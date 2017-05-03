@@ -75,6 +75,50 @@ ALTER TABLE `user_vehicle`
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
+
+
+
+# Affichage de la table items
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `items`;
+
+CREATE TABLE `items` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# Affichage de la table user_inventory
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_inventory`;
+
+CREATE TABLE `user_inventory` (
+  `user_id` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
+  `item_id` int(11) unsigned NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`item_id`),
+  KEY `item_id` (`item_id`),
+  CONSTRAINT `user_inventory_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+ALTER TABLE `users` ADD `job` int(11) DEFAULT '1';
+
+CREATE TABLE `jobs` (
+  `job_id` int(11) NOT NULL,
+  `job_name` varchar(40) NOT NULL,
+  `salary` int(11) NOT NULL DEFAULT '500'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`job_id`);
+
+ALTER TABLE `jobs` MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT;
+
+
 -- Data exporteren was gedeselecteerd
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
