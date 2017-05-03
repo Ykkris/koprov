@@ -20,6 +20,11 @@ AutoStartResources:
     - assets
     - garages
     - banking
+    - vdk_inventory
+    - vdk_recolt
+    - paycheck
+    - jobs_system
+    - missiontext
 
 # do change
 RconPassword: koprobestv
