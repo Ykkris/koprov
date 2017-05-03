@@ -19,6 +19,7 @@ AutoStartResources:
     - loadingscreen
     - assets
     - garages
+    - banking
 
 # do change
 RconPassword: koprobestv
