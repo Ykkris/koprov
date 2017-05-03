@@ -237,7 +237,8 @@ end)
 
 RegisterNUICallback('transferSubmit', function(data, cb)
   local fromPlayer = GetPlayerServerId();
-  TriggerEvent('bank:transfer', tonumber(fromPlayer), tonumber(data.toPlayer), tonumber(data.amount))
+  local toPlayer = data;
+  TriggerEvent('bank:transfer', tonumber(fromPlayer), tonumber(toPlayer), tonumber(data.amount))
   cb('ok')
 end)
 
