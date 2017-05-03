@@ -1,0 +1,115 @@
+<html>
+    <head>
+    	<title>Loading screen Kopro V</title>
+        <meta charset="UTF-8">
+        <link href="stylesheet.css" rel="stylesheet" type="text/css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
+    </head>
+    <body>
+      <audio autoplay="" id="Loading" loop=""><source src="music/Loading.ogg" type="audio/ogg" />
+         <source src="music/Loading.ogg" type="audio/ogg">
+    </audio>
+    <script>
+     var vid = document.getElementById("Loading");
+     vid.volume = 0.2
+    </script>		
+    
+                <div class="allbar">
+                    <p>Chargement</p>
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
+                    <div class="bar bar9"></div>
+                </div>
+    				<p class="text">Les chaussettes de l'archiduchesse sont-elles sèches? Archi-sèches ?</p>           
+	          		<p class="text">Je suis passé chez SOSH. </p>
+	           		<p class="text">La roue sur la rue roule; la rue sous la roue reste.</p>
+	           		<p class="text">Suis-je bien chez ce cher Serge?</p>
+	          		<p class="text">Cinq chiens chassent six chats.</p>
+	         		<p class="text">Un chasseur sachant chasser doit savoir chasser sans son chien.</p>
+	         		<p class="text">Suis-je bien chez ce cher Serge?</p>
+    </body>
+		
+<script type="text/javascript">
+var count = 0;
+var thisCount = 0;
+const handlers = {
+    startInitFunctionOrder(data)
+    {
+        count = data.count;
+
+        document.querySelector('.letni h3').innerHTML += emoji[data.type][data.order - 1] || '';
+    },
+
+    initFunctionInvoking(data)
+    {
+        document.querySelector('.thingy').style.left = '0%';
+        document.querySelector('.thingy').style.width = ((data.idx / count) * 100) + '%';
+    },
+
+    startDataFileEntries(data)
+    {
+        count = data.count;
+
+        document.querySelector('.letni h3').innerHTML += "\u{1f358}";
+    },
+
+    performMapLoadFunction(data)
+    {
+        ++thisCount;
+
+        document.querySelector('.thingy').style.left = '0%';
+        document.querySelector('.thingy').style.width = ((thisCount / count) * 100) + '%';
+    },
+
+    onLogLine(data)
+    {
+        document.querySelector('.letni p').innerHTML = data.message + "..!";
+    }
+};
+
+window.addEventListener('message', function(e)
+{
+    (handlers[e.data.eventName] || function() {})(e.data);
+});
+</script>
+
+<script>
+(function() {
+    var text = $(".text");
+    var quoteIndex = -1;
+
+    function showNextQuote() {
+        ++quoteIndex;
+        text.eq(quoteIndex % text.length)
+            .fadeIn(2000)
+            .delay(2000)
+            .fadeOut(2000, showNextQuote);
+    }
+
+    showNextQuote();
+
+})();
+(function() {
+    var text = $(".text2");
+    var quoteIndex = -1;
+
+    function showNextQuote() {
+        ++quoteIndex;
+        text.eq(quoteIndex % text.length)
+            .fadeIn(2000)
+            .delay(2000)
+            .fadeOut(2000, showNextQuote);
+    }
+
+    showNextQuote();
+
+})
+</script>
+    </body>
+</html>
