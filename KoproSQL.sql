@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `bans` (
 
 -- Structuur van  tabel gta5_gamemode_essential.users wordt geschreven
 CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) UNSIGNED NOT NULL,
   `identifier` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
   `group` varchar(50) NOT NULL DEFAULT '0',
   `permission_level` int(11) NOT NULL DEFAULT '0',
@@ -39,9 +40,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`identifier`);
+  ADD PRIMARY KEY (`ID`);
 
 ALTER TABLE users ADD COLUMN bankbalance INT(32) DEFAULT 0;
+ALTER TABLE `users` ADD COLUMN lastpos VARCHAR(255) DEFAULT '{-887.48388671875, -2311.68872070313,  -3.50776553153992, 142.503463745117}';
 
 
 

@@ -25,6 +25,10 @@ AutoStartResources:
     - paycheck
     - jobs_system
     - missiontext
+    - es_weashop
+    - NeverWanted
+    - lastpostodb
+    - handsup
 
 # do change
 RconPassword: koprobestv

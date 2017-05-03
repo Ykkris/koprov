@@ -38,7 +38,7 @@ local vehshop = {
 				{name = "Off-Road", description = ''},
 				{name = "SUVs", description = ''},
 				{name = "Vans", description = ''},
-				{name = "Cycles", description = ''},
+				--{name = "Cycles", description = ''},
 			}
 		},
 		["compacts"] = {
@@ -83,7 +83,7 @@ local vehshop = {
 				{name = "Alpha", costs = 150000, description = {}, model = "alpha"},
 				{name = "Banshee", costs = 105000, description = {}, model = "banshee"},
 				{name = "Bestia GTS", costs = 610000, description = {}, model = "bestiagts"},
-				{name = "Blista Compact", costs = 42000, description = {}, model = "blista"},
+				--{name = "Blista Compact", costs = 42000, description = {}, model = "blista"},
 				{name = "Buffalo", costs = 35000, description = {}, model = "buffalo"},
 				{name = "Buffalo S", costs = 96000, description = {}, model = "buffalo2"},
 				{name = "Carbonizzare", costs = 195000, description = {}, model = "carbonizzare"},
@@ -181,7 +181,7 @@ local vehshop = {
 				{name = "Dune Buggy", costs = 20000, description = {}, model = "dune"},
 				{name = "Rebel", costs = 22000, description = {}, model = "rebel2"},
 				{name = "Sandking", costs = 38000, description = {}, model = "sandking"},
-				{name = "The Liberator", costs = 550000, description = {}, model = "monster"},
+				--{name = "The Liberator", costs = 550000, description = {}, model = "monster"},
 				{name = "Trophy Truck", costs = 550000, description = {}, model = "trophytruck"},
 			}
 		},
@@ -206,7 +206,7 @@ local vehshop = {
 			buttons = {
 				{name = "Bison", costs = 30000, description = {}, model = "bison"},
 				{name = "Bobcat XL", costs = 23000, description = {}, model = "bobcatxl"},
-				{name = "Gang Burrito", costs = 65000, description = {}, model = "gburrito"},
+				--{name = "Gang Burrito", costs = 65000, description = {}, model = "gburrito"},
 				{name = "Journey", costs = 15000, description = {}, model = "journey"},
 				{name = "Minivan", costs = 30000, description = {}, model = "minivan"},
 				{name = "Paradise", costs = 25000, description = {}, model = "paradise"},
