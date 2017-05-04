@@ -24,7 +24,7 @@ local garage = {
 	marker = { r = 0, g = 155, b = 255, a = 200, type = 1 },
 	menu = {
 		x = 0.9,
-		y = 0.08,
+		y = 0.2,
 		width = 0.2,
 		height = 0.04,
 		buttons = 10,
