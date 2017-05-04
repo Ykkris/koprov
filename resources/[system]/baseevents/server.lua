@@ -17,3 +17,7 @@ AddEventHandler('baseevents:onPlayerDied', function(killedBy, pos)
 
 	RconLog({msgType = 'playerDied', victim = victim, attackerType = killedBy, pos = pos})
 end)
+
+AddEventHandler('baseevents:enteredVehicle', function(data)
+	TriggerClientEvent('garages:enteredVehicle', source)
+end)

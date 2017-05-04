@@ -1,5 +1,6 @@
 RegisterNetEvent('garages:RemoveVehicle')
 RegisterNetEvent('garages:DisplayVehicles')
+RegisterNetEvent('garages:enteredVehicle')
 
 local Keys = {
 	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57, 
@@ -521,6 +522,11 @@ AddEventHandler('garages:DisplayVehicles', function(buttons)
 
 end)
 
+-- When entering a vehicle, sets the vehicle as mission entity to prevent it from disappear
+AddEventHandler('garages:enteredVehicle', function(data)
 
-
-
+	local car = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+	if car then
+        SetEntityAsMissionEntity(car,true,true)
+ 	end
+end)

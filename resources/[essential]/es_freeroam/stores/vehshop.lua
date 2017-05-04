@@ -422,6 +422,7 @@ function CloseCreator(name, veh)
 				Citizen.Wait(0)
 			end
 			personalvehicle = CreateVehicle(model,pos[1],pos[2],pos[3],pos[4],true,false)
+			SetEntityAsMissionEntity(personalvehicle, true, true)
 			SetModelAsNoLongerNeeded(model)
 			for i,mod in pairs(mods) do
 				SetVehicleModKit(personalvehicle,0)
