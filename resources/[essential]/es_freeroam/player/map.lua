@@ -1,7 +1,4 @@
 local blips = {
-   -- Airport and Airfield
-   {name="Airport", id=90, x=-1032.690, y=-2728.141, z=13.757},
-   {name="Airport", id=90, x=1743.6820, y=3286.2510, z=40.087},
    -- barbers
    {name="Barber", id=71, x=-827.333, y=-190.916, z=37.599},
    {name="Barber", id=71, x=130.512, y=-1715.535, z=29.226},
@@ -52,33 +49,17 @@ local blips = {
     {name="Weapon store", id=110, x=2568.379, y=309.629, z=108.461},
     {name="Weapon store", id=110, x=-3157.450, y=1079.633, z=20.692},
     -- Basic
-    {name="Comedy Club", id=102, x=377.088, y=-991.869, z=-97.604},
-    {name="FIB", id=106, x=105.455, y=-745.483, z=44.754},
-    {name="Lifeinvader", id=77, x=-1047.900, y=-233.000, z=39.000},
-    {name="Cluckin Bell", id=357, x=-72.68752, y=6253.72656, z=31.08991},
-    {name="Tequil-La La", id=93, x=-565.171, y=276.625, z=83.286},
-    {name="O'Neil Ranch", id=438, x=2441.200, y=4968.500, z=51.700},
-    {name="Play Boy Mansion", id=439, x=-1475.234, y=167.088, z=55.841},
-    {name="Hippy Camp", id=140, x=2476.712, y=3789.645, z=41.226},
-    {name="Chop shop", id=446, x=479.056, y=-1316.825, z=28.203},
-    {name="Rebel Radio", id=136, x=736.153, y=2583.143, z=79.634},
-    {name="Morgue", id=310, x=243.351, y=-1376.014, z=39.534},
-    {name="Golf", id=109, x=-1336.715, y=59.051, z=55.246 },
-    {name="Jewelry Store", id=52,  x=-630.400, y=-236.700, z=40.00},
+    --{name="FIB", id=106, x=105.455, y=-745.483, z=44.754},
+    --{name="Lifeinvader", id=77, x=-1047.900, y=-233.000, z=39.000},
+    --{name="Cluckin Bell", id=357, x=-72.68752, y=6253.72656, z=31.08991},
+    --{name="Tequil-La La", id=93, x=-565.171, y=276.625, z=83.286},
+    --{name="Morgue", id=310, x=243.351, y=-1376.014, z=39.534},
+    --{name="Jewelry Store", id=52,  x=-630.400, y=-236.700, z=40.00},
     -- Propperty
-    {name="Casino", id=207, x=925.329, y=46.152, z=80.908 },
+    --{name="Casino", id=207, x=925.329, y=46.152, z=80.908 },
     {name="Maze Bank Arena", id=135, x=-250.604, y=-2030.000, z=30.000},
     {name="Stripbar", id=121, x=134.476, y=-1307.887, z=28.983},
-    {name="Weed Farm", id=140, x=2208.777, y=5578.235, z=53.735},
     {name="Downtown Cab Co", id=375, x=900.461, y=-181.466, z=73.89},
-    {name="Theater", id=135, x=293.089, y=180.466, z=104.301},
-    -- Gangs
-    {name="Gang", id=437, x=298.68, y=-2010.10, z=20.07},
-    {name="Gang", id=437, x=86.64, y=-1924.60, z=20.79},
-    {name="Gang", id=437, x=-183.52, y=-1632.62, z=33.34},
-    {name="Gang", id=437, x=989.37, y=-1777.56, z=31.32},
-    {name="Gang", id=437, x=960.24, y=-140.31, z=74.50},
-    {name="Gang", id=437, x=-1042.29, y=4910.17, z=94.92},
     -- Gas stations
     {name="Gas Station", id=361, x=49.4187,   y=2778.793,  z=58.043},
     {name="Gas Station", id=361, x=263.894,   y=2606.463,  z=44.983},
@@ -106,10 +87,10 @@ local blips = {
     {name="Gas Station", id=361, x=2581.321, y=362.039, 108.468},
     -- Police Stations
     {name="Police Station", id=60, x=425.130, y=-979.558, z=30.711},
-    {name="Police Station", id=60, x=1859.234, y= 3678.742, z=33.690},
-    {name="Police Station", id=60, x=-438.862, y=6020.768, z=31.490},
-    {name="Police Station", id=60, x=818.221, y=-1289.883, z=26.300},
-    {name="Prison", id=285, x=1679.049, y=2513.711, z=45.565},
+    --{name="Police Station", id=60, x=1859.234, y= 3678.742, z=33.690},
+    --{name="Police Station", id=60, x=-438.862, y=6020.768, z=31.490},
+    --{name="Police Station", id=60, x=818.221, y=-1289.883, z=26.300},
+    --{name="Prison", id=285, x=1679.049, y=2513.711, z=45.565},
     -- Hospitals
     {name="Hospital", id=61, x= 1839.6, y= 3672.93, z= 34.28},
     {name="Hospital", id=61, x= -247.76, y= 6331.23, z=32.43},
@@ -119,37 +100,12 @@ local blips = {
     {name="Hospital", id=61, x= -676.98, y= 310.68, z= 83.08},
     {name="Hospital", id=61, x= 1151.21, y= -1529.62, z= 35.37},
     {name="Hospital", id=61, x= -874.64, y= -307.71, z= 39.58},
-    -- Vehicle Shop (Simeon)
-    {name="Simeon", id=120, x=-33.803, y=-1102.322, z=25.422},
     -- LS Customs
-    {name="LS Customs", id=72, x= -362.796, y= -132.400, z= 38.252},
-    {name="LS Customs", id=72, x= -1140.19, y= -1985.478, z= 12.729},
-    {name="LS Customs", id=72, x= 716.464, y= -1088.869, z= 21.929},
-    {name="LS Customs", id=72, x= 1174.81, y= 2649.954, z= 37.371},
-    {name="LS Customs", id=72, x= 118.485, y= 6619.560, z= 31.802},
-    -- Survivals
-    {name="Survival", id=305, x=2351.331, y=3086.969, z=48.057},
-    {name="Survival", id=305, x=-1695.803, y=-1139.190, z=13.152},
-    {name="Survival", id=305, x=1532.52, y=-2138.682, z=77.120},
-    {name="Survival", id=305, x=-593.724, y=5283.231, z=70.230},
-    {name="Survival", id=305, x=1891.436, y=3737.409, z=32.513},
-    {name="Survival", id=305, x=195.572, y=-942.493, z=30.692},
-    {name="Survival", id=305, x=1488.579, y=3582.804, z=35.345},
-
-    {name="Safehouse", id=357, x=-952.35943603516, y= -1077.5021972656, z=2.6772258281708},
-    {name="Safehouse", id=357, x=-59.124889373779, y= -616.55456542969, z=37.356777191162},
-    {name="Safehouse", id=357, x=-255.05390930176, y= -943.32885742188, z=31.219989776611},
-    {name="Safehouse", id=357, x=-771.79888916016, y= 351.59423828125, z=87.998191833496},
-    {name="Safehouse", id=357, x=-3086.428, y=339.252, z=6.371},
-    {name="Safehouse", id=357, x=-917.289, y=-450.206, z=39.600},
-
-
-    {name="Race", id=316, x=-1277.629, y=-2030.913, z=1.2823},
-    {name="Race", id=316, x=2384.969, y=4277.583, z=30.379},
-    {name="Race", id=316, x=1577.881, y=3836.107, z=30.7717},
-    -- Yacht
-    {name="Yacht", id=410, x=-2045.800, y=-1031.200, z=11.900},
-    {name="Cargoship", id=410, x=-90.000, y=-2365.800, z=14.300},
+    --{name="LS Customs", id=72, x= -362.796, y= -132.400, z= 38.252},
+    --{name="LS Customs", id=72, x= -1140.19, y= -1985.478, z= 12.729},
+    --{name="LS Customs", id=72, x= 716.464, y= -1088.869, z= 21.929},
+    --{name="LS Customs", id=72, x= 1174.81, y= 2649.954, z= 37.371},
+    --{name="LS Customs", id=72, x= 118.485, y= 6619.560, z= 31.802},
   }
 
 Citizen.CreateThread(function()

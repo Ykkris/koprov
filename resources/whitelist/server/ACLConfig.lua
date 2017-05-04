@@ -11,7 +11,6 @@ ACL.enablePlayerManagement = true
 ACL.useIdentBugWorkaround = true
 
 ACL.whitelist = {
-	"Astou / Roger Bergamo",
 }
 
 -- Currently mods and admins are indistinguishable
@@ -20,6 +19,8 @@ ACL.mods = {
 
 ACL.admins = {
 	"steam:110000101f91cd2",
+	"steam:110000104bd6595",
+	"steam:11000010599af76"
 }
 
 ACL.banlist = {

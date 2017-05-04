@@ -29,6 +29,7 @@ AutoStartResources:
     - NeverWanted
     - lastpostodb
     - handsup
+    - whitelist
 
 # do change
 RconPassword: koprobestv
