@@ -1,12 +1,3 @@
--- NO TOUCHY, IF SOMETHING IS WRONG CONTACT KANERSPS! --
--- NO TOUCHY, IF SOMETHING IS WRONG CONTACT KANERSPS! --
--- NO TOUCHY, IF SOMETHING IS WRONG CONTACT KANERSPS! --
--- NO TOUCHY, IF SOMETHING IS WRONG CONTACT KANERSPS! --
-
---[[ MySQL Class
-
---]]
-
 MySQL = setmetatable({}, MySQL)
 MySQL.__index = MySQL
 
@@ -64,7 +55,7 @@ function MySQL.escape(self, str)
 end
 
 function MySQL._getFieldByName(self, reader, name)
-	local typ = tostring(reader:GetFieldType(name))
+	local typ     = tostring(reader:GetFieldType(name))
 	local ordinal = reader:GetOrdinal(name)
 	
 	if(reader:IsDBNull(ordinal)) then
