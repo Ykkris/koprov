@@ -14,8 +14,10 @@ Citizen.CreateThread(
         local radius = 20.0
         local nearestVeh = GetClosestVehicle(playerX, playerY, playerZ, radius)
         local nearestVehPlate = GetVehicleNumberPlateText(nearestVeh)
-
-        TriggerServerEvent('veh:checkveh', tostring(nearestVehPlate))
+        
+        Citizen.Trace(tostring(nearestVehPlate))
+        
+        TriggerServerEvent('veh:checkveh', nearestVehPlate)
 
         RegisterNetEvent('veh:rcheckveh')
         AddEventHandler('veh:rcheckveh',
