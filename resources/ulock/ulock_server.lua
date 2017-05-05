@@ -8,13 +8,13 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 function IsPlayerGotThisVeh(player, vehplate) -- vehplate string
   local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@name'", {['@name'] = player})
   local result = MySQL:getResults(executed_query, {'vehicle_plate'}, "identifier")
-  if (tostring(vehplate) == tostring(result[1].vehicle_plate)) then 
-	RconPrint(tostring(vehplate))
-	RconPrint(tostring(result[1].vehicle_plate))
-	return true
-  else
-	return false
-  end
+  local match = false
+  for i,j in iparis(result) do
+  	if (tostring(vehplate) == tostring(v.vehicle_plate)) then 
+		match = true
+  	end
+   end
+return match
 end
 
 --RconPrint(tostring(IsPlayerGotThisVeh( , 03YCZ856))
