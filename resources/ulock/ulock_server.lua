@@ -6,10 +6,8 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 
 function IsPlayerGotThisVeh(player, vehplate) -- veh is id veh (int)
-  local executed_query = MySQL:executeQuery("SELECT * FROM users_vehicle WHERE identifier = '@name'", {['@name'] = player})
+  local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@name'", {['@name'] = player})
   local result = MySQL:getResults(executed_query, {'vehicle_plate'}, "identifier")
-  
-  
   if (vehplate == result[1].vehicle_plate) then 
 	return true
   else
@@ -19,6 +17,8 @@ end
 
 RegisterServerEvent('veh:checkveh')
 AddEventHandler('veh:checkveh', function(veh)
-	TrigerClientEvent('veh:rcheckveh', source, IsPlayerGotThisVeh(source, vehplate))
+	local ishegotveh = IsPlayerGotThisVeh(source, vehplate) 
+	RconPrint(tostring(ishegotveh))
+	TrigerClientEvent('veh:rcheckveh', source, ishegotveh)
 	CancelEvent()
 end)
