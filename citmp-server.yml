@@ -31,6 +31,7 @@ AutoStartResources:
     - handsup
     - whitelist
     - watermark
+    - ulock
 
 # do change
 RconPassword: koprobestv
