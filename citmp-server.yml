@@ -34,6 +34,7 @@ AutoStartResources:
     - voip
     - tow
     - towgarage
+    - policegarage
 
 # do change
 RconPassword: koprobestv

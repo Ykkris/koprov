@@ -1,5 +1,5 @@
 <Item>
-      <modelName>police5</modelName>
+      <modelName>police3</modelName>
     <colors>
         <Item>
           <indices content="char_array">
@@ -97,6 +97,6 @@
       <plateProbabilities>
         <Probabilities />
       </plateProbabilities>
-      <lightSettings value="72" />
+      <lightSettings value="1" />
       <sirenSettings value="2" />
     </Item>
