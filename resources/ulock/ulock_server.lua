@@ -23,6 +23,8 @@ RegisterServerEvent('veh:checkveh')
 AddEventHandler('veh:checkveh', function(veh)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
         local userid = user.identifier
+	RconPrint(tostring(userid))
+	RconPrint(tostring(veh))
 	local ishegotveh = IsPlayerGotThisVeh(userid, veh) 
 	RconPrint(tostring(ishegotveh))
 	TrigerClientEvent('veh:rcheckveh', source, ishegotveh)
