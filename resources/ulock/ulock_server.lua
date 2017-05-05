@@ -15,15 +15,15 @@ function IsPlayerGotThisVeh(player, vehplate) -- veh is id veh (int)
   end
 end
 
-RconPrint(tostring(IsPlayerGotThisVeh( , 03YCZ856))
+--RconPrint(tostring(IsPlayerGotThisVeh( , 03YCZ856))
 
 RegisterServerEvent('veh:checkveh')
 AddEventHandler('veh:checkveh', function(veh)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
         local userid = user.identifier
-	end)
 	local ishegotveh = IsPlayerGotThisVeh(userid, veh) 
 	RconPrint(tostring(ishegotveh))
 	TrigerClientEvent('veh:rcheckveh', source, ishegotveh)
 	CancelEvent()
+  end)
 end)
