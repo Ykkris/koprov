@@ -32,6 +32,8 @@ AutoStartResources:
     - whitelist
     - watermark
     - voip
+    - tow
+    - towgarage
 
 # do change
 RconPassword: koprobestv
