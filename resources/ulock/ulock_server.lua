@@ -1,6 +1,8 @@
 -- This is Koprov team proprety. --
 -- You can use it, share it and modify it BUT you're not allowed to make benefit with it. --
 -- Contact us for more informations at koprov.fr --
+require "resources/essentialmode/lib/MySQL"
+MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 
 function IsPlayerGotThisVeh(player, vehplate) -- veh is id veh (int)
