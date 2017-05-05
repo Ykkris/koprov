@@ -5,7 +5,7 @@ require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 
-function IsPlayerGotThisVeh(player, vehplate) -- veh is id veh (int)
+function IsPlayerGotThisVeh(player, vehplate) -- vehplate string
   local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@name'", {['@name'] = player})
   local result = MySQL:getResults(executed_query, {'vehicle_plate'}, "identifier")
   if (tostring(vehplate) == tostring(result[1].vehicle_plate)) then 
@@ -26,6 +26,5 @@ AddEventHandler('veh:checkveh', function(veh)
 	local ishegotveh = IsPlayerGotThisVeh(userid, veh) 
 	RconPrint(tostring(ishegotveh))
 	TrigerClientEvent('veh:rcheckveh', source, ishegotveh)
-	CancelEvent()
   end)
 end)
