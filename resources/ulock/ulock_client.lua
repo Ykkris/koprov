@@ -12,7 +12,7 @@ Citizen.CreateThread(
         local posPlayer = GetEntityCoords(player, false)
         local playerX, playerY, playerZ = posPlayer.x, posPlayer.y, posPlayer.z
         local radius = 20.0
-        local nearestVeh = GetClosestVehicle(playerX, playerY, playerZ, radius)
+        nearestVeh = GetClosestVehicle(playerX, playerY, playerZ, radius)
         local nearestVehPlate = GetVehicleNumberPlateText(nearestVeh)
         
         Citizen.Trace(tostring(nearestVehPlate))
@@ -21,7 +21,8 @@ Citizen.CreateThread(
 
         RegisterNetEvent('veh:rcheckveh')
         AddEventHandler('veh:rcheckveh',
-          function(IsPlayerGotThisVeh)
+          function(test ,IsPlayerGotThisVeh)
+            Citizen.Trace(tostring(test))
             if IsPlayerGotThisVeh then
               local isLocked = GetVehicleDoorLockStatus(nearestVeh)
 
