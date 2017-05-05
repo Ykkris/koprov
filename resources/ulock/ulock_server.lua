@@ -17,6 +17,6 @@ end
 
 RegisterServerEvent('veh:checkveh')
 AddEventHandler('veh:checkveh', function(veh)
-	TrigerClientEvent('veh:rcheckveh', source, IsPlayerGotThisVeh(player, vehplate))
+	TrigerClientEvent('veh:rcheckveh', source, IsPlayerGotThisVeh(source, vehplate))
 	CancelEvent()
 end)
