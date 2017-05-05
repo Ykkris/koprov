@@ -36,7 +36,7 @@ Citizen.CreateThread(function()
 			
 			else TriggerEvent('chatMessage', "", {255, 0, 0}, "^1Tu n'as pas les clefs!");
 			
-			end)
+			end
 		-- elseif (IsControlJustPressed(1, 303) and isPlayerInCar) then
 		
 			-- menu appear
@@ -46,5 +46,5 @@ Citizen.CreateThread(function()
 			
 			
 		end
-	end
+	end)
 end)
