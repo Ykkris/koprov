@@ -5,28 +5,29 @@ require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 
-function IsPlayerGotThisVeh(player, vehplate) -- vehplate string
-  local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@name'", {['@name'] = player})
-  local result = MySQL:getResults(executed_query, {'vehicle_plate'}, "identifier")
+function IsPlayerGotThisVeh(player, vehPlate) -- vehplate string
+  local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@name' AND vehicle_plate = '@plate'",
+                                           {['@name'] = player, ['@plate'] = vehPlate})
+  local result = MySQL:getResults(executed_query, {'identifier'})
   local match = false
-  for i,j in iparis(result) do
-  	if (tostring(vehplate) == tostring(v.vehicle_plate)) then 
-		match = true
-  	end
-   end
-return match
+  if result[1] then
+    match = true
+  end
+  --for i,j in iparis(result) do
+  --	if (tostring(vehplate) == tostring(v.vehicle_plate)) then 
+	--	match = true
+  --	end
+  -- end
+
+  return match
 end
 
 --RconPrint(tostring(IsPlayerGotThisVeh( , 03YCZ856))
 
 RegisterServerEvent('veh:checkveh')
-AddEventHandler('veh:checkveh', function(veh)
+AddEventHandler('veh:checkveh', function(veh, plate)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
-        local userid = user.identifier
-	RconPrint(tostring(userid))
-	RconPrint(tostring(veh))
-	local ishegotveh = IsPlayerGotThisVeh(userid, veh) 
-	RconPrint(tostring(ishegotveh))
-	TrigerClientEvent('veh:rcheckveh', source, ishegotveh)
+    local player = user.identifier
+  	TriggerClientEvent('veh:rcheckveh', source, veh, IsPlayerGotThisVeh(player, plate))
   end)
 end)

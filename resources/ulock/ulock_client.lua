@@ -1,43 +1,55 @@
-Citizen.CreateThread(
-  function()
-    while true do
-      Wait(0)
+Citizen.CreateThread(function()
+  while true do
+    Wait(0)
 
-      local isPlayerInCar = IsPedInAnyVehicle(GetPlayerPed(-1))
+    local player = GetPlayerPed(-1)
+    local isPlayerInCar = IsPedInAnyVehicle(player)
 
-      if (IsControlJustPressed(1, 303) and not(isPlayerInCar)) then -- 303 is the 'U' key
-        Citizen.Trace("test")
-        
-        local player = GetPlayerPed(-1)
+    if IsControlJustPressed(1, 303) then -- 303 is the 'U' key
+      AddTextComponentString("press key")
+      DrawNotification(false, false)
+
+      if isPlayerInCar then
+        local veh = GetVehiclePedIsIn(player, false)
+        local vehPlate = GetVehicleNumberPlateText(veh)
+        TriggerServerEvent('veh:checkveh', veh, vehPlate)
+      else        
         local posPlayer = GetEntityCoords(player, false)
         local playerX, playerY, playerZ = posPlayer.x, posPlayer.y, posPlayer.z
-        local radius = 20.0
-        nearestVeh = GetClosestVehicle(playerX, playerY, playerZ, radius)
+        local radius = 2.0
+        local nearestVeh = GetClosestVehicle(playerX, playerY, playerZ, radius, 0, 70)
         local nearestVehPlate = GetVehicleNumberPlateText(nearestVeh)
-        
-        Citizen.Trace(tostring(nearestVehPlate))
-        
-        TriggerServerEvent('veh:checkveh', nearestVehPlate)
-
-        RegisterNetEvent('veh:rcheckveh')
-        AddEventHandler('veh:rcheckveh',
-          function(test ,IsPlayerGotThisVeh)
-            Citizen.Trace(tostring(test))
-            if IsPlayerGotThisVeh then
-              local isLocked = GetVehicleDoorLockStatus(nearestVeh)
-
-              if isLocked == 1 or isLocked == 0 then
-
-                SetVehicleDoorsLocked(nearestVeh, 2)
-              else
-                SetVehicleDoorsLocked(nearestVeh, 1)
-              end
-            else
-              TriggerEvent('chatMessage', "", {255, 0, 0}, "^1Tu n'as pas les clefs!")
-            end
-          end
-        )
+        if nearestVehPlate ~= nil then
+          TriggerServerEvent('veh:checkveh', nearestVeh, nearestVehPlate)
+        end       
       end
+
     end
+
   end
-)
+end)
+
+RegisterNetEvent('veh:rcheckveh')
+AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh)
+  local nearestVehPlate = GetVehicleNumberPlateText(veh)
+  if playerGotThisVeh then
+    local isLocked = GetVehicleDoorLockStatus(veh)
+
+    if isLocked == 1 or isLocked == 0 then
+
+      SetVehicleDoorsLocked(veh, 2)
+      SetNotificationTextEntry("STRING")
+      AddTextComponentString("Véhicule fermé")
+      DrawNotification(false, false)
+    else
+      SetVehicleDoorsLocked(veh, 1)
+      SetNotificationTextEntry("STRING")
+      AddTextComponentString("Véhicule ouvert")
+      DrawNotification(false, false)
+    end
+  else
+    SetNotificationTextEntry("STRING")
+    AddTextComponentString("Tu n'as pas les clefs!")
+    DrawNotification(false, false)
+  end
+end)
