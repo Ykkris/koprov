@@ -17,7 +17,7 @@ end
 
 RegisterServerEvent('veh:checkveh')
 AddEventHandler('veh:checkveh', function(veh)
-	local ishegotveh = IsPlayerGotThisVeh(source, vehplate) 
+	local ishegotveh = IsPlayerGotThisVeh(source, veh) 
 	RconPrint(tostring(ishegotveh))
 	TrigerClientEvent('veh:rcheckveh', source, ishegotveh)
 	CancelEvent()
