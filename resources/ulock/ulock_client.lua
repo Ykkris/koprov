@@ -11,7 +11,7 @@ Citizen.CreateThread(
         local player = GetPlayerPed(-1)
         local posPlayer = GetEntityCoords(player, false)
         local playerX, playerY, playerZ = posPlayer.x, posPlayer.y, posPlayer.z
-        local radius = 2.0
+        local radius = 20.0
         local nearestVeh = GetClosestVehicle(playerX, playerY, playerZ, radius)
         local nearestVehPlate = GetVehicleNumberPlateText(nearestVeh)
 
