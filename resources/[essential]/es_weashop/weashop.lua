@@ -35,7 +35,7 @@ local weashop = {
 			name = "Melee",
 			buttons = {
 				{title = "Knife", name = "Knife", costs = 155000, description = {}, model = "WEAPON_Knife"},
-				{title = "Nightstick", name = "Nightstick", costs = 25000, description = {}, model = "WEAPON_Nightstick"},
+				--{title = "Nightstick", name = "Nightstick", costs = 25000, description = {}, model = "WEAPON_Nightstick"},
 				{title = "Hammer", name = "Hammer", costs = 18000, description = {}, model = "WEAPON_HAMMER"},
 				{title = "Bat", name = "Bat", costs = 85000, description = {}, model = "WEAPON_Bat"},
 				{title = "Crowbar", name = "Crowbar", costs = 30000, description = {}, model = "WEAPON_Crowbar"},
