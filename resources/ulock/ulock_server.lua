@@ -8,7 +8,9 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 function IsPlayerGotThisVeh(player, vehplate) -- veh is id veh (int)
   local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@name'", {['@name'] = player})
   local result = MySQL:getResults(executed_query, {'vehicle_plate'}, "identifier")
-  if (vehplate == result[1].vehicle_plate) then 
+  if (tostring(vehplate) == tostring(result[1].vehicle_plate)) then 
+	RconPrint(tostring(vehplate))
+	RconPrint(tostring(result[1].vehicle_plate))
 	return true
   else
 	return false
