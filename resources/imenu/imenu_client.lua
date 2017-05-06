@@ -384,8 +384,9 @@ function OpenDoor(dumbledor)
 end
 
 function Limitator(acombienjetelimitemonbro)
-	okjetelimiteaca = acombienjetelimite
+	okjetelimiteaca = tonumber(acombienjetelimite)
 	playerVeh.MaxSpeed = okjetelimiteaca
+	  
 end
 
 
