@@ -64,7 +64,6 @@ local vehshop = {
 }
 
 
-local isPlayerInCar = true -- A CHANGER AVEC LE CODE
 
 local function LocalPed()
 return GetPlayerPed(-1)
@@ -203,7 +202,6 @@ Citizen.CreateThread(function()
 				CloseCreator()
 			end
 			local playerVehPlate = nil
-			local posPlayer = GetEntityCoords(player, false)
 			local playerVeh = GetVehiclePedIsIn(player, true)
 			isyourcar = false
 			if playerVeh ~= nil then
@@ -214,11 +212,14 @@ Citizen.CreateThread(function()
 				AddTextComponentString("Vous n'êtes pas dans un véhicule.")
 				DrawNotification(false, false)
 			end
-			
+			isrunning = false
 			if playerVeh ~= nil then
 				TriggerServerEvent('veh:checkveh', playerVeh, playerVehPlate)
 			end
+			
+			while isrunning == false do
 			Wait(100)
+			end
 			if isyourcar then
 					OpenCreator()
 			end
@@ -374,6 +375,7 @@ function stringstarts(String,Start)
 end
 
 
-AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh)
+AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh, running)
+  isrunning = running
   isyourcar = playerGotThisVeh
  end)
