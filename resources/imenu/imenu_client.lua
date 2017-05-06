@@ -211,11 +211,12 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		if (IsControlJustPressed(27 , 71)) then                                  ------ On enleve le limitateur
-			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 then
+			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 ) then
 				if limitator then
 					local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
 					Citizen.Trace("Max acc de ta caisse = "..tostring(test))
 					SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
+					ShowNotification("Limitateur enlevé")
 				end
 			end
 		end                                                                       --------
@@ -420,6 +421,11 @@ function toFloat(number)
 	return number+0.0
 end
 
+function ShowNotification(message)
+	SetNotificationTextEntry("STRING")
+	AddTextComponentString(message)
+	DrawNotification(false, false)
+end
 
 --AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh, running)
 --  isrunning = running
