@@ -61,9 +61,9 @@ local vehshop = {
 				{name = "10", description = ''},
 				{name = "30", description = ''},
 				{name = "50", description = ''},
-				{name = "70", description = ''},
 				{name = "90", description = ''},
 				{name = "110", description = ''},
+				{name = "Enlever la limite", description = ''},
 			}
 		},
 		["moteur"] = {
@@ -212,11 +212,9 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		if (IsControlJustPressed(27 , 71)) then                                  ------ On enleve le limitateur
 			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 ) then
-				if limitator then
-					local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-					Citizen.Trace("Max acc de ta caisse = "..tostring(test))
-					SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
-					ShowNotification("Limitateur enlevé")
+				if not(engine) then
+					SetVehicleEngineOn(playerVeh, true, true)
+					SetVehiculeUndrivable(playerVeh, true)
 				end
 			end
 		end                                                                       --------
@@ -340,12 +338,12 @@ function ButtonSelected(button)
 			OpenLimitator('30')
 		elseif btn == "50" then
 			OpenLimitator('50')
-		elseif btn == "70" then
-			OpenLimitator('70')
 		elseif btn == "90" then
-			OpenLimitator("90")
+			OpenLimitator('90')
 		elseif btn == "110" then
-			OpenLimitator('110')
+			OpenLimitator("110")
+		elseif btn == "Enlever la limite" then
+			StopLimitator()
 		end
 
 
@@ -400,21 +398,17 @@ function OpenLimitator(acombienjetelimitemonbro)
 	Citizen.Trace("PlayerVeh : "..tostring(playerVeh))
 	Citizen.Trace("limite = "..tostring(okjetelimiteaca))
 	Citizen.Trace("limitator = "..tostring(limitator))
-	vehshop.menu.from = 1
-	vehshop.menu.to = 10
-	vehshop.selectedbutton = 0
-	vehshop.currentmenu = "main"
+	OpenCreator()
 	  
 end
 
 function ToggleEngineOff()
-	engine = not(engine)
-	SetVehicleEngineOn(playerVeh, engine, engine)
-	SetVehiculeUndrivable(playerVeh, engine)
-	vehshop.menu.from = 1
-	vehshop.menu.to = 10
-	vehshop.selectedbutton = 0
-	vehshop.currentmenu = "main"
+	if engine = true then
+		SetVehicleEngineOn(playerVeh, false, false)
+		SetVehiculeUndrivable(playerVeh, false)
+	end
+	engine = false
+	OpenCreator()
 end
 
 function toFloat(number)
@@ -425,6 +419,13 @@ function ShowNotification(message)
 	SetNotificationTextEntry("STRING")
 	AddTextComponentString(message)
 	DrawNotification(false, false)
+end
+
+function StopLimitator()
+	local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+	Citizen.Trace("Max acc de ta caisse = "..tostring(test))
+	SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
+	ShowNotification("Limitateur enlevé")
 end
 
 --AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh, running)
