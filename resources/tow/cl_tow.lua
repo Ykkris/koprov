@@ -31,6 +31,7 @@ AddEventHandler('pv:tow', function()
 			end
 		else
 			AttachEntityToEntity(currentlyTowedVehicle, vehicle, 20, -0.5, -12.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+			SetVehicleDerformationFixed(currentlyTowedVehicle)
 			DetachEntity(currentlyTowedVehicle, true, true)
 			SetVehicleOnGroundProperly(vehicle)
 			currentlyTowedVehicle = nil
