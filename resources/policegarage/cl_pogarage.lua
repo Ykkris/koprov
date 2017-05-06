@@ -57,20 +57,24 @@ local Keys = {
 
 -- NEW VERSION
 local cmd = {
-	["classic"] = { event = 'policeg:s_classic' },
-	["moto"] = { event = 'policeg:s_moto' },
-	["fila"] = { event = 'policeg:s_fila' },
-	["truck"] = { event = 'policeg:s_truck' },
-	["helico"] = { event = 'policeg:s_helico' },
+	["classic"] = { event = 'policeg:s_classic' }, --police3
+	["moto"] = { event = 'policeg:s_moto' }, -- policeb
+	["fila"] = { event = 'policeg:s_fila' }, -- police4
+	["truck"] = { event = 'policeg:s_truck' }, -- policet
+	["helico"] = { event = 'policeg:s_helico' }, -- maverick
+	["stanier"] = { event = 'policeg:s_stanier'}, -- police
+	["buffalo"] = { event = 'policeg:s_buffalo'}, -- police2
 }
 
 function InitMenuVehicules()
 	MenuTitle = "SpawnJobs"
 	ClearMenu()
-	Menu.addButton("Classique", "callSE", cmd["classic"].event)
+	Menu.addButton("Basique", "callSE", cmd["classic"].event)
 	Menu.addButton("Moto", "callSE", cmd["moto"].event)
 	Menu.addButton("Filature", "callSE", cmd["fila"].event)
 	Menu.addButton("Camion", "callSE", cmd["truck"].event)
+	Menu.addButton("Interceptor", "callSE", cmd["stanier"].event)
+	Menu.addButton("Buffalo", "callSE", cmd["buffalo"].event)
 end
 
 function InitMenuHelico()
@@ -199,6 +203,46 @@ AddEventHandler('policeg:c_helico', function()
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
 	local spawned_car = CreateVehicle(vehicle, coords, 449.359, - 980.727, 42.80, true, false)
+	SetVehicleOnGroundProperly(spawned_car)
+	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
+	SetPedIntoVehicle(myPed, spawned_car, - 1)
+	SetModelAsNoLongerNeeded(vehicle)
+	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+end)
+
+RegisterNetEvent('policeg:c_stanier')
+AddEventHandler('policeg:c_stanier', function()
+	Citizen.Wait(0)
+	local myPed = GetPlayerPed(-1)
+	local player = PlayerId()
+	local vehicle = GetHashKey('police')
+	RequestModel(vehicle)
+	while not HasModelLoaded(vehicle) do
+		Wait(1)
+	end
+	local plate = math.random(100, 900)
+	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+	local spawned_car = CreateVehicle(vehicle, coords, 431.436, - 996.786, 25.1887, true, false)
+	SetVehicleOnGroundProperly(spawned_car)
+	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
+	SetPedIntoVehicle(myPed, spawned_car, - 1)
+	SetModelAsNoLongerNeeded(vehicle)
+	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+end)
+
+RegisterNetEvent('policeg:c_buffalo')
+AddEventHandler('policeg:c_buffalo', function()
+	Citizen.Wait(0)
+	local myPed = GetPlayerPed(-1)
+	local player = PlayerId()
+	local vehicle = GetHashKey('police2')
+	RequestModel(vehicle)
+	while not HasModelLoaded(vehicle) do
+		Wait(1)
+	end
+	local plate = math.random(100, 900)
+	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+	local spawned_car = CreateVehicle(vehicle, coords, 431.436, - 996.786, 25.1887, true, false)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)

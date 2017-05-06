@@ -15,6 +15,8 @@ RegisterServerEvent('policeg:s_moto')
 RegisterServerEvent('policeg:s_fila')
 RegisterServerEvent('policeg:s_truck')
 RegisterServerEvent('policeg:s_helico')
+RegisterServerEvent('policeg:s_stanier')
+RegisterServerEvent('policeg:s_buffalo')
 
 AddEventHandler('policeg:s_classic', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
@@ -79,6 +81,34 @@ AddEventHandler('policeg:s_helico', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_helico', source)
+      TriggerClientEvent('worked', source)
+    else
+      TriggerClientEvent('notworked', source)
+    end
+  end)
+end)
+
+AddEventHandler('policeg:s_stanier', function()
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    local player = user.identifier
+    local namejob = nameJob(player)
+    -- NAME OF YOUR JOB
+    if namejob == "Police" then
+      TriggerClientEvent('policeg:c_stanier', source)
+      TriggerClientEvent('worked', source)
+    else
+      TriggerClientEvent('notworked', source)
+    end
+  end)
+end)
+
+AddEventHandler('policeg:s_buffalo', function()
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    local player = user.identifier
+    local namejob = nameJob(player)
+    -- NAME OF YOUR JOB
+    if namejob == "Police" then
+      TriggerClientEvent('policeg:c_buffalo', source)
       TriggerClientEvent('worked', source)
     else
       TriggerClientEvent('notworked', source)
