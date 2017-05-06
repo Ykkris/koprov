@@ -1,4 +1,4 @@
--- This is Koprov team proprety. --
+²²-- This is Koprov team proprety. --
 -- You can use it, share it and modify it BUT you're not allowed to make benefit with it. --
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
@@ -71,6 +71,8 @@ local vehshop = {
 			name = "Eteindre le moteur",
 			buttons = { 
 				{name = "TEST", description = ''},
+				{name = "TEST2", description = ''},
+				{name = "TEST3", description = ''},
 			}
 		},
 	}
@@ -359,6 +361,9 @@ function ButtonSelected(button)
 			end
 			engine = false
 			OpenCreator()
+		elseif btn == "TEST2" then Citizen.Trace("Select button 2") end
+			
+		elseif btn == "TEST3" then Citizen.Trace("Select button 3") end
 			
 			--ToggleEngineOff()
 		end
