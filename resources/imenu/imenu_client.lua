@@ -197,7 +197,7 @@ local backlock = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if (IsControlJustPressed(1,303)) then -- change to IsPlayerInCar
+		if (IsControlJustPressed(1,182)) then -- change to IsPlayerInCar
 			if vehshop.opened then
 				CloseCreator()
 			end
