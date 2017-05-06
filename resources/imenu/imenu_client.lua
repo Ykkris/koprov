@@ -203,7 +203,7 @@ Citizen.CreateThread(function()
 			end
 			local player = GetPlayerPed(-1)	
 			local playerVeh = nil
-			local playerVeh = GetVehiclePedIsIn(player, false)
+			playerVeh = GetVehiclePedIsIn(player, false)
 			Citizen.Trace("Avec false : "..playerVeh)
 			Citizen.Trace("Avec true : "..GetVehiclePedIsIn(player, true))
 			if playerVeh ~= 0 then
@@ -323,6 +323,8 @@ function ButtonSelected(button)
 		elseif btn == "110" then
 			OpenLimitator('110')
 		end
+	elseif this == "Eteindre le moteur" then
+		        ToggleEngineOff()
 
 	end
 end
@@ -358,6 +360,10 @@ end
 
 function stringstarts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
+end
+
+function ToggleEngineOff()
+	playerVeh.IsDriveable = false  --playerVeh
 end
 
 
