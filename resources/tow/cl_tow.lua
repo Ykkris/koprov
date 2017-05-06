@@ -18,6 +18,7 @@ AddEventHandler('pv:tow', function()
 
 		if currentlyTowedVehicle == nil then
 			if targetVehicle ~= 0 then
+					Citizen.Trace(tostring(targetVehicle))
 				if not IsPedInAnyVehicle(playerped, true) then
 					if vehicle ~= targetVehicle then
 						Citizen.Trace("On a vérifier que vehicle etait diff de target")
