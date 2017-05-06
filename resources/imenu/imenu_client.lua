@@ -209,16 +209,7 @@ end
 local backlock = false
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(0)
-		if (IsControlJustPressed(27 , 71)) then                                  ------ On enleve le limitateur
-			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 ) then
-				if not(engine) then
-					SetVehicleEngineOn(playerVeh, true, true)
-					SetVehiculeUndrivable(playerVeh, true)
-					engine = true
-				end
-			end
-		end                                                                       --------
+		Citizen.Wait(0)                                                                     --------
 				
 		if (IsControlJustPressed(1,182)) then -- change to IsPlayerInCar
 			if vehshop.opened then
@@ -233,6 +224,17 @@ Citizen.CreateThread(function()
 			OpenCreator()
 			end
 		end
+		
+		if (IsControlJustPressed(27 , 71)) then                                  ------ On enleve le limitateur
+			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 ) then
+				if not(engine) then
+					SetVehicleEngineOn(playerVeh, true, true)
+					SetVehiculeUndrivable(playerVeh, true)
+					engine = true
+				end
+			end
+		end  
+		
 		if vehshop.opened then
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu]
