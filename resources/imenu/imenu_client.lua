@@ -215,6 +215,7 @@ Citizen.CreateThread(function()
 				if not(engine) then
 					SetVehicleEngineOn(playerVeh, true, true)
 					SetVehiculeUndrivable(playerVeh, true)
+					engine = true
 				end
 			end
 		end                                                                       --------
