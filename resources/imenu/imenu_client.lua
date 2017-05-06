@@ -405,11 +405,12 @@ end
 
 function ToggleEngineOff()
 	if engine then
-		SetVehicleEngineOn(playerVeh, false, false)
-		SetVehiculeUndrivable(playerVeh, false)
+		local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+		SetVehicleEngineOn(test, false, false)
+		SetVehiculeUndrivable(test, false)
 	end
 	engine = false
-	OpenCreator()
+	OpenMenu("main")
 end
 
 function toFloat(number)
