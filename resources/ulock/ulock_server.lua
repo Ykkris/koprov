@@ -28,6 +28,6 @@ RegisterServerEvent('veh:checkveh')
 AddEventHandler('veh:checkveh', function(veh, plate)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
-  	TriggerClientEvent('veh:rcheckveh', source, veh, IsPlayerGotThisVeh(player, plate), true)
+  	TriggerClientEvent('veh:rcheckveh', source, veh, IsPlayerGotThisVeh(player, plate) )
   end)
 end)
