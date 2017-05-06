@@ -361,9 +361,9 @@ function ButtonSelected(button)
 			end
 			engine = false
 			OpenCreator()
-		elseif btn == "TEST2" then Citizen.Trace("Select button 2") end
+		elseif btn == "TEST2" then Citizen.Trace("Select button 2")
 			
-		elseif btn == "TEST3" then Citizen.Trace("Select button 3") end
+		elseif btn == "TEST3" then Citizen.Trace("Select button 3")
 			
 			--ToggleEngineOff()
 		end
