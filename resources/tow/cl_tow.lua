@@ -1,5 +1,5 @@
 local currentlyTowedVehicle = nil
-local radius = 2.0
+radius = 5.0
 
 RegisterNetEvent('pv:tow')
 AddEventHandler('pv:tow', function()
@@ -20,10 +20,13 @@ AddEventHandler('pv:tow', function()
 			if targetVehicle ~= 0 then
 				if not IsPedInAnyVehicle(playerped, true) then
 					if vehicle ~= targetVehicle then
+						Citizen.Trace("On a vérifier que vehicle etait diff de target")
 						local postargetveh = GetEntityCoords(targetVehicle ,1)
+						Citizen.Trace("On a pris les coords de targer ".. postargetveh)
 						local posveh = GetEntityCoords(vehicle, 1)
+						Citizen.Trace("On a prit les coords de vehicle " .. posveh)
 						local diffpos = GetDistanceBetweenCoords(postargetveh.x, postargetveh.y, postargetveh.z, posveh.x, posveh.y, posveh.z, true)
-						
+						Citizen.Trace("On a fait la diff ".. diffpos)
 						if diffpos <= radius then
 								
 							AttachEntityToEntity(targetVehicle, vehicle, 20, -0.5, -5.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
