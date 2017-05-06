@@ -203,7 +203,7 @@ Citizen.CreateThread(function()
 			end
 			local player = PlayerId()	
 			local playerVeh = nil
-			playerVeh = GetVehiclePedIsIn(player, true)
+			local playerVeh = GetVehiclePedIsIn(player, true)
 			if playerVeh ~= nil then
 					OpenCreator()
 			end
