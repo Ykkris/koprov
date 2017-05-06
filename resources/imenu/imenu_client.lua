@@ -1,7 +1,7 @@
 -- This is Koprov team proprety. --
 -- You can use it, share it and modify it BUT you're not allowed to make benefit with it. --
 -- Contact us for more informations at koprov.fr --
-RegisterNetEvent('veh:rcheckveh')
+-- RegisterNetEvent('veh:rcheckveh')
 local vehshop = {
 	opened = false,
 	title = "Gestion de la voiture",
@@ -201,26 +201,10 @@ Citizen.CreateThread(function()
 			if vehshop.opened then
 				CloseCreator()
 			end
-			local playerVehPlate = nil
-			local playerVeh = GetVehiclePedIsIn(player, true)
-			isyourcar = false
+				
+			local playerVeh = nil
+			playerVeh = GetVehiclePedIsIn(player, true)
 			if playerVeh ~= nil then
-			
-				local playerVehPlate = GetVehicleNumberPlateText(playerVeh)
-			else
-				SetNotificationTextEntry("STRING")
-				AddTextComponentString("Vous n'êtes pas dans un véhicule.")
-				DrawNotification(false, false)
-			end
-			isrunning = false
-			if playerVeh ~= nil then
-				TriggerServerEvent('veh:checkveh', playerVeh, playerVehPlate)
-			end
-			
-			while isrunning == false do
-			Wait(100)
-			end
-			if isyourcar then
 					OpenCreator()
 			end
 		end
@@ -375,7 +359,7 @@ function stringstarts(String,Start)
 end
 
 
-AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh, running)
-  isrunning = running
-  isyourcar = playerGotThisVeh
- end)
+--AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh, running)
+--  isrunning = running
+--  isyourcar = playerGotThisVeh
+-- end)
