@@ -201,7 +201,7 @@ Citizen.CreateThread(function()
 			if vehshop.opened then
 				CloseCreator()
 			end
-				
+			local player = PlayerId()	
 			local playerVeh = nil
 			playerVeh = GetVehiclePedIsIn(player, true)
 			if playerVeh ~= nil then
