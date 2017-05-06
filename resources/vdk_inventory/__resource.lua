@@ -3,8 +3,7 @@ server_scripts {
 	'server.lua'
 }
 client_script {
-	'vdkinv.lua',
-	'GUI.lua'
+	'vdkinv.lua'
 }
 
 export 'getQuantity'

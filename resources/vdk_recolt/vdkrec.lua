@@ -81,21 +81,22 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
         near = IsNear()
-        if (exports.vdk_inventory:notFull() == true) then
-            if (near == 'field') then
-                recolt('Récolte', '+1')
-            elseif (near == 'treatment' and exports.vdk_inventory:getQuantity(JOBS[jobId].raw_id) > 0) then
-                recolt('Traitement', '+1')
-            elseif (near == 'seller' and exports.vdk_inventory:getQuantity(JOBS[jobId].treat_id) > 0) then
-                recolt('Vente', '-1')
-            end
-        else
-            if (near == 'treatment' and exports.vdk_inventory:getQuantity(JOBS[jobId].raw_id) > 0) then
-                recolt('Traitement', '+1')
-            elseif (near == 'seller' and exports.vdk_inventory:getQuantity(JOBS[jobId].treat_id) > 0) then
-                recolt('Vente', '-1')
-            end
-        end
+        ---- Désactivé tant que c'est pas géré côté inventory 
+        -- if (exports.vdk_inventory:notFull() == true) then
+        --     if (near == 'field') then
+        --         recolt('Récolte', '+1')
+        --     elseif (near == 'treatment' and exports.vdk_inventory:getQuantity(JOBS[jobId].raw_id) > 0) then
+        --         recolt('Traitement', '+1')
+        --     elseif (near == 'seller' and exports.vdk_inventory:getQuantity(JOBS[jobId].treat_id) > 0) then
+        --         recolt('Vente', '-1')
+        --     end
+        -- else
+        --     if (near == 'treatment' and exports.vdk_inventory:getQuantity(JOBS[jobId].raw_id) > 0) then
+        --         recolt('Traitement', '+1')
+        --     elseif (near == 'seller' and exports.vdk_inventory:getQuantity(JOBS[jobId].treat_id) > 0) then
+        --         recolt('Vente', '-1')
+        --     end
+        -- end
     end
 end)
 
