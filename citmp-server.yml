@@ -38,6 +38,7 @@ AutoStartResources:
     - ulock
     - imenu
     - SelVeh
+    - thecops
 
 # do change
 RconPassword: koprobestv
