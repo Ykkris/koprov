@@ -338,8 +338,7 @@ function ButtonSelected(button)
 		elseif btn == "110" then
 			OpenLimitator('110')
 		end
-	elseif this == "Eteindre le moteur" then
-		        ToggleEngineOff()
+
 
 	end
 end
