@@ -204,8 +204,9 @@ Citizen.CreateThread(function()
 			local player = PlayerId()	
 			local playerVeh = nil
 			local playerVeh = GetVehiclePedIsIn(player, true)
+			Citizen.Trace(tostring(playerVeh))
 			if playerVeh ~= nil then
-					OpenCreator()
+			OpenCreator()
 			end
 		end
 		if vehshop.opened then
