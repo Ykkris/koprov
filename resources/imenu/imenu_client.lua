@@ -70,7 +70,7 @@ local vehshop = {
 			title = "Moteur", 
 			name = "Eteindre le moteur",
 			buttons = { 
-				{name = "Put this off", description = ''},
+				{name = "TEST", description = ''},
 			}
 		},
 	}
@@ -349,8 +349,18 @@ function ButtonSelected(button)
 			StopLimitator()
 		end
 	elseif this == "Eteindre le moteur" then
-		if btn == "Put this off" then
-			ToggleEngineOff()
+		if btn == "TEST" then
+			
+			Citizen.Trace("engine = " .. tosting(engine))
+			if engine then
+				Citizen.Trace("playerVeh : ".. tostring(playerVeh))
+				SetVehicleEngineOn(playerVeh, false, true)
+				SetVehiculeUndrivable(playerVeh, true)
+			end
+			engine = false
+			OpenCreator()
+			
+			--ToggleEngineOff()
 		end
 
 
