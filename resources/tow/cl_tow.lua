@@ -65,4 +65,3 @@ function ShowNotification(message)
 	AddTextComponentString(message)
 	DrawNotification(false, false)
 end	
-end
