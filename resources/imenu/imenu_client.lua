@@ -397,7 +397,7 @@ function OpenLimitator(acombienjetelimitemonbro)
 	okjetelimiteaca = tonumber(acombienjetelimitemonbro) / 3.6
 	SetEntityMaxSpeed(playerVeh, toFloat(okjetelimiteaca))
 	limitator = true
-	Citizen.Trace("PlayerVeh : ..tostring(playerVeh))
+	Citizen.Trace("PlayerVeh : "..tostring(playerVeh))
 	Citizen.Trace("limite = "..tostring(okjetelimiteaca))
 	Citizen.Trace("limitator = "..tostring(limitator))
 	vehshop.menu.from = 1
