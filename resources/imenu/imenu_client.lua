@@ -1,7 +1,7 @@
 -- This is Koprov team proprety. --
 -- You can use it, share it and modify it BUT you're not allowed to make benefit with it. --
 -- Contact us for more informations at koprov.fr --
-
+RegisterNetEvent('veh:rcheckveh')
 local vehshop = {
 	opened = false,
 	title = "Gestion de la voiture",
@@ -373,7 +373,7 @@ function stringstarts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
 
-RegisterNetEvent('veh:rcheckveh')
+
 AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh)
   isyourcar = playerGotThisVeh
  end)
