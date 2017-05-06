@@ -1,4 +1,4 @@
--- This is Koprov team proprety. --
+²²-- This is Koprov team proprety. --
 -- You can use it, share it and modify it BUT you're not allowed to make benefit with it. --
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
@@ -218,7 +218,7 @@ Citizen.CreateThread(function()
 			end
 			local player = GetPlayerPed(-1)	
 			local playerVeh = 0
-			playerVeh = GetVehiclePedIsIn(player, false)
+			local playerVeh = GetVehiclePedIsIn(player, false)
 			Citizen.Trace("Avec false : "..playerVeh)
 			Citizen.Trace("Avec true : "..GetVehiclePedIsIn(player, true))
 			if playerVeh ~= 0 then
