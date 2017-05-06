@@ -373,7 +373,7 @@ function stringstarts(String,Start)
 end
 
 function ToggleEngineOff()
-	Citizen.Trace(tostring(playerveh))
+	Citizen.Trace(tostring(playerVeh))
 	playerVeh.IsEngineRunning = false  --playerVeh
 end
 
