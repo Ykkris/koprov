@@ -3,10 +3,8 @@
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
 
-function ToggleEngineOff()
-	Citizen.Trace(tostring(playerVeh))
-	playerVeh.IsEngineRunning = false  --playerVeh
-end
+limitator = false
+engine = true
 
 local index = {
 	ad = 1,
@@ -212,6 +210,16 @@ local backlock = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
+		if (IsControlJustPressed(27 , 71)) then                                  ------ On enleve le limitateur
+			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 then
+				if limitator then
+					local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+					Citizen.Trace("Max acc de ta caisse = "..tostring(test))
+					SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
+				end
+			end
+		end                                                                       --------
+				
 		if (IsControlJustPressed(1,182)) then -- change to IsPlayerInCar
 			if vehshop.opened then
 				CloseCreator()
@@ -312,17 +320,17 @@ function ButtonSelected(button)
 		end
 	elseif this == "Gérer les portes" then
 		if btn == "Coffre" then
-			OpenDoor('Coffre')
+			OpenCloseDoor('Coffre')
 		elseif btn == "Capot" then
-			OpenDoor('Capot')
+			OpenCloseDoor('Capot')
 		elseif btn == "Avant gauche" then
-			OpenDoor('Avant gauche')
+			OpenCloseDoor('Avant gauche')
 		elseif btn == "Avant Droite" then
-			OpenDoor('Avant Droite')
+			OpenCloseDoor('Avant Droite')
 		elseif btn == "Arrière gauche" then
-			OpenDoor("Arrière gauche")
+			OpenCloseDoor("Arrière gauche")
 		elseif btn == "Arrière droite" then
-			OpenDoor('Arrière droite')
+			OpenCloseDoor('Arrière droite')
 		end
 	elseif this == "Limitateur de vitesse" then
 		if btn == "10" then
@@ -377,17 +385,39 @@ function stringstarts(String,Start)
 end
 
 
-function OpenDoor(dumbledor)
+function OpenCloseDoor(dumbledor)
 	 
 	
-	
+	--GET_VEHICLE_DOOR_ANGLE_RATIO
 	--SET_VEHICLE_DOOR_OPEN	
 end
 
-function Limitator(acombienjetelimitemonbro)
-	okjetelimiteaca = tonumber(acombienjetelimitemonbro)
-	playerVeh.MaxSpeed = okjetelimiteaca
+function OpenLimitator(acombienjetelimitemonbro)
+	okjetelimiteaca = tonumber(acombienjetelimitemonbro) / 3.6
+	SetEntityMaxSpeed(playerVeh, toFloat(okjetelimiteaca))
+	limitator = true
+	Citizen.Trace("PlayerVeh : ..tostring(playerVeh))
+	Citizen.Trace("limite = "..tostring(okjetelimiteaca))
+	Citizen.Trace("limitator = "..tostring(limitator))
+	vehshop.menu.from = 1
+	vehshop.menu.to = 10
+	vehshop.selectedbutton = 0
+	vehshop.currentmenu = "main"
 	  
+end
+
+function ToggleEngineOff()
+	engine = not(engine)
+	SetVehicleEngineOn(playerVeh, engine, engine)
+	SetVehiculeUndrivable(playerVeh, engine)
+	vehshop.menu.from = 1
+	vehshop.menu.to = 10
+	vehshop.selectedbutton = 0
+	vehshop.currentmenu = "main"
+end
+
+function toFloat(number)
+	return number+0.0
 end
 
 
