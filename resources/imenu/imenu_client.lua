@@ -404,7 +404,7 @@ function OpenLimitator(acombienjetelimitemonbro)
 end
 
 function ToggleEngineOff()
-	if engine = true then
+	if engine then
 		SetVehicleEngineOn(playerVeh, false, false)
 		SetVehiculeUndrivable(playerVeh, false)
 	end
