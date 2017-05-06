@@ -376,7 +376,7 @@ function ToggleEngineOff()
 	SetVehicleEngineOn(playerVeh, false, instantly)
 end
 
-function ToggleEngineOff()
+function ToggleEngineOffn()
 	OpenDoor(dumbledor)
 	 
 	
