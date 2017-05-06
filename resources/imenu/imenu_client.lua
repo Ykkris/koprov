@@ -308,7 +308,7 @@ function ButtonSelected(button)
 		elseif btn == "Limitateur de vitesse" then
 			OpenMenu('limitateur')
 		elseif btn == "Eteindre le moteur" then
-			OpenMenu('moteur')
+			ToggleEngineOff()
 		end
 	elseif this == "Gérer les portes" then
 		if btn == "Coffre" then
