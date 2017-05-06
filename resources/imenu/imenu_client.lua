@@ -225,8 +225,8 @@ Citizen.CreateThread(function()
 				CloseCreator()
 			end
 			local player = GetPlayerPed(-1)	
-			local playerVeh = 0
-			local playerVeh = GetVehiclePedIsIn(player, false)
+			playerVeh = 0
+			playerVeh = GetVehiclePedIsIn(player, false)
 			Citizen.Trace("Avec false : "..playerVeh)
 			Citizen.Trace("Avec true : "..GetVehiclePedIsIn(player, true))
 			if playerVeh ~= 0 then
@@ -316,7 +316,7 @@ function ButtonSelected(button)
 		elseif btn == "Limitateur de vitesse" then
 			OpenMenu('limitateur')
 		elseif btn == "Eteindre le moteur" then
-			ToggleEngineOff()
+			OpenMenu("Eteindre le moteur")
 		end
 	elseif this == "Gérer les portes" then
 		if btn == "Coffre" then
@@ -346,6 +346,10 @@ function ButtonSelected(button)
 		elseif btn == "Enlever la limite" then
 			StopLimitator()
 		end
+	elseif this == "Eteindre le moteur" then
+		if btn == "Put this off" then
+			ToggleEngineOff()
+		end
 
 
 	end
@@ -357,7 +361,10 @@ function OpenMenu(menu)
 		vehshop.lastmenu = "main"
 	elseif menu == "limitateur"  then
 		vehshop.lastmenu = "main"
+	elseif menu == "moteur" then
+		vehshop.lastmenu = "main"
 	end
+	
 	vehshop.menu.from = 1
 	vehshop.menu.to = 10
 	vehshop.selectedbutton = 0
@@ -405,12 +412,11 @@ end
 
 function ToggleEngineOff()
 	if engine then
-		local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-		SetVehicleEngineOn(test, false, false)
-		SetVehiculeUndrivable(test, false)
+		SetVehicleEngineOn(playerVeh, false, true)
+		SetVehiculeUndrivable(playerVeh, false)
 	end
 	engine = false
-	OpenMenu("main")
+	OpenCreator()
 end
 
 function toFloat(number)
