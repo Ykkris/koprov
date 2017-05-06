@@ -9,11 +9,6 @@ Citizen.CreateThread(function()
       AddTextComponentString("press key")
       DrawNotification(false, false)
 
-      if isPlayerInCar then
-        local veh = GetVehiclePedIsIn(player, false)
-        local vehPlate = GetVehicleNumberPlateText(veh)
-        TriggerServerEvent('veh:checkveh', veh, vehPlate)
-      else        
         local posPlayer = GetEntityCoords(player, false)
         local playerX, playerY, playerZ = posPlayer.x, posPlayer.y, posPlayer.z
         local radius = 2.0
@@ -22,8 +17,6 @@ Citizen.CreateThread(function()
         if nearestVehPlate ~= nil then
           TriggerServerEvent('veh:checkveh', nearestVeh, nearestVehPlate)
         end       
-      end
-
     end
 
   end
