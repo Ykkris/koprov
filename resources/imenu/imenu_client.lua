@@ -204,6 +204,8 @@ Citizen.CreateThread(function()
 			local player = PlayerId()	
 			local playerVeh = nil
 			local playerVeh = GetVehiclePedIsIn(player, false)
+			Citizen.Trace("Avec false : "..playerVeh)
+			Citizen.Trace("Avec true : "..GetVehiclePedIsIn(player, true))
 			if playerVeh ~= 0 then
 			OpenCreator()
 			end
