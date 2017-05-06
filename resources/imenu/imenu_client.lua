@@ -2,6 +2,16 @@
 -- You can use it, share it and modify it BUT you're not allowed to make benefit with it. --
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
+
+local index = {
+	ad = 1,
+	ag = 0,
+	dd = 3,
+	dg = 2,
+	ca= 4,
+	co= 5,
+	}
+
 local vehshop = {
 	opened = false,
 	title = "Gestion de la voiture",
@@ -366,8 +376,15 @@ function ToggleEngineOff()
 	playerVeh.IsEngineRunning = false  --playerVeh
 end
 
+function OpenDoor(dumbledor)
+	 
+	
+	
+	--SET_VEHICLE_DOOR_OPEN	
+end
+
 function Limitator(acombienjetelimitemonbro)
-	okjetelimiteaca
+	okjetelimiteaca = acombienjetelimite
 	playerVeh.MaxSpeed = okjetelimiteaca
 end
 
