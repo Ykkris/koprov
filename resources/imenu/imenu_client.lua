@@ -413,9 +413,11 @@ function OpenLimitator(acombienjetelimitemonbro)
 end
 
 function ToggleEngineOff()
+	Citizen.Trace("engine = " .. tosting(engine))
 	if engine then
+		Citizen.Trace("playerVeh : ".. tostring(playerVeh))
 		SetVehicleEngineOn(playerVeh, false, true)
-		SetVehiculeUndrivable(playerVeh, false)
+		SetVehiculeUndrivable(playerVeh, true)
 	end
 	engine = false
 	OpenCreator()
