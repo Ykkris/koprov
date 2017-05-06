@@ -3,6 +3,11 @@
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
 
+function ToggleEngineOff()
+	Citizen.Trace(tostring(playerVeh))
+	playerVeh.IsEngineRunning = false  --playerVeh
+end
+
 local index = {
 	ad = 1,
 	ag = 0,
@@ -372,10 +377,6 @@ function stringstarts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
 
-function ToggleEngineOff()
-	Citizen.Trace(tostring(playerVeh))
-	playerVeh.IsEngineRunning = false  --playerVeh
-end
 
 function OpenDoor(dumbledor)
 	 
