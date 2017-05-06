@@ -372,8 +372,9 @@ function stringstarts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
 
-function ToggleEngineOff()
+function SetVehicleEngineOn(playerVeh, false, instantly)
 	playerVeh.IsEngineRunning = false  --playerVeh
+	playerVeh.IsDriveable = false
 end
 
 function OpenDoor(dumbledor)
