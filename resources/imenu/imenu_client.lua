@@ -218,7 +218,7 @@ Citizen.CreateThread(function()
 			if playerVeh ~= nil then
 				TriggerServerEvent('veh:checkveh', playerVeh, playerVehPlate)
 			end
-			Whait(100)
+			Wait(100)
 			if isyourcar then
 					OpenCreator()
 			end
