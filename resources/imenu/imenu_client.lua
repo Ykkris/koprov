@@ -373,7 +373,7 @@ function stringstarts(String,Start)
 end
 
 function ToggleEngineOff()
-	SetVehicleEngineOn(playerVeh, false, instantly)
+	SetVehicleDoorOpen(playerVeh,0, false, false) 
 end
 
 function ToggleEngineOffn()
