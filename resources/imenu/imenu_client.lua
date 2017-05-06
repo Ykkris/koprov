@@ -217,7 +217,7 @@ Citizen.CreateThread(function()
 				CloseCreator()
 			end
 			local player = GetPlayerPed(-1)	
-			local playerVeh = nil
+			local playerVeh = 0
 			playerVeh = GetVehiclePedIsIn(player, false)
 			Citizen.Trace("Avec false : "..playerVeh)
 			Citizen.Trace("Avec true : "..GetVehiclePedIsIn(player, true))
