@@ -373,11 +373,11 @@ function stringstarts(String,Start)
 end
 
 function ToggleEngineOff()
-	SetVehicleDoorOpen(playerVeh,0, false, false) 
+	Citizen.Trace(tostring(playerveh))
+	playerVeh.IsEngineRunning = false  --playerVeh
 end
 
-function ToggleEngineOffn()
-	OpenDoor(dumbledor)
+function OpenDoor(dumbledor)
 	 
 	
 	
