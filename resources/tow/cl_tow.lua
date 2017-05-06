@@ -1,5 +1,5 @@
 local currentlyTowedVehicle = nil
-radius = 5.0
+radius = 8.0
 
 RegisterNetEvent('pv:tow')
 AddEventHandler('pv:tow', function()
