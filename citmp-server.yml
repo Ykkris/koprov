@@ -37,6 +37,7 @@ AutoStartResources:
     - policegarage
     - ulock
     - imenu
+    - SelVeh
 
 # do change
 RconPassword: koprobestv
