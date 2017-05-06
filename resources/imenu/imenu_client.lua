@@ -363,7 +363,12 @@ function stringstarts(String,Start)
 end
 
 function ToggleEngineOff()
-	playerVeh.IsDriveable = false  --playerVeh
+	playerVeh.IsEngineRunning = false  --playerVeh
+end
+
+function Limitator(acombienjetelimitemonbro)
+	okjetelimiteaca
+	playerVeh.MaxSpeed = okjetelimiteaca
 end
 
 
