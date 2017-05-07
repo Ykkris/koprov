@@ -455,19 +455,19 @@ function OpenCloseDoor(dumbledoor)
 
 	
 
-	local isdoordamaged = IsVehicleDoorDamaged(playerVeh, dumbledor)
+	local isdoordamaged = IsVehicleDoorDamaged(playerVeh, dumbledoor)
 	
 	if isdoordamaged then ShowNotification("La porte est cassé.")
 	end
 	
-	local angle = GetVehicleDoorAngleRatio(playerVeh, dumbledor)
+	local angle = GetVehicleDoorAngleRatio(playerVeh, dumbledoor)
 	
 	if angle == 0 then
 		ShowNotification("La porte est ouverte.")
-		SetVehicleDoorOpen(playerVeh, dumbledor, false, false)
+		SetVehicleDoorOpen(playerVeh, dumbledoor, false, false)
 	else
 		ShowNotification("La porte est fermé.")
-		SetVehicleDoorShut(playerVeh, dumbledor, false)
+		SetVehicleDoorShut(playerVeh, dumbledoor, false)
 	
 	--GET_VEHICLE_DOOR_ANGLE_RATIO
 	--SET_VEHICLE_DOOR_OPEN	
