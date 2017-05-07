@@ -85,8 +85,8 @@ Citizen.CreateThread(function()
   --    Citizen.Trace(tostring(IsNearJob))
   --  end
     if (IsNearJobs() == false) and (Menu.hidden == false) then
+          menuJobs()
           Menu.hidden = not Menu.hidden
-          ClearMenu()
     end
     Menu.renderGUI()
   end
