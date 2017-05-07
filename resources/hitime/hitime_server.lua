@@ -7,9 +7,11 @@ actualplayer = 0
 RegisterServerEvent('Join')
 AddEventHandler('Join', function()
 	actualplayer = source
+	RconPrint("source = ".. tostring(source))
 	local players = GetPlayers()
 	if #players >= 2 then
 		TriggerClientEvent("client.time", players[0])
+		RconPrint("on prend le time de : " .. tostring(players[0]))
 	end
 
 
@@ -19,6 +21,8 @@ end)
 
 RegisterServerEvent('return.client.time')
 AddEventHandler('return.client.time', function(hours, minuts, seconds)
+		
+	RconPrint("L heure du return est "..tostring(hours).." : "..tostring(minuts).." : "..tostring(seconds))
 
 	TriggerClientEvent("update.client.time", actualplayer, hours, minuts, seconds)
 	
