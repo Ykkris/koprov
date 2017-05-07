@@ -32,7 +32,7 @@ AddEventHandler('test:SelVeh', function(plate)
        price = result[1].vehicle_price
        price = price / 2
        RconPrint(tostring(price))
-       deposit(player, price)
+       deposit(source, price)
        Rconprint(tostring(player))
 
     end
@@ -42,9 +42,12 @@ AddEventHandler('test:SelVeh', function(plate)
   end)
 end)
 
-function deposit(player, amount)
-  user:addmoney(tonumber(amout))
-  MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'", {['@value'] = amount, ['@identifier'] = player})
+function deposit(source, amount)
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+   user:addmoney(tonumber(amout))
+  end)
+  
+-- MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'", {['@value'] = amount, ['@identifier'] = player})
 end
 
 AddEventHandler('test:CheckGarageForVeh', function()
