@@ -23,9 +23,8 @@ end)
 
 AddEventHandler('test:SelVeh', function(plate)
   TriggerEvent('es:getPlayerFromId', source, function(user)
-    local player = user.identifier
-    local plate = plate
-       RconPrint(tostring(plate))
+         player = user.identifier
+         RconPrint(tostring(plate))
 
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_plate ='@plate'",{['@username'] = player, ['@plate'] = plate})
     local result = MySQL:getResults(executed_query, {'vehicle_price'}, "identifier")
