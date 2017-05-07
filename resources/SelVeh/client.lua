@@ -6,11 +6,6 @@ VEHICLES = {}
 local vente_location = {-45.228, -1083.123, 25.816}
 local currentlocation = nil
 
-function RentrerVehicule()
-	TriggerServerEvent('test:CheckForVeh',source)
-CloseMenu()
-
-
 Citizen.CreateThread(function()
 	local loc = vente_location
 	pos = vente_location
