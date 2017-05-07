@@ -1,4 +1,6 @@
 RegisterNetEvent("test:SelVehicle")
+RegisterNetEvent("test:getVehicles")
+
 
 VEHICLES = {}
 local vente_location = {-45.228, -1083.123, 25.816}
@@ -27,7 +29,7 @@ Citizen.CreateThread(function()
 		if GetDistanceBetweenCoords(vente_location[1],vente_location[2],vente_location[3],GetEntityCoords(LocalPed())) < 5 and IsPedInAnyVehicle(LocalPed(), true) == false then
 			drawTxt('~g~E~s~ pour vendre le véhicule à 50% du prix d\'achat',0,1,0.5,0.8,0.6,255,255,255,255)		
 			if IsControlJustPressed(1, 86) then				
-				TriggerServerEvent('garages:CheckForSelVeh',source)
+				TriggerServerEvent('test:CheckForSelVeh',source)
 			end
 		end
 	end
@@ -46,10 +48,15 @@ AddEventHandler('test:SelVehicle', function(vehicle, plate)
 				drawNotification("Ce n'est pas ton véhicule")
 			else
 				Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
-				TriggerServerEvent('garages:SelVeh', plate)
-				TriggerServerEvent("garages:CheckGarageForVeh")
+				TriggerServerEvent('test:SelVeh', plate)
+				TriggerServerEvent("test:CheckGarageForVeh")
 			end
 		else
 			drawNotification("Aucun véhicule présent")
 		end   
+end)
+			
+AddEventHandler("test:getVehicles", function(THEVEHICLES)
+    VEHICLES = {}
+    VEHICLES = THEVEHICLES
 end)
