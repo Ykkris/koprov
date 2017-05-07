@@ -31,7 +31,7 @@ AddEventHandler('test:SelVeh', function(plate)
     local result = MySQL:getResults(executed_query, {'vehicle_price'}, "identifier")
     if(result)then
        price = result[1].vehicle_price
-       local price = price / 2
+       price = price / 2
        RconPrint(tostring(price))
        deposit(player, price)
 
@@ -43,7 +43,7 @@ AddEventHandler('test:SelVeh', function(plate)
 end)
 
 function deposit(player, amount)
-  user:addmoney(tonumber(price))
+  user:addmoney(tonumber(amout))
   MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'", {['@value'] = amount, ['@identifier'] = player})
 end
 
