@@ -44,7 +44,7 @@ end)
 
 function deposit(source, amount)
   TriggerEvent('es:getPlayerFromId', source, function(user)
-   user:addmoney(tonumber(amout))
+   user:addMoney(tonumber(amout))
   end)
   
 -- MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'", {['@value'] = amount, ['@identifier'] = player})
