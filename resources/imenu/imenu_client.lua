@@ -321,7 +321,7 @@ elseif  btn == "Capot" then dtd(btn)
 
 elseif  btn == "Avant gauche" then dtd(btn)
 
-elseif  btn == "Avant Droite" then dtd(btn)
+elseif  btn == "Avant droite" then dtd(btn)
 
 elseif  btn == "Arrière gauche" then dtd(btn)
 
