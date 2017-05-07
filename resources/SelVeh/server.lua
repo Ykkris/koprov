@@ -4,6 +4,7 @@ MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 RegisterServerEvent('test:CheckForVeh')
 RegisterServerEvent('test:CheckForSelVeh')
 RegisterServerEvent('test:SelVeh')
+RegisterServerEvent('test:CheckGarageForVeh')
 
 local vehicles = {}
 
@@ -46,3 +47,21 @@ function deposit(player, amount)
   local new_balance = bankbalance + amount
   MySQL:executeQuery("UPDATE users SET `bankbalance`='@value' WHERE identifier = '@identifier'", {['@value'] = new_balance, ['@identifier'] = player})
 end
+
+AddEventHandler('test:CheckGarageForVeh', function()
+  vehicles = {}
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    local player = user.identifier  
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
+    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state'}, "id")
+    if (result) then
+        for _, v in ipairs(result) do
+                --print(v.vehicle_model)
+                --print(v.vehicle_plate)
+                --print(v.vehicle_state)
+                --print(v.id)
+            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_state"] = v.vehicle_state}
+            table.insert(vehicles, tonumber(v.id), t)
+        end
+    end
+  end) 
