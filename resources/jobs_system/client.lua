@@ -80,13 +80,14 @@ Citizen.CreateThread(function()
       Menu.hidden = not Menu.hidden 
     end
   end
-  --  if (IsControlJustPressed(1,Keys["U"]) then
-  --    Citizen.Trace(tostring(Menu.hidden))
-  --    Citizen.Trace(tostring(IsNearJob))
-  --  end
+    if (IsControlJustPressed(1,Keys["U"]) then
+      Citizen.Trace(tostring(Menu.hidden))
+      Citizen.Trace(tostring(IsNearJob))
+    end
     if (IsNearJobs() == false) and (Menu.hidden == false) then
-          menuJobs()
+          ClearMenu()
           Menu.hidden = not Menu.hidden
+          menuJobs()
     end
     Menu.renderGUI()
   end
