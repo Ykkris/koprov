@@ -51,19 +51,19 @@ AddEventHandler('BuyForVeh', function(name, model, plate, primarycolor, secondar
 end)
 
 -- Spawn the personal vehicle
-TriggerEvent('es:addCommand', 'pv', function(source, user)
-  TriggerEvent('es:getPlayerFromId', source, function(user)
-    local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
-  	local result = MySQL:getResults(executed_query, {'vehicle_model'})
+-- TriggerEvent('es:addCommand', 'pv', function(source, user)
+--   TriggerEvent('es:getPlayerFromId', source, function(user)
+--     local player = user.identifier
+--     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
+--   	local result = MySQL:getResults(executed_query, {'vehicle_model'})
 
-    if(result)then
-		for k,v in ipairs(result)do
-      print(v.vehicle_model)
-      vehicle = v.vehicle_model
-      end
-    end
+--     if(result)then
+-- 		for k,v in ipairs(result)do
+--       print(v.vehicle_model)
+--       vehicle = v.vehicle_model
+--       end
+--     end
 
-  	TriggerClientEvent('vehshop:spawnVehicle', source, vehicle)
-  end)
-end)
+--   	TriggerClientEvent('vehshop:spawnVehicle', source, vehicle)
+--   end)
+-- end)

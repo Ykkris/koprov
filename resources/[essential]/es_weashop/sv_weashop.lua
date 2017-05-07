@@ -2,7 +2,7 @@
 require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
-local max_number_weapons = 800 --maximum number of weapons that the player can buy. Weapons given at spawn doesn't count.
+local max_number_weapons = 6 --maximum number of weapons that the player can buy. Weapons given at spawn doesn't count.
 local cost_ratio = 100 --Ratio for withdrawing the weapons. This is price/cost_ratio = cost.
 
 RegisterServerEvent('CheckMoneyForWea')

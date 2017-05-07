@@ -7,23 +7,23 @@ RegisterServerEvent("item:setItem")
 RegisterServerEvent("item:reset")
 RegisterServerEvent("item:sell")
 
-local items = {}
-
-
 AddEventHandler("item:getItems", function()
+    print("item:getItems")
     items = {}
     local player = getPlayerID(source)
     local executed_query = MySQL:executeQuery("SELECT * FROM user_inventory JOIN items ON `user_inventory`.`item_id` = `items`.`id` WHERE user_id = '@username'", { ['@username'] = player })
     local result = MySQL:getResults(executed_query, { 'quantity', 'libelle', 'item_id' }, "item_id")
+
     if (result) then
         for _, v in ipairs(result) do
-            t = { ["quantity"] = v.quantity, ["libelle"] = v.libelle }
-            table.insert(items, tonumber(v.item_id), t)
+            table.insert(items, { name = v.libelle, quantity = v.quantity, id = v.item_id })
         end
     end
-    TriggerClientEvent("gui:getItems", source, items)
+
+    TriggerClientEvent("item:displayInventory", source, items)
 end)
 
+--------------J'ai rien touché là dedans---------------
 AddEventHandler("item:setItem", function(item, quantity)
     local player = getPlayerID(source)
     MySQL:executeQuery("INSERT INTO user_inventory (`user_id`, `item_id`, `quantity`) VALUES ('@player', @item, @qty)",
@@ -47,6 +47,7 @@ AddEventHandler("item:sell", function(id, qty, price)
         user:addMoney(tonumber(price))
     end)
 end)
+--------------------------------------------------------
 
 -- get's the player id without having to use bugged essentials
 function getPlayerID(source)

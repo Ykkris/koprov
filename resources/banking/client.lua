@@ -79,9 +79,6 @@ local atms = {
   {name="ATM", id=277, x=289.012, y=-1256.545, z=29.440},
   {name="ATM", id=277, x=295.839, y=-895.640, z=29.217},
   {name="ATM", id=277, x=1686.753, y=4815.809, z=42.008},
-  {name="ATM", id=277, x=-302.408, y=-829.945, z=32.417},
-  {name="ATM", id=277, x=5.134, y=-919.949, z=29.557},
-
 }
 
 -- Banks
@@ -139,27 +136,40 @@ function closeGui()
   atmOpen = false
 end
 
+function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
+	SetTextFont(font)
+	SetTextProportional(0)
+	SetTextScale(scale, scale)
+	SetTextColour(r, g, b, a)
+	SetTextDropShadow(0, 0, 0, 0,255)
+	SetTextEdge(1, 0, 0, 0, 255)
+	SetTextDropShadow()
+	SetTextOutline()
+	SetTextCentre(centre)
+	SetTextEntry("STRING")
+	AddTextComponentString(text)
+	DrawText(x , y)
+end
+
 -- If GUI setting turned on, listen for INPUT_PICKUP keypress
 if enableBankingGui then
   Citizen.CreateThread(function()
     while true do
       Citizen.Wait(0)
-      if(IsNearBank() or IsNearATM()) then
+      if((IsNearBank() or IsNearATM()) and (IsPedInAnyVehicle(GetPlayerPed(-1), true) == false)) then
         if (atBank == false) then
-          TriggerEvent('chatMessage', "", {0, 255, 0}, "^0Press 'Context Action Key' (Default: E) to activate");
+          --TriggerEvent('chatMessage', "", {0, 255, 0}, "^0Press 'Context Action Key' (Default: E) to activate");
+		  
         end
+		drawTxt("Appuyez sur ~g~E~s~ pour acceder à l'ATM",0,1,0.5,0.8,0.6,255,255,255,255)
         atBank = true
         if IsControlJustPressed(1, 38)  then -- IF INPUT_PICKUP Is pressed
-          if (IsInVehicle()) then
-            TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You cannot use the bank in a vehicle!");
+          if bankOpen then
+            closeGui()
+            bankOpen = false
           else
-            if bankOpen then
-              closeGui()
-              bankOpen = false
-            else
-              openGui()
-              bankOpen = true
-            end
+            openGui()
+            bankOpen = true
           end
       	end
       else
@@ -178,15 +188,12 @@ end
 Citizen.CreateThread(function()
   while true do
     if bankOpen or atmOpen then
-      local ply = GetPlayerPed(-1)
       local active = true
       DisableControlAction(0, 1, active) -- LookLeftRight
       DisableControlAction(0, 2, active) -- LookUpDown
-      DisableControlAction(0, 24, active) -- Attack
-      DisablePlayerFiring(ply, true) -- Disable weapon firing
       DisableControlAction(0, 142, active) -- MeleeAttackAlternate
       DisableControlAction(0, 106, active) -- VehicleMouseControlOverride
-      if IsDisabledControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 142) then -- MeleeAttackAlternate
+      if IsDisabledControlJustReleased(0, 142) then -- MeleeAttackAlternate
         SendNUIMessage({type = "click"})
       end
     end
@@ -253,16 +260,6 @@ function IsNearATM()
   end
 end
 
--- Check if player is in a vehicle
-function IsInVehicle()
-  local ply = GetPlayerPed(-1)
-  if IsPedSittingInAnyVehicle(ply) then
-    return true
-  else
-    return false
-  end
-end
-
 -- Check if player is near a bank
 function IsNearBank()
   local ply = GetPlayerPed(-1)
@@ -291,11 +288,7 @@ end
 RegisterNetEvent('bank:deposit')
 AddEventHandler('bank:deposit', function(amount)
   if(IsNearBank() == true or depositAtATM == true and IsNearATM() == true or depositAnywhere == true ) then
-    if (IsInVehicle()) then
-      TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You cannot use the atm in a vehicle!");
-    else
-      TriggerServerEvent("bank:deposit", tonumber(amount))
-    end
+    TriggerServerEvent("bank:deposit", tonumber(amount))
   else
     TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You can only deposit at a bank!");
   end
@@ -305,11 +298,7 @@ end)
 RegisterNetEvent('bank:withdraw')
 AddEventHandler('bank:withdraw', function(amount)
   if(IsNearATM() == true or IsNearBank() == true or withdrawAnywhere == true) then
-    if (IsInVehicle()) then
-      TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You cannot use the bank in a vehicle!");
-    else
-      TriggerServerEvent("bank:withdraw", tonumber(amount))
-    end
+    TriggerServerEvent("bank:withdraw", tonumber(amount))
   else
     TriggerEvent('chatMessage', "", {255, 0, 0}, "^1This is not a bank or an ATM!");
   end

@@ -1,7 +1,7 @@
 -- CONFIG --
 
 -- The watermark text --
-servername = "Kopro V"
+servername = "KOPROV.FR"
 
 -- The x and y offset (starting at the top left corner) --
 -- Default: 0.005, 0.001
@@ -13,7 +13,7 @@ rgb = {r = 231, g = 76, b = 60}
 
 -- Text transparency --
 -- Default: 255
-alpha = 150
+alpha = 75
 
 -- Text scale
 -- Default: 0.4
@@ -23,7 +23,7 @@ scale = 0.8
 -- Text Font --
 -- 0 - 5 possible
 -- Default: 1
-font = 1
+font = 4
 
 -- Rainbow Text --
 -- false: Turn off

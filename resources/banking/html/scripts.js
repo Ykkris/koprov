@@ -63,9 +63,9 @@ $(document).ready(function(){
   function openDeposit() {
     $(".deposit-container").css("display", "block");
   }
-  function openTransfer() {
-    $(".transfer-container").css("display", "block");
-  }
+  // function openTransfer() {
+  //   $(".transfer-container").css("display", "block");
+  // }
   function openContainer() {
     $(".bank-container").css("display", "block");
     $("#cursor").css("display", "block");
@@ -122,10 +122,10 @@ $(document).ready(function(){
       closeAll();
       openDeposit();
     }
-    if(item.openSection == "transfer") {
-      closeAll();
-      openTransfer();
-    }
+    // if(item.openSection == "transfer") {
+    //   closeAll();
+    //   openTransfer();
+    // }
     if (item.type == "click") {
         triggerClick(cursorX - 1, cursorY - 1);
     }
@@ -148,9 +148,9 @@ $(document).ready(function(){
   $(".btnDeposit").click(function(){
       $.post('http://banking/deposit', JSON.stringify({}));
   });
-  $(".btnTransfer").click(function(){
-      $.post('http://banking/transfer', JSON.stringify({}));
-  });
+  // $(".btnTransfer").click(function(){
+  //     $.post('http://banking/transfer', JSON.stringify({}));
+  // });
   $(".btnBalance").click(function(){
       $.post('http://banking/balance', JSON.stringify({}));
   });
@@ -192,21 +192,21 @@ $(document).ready(function(){
       }, 2000)
       $("#deposit-form #amount").val('')
   });
-  $("#transfer-form").submit(function(e) {
-      e.preventDefault();
-      $.post('http://banking/transferSubmit', JSON.stringify({
-          amount: $("#transfer-form #amount").val(),
-          toPlayer: $("#transfer-form #toPlayer").val()
-      }));
-      $("#transfer-form #amount").prop('disabled', true)
-      $("#transfer-form #toPlayer").prop('disabled', true)
-      $("#transfer-form #submit").css('display', 'none')
-      setTimeout(function(){
-        $("#transfer-form #amount").prop('disabled', false)
-        $("#transfer-form #submit").css('display', 'block')
-        $("#transfer-form #toPlayer").prop('disabled', false)
-      }, 2000)
-      $("#transfer-form #amount").val('')
-      $("#transfer-form #toPlayer").val('')
-  });
+  // $("#transfer-form").submit(function(e) {
+  //     e.preventDefault();
+  //     $.post('http://banking/transferSubmit', JSON.stringify({
+  //         amount: $("#transfer-form #amount").val(),
+  //         toPlayer: $("#transfer-form #toPlayer").val()
+  //     }));
+  //     $("#transfer-form #amount").prop('disabled', true)
+  //     $("#transfer-form #toPlayer").prop('disabled', true)
+  //     $("#transfer-form #submit").css('display', 'none')
+  //     setTimeout(function(){
+  //       $("#transfer-form #amount").prop('disabled', false)
+  //       $("#transfer-form #submit").css('display', 'block')
+  //       $("#transfer-form #toPlayer").prop('disabled', false)
+  //     }, 2000)
+  //     $("#transfer-form #amount").val('')
+  //     $("#transfer-form #toPlayer").val('')
+  // });
 });
