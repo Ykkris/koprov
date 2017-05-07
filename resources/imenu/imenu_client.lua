@@ -315,17 +315,17 @@ function ButtonSelected(button)
 	
 	if 
 
-	    btn == "Coffre" then OpenCloseDoor(btn)
+	    btn == "Coffre" then dtd(btn)
 
-elseif  btn == "Capot" then OpenCloseDoor(btn)
+elseif  btn == "Capot" then dtd(btn)
 
-elseif  btn == "Avant gauche" then OpenCloseDoor(btn)
+elseif  btn == "Avant gauche" then dtd(btn)
 
-elseif  btn == "Avant Droite" then OpenCloseDoor(btn)
+elseif  btn == "Avant Droite" then dtd(btn)
 
-elseif  btn == "Arrière gauche" then OpenCloseDoor(btn)
+elseif  btn == "Arrière gauche" then dtd(btn)
 
-elseif  btn == "Arrière droite" then OpenCloseDoor(btn)
+elseif  btn == "Arrière droite" then dtd(btn)
 ---
 
 elseif btn == "10"  then OpenLimitator(tonumber(btn))
@@ -440,12 +440,37 @@ function stringstarts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
 
-
-function OpenCloseDoor(dumbledor)
+function dtd(dumbledor)
+	if dumbledor = "Coffre" then return OpenCloseDoor(5)
+		elseif dumbledor = "Capot" then return OpenCloseDoor(4)
+		elseif dumbledor = "Avant gauche" then  return OpenCloseDoor(0)
+		elseif dumbledor = "Avant droite" then  return OpenCloseDoor(1)
+		elseif dumbledor = "Arrière gauche" then return OpenCloseDoor(2)
+		elseif dumbledor = "Arrière droite" then return OpenCloseDoor(3)
 	
+	end
+	
+function OpenCloseDoor(dumbledoor)
+
+	
+
+	local isdoordamaged = IsVehicleDoorDamaged(playerVeh, dumbledor)
+	
+	if isdoordamaged then ShowNotification("La porte est cassé.")
+	end
+	
+	local angle = GetVehicleDoorAngleRatio(playerVeh, dumbledor)
+	
+	if angle == 0 then
+		ShowNotification("La porte est ouverte.")
+		SetVehicleDoorOpen(playerVeh, dumbledor, false, false)
+	else
+		ShowNotification("La porte est ouverte.")
+		SetVehicleDoorShut(playerVeh, dumbledor, false)
 	
 	--GET_VEHICLE_DOOR_ANGLE_RATIO
 	--SET_VEHICLE_DOOR_OPEN	
+	end
 end
 
 function OpenLimitator(acombienjetelimitemonbro)
