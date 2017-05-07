@@ -70,9 +70,6 @@ local vehshop = {
 			title = "Moteur", 
 			name = "Eteindre le moteur",
 			buttons = { 
-				{name = "TEST", description = ''},
-				{name = "TEST2", description = ''},
-				{name = "TEST3", description = ''},
 			}
 		},
 	}
@@ -226,7 +223,6 @@ Citizen.CreateThread(function()
 		end
 		
 		if (IsControlJustPressed(1 , 71)) then      		------ On enleve le limitateur
-			Citizen.Trace("Touche ok ")
 			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 ) then
 					SetVehicleEngineOn(playerVeh, true, true)
 					SetVehicleUndriveable(playerVeh, false)
@@ -307,7 +303,6 @@ end
 
 
 function ButtonSelected(button)
-	Citizen.Trace(tostring(button.name))
 	local ped = GetPlayerPed(-1)
 	local this = vehshop.currentmenu -- menu
 	local btn = button.name --Gerer les portes
@@ -391,15 +386,7 @@ end
 			StopLimitator()
 		end
 	elseif this == "Eteindre le moteur" then
-		if btn == "TEST" then
 			OpenCreator()
-		elseif btn == "TEST2" then Citizen.Trace("Select button 2")
-			
-		elseif btn == "TEST3" then Citizen.Trace("Select button 3")
-			
-			--ToggleEngineOff()
-		end
-
 
 	end
 end
@@ -478,21 +465,14 @@ function OpenLimitator(acombienjetelimitemonbro)
 	okjetelimiteaca = tonumber(acombienjetelimitemonbro) / 3.6
 	SetEntityMaxSpeed(playerVeh, toFloat(okjetelimiteaca))
 	limitator = true
-	Citizen.Trace("PlayerVeh : "..tostring(playerVeh))
-	Citizen.Trace("limite = "..tostring(okjetelimiteaca))
-	Citizen.Trace("limitator = "..tostring(limitator))
 	OpenCreator()
 	  
 end
 
 function ToggleEngineOff()
-	Citizen.Trace("engine = " .. tostring(engine))
 	if engine then
-		Citizen.Trace("playerVeh : ".. tostring(playerVeh))
 		SetVehicleEngineOn(playerVeh, false, true)
-		Citizen.Trace("playerVeh : ".. tostring(playerVeh))
 		SetVehicleUndriveable(playerVeh, engine)
-		Citizen.Trace("playerVeh : ".. tostring(playerVeh))
 	end
 	engine = false
 	OpenCreator()
@@ -510,7 +490,6 @@ end
 
 function StopLimitator()
 	local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-	Citizen.Trace("Max acc de ta caisse = "..tostring(test))
 	SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
 	ShowNotification("Limitateur enlevé")
 end
