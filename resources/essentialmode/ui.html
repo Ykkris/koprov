@@ -20,12 +20,24 @@
 				var item = event.data;
 
 				if(item.setmoney == true)
-					document.getElementById("cash").innerHTML = "<div><font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>$</font>" + addCommas(item.money);
+					$("#cash").html("<div><font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>€</font> " +addCommas(item.money) +"</div>");
+				if(item.setdirtymoney == true)
+					$("#dirtycash").html("<div><font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>€</font> " +addCommas(item.dirtymoney) +"</div>");
 				if(item.addcash == true){
 					$(".tiny").remove();
 
-					var element = $("<div class='tiny'>+<font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>$</font>"+addCommas(item.money)+"</div>")
+					var element = $("<div class='tiny'>+"+addCommas(item.money)+"<font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'> €</font></div>")
 					$("#money").append(element)
+
+					setTimeout(function(){
+						$(element).fadeOut(600, function() { $(this).remove(); })
+					}, 1000)
+				}
+				if(item.adddirtycash == true){
+					$(".tiny").remove();
+
+					var element = $("<div class='tiny'>+"+addCommas(item.dirtymoney)+"<font style='color: rgb(125, 0, 0); font-weight: 700; margin-right: 6px;'> €</font></div>")
+					$("#dirtymoney").append(element)
 
 					setTimeout(function(){
 						$(element).fadeOut(600, function() { $(this).remove(); })
@@ -34,8 +46,18 @@
 				if(item.removecash == true){
 					$(".tiny").remove();
 					
-					var element = $("<div class='tiny'>-<font style='color: rgb(250, 0, 0); font-weight: 700; margin-right: 6px;'>$</font>"+addCommas(item.money)+"</div>")
+					var element = $("<div class='tiny'>-"+addCommas(item.money)+"<font style='color: rgb(250, 0, 0); font-weight: 700; margin-right: 6px;'> €</font></div>")
 					$("#money").append(element)
+
+					setTimeout(function(){
+						$(element).fadeOut(600, function() { $(this).remove(); })
+					}, 1000)
+				}
+				if(item.removedirtycash == true){
+					$(".tiny").remove();
+					
+					var element = $("<div class='tiny'>-"+addCommas(item.dirtymoney)+"<font style='color: rgb(250, 0, 0); font-weight: 700; margin-right: 6px;'> €</font></div>")
+					$("#dirtymoney").append(element)
 
 					setTimeout(function(){
 						$(element).fadeOut(600, function() { $(this).remove(); })
@@ -46,6 +68,7 @@
 				}
 				if(item.setDisplay == true){
 					$("#money").css('opacity', item.display)
+					$("#dirtymoney").css('opacity', item.display)
 				}
 			})
 		}
@@ -57,24 +80,30 @@
 			src: url(pdown.ttf);
 		}
 		.tiny {
-			font-size: 29px;
+			font-size: 25px;
 			position: absolute; right: 10;
 		}
 		#money {
 			font-family: pcdown;
-			font-size: 35px;
+			font-size: 30px;
 			color: white;
 			padding: 4px;
-		text-shadow:
-		   -1px -1px 0 #000,
-			1px -1px 0 #000,
-			-1px 1px 0 #000,
-			 1px 1px 0 #000;
-				}
+			text-shadow:
+				-1px -1px 0 #000,
+				1px -1px 0 #000,
+				-1px 1px 0 #000,
+				1px 1px 0 #000;
+		}
 
 		#container {
 			position: absolute;
-			top: 40; right: 40;
+			text-align: right;
+			top: 15; right: 20;
+		}
+		#icon {
+			height: 21px;
+			width: auto;
+			margin-right: 10px;
 		}
 	</style>
 </head>
@@ -85,8 +114,10 @@
 	</div>
 	<div id="container">
 		<div id="money">
-
 			<div id="cash"/>
+		</div>
+		<div id="dirtymoney"/>
+			<div id="dirtycash"/>
 		</div>
 	</div>
 </body>
