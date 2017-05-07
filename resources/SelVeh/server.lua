@@ -16,19 +16,7 @@ AddEventHandler('test:CheckForSelVeh', function()
     local executed_query2 = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@state'] = state})
     local result2 = MySQL:getResults(executed_query2, {'vehicle_plate'}, "identifier")
     TriggerClientEvent('test:SelVehicle', source, result, result2)
-        
-        for k,v in ipairs(result) do
-          RconPrint(tostring(k))
-          RconPrint(tostring(v[1]))
-         end
-        
-         for k,v in ipairs(result2) do
-          RconPrint(tostring(k))
-          RconPrint(tostring(v[1]))
-         end
-        
-        
-        
+         
   end)
 end)
 
