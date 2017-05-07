@@ -10,8 +10,8 @@ AddEventHandler('Join', function()
 	RconPrint("source = ".. tostring(source))
 	local players = GetPlayers()
 	if #players >= 2 then
-		TriggerClientEvent("client.time", players[0])
-		RconPrint("on prend le time de : " .. tostring(players[0]))
+		TriggerClientEvent("client.time", players[1])
+		RconPrint("on prend le time de : " .. tostring(players[1]))
 	end
 
 
