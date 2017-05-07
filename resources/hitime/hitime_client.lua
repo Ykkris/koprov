@@ -30,7 +30,7 @@ TriggerServerEvent("return.client.time", hours, minuts, seconds)
 end)
 
 RegisterNetEvent("update.client.time")
-AddEventHandler('client.time', function(hours, minutes, seconds)
+AddEventHandler('update.client.time', function(hours, minutes, seconds)
 
 NetworkOverrideClockTime(hours, minutes, seconds)
 
