@@ -449,6 +449,7 @@ function dtd(dumbledor)
 		elseif dumbledor == "Arrière droite" then return OpenCloseDoor(3)
 	
 	end
+end
 	
 function OpenCloseDoor(dumbledoor)
 
