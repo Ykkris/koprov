@@ -33,8 +33,8 @@ end)
 AddEventHandler('test:SelVehicle', function(result, result2)
 	local car = GetHashKey(vehicle)	
 	
-	local plate = result2[1][1] -- a changer
-	local test = result[1][1]
+	local plate = result2[1].vehicle_plate -- a changer
+	local test = result[1].vehicle_model
 	Citizen.Trace(tostring(plate))
 	Citizen.Trace(tostring(test))
 	
