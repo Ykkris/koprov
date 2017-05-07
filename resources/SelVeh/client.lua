@@ -53,7 +53,8 @@ AddEventHandler('test:SelVehicle', function(vehicle, plate)
 			end
 		else
 			drawNotification("Aucun véhicule présent")
-		end   
+		end
+	end)
 end)
 			
 AddEventHandler("test:getVehicles", function(THEVEHICLES)
