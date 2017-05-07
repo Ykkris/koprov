@@ -31,9 +31,7 @@ AddEventHandler('test:SelVeh', function(plate)
     if(result)then
        price = result[1].vehicle_price
        price = price / 2
-       RconPrint(tostring(price))
        deposit(source, price)
-       RconPrint(tostring(player))
 
     end
     local executed_query = MySQL:executeQuery("DELETE from user_vehicle WHERE identifier = '@username' AND vehicle_plate = '@plate'",
@@ -44,7 +42,7 @@ end)
 
 function deposit(source, amount)
   TriggerEvent('es:getPlayerFromId', source, function(user)
-   user:addMoney(tonumber(amout))
+   user:addMoney(tonumber(amount))
   end)
   
 -- MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'", {['@value'] = amount, ['@identifier'] = player})
