@@ -1,7 +1,7 @@
 RequestModel( GetHashKey( "A_C_Cow" ) )
 hash = GetHashKey( "A_C_Cow" )
 while ( not HasModelLoaded( GetHashKey( "A_C_Cow" ) ) ) do
-    Citizen.Wait( 1 )
+    Wait(1)
 end
 -- CreateVehicle(MISSION.hashTruck, 12.1995, -1.174761, 73.000, 0.0, true, false)
 
