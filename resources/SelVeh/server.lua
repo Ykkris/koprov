@@ -21,6 +21,8 @@ AddEventHandler('test:CheckForSelVeh', function()
       local plate = plate
       end
     end
+     RconPrint("vehicle " .. tostring(vehicle))
+     RconPrint("plate " .. tostring(plate))
     TriggerClientEvent('test:SelVehicle', source, vehicle, plate)
   end)
 end)
