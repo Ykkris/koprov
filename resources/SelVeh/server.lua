@@ -43,9 +43,7 @@ AddEventHandler('test:SelVeh', function(plate)
 end)
 
 function deposit(player, amount)
-  local bankbalance = bankBalance(player)
-  local new_balance = bankbalance + amount
-  MySQL:executeQuery("UPDATE users SET `bankbalance`='@value' WHERE identifier = '@identifier'", {['@value'] = new_balance, ['@identifier'] = player})
+  MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'", {['@value'] = amount, ['@identifier'] = player})
 end
 
 AddEventHandler('test:CheckGarageForVeh', function()
