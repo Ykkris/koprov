@@ -35,7 +35,7 @@ function RequestToSave()
 	TriggerServerEvent("projectEZ:savelastpos", LastPosX , LastPosY , LastPosZ, LastPosH)
 	if not origin then
 		--Affichage d'un message confirmant la sauvegarde de la position du joueurs.
-		Notify("Position Sauvegardée")
+		Notify("Position sauvegardée sur le GPS.")
 	end
 end
 
