@@ -34,6 +34,9 @@ AddEventHandler('test:SelVehicle', function(result, result2)
 	local car = GetHashKey(vehicle)	
 	
 	local plate = result2[1] -- a changer
+	local test = result[1]
+	Citizen.Trace(plate)
+	Citizen.Trace(test)
 	
 	Citizen.CreateThread(function()		
 		Citizen.Wait(0)
