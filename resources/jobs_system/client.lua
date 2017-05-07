@@ -12,6 +12,8 @@ local jobs = {
   {name="Pêcheur", id=8},
 }
 
+isopen = false
+
 ---------------------------------- FUNCTIONS ----------------------------------
 
 function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
@@ -41,6 +43,7 @@ function IsNearJobs()
 end
 
 function menuJobs()
+  isopen = true
   MenuTitle = "Jobs"
   ClearMenu()
   for _, item in pairs(jobs) do
@@ -75,6 +78,9 @@ Citizen.CreateThread(function()
     if (IsControlJustPressed(1,Keys["H"]) and IsNearJobs() == true) then
       menuJobs()
       Menu.hidden = not Menu.hidden 
+    end
+    if (IsNearJobs() == false) and (Menu.hidden == false) then
+          Menu.hidden = not Menu.hidden
     end
   end
     Menu.renderGUI()
