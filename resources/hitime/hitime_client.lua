@@ -4,7 +4,7 @@ Citizen.CreateThread(function()
 
 	if not(sync) then
 		local year, month, day, hour, minute, seconde = GetUtcTime()
-        NetworkOverrideClockTime(hour, minute, second)
+        NetworkOverrideClockTime(hour, minute, seconde)
 		sync = true
 	end
 	
@@ -33,5 +33,6 @@ RegisterNetEvent("update.client.time")
 AddEventHandler('update.client.time', function(hours, minutes, seconds)
 Citizen.Trace(tostring(hours)..tostring(minutes)..tostring(seconds))
 NetworkOverrideClockTime(hours, minutes, seconds)
+		Citizen.Trace("done")
 
 end)
