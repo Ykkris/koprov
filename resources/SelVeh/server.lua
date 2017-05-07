@@ -32,7 +32,7 @@ AddEventHandler('test:SelVeh', function(plate)
     if(result)then
         price = result[1].vehicle_price
        local price = price / 2
-       Citizen.Trace(tostring(price))
+       RconPrint(tostring(price))
        deposit(player, price)
 
     end
