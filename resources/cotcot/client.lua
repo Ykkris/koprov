@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
     local pop_finish = false
     local count = 0
     if not(pop_finish) then
-      while count <= 50 do
+      while count <= 25 do
         poulet = CreatePed(28, hash, 2126.68, 5013.56, 40.42, 0.0 ,true)
         SetEntityAsMissionEntity(poulet, true, true)
         count = count + 1
