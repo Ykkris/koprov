@@ -9,7 +9,7 @@ local vehicles = {}
 
 AddEventHandler('test:CheckForSelVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
-    local state = "Sortit"
+    local state = "out"
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@state'] = state})
     local result = MySQL:getResults(executed_query, {'vehicle_model'}, "identifier")
