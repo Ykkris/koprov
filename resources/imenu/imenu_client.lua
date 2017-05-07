@@ -465,7 +465,7 @@ function OpenCloseDoor(dumbledoor)
 		ShowNotification("La porte est ouverte.")
 		SetVehicleDoorOpen(playerVeh, dumbledor, false, false)
 	else
-		ShowNotification("La porte est ouverte.")
+		ShowNotification("La porte est fermé.")
 		SetVehicleDoorShut(playerVeh, dumbledor, false)
 	
 	--GET_VEHICLE_DOOR_ANGLE_RATIO
