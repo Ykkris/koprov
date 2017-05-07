@@ -441,12 +441,12 @@ function stringstarts(String,Start)
 end
 
 function dtd(dumbledor)
-	if dumbledor == "Coffre" then return OpenCloseDoor(5)
-		elseif dumbledor == "Capot" then return OpenCloseDoor(4)
-		elseif dumbledor == "Avant gauche" then  return OpenCloseDoor(0)
-		elseif dumbledor == "Avant droite" then  return OpenCloseDoor(1)
-		elseif dumbledor == "Arrière gauche" then return OpenCloseDoor(2)
-		elseif dumbledor == "Arrière droite" then return OpenCloseDoor(3)
+	if dumbledor == "Coffre" then  OpenCloseDoor(5)
+		elseif dumbledor == "Capot" then  OpenCloseDoor(4)
+		elseif dumbledor == "Avant gauche" then  OpenCloseDoor(0)
+		elseif dumbledor == "Avant droite" then  OpenCloseDoor(1)
+		elseif dumbledor == "Arrière gauche" then OpenCloseDoor(2)
+		elseif dumbledor == "Arrière droite" then OpenCloseDoor(3)
 	
 	end
 end
