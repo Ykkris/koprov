@@ -3,29 +3,8 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 RegisterServerEvent('test:SelVeh')
 RegisterServerEvent('test:CheckGarageForVeh')
-RegisterServerEvent('garages:GetPlayerVehs')
 
 -- Checks if the plate belongs to the user, if it does it updates the vehicle as in, then send the remove order to the client
-AddEventHandler('garages:SetVehIn', function(plate)
-  TriggerEvent('es:getPlayerFromId', source, function(user)
-    local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
-    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
-    local found = false
-    local state = 'in'
-    if(result)then
-      for k,v in ipairs(result)do
-        if v.vehicle_plate == plate then
-          found = true
-          MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
-          {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
-        end
-      end
-    end
-
-    TriggerClientEvent('garages:RemoveVehicle', source, found, plate, cassei)
-  end)
-end)
 
 
 AddEventHandler('test:CheckGarageForVeh', function()
@@ -47,7 +26,7 @@ AddEventHandler('test:CheckGarageForVeh', function()
   end)  
     --print(vehicles[1].id)
     --print(vehicles[2].vehicle_model)
-    TriggerClientEvent('garages:getVehicles', source, vehicles)
+    TriggerClientEvent('test:getVehicles', source, vehicles)
 end)
 
 AddEventHandler('test:SelVeh', function(plate)
