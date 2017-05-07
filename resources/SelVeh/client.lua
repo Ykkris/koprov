@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
 		if GetDistanceBetweenCoords(vente_location[1],vente_location[2],vente_location[3],GetEntityCoords(LocalPed())) < 5 and IsPedInAnyVehicle(LocalPed(), true) == false then
 			drawTxt('~g~E~s~ pour vendre le véhicule à 50% du prix d\'achat',0,1,0.5,0.8,0.6,255,255,255,255)		
 			if IsControlJustPressed(1, 86) then				
-				TriggerServerEvent('test:CheckForSelVeh',source)
+				TriggerServerEvent('garages:CheckForSelVeh',source)
 			end
 		end
 	end
