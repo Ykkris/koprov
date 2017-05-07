@@ -33,7 +33,7 @@ AddEventHandler('test:SelVeh', function(plate)
        price = price / 2
        RconPrint(tostring(price))
        deposit(source, price)
-       Rconprint(tostring(player))
+       RconPrint(tostring(player))
 
     end
     local executed_query = MySQL:executeQuery("DELETE from user_vehicle WHERE identifier = '@username' AND vehicle_plate = '@plate'",
