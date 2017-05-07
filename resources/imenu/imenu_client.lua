@@ -220,8 +220,6 @@ Citizen.CreateThread(function()
 			local player = GetPlayerPed(-1)	
 			playerVeh = 0
 			playerVeh = GetVehiclePedIsIn(player, false)
-			Citizen.Trace("Avec false : "..playerVeh)
-			Citizen.Trace("Avec true : "..GetVehiclePedIsIn(player, true))
 			if playerVeh ~= 0 then
 			OpenCreator()
 			end
@@ -314,6 +312,49 @@ function ButtonSelected(button)
 	local ped = GetPlayerPed(-1)
 	local this = vehshop.currentmenu -- menu
 	local btn = button.name --Gerer les portes
+	-- Gros ajout très très désordonné ------------ Contactez Izio au 06.....
+	
+	if 
+
+	    btn = "Coffre" then OpenCloseDoor(btn)
+
+elseif  btn = "Capot" then OpenCloseDoor(btn)
+
+elseif  btn = "Avant gauche" then OpenCloseDoor(btn)
+
+elseif  btn = "Avant Droite" then OpenCloseDoor(btn)
+
+elseif  btn = "Arrière gauche" then OpenCloseDoor(btn)
+
+elseif  btn = "Arrière droite" then OpenCloseDoor(btn)
+---
+
+elseif btn = "10"  then Openlimitator(tonumber(btn))
+
+elseif btn = "30"  then Openlimitator(tonumber(btn))
+
+elseif btn = "50"  then Openlimitator(tonumber(btn))
+
+elseif btn = "90"  then Openlimitator(tonumber(btn))
+
+elseif btn = "110"  then Openlimitator(tonumber(btn))
+
+elseif btn = "Enlever la limite"  then StopLimitator() -- string enlever la limite
+---
+
+
+elseif btn = "Eteindre le moteur" then ToggleEngineOff()
+
+
+end
+	
+	
+	
+	
+	
+	
+	
+	---------------------------------------------------------------------------
 	if this == "main" then
 		if btn == "Gérer les portes" then
 			OpenMenu('portes')
