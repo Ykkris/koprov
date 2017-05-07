@@ -11,9 +11,11 @@ AddEventHandler('test:CheckForSelVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local state = "Sortit"
     local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
-    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
-    TriggerClientEvent('test:SelVehicle', source, result)
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@state'] = state})
+    local result = MySQL:getResults(executed_query, {'vehicle_model'}, "identifier")
+    local executed_query2 = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@state'] = state})
+    local result2 = MySQL:getResults(executed_query2, {'vehicle_plate'}, "identifier")
+    TriggerClientEvent('test:SelVehicle', source, result, result2)
   end)
 end)
 
