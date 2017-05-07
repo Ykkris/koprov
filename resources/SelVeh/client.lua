@@ -35,9 +35,11 @@ AddEventHandler('test:SelVehicle', function(vehicle, plate)
 	local plate = plate
 	Citizen.CreateThread(function()		
 		Citizen.Wait(0)
-		local caissei = GetClosestVehicle(-45.228, -1083.123, 25.816, 3.000, 0, 70)
+		local caissei = GetClosestVehicle(-45.228, -1083.123, 25.816, 8.000, 0, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
+		Citizen.Trace("caissei : "..tostring(caissei))
+		Citizen.Trace("platecaissei :"..tostring(platecaissei))
 		if DoesEntityExist(caissei) then	
 			if plate ~= platecaissei then					
 				drawNotification("Ce n'est pas ton véhicule")
