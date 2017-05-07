@@ -106,3 +106,52 @@ AddEventHandler("es:enablePvp", function()
 		end
 	end)
 end)
+
+
+RegisterNetEvent('es:activatedirtyMoney')
+AddEventHandler('es:activatedirtyMoney', function(e)
+	SendNUIMessage({
+		setdirtymoney = true,
+		dirtymoney = e
+	})
+end)
+
+RegisterNetEvent("es:addeddirtyMoney")
+AddEventHandler("es:addeddirtyMoney", function(m)
+	SendNUIMessage({
+		adddirtycash = true,
+		dirtymoney = m
+	})
+
+end)
+
+RegisterNetEvent("es:removeddirtyMoney")
+AddEventHandler("es:removeddirtyMoney", function(m)
+	SendNUIMessage({
+		removedirtycash = true,
+		dirtymoney = m
+	})
+end)
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(1000)
+		local pos = GetEntityCoords(GetPlayerPed(-1))
+
+		if(oldPos ~= pos)then
+			TriggerServerEvent('es:updatePositions', pos.x, pos.y, pos.z)
+
+			if(loaded)then
+				SendNUIMessage({
+					setmoney = true,
+					money = cashy,
+					setdirtymoney = true,
+					dirtymoney = 0
+				})
+
+				loaded = false
+			end
+			oldPos = pos
+		end
+	end
+end)
