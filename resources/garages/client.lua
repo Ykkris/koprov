@@ -490,7 +490,7 @@ end)
 AddEventHandler('garages:DisplayVehicles', function(buttons)
 
 	local list = { 
-		title = "Véhicules",
+		title = "Vehicules",
 		name = "list",
 		buttons = buttons
 	}

@@ -17,7 +17,7 @@ end)
       Wait(0)
 
       SetNotificationTextEntry("STRING");
-      AddTextComponentString("Bienvenue sur ~g~Kopro V !.\n ~y~For more info go to github.com/FiveM-Scripts");
+      AddTextComponentString("Bienvenue sur ~g~Kopro V !.\n ~y~Pour afficher les commandes tapper /help dans le chat !");
       SetNotificationMessage("CHAR_ALL_PLAYERS_CONF", "CHAR_ALL_PLAYERS_CONF", true, 1, "Kopro V Team", "v0.1");
       DrawNotification(false, true);
       Wait(10000000)
