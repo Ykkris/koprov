@@ -15,8 +15,8 @@ AddEventHandler('test:CheckForSelVeh', function()
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
     if(result)then
       for k,v in ipairs(result)do
-        vehicle = vehicle_model.k
-        plate = vehicle_plate.k
+        vehicle = k.vehicle_model
+        plate = k.vehicle_plate
       local vehicle = vehicle
       local plate = plate
       end
