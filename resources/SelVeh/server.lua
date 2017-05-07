@@ -19,12 +19,12 @@ AddEventHandler('test:CheckForSelVeh', function()
         
         for k,v in ipairs(result) do
           RconPrint(tostring(k))
-          RconPrint(tostring(v))
+          RconPrint(tostring(v[1]))
          end
         
          for k,v in ipairs(result2) do
           RconPrint(tostring(k))
-          RconPrint(tostring(v))
+          RconPrint(tostring(v[1]))
          end
         
         
