@@ -65,3 +65,4 @@ AddEventHandler('test:CheckGarageForVeh', function()
         end
     end
   end) 
+end)
