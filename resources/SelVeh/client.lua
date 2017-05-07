@@ -35,16 +35,12 @@ AddEventHandler('test:SelVehicle', function(result, result2)
 	
 	local plate = result2[1].vehicle_plate -- a changer
 	local test = result[1].vehicle_model
-	Citizen.Trace(tostring(plate))
-	Citizen.Trace(tostring(test))
 	
 	Citizen.CreateThread(function()		
 		Citizen.Wait(0)
 		local caissei = GetVehiclePedIsIn(GetPlayerPed(-1))
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
-		Citizen.Trace("caissei : "..tostring(caissei))
-		Citizen.Trace("platecaissei :"..tostring(platecaissei))
 		if DoesEntityExist(caissei) then	
 			if plate ~= platecaissei then					
 				drawNotification("Ce n'est pas ton véhicule")
