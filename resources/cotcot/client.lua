@@ -7,7 +7,7 @@ end
 
 Citizen.CreateThread(function()
        Wait(500)
-       poulet = CreatePed(hash, 2126.68, 5013.56, 40.42, 0.0 ,true)
+       poulet = CreatePed(28, hash, 2126.68, 5013.56, 40.42, 0.0 ,true)
     local pop_finish = false
     local count = 0
     if not(pop_finish) then
