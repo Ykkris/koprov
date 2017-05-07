@@ -39,6 +39,7 @@ AutoStartResources:
     - imenu
     - SelVeh
     - thecops
+    - cotcot
 
 # do change
 RconPassword: koprobestv
