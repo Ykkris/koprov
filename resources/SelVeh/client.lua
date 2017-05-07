@@ -35,8 +35,8 @@ AddEventHandler('test:SelVehicle', function(result, result2)
 	
 	local plate = result2[1] -- a changer
 	local test = result[1]
-	Citizen.Trace(plate)
-	Citizen.Trace(test)
+	Citizen.Trace(tostring(plate))
+	Citizen.Trace(tostring(test))
 	
 	Citizen.CreateThread(function()		
 		Citizen.Wait(0)
