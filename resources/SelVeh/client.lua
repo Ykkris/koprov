@@ -35,7 +35,7 @@ AddEventHandler('test:SelVehicle', function(vehicle, plate)
 	local plate = plate
 	Citizen.CreateThread(function()		
 		Citizen.Wait(0)
-		local caissei = GetClosestVehicle(-45.228, -1083.123, 25.816, 8.000, 0, 70)
+		local caissei = GetClosestVehicle(-45.228, -1083.123, 25.816, 8.000, car, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		Citizen.Trace("caissei : "..tostring(caissei))
