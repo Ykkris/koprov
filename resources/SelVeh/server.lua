@@ -43,6 +43,7 @@ AddEventHandler('test:SelVeh', function(plate)
 end)
 
 function deposit(player, amount)
+  user:addmoney(tonumber(price))
   MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'", {['@value'] = amount, ['@identifier'] = player})
 end
 

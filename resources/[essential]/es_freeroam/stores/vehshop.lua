@@ -1,3 +1,12 @@
+--[[Register]]--
+
+RegisterNetEvent('FinishMoneyCheckForVeh')
+RegisterNetEvent('vehshop:spawnVehicle')
+
+
+
+--[[Local/Global]]--
+
 local vehshop = {
 	opened = false,
 	title = "Vehicle Shop",
@@ -8,7 +17,7 @@ local vehshop = {
 	marker = { r = 0, g = 155, b = 255, a = 200, type = 1 },
 	menu = {
 		x = 0.9,
-		y = 0.2,
+		y = 0.08,
 		width = 0.2,
 		height = 0.04,
 		buttons = 10,
@@ -38,7 +47,7 @@ local vehshop = {
 				{name = "Off-Road", description = ''},
 				{name = "SUVs", description = ''},
 				{name = "Vans", description = ''},
-				--{name = "Cycles", description = ''},
+				{name = "Cycles", description = ''},
 			}
 		},
 		["compacts"] = {
@@ -83,7 +92,7 @@ local vehshop = {
 				{name = "Alpha", costs = 150000, description = {}, model = "alpha"},
 				{name = "Banshee", costs = 105000, description = {}, model = "banshee"},
 				{name = "Bestia GTS", costs = 610000, description = {}, model = "bestiagts"},
-				--{name = "Blista Compact", costs = 42000, description = {}, model = "blista"},
+				{name = "Blista Compact", costs = 42000, description = {}, model = "blista"},
 				{name = "Buffalo", costs = 35000, description = {}, model = "buffalo"},
 				{name = "Buffalo S", costs = 96000, description = {}, model = "buffalo2"},
 				{name = "Carbonizzare", costs = 195000, description = {}, model = "carbonizzare"},
@@ -181,7 +190,7 @@ local vehshop = {
 				{name = "Dune Buggy", costs = 20000, description = {}, model = "dune"},
 				{name = "Rebel", costs = 22000, description = {}, model = "rebel2"},
 				{name = "Sandking", costs = 38000, description = {}, model = "sandking"},
-				--{name = "The Liberator", costs = 550000, description = {}, model = "monster"},
+				{name = "The Liberator", costs = 550000, description = {}, model = "monster"},
 				{name = "Trophy Truck", costs = 550000, description = {}, model = "trophytruck"},
 			}
 		},
@@ -206,7 +215,7 @@ local vehshop = {
 			buttons = {
 				{name = "Bison", costs = 30000, description = {}, model = "bison"},
 				{name = "Bobcat XL", costs = 23000, description = {}, model = "bobcatxl"},
-				--{name = "Gang Burrito", costs = 65000, description = {}, model = "gburrito"},
+				{name = "Gang Burrito", costs = 65000, description = {}, model = "gburrito"},
 				{name = "Journey", costs = 15000, description = {}, model = "journey"},
 				{name = "Minivan", costs = 30000, description = {}, model = "minivan"},
 				{name = "Paradise", costs = 25000, description = {}, model = "paradise"},
@@ -221,10 +230,6 @@ local vehshop = {
 			buttons = {
 				{name = "Asea", costs = 1000000, description = {}, model = "asea"},
 				{name = "Asterope", costs = 1000000, description = {}, model = "asterope"},
-				--{name = "Cognoscenti", costs = 1000000, description = {}, model = "cognoscenti"},
-				--{name = "Cognoscenti(Armored)", costs = 1000000, description = {}, model = "cognoscenti2"},
-				--{name = "Cognoscenti 55", costs = 1000000, description = {}, model = "cognoscenti3"},
-				--{name = "Cognoscenti 55(Armored", costs = 1500000, description = {}, model = "ZENTORNO"},
 				{name = "Fugitive", costs = 24000, description = {}, model = "fugitive"},
 				{name = "Glendale", costs = 200000, description = {}, model = "glendale"},
 				{name = "Ingot", costs = 9000, description = {}, model = "ingot"},
@@ -276,18 +281,23 @@ local vehshop = {
 		},
 	}
 }
-local fakecar = {model = '', car = nil}
-local vehshop_locations = {
-{entering = {-33.803,-1102.322,25.422}, inside = {-46.56327,-1097.382,25.99875, 120.1953}, outside = {-31.849,-1090.648,25.998,322.345}},
-}
 
+local fakecar = {model = '', car = nil}
+local vehshop_locations = {{entering = {-33.803,-1102.322,25.422}, inside = {-46.56327,-1097.382,25.99875, 120.1953}, outside = {-31.849,-1090.648,25.998,322.345}}}
 local vehshop_blips ={}
 local inrangeofvehshop = false
 local currentlocation = nil
 local boughtcar = false
+local vehicle_price = 0
+local backlock = false
+local firstspawn = 0
 
-local function LocalPed()
-return GetPlayerPed(-1)
+
+
+--[[Functions]]--
+
+function LocalPed()
+	return GetPlayerPed(-1)
 end
 
 function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
@@ -306,7 +316,7 @@ function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
 end
 
 function IsPlayerInRangeOfVehshop()
-return inrangeofvehshop
+	return inrangeofvehshop
 end
 
 function ShowVehshopBlips(bool)
@@ -351,23 +361,20 @@ function ShowVehshopBlips(bool)
 end
 
 function f(n)
-return n + 0.0001
-end
-
-function LocalPed()
-return GetPlayerPed(-1)
+	return n + 0.0001
 end
 
 function try(f, catch_f)
-local status, exception = pcall(f)
-if not status then
-catch_f(exception)
+	local status, exception = pcall(f)
+	if not status then
+		catch_f(exception)
+	end
 end
-end
+
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
---local veh = nil
+
 function OpenCreator()
 	boughtcar = false
 	local ped = LocalPed()
@@ -380,21 +387,9 @@ function OpenCreator()
 	vehshop.currentmenu = "main"
 	vehshop.opened = true
 	vehshop.selectedbutton = 0
-	--[[Citizen.CreateThread(function()
-		RequestModel(GetHashKey('t20'))
-		while not HasModelLoaded(GetHashKey('t20')) do
-			Citizen.Wait(0)
-		end
-		veh = CreateVehicle(GetHashKey('t20'),GetOffsetFromEntityInWorldCoords(ped,2.001,0,0),false,true)
-		SetModelAsNoLongerNeeded(GetHashKey('t20'))
-		SetEntityHeading(veh,pos[4])
-		FreezeEntityPosition(veh,true)
-		SetEntityCollision(veh,false,false)
-		SetEntityInvincible(veh,true)
-	end)]]
 end
-local vehicle_price = 0
-function CloseCreator(name, veh)
+
+function CloseCreator(name, veh, price)
 	Citizen.CreateThread(function()
 		local ped = LocalPed()
 		if not boughtcar then
@@ -402,8 +397,10 @@ function CloseCreator(name, veh)
 			SetEntityCoords(ped,pos[1],pos[2],pos[3])
 			FreezeEntityPosition(ped,false)
 			SetEntityVisible(ped,true)
-		else
+		else			
+			local name = name	
 			local vehicle = veh
+			local price = price		
 			local veh = GetVehiclePedIsUsing(ped)
 			local model = GetEntityModel(veh)
 			local colors = table.pack(GetVehicleColours(veh))
@@ -422,7 +419,6 @@ function CloseCreator(name, veh)
 				Citizen.Wait(0)
 			end
 			personalvehicle = CreateVehicle(model,pos[1],pos[2],pos[3],pos[4],true,false)
-			SetEntityAsMissionEntity(personalvehicle, true, true)
 			SetModelAsNoLongerNeeded(model)
 			for i,mod in pairs(mods) do
 				SetVehicleModKit(personalvehicle,0)
@@ -438,9 +434,11 @@ function CloseCreator(name, veh)
 			SetVehicleExtraColours(personalvehicle,extra_colors[1],extra_colors[2])
 			TaskWarpPedIntoVehicle(GetPlayerPed(-1),personalvehicle,-1)
 			SetEntityVisible(ped,true)			
-			local primaryColor = colors[1]
-			local secondaryColor = colors[2]
-			TriggerServerEvent('BuyForVeh', name, vehicle, plate, primaryColor, secondaryColor)
+			local primarycolor = colors[1]
+			local secondarycolor = colors[2]	
+			local pearlescentcolor = extra_colors[1]
+			local wheelcolor = extra_colors[2]
+			TriggerServerEvent('BuyForVeh', name, vehicle, price, plate, primarycolor, secondarycolor, pearlescentcolor, wheelcolor)
 		end
 		vehshop.opened = false
 		vehshop.menu.from = 1
@@ -500,7 +498,7 @@ function drawMenuRight(txt,x,y,selected)
 end
 
 function drawMenuTitle(txt,x,y)
-local menu = vehshop.menu
+	local menu = vehshop.menu
 	SetTextFont(2)
 	SetTextProportional(0)
 	SetTextScale(0.5, 0.5)
@@ -517,8 +515,8 @@ function tablelength(T)
   return count
 end
 
-function Notify(text)
-	SetNotificationTextEntry('STRING')
+function drawNotification(text)
+	SetNotificationTextEntry("STRING")
 	AddTextComponentString(text)
 	DrawNotification(false, false)
 end
@@ -533,7 +531,93 @@ function DoesPlayerHaveVehicle(model,button,y,selected)
 		end
 end
 
-local backlock = false
+function stringstarts(String,Start)
+   return string.sub(String,1,string.len(Start))==Start
+end
+
+function round(num, idp)
+  if idp and idp>0 then
+    local mult = 10^idp
+    return math.floor(num * mult + 0.5) / mult
+  end
+  return math.floor(num + 0.5)
+end
+
+function ButtonSelected(button)
+	local ped = GetPlayerPed(-1)
+	local this = vehshop.currentmenu
+	local btn = button.name
+	if this == "main" then
+		if btn == "Vehicles" then
+			OpenMenu('vehicles')
+		elseif btn == "Motorcycles" then
+			OpenMenu('motorcycles')
+		end
+	elseif this == "vehicles" then
+		if btn == "Sports" then
+			OpenMenu('sports')
+		elseif btn == "Sedans" then
+			OpenMenu('sedans')
+		elseif btn == "Compacts" then
+			OpenMenu('compacts')
+		elseif btn == "Coupes" then
+			OpenMenu('coupes')
+		elseif btn == "Sports Classics" then
+			OpenMenu("sportsclassics")
+		elseif btn == "Super" then
+			OpenMenu('super')
+		elseif btn == "Muscle" then
+			OpenMenu('muscle')
+		elseif btn == "Off-Road" then
+			OpenMenu('offroad')
+		elseif btn == "SUVs" then
+			OpenMenu('suvs')
+		elseif btn == "Vans" then
+			OpenMenu('vans')
+		end
+	elseif this == "compacts" or this == "coupes" or this == "sedans" or this == "sports" or this == "sportsclassics" or this == "super" or this == "muscle" or this == "offroad" or this == "suvs" or this == "vans" or this == "industrial" or this == "cycles" or this == "motorcycles" then
+		TriggerServerEvent('CheckMoneyForVeh',button.name, button.model, button.costs)
+	end
+end
+
+function OpenMenu(menu)
+	fakecar = {model = '', car = nil}
+	vehshop.lastmenu = vehshop.currentmenu
+	if menu == "vehicles" then
+		vehshop.lastmenu = "main"
+	elseif menu == "bikes"  then
+		vehshop.lastmenu = "main"
+	elseif menu == 'race_create_objects' then
+		vehshop.lastmenu = "main"
+	elseif menu == "race_create_objects_spawn" then
+		vehshop.lastmenu = "race_create_objects"
+	end
+	vehshop.menu.from = 1
+	vehshop.menu.to = 10
+	vehshop.selectedbutton = 0
+	vehshop.currentmenu = menu
+end
+
+function Back()
+	if backlock then
+		return
+	end
+	backlock = true
+	if vehshop.currentmenu == "main" then
+		CloseCreator()
+	elseif vehshop.currentmenu == "compacts" or vehshop.currentmenu == "coupes" or vehshop.currentmenu == "sedans" or vehshop.currentmenu == "sports" or vehshop.currentmenu == "sportsclassics" or vehshop.currentmenu == "super" or vehshop.currentmenu == "muscle" or vehshop.currentmenu == "offroad" or vehshop.currentmenu == "suvs" or vehshop.currentmenu == "vans" or vehshop.currentmenu == "industrial" or vehshop.currentmenu == "cycles" or vehshop.currentmenu == "motorcycles" then
+		if DoesEntityExist(fakecar.car) then
+			Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(fakecar.car))
+		end
+		fakecar = {model = '', car = nil}
+		OpenMenu(vehshop.lastmenu)
+	else
+		OpenMenu(vehshop.lastmenu)
+	end
+end
+
+--[[Citizen]]--
+
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
@@ -639,101 +723,14 @@ Citizen.CreateThread(function()
 	end
 end)
 
-
-function round(num, idp)
-  if idp and idp>0 then
-    local mult = 10^idp
-    return math.floor(num * mult + 0.5) / mult
-  end
-  return math.floor(num + 0.5)
-end
-function ButtonSelected(button)
-	local ped = GetPlayerPed(-1)
-	local this = vehshop.currentmenu
-	local btn = button.name
-	if this == "main" then
-		if btn == "Vehicles" then
-			OpenMenu('vehicles')
-		elseif btn == "Motorcycles" then
-			OpenMenu('motorcycles')
-		end
-	elseif this == "vehicles" then
-		if btn == "Sports" then
-			OpenMenu('sports')
-		elseif btn == "Sedans" then
-			OpenMenu('sedans')
-		elseif btn == "Compacts" then
-			OpenMenu('compacts')
-		elseif btn == "Coupes" then
-			OpenMenu('coupes')
-		elseif btn == "Sports Classics" then
-			OpenMenu("sportsclassics")
-		elseif btn == "Super" then
-			OpenMenu('super')
-		elseif btn == "Muscle" then
-			OpenMenu('muscle')
-		elseif btn == "Off-Road" then
-			OpenMenu('offroad')
-		elseif btn == "SUVs" then
-			OpenMenu('suvs')
-		elseif btn == "Vans" then
-			OpenMenu('vans')
-		end
-	elseif this == "compacts" or this == "coupes" or this == "sedans" or this == "sports" or this == "sportsclassics" or this == "super" or this == "muscle" or this == "offroad" or this == "suvs" or this == "vans" or this == "industrial" or this == "cycles" or this == "motorcycles" then
-		TriggerServerEvent('CheckMoneyForVeh',btn, button.model,button.costs)
-	end
-end
-
-RegisterNetEvent('FinishMoneyCheckForVeh')
-AddEventHandler('FinishMoneyCheckForVeh', function(name, vehicle)
+AddEventHandler('FinishMoneyCheckForVeh', function(name, vehicle, price)	
+	local name = name
 	local vehicle = vehicle
+	local price = price
 	boughtcar = true
-	CloseCreator(name, vehicle)
+	CloseCreator(name, vehicle, price)
 end)
 
-function OpenMenu(menu)
-	fakecar = {model = '', car = nil}
-	vehshop.lastmenu = vehshop.currentmenu
-	if menu == "vehicles" then
-		vehshop.lastmenu = "main"
-	elseif menu == "bikes"  then
-		vehshop.lastmenu = "main"
-	elseif menu == 'race_create_objects' then
-		vehshop.lastmenu = "main"
-	elseif menu == "race_create_objects_spawn" then
-		vehshop.lastmenu = "race_create_objects"
-	end
-	vehshop.menu.from = 1
-	vehshop.menu.to = 10
-	vehshop.selectedbutton = 0
-	vehshop.currentmenu = menu
-end
-
-
-function Back()
-	if backlock then
-		return
-	end
-	backlock = true
-	if vehshop.currentmenu == "main" then
-		CloseCreator()
-	elseif vehshop.currentmenu == "compacts" or vehshop.currentmenu == "coupes" or vehshop.currentmenu == "sedans" or vehshop.currentmenu == "sports" or vehshop.currentmenu == "sportsclassics" or vehshop.currentmenu == "super" or vehshop.currentmenu == "muscle" or vehshop.currentmenu == "offroad" or vehshop.currentmenu == "suvs" or vehshop.currentmenu == "vans" or vehshop.currentmenu == "industrial" or vehshop.currentmenu == "cycles" or vehshop.currentmenu == "motorcycles" then
-		if DoesEntityExist(fakecar.car) then
-			Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(fakecar.car))
-		end
-		fakecar = {model = '', car = nil}
-		OpenMenu(vehshop.lastmenu)
-	else
-		OpenMenu(vehshop.lastmenu)
-	end
-
-end
-
-function stringstarts(String,Start)
-   return string.sub(String,1,string.len(Start))==Start
-end
-
-local firstspawn = 0
 AddEventHandler('playerSpawned', function(spawn)
 if firstspawn == 0 then
 	--326 car blip 227 225
@@ -742,7 +739,6 @@ if firstspawn == 0 then
 end
 end)
 
-RegisterNetEvent('vehshop:spawnVehicle')
 AddEventHandler('vehshop:spawnVehicle', function(v)
 	local car = GetHashKey(v)
 	local playerPed = GetPlayerPed(-1)
@@ -752,9 +748,23 @@ AddEventHandler('vehshop:spawnVehicle', function(v)
 				Citizen.Wait(0)
 		end
 		local playerCoords = GetEntityCoords(playerPed)
-
 		veh = CreateVehicle(car, playerCoords, 0.0, true, false)
 		TaskWarpPedIntoVehicle(playerPed, veh, -1)
 		SetEntityInvincible(veh, true)
+	end
+end)
+
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		RemoveIpl('v_carshowroom')
+		RemoveIpl('shutter_open')
+		RemoveIpl('shutter_closed')
+		RemoveIpl('shr_int')
+		RemoveIpl('csr_inMission')
+		RequestIpl('v_carshowroom')
+		RequestIpl('shr_int')
+		RequestIpl('shutter_closed')
+		firstspawn = 1
 	end
 end)
