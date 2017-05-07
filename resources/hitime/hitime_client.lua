@@ -32,7 +32,7 @@ end)
 RegisterNetEvent("update.client.time")
 AddEventHandler('update.client.time', function(hours, minutes, seconds)
 Citizen.Trace(tostring(hours)..tostring(minutes)..tostring(seconds))
-NetworkOverrideClockTime(hours, minutes, seconds)
+NetworkOverrideClockTime(tonumber(hours),tonumber(minutes), tonumber(seconds))
 		Citizen.Trace("done")
 
 end)
