@@ -21,9 +21,9 @@ end)
 RegisterNetEvent('client.time')
 AddEventHandler('client.time', function()
    
-hours = GetClockHours
-minuts = GetClockMinutes
-sconds = GetClockSeconds
+hours = GetClockHours()
+minuts = GetClockMinutes()
+sconds = GetClockSeconds()
 	
 TriggerServerEvent("return.client.time", hours, minuts, seconds)
 
