@@ -9,12 +9,13 @@ Player.__index = Player
 
 -- Meta table for users
 setmetatable(Player, {
-	__call = function(self, source, permission_level, money, identifier, group)
+	__call = function(self, source, permission_level, money, dirty_money, identifier, group)
 		local pl = {}
 
 		pl.source = source
 		pl.permission_level = permission_level
 		pl.money = money
+		pl.dirty_money = dirty_money
 		pl.identifier = identifier
 		pl.group = group
 		pl.coords = {x = 0.0, y = 0.0, z = 0.0}
