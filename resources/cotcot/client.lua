@@ -11,6 +11,11 @@ AddEventHandler('playerSpawned', function(spawn)
       table.insert(storedPeds, {ped = thisPed})
       SetEntityInvincible(thisPed, true)
     end
+<<<<<<< HEAD
     firstspawn = 1
   end
+=======
+    
+    
+>>>>>>> origin/master
 end)

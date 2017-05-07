@@ -225,13 +225,12 @@ Citizen.CreateThread(function()
 			end
 		end
 		
-		if (IsControlJustPressed(27 , 71)) then                                  ------ On enleve le limitateur
+		if (IsControlJustPressed(1 , 71)) then      		------ On enleve le limitateur
+			Citizen.Trace("Touche ok ")
 			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 ) then
-				if not(engine) then
 					SetVehicleEngineOn(playerVeh, true, true)
-					SetVehiculeUndrivable(playerVeh, true)
+					SetVehicleUndriveable(playerVeh, false)
 					engine = true
-				end
 			end
 		end  
 		
@@ -329,17 +328,17 @@ elseif  btn == "Arrière gauche" then OpenCloseDoor(btn)
 elseif  btn == "Arrière droite" then OpenCloseDoor(btn)
 ---
 
-elseif btn == "10"  then Openlimitator(tonumber(btn))
+elseif btn == "10"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "30"  then Openlimitator(tonumber(btn))
+elseif btn == "30"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "50"  then Openlimitator(tonumber(btn))
+elseif btn == "50"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "90"  then Openlimitator(tonumber(btn))
+elseif btn == "90"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "110"  then Openlimitator(tonumber(btn))
+elseif btn == "110"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "Enlever la limite"  then StopLimitator() -- string enlever la limite
+elseif btn == "Enlever la limite"  then OpenLimitator(500) -- trop hacky
 ---
 
 
@@ -393,14 +392,6 @@ end
 		end
 	elseif this == "Eteindre le moteur" then
 		if btn == "TEST" then
-			
-			Citizen.Trace("engine = " .. tosting(engine))
-			if engine then
-				Citizen.Trace("playerVeh : ".. tostring(playerVeh))
-				SetVehicleEngineOn(playerVeh, false, true)
-				SetVehiculeUndrivable(playerVeh, true)
-			end
-			engine = false
 			OpenCreator()
 		elseif btn == "TEST2" then Citizen.Trace("Select button 2")
 			
@@ -469,11 +460,13 @@ function OpenLimitator(acombienjetelimitemonbro)
 end
 
 function ToggleEngineOff()
-	Citizen.Trace("engine = " .. tosting(engine))
+	Citizen.Trace("engine = " .. tostring(engine))
 	if engine then
 		Citizen.Trace("playerVeh : ".. tostring(playerVeh))
 		SetVehicleEngineOn(playerVeh, false, true)
-		SetVehiculeUndrivable(playerVeh, true)
+		Citizen.Trace("playerVeh : ".. tostring(playerVeh))
+		SetVehicleUndriveable(playerVeh, engine)
+		Citizen.Trace("playerVeh : ".. tostring(playerVeh))
 	end
 	engine = false
 	OpenCreator()
