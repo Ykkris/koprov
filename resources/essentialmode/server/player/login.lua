@@ -11,10 +11,10 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 function LoadUser(identifier, source, new)
 	local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@name'", {['@name'] = identifier})
-	local result = MySQL:getResults(executed_query, {'permission_level', 'money', 'identifier', 'group'}, "identifier")
+	local result = MySQL:getResults(executed_query, {'permission_level', 'money', 'dirty_money', 'identifier', 'group'}, "identifier")
 
 	local group = groups[result[1].group]
-	Users[source] = Player(source, result[1].permission_level, result[1].money, result[1].identifier, group)
+	Users[source] = Player(source, result[1].permission_level, result[1].money, result[1].dirty_money, result[1].identifier, group)
 
 	TriggerEvent('es:playerLoaded', source, Users[source])
 
@@ -162,13 +162,11 @@ local function savePlayerMoney()
 	SetTimeout(60000, function()
 		TriggerEvent("es:getPlayers", function(users)
 			for k,v in pairs(users)do
-				MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'",
-			    {['@value'] = v.money, ['@identifier'] = v.identifier})
+				MySQL:executeQuery("UPDATE users SET `money`='@value', `dirty_money`='@v2' WHERE identifier = '@identifier'",
+			    {['@value'] = v.money, ['@v2'] = v.dirty_money, ['@identifier'] = v.identifier})
 			end
 		end)
 
 		savePlayerMoney()
 	end)
 end
-
-savePlayerMoney()
