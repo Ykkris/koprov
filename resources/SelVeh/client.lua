@@ -33,9 +33,8 @@ end)
 AddEventHandler('test:SelVehicle', function(result, result2)
 	local car = GetHashKey(vehicle)	
 	
-	local plate = result2.[1] -- a changer
+	local plate = result2[1] -- a changer
 	
-	end
 	Citizen.CreateThread(function()		
 		Citizen.Wait(0)
 		local caissei = GetVehiclePedIsIn(GetPlayerPed(-1))
