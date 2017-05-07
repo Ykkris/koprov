@@ -1,13 +1,13 @@
 require "resources/essentialmode/lib/MySQL"
 MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
-RegisterServerEvent('selveh:CheckForVeh')
-RegisterServerEvent('selveh:CheckForSelVeh')
-RegisterServerEvent('selveh:SelVeh')
+RegisterServerEvent('test:CheckForVeh')
+RegisterServerEvent('test:CheckForSelVeh')
+RegisterServerEvent('test:SelVeh')
 
 local vehicles = {}
 
-AddEventHandler('selveh:CheckForSelVeh', function()
+AddEventHandler('test:CheckForSelVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local state = "Sortit"
     local player = user.identifier
@@ -21,11 +21,11 @@ AddEventHandler('selveh:CheckForSelVeh', function()
       local plate = plate
       end
     end
-    TriggerClientEvent('selveh:SelVehicle', source, vehicle, plate)
+    TriggerClientEvent('test:SelVehicle', source, vehicle, plate)
   end)
 end)
 
-AddEventHandler('selveh:SelVeh', function(plate)
+AddEventHandler('test:SelVeh', function(plate)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
     local plate = plate
