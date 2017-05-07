@@ -56,3 +56,7 @@ AddEventHandler("test:getVehicles", function(THEVEHICLES)
     VEHICLES = {}
     VEHICLES = THEVEHICLES
 end)
+
+function LocalPed()
+	return GetPlayerPed(-1)
+end
