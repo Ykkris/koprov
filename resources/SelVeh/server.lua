@@ -30,8 +30,9 @@ AddEventHandler('test:SelVeh', function(plate)
     local result = MySQL:getResults(executed_query, {'vehicle_price'}, "identifier")
     if(result)then
         price = result[1].vehicle_price
-       local price = price / 2      
-       user:addMoney((price))
+       local price = price / 2
+       Citizen.Trace(tostring(price))
+       deposit(player, price)
 
     end
     local executed_query = MySQL:executeQuery("DELETE from user_vehicle WHERE identifier = '@username' AND vehicle_plate = '@plate'",
@@ -39,3 +40,9 @@ AddEventHandler('test:SelVeh', function(plate)
     TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Véhicule vendu!\n")
   end)
 end)
+
+function deposit(player, amount)
+  local bankbalance = bankBalance(player)
+  local new_balance = bankbalance + amount
+  MySQL:executeQuery("UPDATE users SET `bankbalance`='@value' WHERE identifier = '@identifier'", {['@value'] = new_balance, ['@identifier'] = player})
+end
