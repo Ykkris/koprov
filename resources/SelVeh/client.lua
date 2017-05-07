@@ -30,9 +30,10 @@ Citizen.CreateThread(function()
 	end
 end)
 
-AddEventHandler('test:SelVehicle', function(vehicle, plate)
+AddEventHandler('test:SelVehicle', function(result)
 	local car = GetHashKey(vehicle)	
-	local plate = plate
+	local plate = result[1][1]
+	Citizen.Trace(plate)
 	Citizen.CreateThread(function()		
 		Citizen.Wait(0)
 		local caissei = GetVehiclePedIsIn(GetPlayerPed(-1))
