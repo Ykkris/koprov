@@ -329,17 +329,17 @@ elseif  btn == "Arrière gauche" then OpenCloseDoor(btn)
 elseif  btn == "Arrière droite" then OpenCloseDoor(btn)
 ---
 
-elseif btn == "10"  then Openlimitator(tonumber(btn))
+elseif btn == "10"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "30"  then Openlimitator(tonumber(btn))
+elseif btn == "30"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "50"  then Openlimitator(tonumber(btn))
+elseif btn == "50"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "90"  then Openlimitator(tonumber(btn))
+elseif btn == "90"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "110"  then Openlimitator(tonumber(btn))
+elseif btn == "110"  then OpenLimitator(tonumber(btn))
 
-elseif btn == "Enlever la limite"  then StopLimitator() -- string enlever la limite
+elseif btn == "Enlever la limite"  then OpenLimitator(500) -- trop hacky
 ---
 
 
