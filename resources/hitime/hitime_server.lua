@@ -9,7 +9,7 @@ AddEventHandler('Join', function()
 	actualplayer = source
 	local players = GetPlayers()
 	if #players >= 2 then
-		TriggerClientEvent("client.time", players[1])
+		TriggerClientEvent("client.time", players[0])
 	end
 
 
@@ -20,6 +20,6 @@ end)
 RegisterServerEvent('return.client.time')
 AddEventHandler('return.client.time', function(hours, minuts, seconds)
 
-	TriggerClientEvent("update.client.time", actualplayer, hours, minutes, seconds)
+	TriggerClientEvent("update.client.time", actualplayer, hours, minuts, seconds)
 	
 end)
