@@ -45,8 +45,8 @@ AddEventHandler('playerDropped', function()
 	if(Users[source])then
 		TriggerEvent("es:playerDropped", Users[source])
 
-		MySQL:executeQuery("UPDATE users SET `money`='@value' WHERE identifier = '@identifier'",
-		{['@value'] = Users[source].money, ['@identifier'] = Users[source].identifier})
+		MySQL:executeQuery("UPDATE users SET `money`='@value', `dirty_money`='@v2' WHERE identifier = '@identifier'",
+		{['@value'] = Users[source].money, ['@v2'] = Users[source].dirty_money, ['@identifier'] = Users[source].identifier})
 
 		Users[source] = nil
 	end
