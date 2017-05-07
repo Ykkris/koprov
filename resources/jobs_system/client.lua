@@ -79,10 +79,10 @@ Citizen.CreateThread(function()
       menuJobs()
       Menu.hidden = not Menu.hidden 
     end
+  end
     if (IsNearJobs() == false) and (Menu.hidden == false) then
           Menu.hidden = not Menu.hidden
     end
-  end
     Menu.renderGUI()
   end
 end)
