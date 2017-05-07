@@ -23,7 +23,7 @@ AddEventHandler('client.time', function()
    
 hours = GetClockHours()
 minuts = GetClockMinutes()
-sconds = GetClockSeconds()
+seconds = GetClockSeconds()
 	
 TriggerServerEvent("return.client.time", hours, minuts, seconds)
 
