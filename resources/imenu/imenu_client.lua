@@ -442,7 +442,7 @@ end
 
 
 function OpenCloseDoor(dumbledor)
-	 
+	
 	
 	--GET_VEHICLE_DOOR_ANGLE_RATIO
 	--SET_VEHICLE_DOOR_OPEN	
