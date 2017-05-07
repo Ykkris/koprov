@@ -33,7 +33,7 @@ local garage = {
 		scale = 0.4,
 		font = 0,
 		["main"] = {
-			title = "Actions",
+			title = "CATEGORIES",
 			name = "main",
 			buttons = {
 				{name = "Rentrer ton véhicule", description = "", action = "rentrer"},
@@ -397,6 +397,24 @@ function ButtonSelected(button)
 	end
 end
 
+function OpenMenu(menu)
+	fakecar = {model = '', car = nil}
+	garage.lastmenu = garage.currentmenu
+	if menu == "vehicles" then
+		garage.lastmenu = "main"
+	elseif menu == "bikes"  then
+		garage.lastmenu = "main"
+	elseif menu == 'race_create_objects' then
+		garage.lastmenu = "main"
+	elseif menu == "race_create_objects_spawn" then
+		garage.lastmenu = "race_create_objects"
+	end
+	garage.menu.from = 1
+	garage.menu.to = 10
+	garage.selectedbutton = 0
+	garage.currentmenu = menu
+end
+
 
 function Back()
 	if backlock then
@@ -490,7 +508,7 @@ end)
 AddEventHandler('garages:DisplayVehicles', function(buttons)
 
 	local list = { 
-		title = "Vehicules",
+		title = "VEHICLES",
 		name = "list",
 		buttons = buttons
 	}
