@@ -30,7 +30,7 @@ AddEventHandler('test:SelVeh', function(plate)
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_plate ='@plate'",{['@username'] = player, ['@plate'] = plate})
     local result = MySQL:getResults(executed_query, {'vehicle_price'}, "identifier")
     if(result)then
-        price = result[1].vehicle_price
+       price = result[1].vehicle_price
        local price = price / 2
        RconPrint(tostring(price))
        deposit(player, price)
