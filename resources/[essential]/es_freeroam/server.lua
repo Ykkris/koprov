@@ -11,6 +11,8 @@ AddEventHandler('es:playerLoaded', function(source)
 	-- Get the players money amount
 	TriggerEvent("es:getPlayerFromId", source, function(user)
 	user:setMoney((user.money))
+	TriggerClientEvent('es:activatedirtyMoney', source, user.dirty_money)
+	end)
 	end)
 end)
 
