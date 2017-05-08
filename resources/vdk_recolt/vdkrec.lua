@@ -143,6 +143,8 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
         near, item = IsNear()
+	Citizen.Trace(tostring(near == field))
+	Citizen.Trace(tostring(item.job_id).."  "..tostring(jobId))
 	--neari, itemi = IsNeari()
         if (exports.vdk_inventory:notFull() == true) then
             if (near == 'field' and exports.vdk_inventory:getQuantity(item.raw_id) < item.raw_lim ) then
