@@ -174,3 +174,14 @@ function getNearPlayer()
         return playerNear
     end
 end
+
+function getPlayers()
+    local playerList = {}
+    for i = 0, 32 do
+        local player = GetPlayerFromServerId(i)
+        if NetworkIsPlayerActive(player) then
+            table.insert(playerList, player)
+        end
+    end
+    return playerList
+end
