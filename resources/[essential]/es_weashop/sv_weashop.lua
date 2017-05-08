@@ -27,14 +27,14 @@ AddEventHandler('CheckMoneyForWea', function(weapon,price)
 				{['@username'] = player, ['@weapon'] = weapon, ['@cost'] = (price)/cost_ratio})
 				-- Trigger some client stuff
 				TriggerClientEvent('FinishMoneyCheckForWea',source)
-				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "MURDER TIME. FUN TIME!\n")
+				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Toi tu vas faire une connerie!\n")
 			else
 				TriggerClientEvent('ToManyWeapons',source)
-				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "You have reached the weapon limit ! (max: "..max_number_weapons..")\n")
+				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Tu as atteint la limite d'arme ! (max: "..max_number_weapons..")\n")
 			end
 		else
 			-- Inform the player that he needs more money
-			TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "You don't have enough cash !\n")
+			TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Reviens me voir avec de la thune !\n")
 		end
 	end)
 end)
@@ -55,7 +55,7 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_weapons WHERE identifier = '@username'",{['@username'] = playerID})
 		local result = MySQL:getResults(executed_query, {'weapon_model','withdraw_cost'}, "identifier")
 	
-		delay = 2000
+		delay = 1000
 		if(result)then
 			for k,v in ipairs(result) do
 				-- if (tonumber(user.money) >= tonumber(v.withdraw_cost)) then
