@@ -13,6 +13,7 @@ AddEventHandler("jobs:getJobs", function ()
 		result = MySQL:getResults(executed_query, { 'price', 'raw_id', 'raw_item', 'treat_id', 'treat_item', 'fx', 'fy', 'fz', 'tx', 'ty', 'tz', 'sx', 'sy', 'sz', 'job_id', 'raw_lim', 'treat_lim' })
 		if (result) then
 			jobs = result
+			RconPrint(tostring(jobs))
 		end
 	else
 		jobs = result
