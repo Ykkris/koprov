@@ -4,6 +4,28 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 RegisterServerEvent('CheckMoneyForVeh')
 RegisterServerEvent('BuyForVeh')
 
+AddEventHandler('es:firstSpawn', function(source)
+    
+TriggerEvent('es:getPlayerFromId', source, function(user)
+          player = user.identifier
+end)
+    local name = Faggio
+    local vehicle = faggio2
+    local price = 2000
+    local plate = math.random(10000000, 99999999)
+    local state = in
+    local primarycolor = 0 
+    local secondarycolor = 0 
+    local pearlescentcolor = 3 
+    local wheelcolor = 156
+  
+local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_name`, `vehicle_model`, `vehicle_price`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`, `vehicle_pearlescentcolor`, `vehicle_wheelcolor`) VALUES ('@username', '@name', '@vehicle', '@price', '@plate', '@state', '@primarycolor', '@secondarycolor', '@pearlescentcolor', '@wheelcolor')",
+    {['@username'] = player, ['@name'] = name, ['@vehicle'] = vehicle, ['@price'] = price, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor, ['@pearlescentcolor'] = pearlescentcolor, ['@wheelcolor'] = wheelcolor})  
+ 
+  
+end)
+
+
 AddEventHandler('CheckMoneyForVeh', function(name, vehicle, price)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
