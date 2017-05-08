@@ -16,22 +16,22 @@ pz = {}
 TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 	-- L'utilisateur est un administrateur.
 	RconPrint(tostring(args[1].. "   "..tostring(args[2])))
-	if args[1] == 'commencer' then
+	if args[2] == 'commencer' then
 		utilise = true
 		TriggerClientEvent('mazone:demarrage', source, args)
 		TriggerClientEvent('mazone:notification', source, "Demarrage effectué, /mazone point ou /mazone sauvegarder maintenant")
 		
-	else if (args[1] == 'point' and utilise) then
+	else if (args[2] == 'point' and utilise) then
 		TriggerClientEvent('mazone:pointage', source, args)
 		else TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 		end
 	end
 	
-	if (args[1] == 'sauvegarder' and utilise) then
-		if args[2] ~= nil then
+	if (args[2] == 'sauvegarder' and utilise) then
+		if args[3] ~= nil then
 			TriggerClientEvent('mazone:sauvegarder', source, args)
 			utilise = false
-			name = args[2]
+			name = args[3]
 			Wait(300)
 			px = {}
 			py = {}
@@ -43,7 +43,7 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 		TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 	end
 	
-	if (args[1] == 'arret' and utilise) then
+	if (args[2] == 'arret' and utilise) then
 		TrigerClientEvent('mazone:arret', source, args)
 		utilise = false
 		px = {}
