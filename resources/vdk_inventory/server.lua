@@ -10,7 +10,7 @@ RegisterServerEvent("player:giveItem")
 
 local items = {}
 
-AddEventHandler("onResourceStart", function("vdk_inventory")
+AddEventHandler("onResourceStart", function(vdk_inventory)
       Players = {}
       Players = GetPlayers()
       for k in ipairs(Players) do
