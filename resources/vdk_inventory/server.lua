@@ -10,6 +10,16 @@ RegisterServerEvent("player:giveItem")
 
 local items = {}
 
+AddEventHandler("onResourceStart", function("vdk_inventory")
+      Players = {}
+      Players = GetPlayers()
+      for k in ipairs(Players) do
+            
+      TriggerEvent("update:getItems", k)
+      
+      end
+        
+end
 
 AddEventHandler("item:getItems", function()
     items = {}
@@ -24,6 +34,21 @@ AddEventHandler("item:getItems", function()
     end
     TriggerClientEvent("gui:getItems", source, items)
 end)
+    
+AddEventHandler("update:getItems", function(player)  -- Ajout pour le OnResourceStart
+    items = {}
+    local playert = getPlayerID(player)
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_inventory JOIN items ON `user_inventory`.`item_id` = `items`.`id` WHERE user_id = '@username'", { ['@username'] = playert })
+    local result = MySQL:getResults(executed_query, { 'quantity', 'libelle', 'item_id' }, "item_id")
+    if (result) then
+        for _, v in ipairs(result) do
+            t = { ["quantity"] = v.quantity, ["libelle"] = v.libelle }
+            table.insert(items, tonumber(v.item_id), t)
+        end
+    end
+    TriggerClientEvent("gui:getItems", player, items)
+end)
+
 
 AddEventHandler("item:setItem", function(item, quantity)
     local player = getPlayerID(source)
