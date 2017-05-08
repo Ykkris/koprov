@@ -2,7 +2,7 @@ ITEMS = {}
 -- flag to keep track of whether player died to prevent
 -- multiple runs of player dead code
 local playerdead = false
-local maxCapacity = 60
+local maxCapacity = 150
 
 -- register events, only needs to be done once
 RegisterNetEvent("item:reset")
@@ -65,14 +65,14 @@ function delete(arg)
     InventoryMenu()
 end
 
-function add(arg)
-    local itemId = tonumber(arg[1])
-    local qty = arg[2]
-    local item = ITEMS[itemId]
-    item.quantity = item.quantity + qty
-    TriggerServerEvent("item:updateQuantity", item.quantity, itemId)
-    InventoryMenu()
-end
+-- function add(arg)
+--     local itemId = tonumber(arg[1])
+--     local qty = arg[2]
+--     local item = ITEMS[itemId]
+--     item.quantity = item.quantity + qty
+--     TriggerServerEvent("item:updateQuantity", item.quantity, itemId)
+--     InventoryMenu()
+-- end
 
 function new(item, quantity)
     TriggerServerEvent("item:setItem", item, quantity)
