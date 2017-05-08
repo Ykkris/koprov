@@ -2,7 +2,7 @@ ITEMS = {}
 -- flag to keep track of whether player died to prevent
 -- multiple runs of player dead code
 local playerdead = false
-local maxCapacity = 64
+local maxCapacity = 60
 
 -- register events, only needs to be done once
 RegisterNetEvent("item:reset")
@@ -80,7 +80,11 @@ function new(item, quantity)
 end
 
 function getQuantity(itemId)
-    return ITEMS[tonumber(itemId)].quantity
+	if(not ITEMS[tonumber(itemId)]) then
+		return 0
+	else
+		return ITEMS[tonumber(itemId)].quantity
+	end
 end
 
 function notFull()
@@ -93,7 +97,7 @@ end
 
 function InventoryMenu()
     ped = GetPlayerPed(-1);
-    MenuTitle = "Objets:"
+    MenuTitle = "Items:"
     ClearMenu()
     for ind, value in pairs(ITEMS) do
         if (value.quantity > 0) then
@@ -106,7 +110,7 @@ function ItemMenu(itemId)
     MenuTitle = "Details:"
     ClearMenu()
     Menu.addButton("Supprimer 1", "delete", { itemId, 1 })
-    --Menu.addButton("Ajouter 1", "add", { itemId, 1 })
+    Menu.addButton("Ajouter 1", "add", { itemId, 1 })
 end
 
 Citizen.CreateThread(function()
