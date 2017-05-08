@@ -111,7 +111,7 @@ local xoffset = 0
 		end
 		SetTextFont(0)
 		SetTextScale(0.0,0.35)
-		SetTextColour(0, 0, 0, 0)
+		SetTextColour(0, 0, 0, 255)
 		SetTextCentre(true)
 		-- SetTextDropShadow(0, 0, 0, 0, 0)
 		SetTextEdge(0, 0, 0, 0, 0)
