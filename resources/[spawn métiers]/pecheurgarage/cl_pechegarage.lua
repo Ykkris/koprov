@@ -51,13 +51,13 @@ local Keys = {
 
 -- NEW VERSION
 local cmd = {
-	["camionb"] = { event = 'bucheron:s_camionb' }
+	["bateaup"] = { event = 'pecheur:s_bateaup' }
 }
 
 function InitMenuVehicules()
 	MenuTitle = "SpawnJobs"
 	ClearMenu()
-	Menu.addButton("Camion Bûcheron", "callSE", cmd["camionb"].event)
+	Menu.addButton("Bateau", "callSE", cmd["bateaup"].event)
 end
 
 function callSE(evt)
@@ -69,10 +69,10 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		DrawMarker(1, -31.124, -2653.691, 5.0162, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
+		DrawMarker(1, 107.2117, -3085.819, 4.9999, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
 
-		if GetDistanceBetweenCoords(-31.124, -2653.691, 5.0162, GetEntityCoords(LocalPed())) < 1 then
-			drawTxt('Press ~g~H~s~ to spawn a ~b~Car', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
+		if GetDistanceBetweenCoords(107.2117, -3085.819, 5.9999, GetEntityCoords(LocalPed())) < 1 then
+			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre un ~b~bateau', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
 				Menu.hidden = not Menu.hidden
@@ -82,19 +82,19 @@ Citizen.CreateThread(function()
 	end
 end)
 
-RegisterNetEvent('bucheron:c_camionb')
-AddEventHandler('bucheron:c_camionb', function()
+RegisterNetEvent('pecheur:c_bateaup')
+AddEventHandler('pecheur:c_bateaup', function()
 Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
-	local vehicle = GetHashKey('rubble')
+	local vehicle = GetHashKey('tug')
 	RequestModel(vehicle)
 	while not HasModelLoaded(vehicle) do
 		Wait(1)
 	end
 	local plate = math.random(100, 900)
-	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_camion = CreateVehicle(vehicle, coords, 431.436, - 996.786, 25.1887, true, false)
+	-- local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), -0.5, 20.0, 2.0)
+	local spawned_camion = CreateVehicle(vehicle, 95.381, -3085.819, 5.597, false, true)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)

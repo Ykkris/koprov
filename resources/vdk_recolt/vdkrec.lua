@@ -70,6 +70,7 @@ function IsNear()
     local ply = GetPlayerPed(-1)
     local plyCoords = GetEntityCoords(ply, 0)
 	if(IsPedInAnyVehicle(ply, true) == false) then
+        Citizen.Trace(tostring(IsPedInAnyVehicle(ply, true)))
 			
 		for k, item in ipairs(JOBS) do
 			if(item.job_id == jobId) then  -- if(item.job_id == jobId or item.job_id == 6) then
