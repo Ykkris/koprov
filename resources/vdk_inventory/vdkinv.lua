@@ -154,3 +154,23 @@ function PlayerIsDead()
     end
     TriggerServerEvent("item:reset")
 end
+
+function getNearPlayer()
+    local players = getPlayers()
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local pos2
+    local distance
+    local minDistance = 3
+    local playerNear
+    for _, player in pairs(players) do
+        pos2 = GetEntityCoords(GetPlayerPed(player))
+        distance = GetDistanceBetweenCoords(pos["x"], pos["y"], pos["z"], pos2["x"], pos2["y"], pos2["z"], true)
+        if (pos ~= pos2 and distance < minDistance) then
+            playerNear = player
+            minDistance = distance
+        end
+    end
+    if (minDistance < 3) then
+        return playerNear
+    end
+end
