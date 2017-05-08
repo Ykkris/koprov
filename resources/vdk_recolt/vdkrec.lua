@@ -74,6 +74,7 @@ function IsNear()
 			
 		for k, item in ipairs(JOBS) do
 			if(item.job_id == jobId) then  -- if(item.job_id == jobId or item.job_id == 6) then
+				Citizen.Trace(tostring(item.job_id))
 				local distance_field = GetDistanceBetweenCoords(item.fx, item.fy, item.fz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
 				local distance_treatment = GetDistanceBetweenCoords(item.tx, item.ty, item.tz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
 				local distance_seller = GetDistanceBetweenCoords(item.sx, item.sy, item.sz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
@@ -144,7 +145,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
         near, item = IsNear()
 	Citizen.Trace(tostring(near == field))
-	Citizen.Trace(tostring(item.job_id).."  "..tostring(jobId))
+	Citizen.Trace(tostring(jobId))
 	--neari, itemi = IsNeari()
         if (exports.vdk_inventory:notFull() == true) then
             if (near == 'field' and exports.vdk_inventory:getQuantity(item.raw_id) < item.raw_lim ) then
