@@ -111,6 +111,24 @@ function ItemMenu(itemId)
     ClearMenu()
     Menu.addButton("Supprimer 1", "delete", { itemId, 1 })
     Menu.addButton("Ajouter 1", "add", { itemId, 1 })
+    Menu.addButton("Donner", "give", itemId)
+end
+
+function give(item)
+    local player = getNearPlayer()
+    if (player ~= nil) then
+        DisplayOnscreenKeyboard(1, "Quantité :", "", "", "", "", "", 2)
+        while (UpdateOnscreenKeyboard() == 0) do
+            DisableAllControlActions(0);
+            Wait(0);
+        end
+        if (GetOnscreenKeyboardResult()) then
+            local res = tonumber(GetOnscreenKeyboardResult())
+            if (ITEMS[item].quantity - res >= 0) then
+                TriggerServerEvent("player:giveItem", item, ITEMS[item].libelle, res, GetPlayerServerId(player))
+            end
+        end
+    end
 end
 
 Citizen.CreateThread(function()
