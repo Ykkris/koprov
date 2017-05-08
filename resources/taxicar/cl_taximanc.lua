@@ -57,7 +57,7 @@ local cmd = {
 function InitMenuVehicules()
 	MenuTitle = "SpawnJobs"
 	ClearMenu()
-	Menu.addButton("Camion Bûcheron", "callSE", cmd["taxicar"].event)
+	Menu.addButton("Voiture de taxis", "callSE", cmd["taxicar"].event)
 end
 
 function callSE(evt)
@@ -69,10 +69,10 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		DrawMarker(1, 904.5086, -173.662, 73.0755, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
+		DrawMarker(1, 904.5086, -173.662, 73.0755, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 185, 169, 65, 200, 0, 0, 0, 0)
 
 		if GetDistanceBetweenCoords(904.5086, -173.662, 74.0755, GetEntityCoords(LocalPed())) < 1 then
-			drawTxt('Press ~g~H~s~ to spawn a ~b~Car', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
+			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre un ~b~taxis', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
 				Menu.hidden = not Menu.hidden
