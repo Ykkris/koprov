@@ -64,9 +64,9 @@ AddEventHandler('mazone:pointclient', function(point)
 end)
 
 function AjoutPoint(point)
-	Points[ #Points + 1] = x.point
-	Points[ #Points + 1] = y.point
-	Points[ #Points + 1] = z.point
+	Points[ #Points + 1] = point.x
+	Points[ #Points + 1] = point.y
+	Points[ #Points + 1] = point.z
 	RconPrint("test :"tostring(Points[1]))
 	TriggerClientEvent('mazone:notification', source, "Point ajouté ! (/mazone sauvegarder) (/mazone arret)")
 end
