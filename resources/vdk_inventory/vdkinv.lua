@@ -125,7 +125,7 @@ function give(item)
         end
         if (GetOnscreenKeyboardResult()) then
             local res = tonumber(GetOnscreenKeyboardResult())
-            if (ITEMS[item].quantity - res >= 0) then
+            if ((ITEMS[item].quantity - res >= 0) and (res>0) ) then
                 TriggerServerEvent("player:giveItem", item, ITEMS[item].libelle, res, GetPlayerServerId(player))
             end
         end
