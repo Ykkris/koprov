@@ -13,7 +13,7 @@ py = {}
 pz = {}
 
 -- UNE SEULE PERSONNE PEUT UTILISER LA COMMANDE A LA FOIS : pour changer cela, on pourrait ajouter une data dans Player = {...,...,...,...}
-TriggerEvent('es:addAdminCommand', 'mazone', 5, function(source, args, user) 
+TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 	-- L'utilisateur est un administrateur.
 	if args[1] == 'commencer' then
 		utilise = true
