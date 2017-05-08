@@ -15,9 +15,9 @@ AddEventHandler('pecheur:s_bateaup', function()
     -- NAME OF YOUR JOB
     if namejob == "Pêcheur" then
       TriggerClientEvent('pecheur:c_bateaup', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedbat', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedbat', source)
     end
   end)
 end)

@@ -17,18 +17,18 @@ function drawTxt(text, font, centre, x, y, scale, r, g, b, a)
 	DrawText(x, y)
 end
 
-RegisterNetEvent("notworked")
-AddEventHandler("notworked", function()
+RegisterNetEvent("notworkedbat")
+AddEventHandler("notworkedbat", function()
 
 
 	SetNotificationTextEntry("STRING");
-	AddTextComponentString("~r~Impossible de faire spawn !" );
+	AddTextComponentString("~r~Vous n'avez pas le bon métier." );
 	DrawNotification(false, true);
 
 end)
 
-RegisterNetEvent("worked")
-AddEventHandler("worked", function()
+RegisterNetEvent("workedbat")
+AddEventHandler("workedbat", function()
 
 
 	SetNotificationTextEntry("STRING");
@@ -96,7 +96,7 @@ Citizen.Wait(0)
 	-- local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), -0.5, 20.0, 2.0)
 	local spawned_camion = CreateVehicle(vehicle, 95.381, -3085.819, 5.597, false, true)
 	SetVehicleOnGroundProperly(spawned_car)
-	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
+	SetVehicleNumberPlateText(spawned_car, ""..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	SetModelAsNoLongerNeeded(vehicle)
 	-- Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))

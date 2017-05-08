@@ -57,7 +57,7 @@ local cmd = {
 function InitMenuVehicules()
 	MenuTitle = "SpawnJobs"
 	ClearMenu()
-	Menu.addButton("Camion Bûcheron", "callSE", cmd["camionb"].event)
+	Menu.addButton("Camion", "callSE", cmd["camionb"].event)
 end
 
 function callSE(evt)
@@ -69,7 +69,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		DrawMarker(1, -31.124, -2653.691, 5.0162, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
+		DrawMarker(1, -31.124, -2653.691, 5.0162, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 60, 170, 78, 200, 0, 0, 0, 0)
 
 		if GetDistanceBetweenCoords(-31.124, -2653.691, 5.0162, GetEntityCoords(LocalPed())) < 1 then
 			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre un ~b~camion', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
@@ -93,8 +93,8 @@ Citizen.Wait(0)
 		Wait(1)
 	end
 	local plate = math.random(100, 900)
-	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_camion = CreateVehicle(vehicle, coords, 431.436, - 996.786, 25.1887, true, false)
+	-- local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+	local spawned_camion = CreateVehicle(vehicle, -14.0791, -2658.8503, 6.00430, true, false)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
