@@ -38,6 +38,7 @@ function IsNearJobs()
     local distance = GetDistanceBetweenCoords(item.x, item.y, item.z,  plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
     if(distance <= 10) then
       return true
+    else return false
     end
   end
 end
