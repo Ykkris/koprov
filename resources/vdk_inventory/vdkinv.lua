@@ -112,7 +112,6 @@ function ItemMenu(itemId)
     MenuTitle = "Details:"
     ClearMenu()
     Menu.addButton("Supprimer 1", "delete", { itemId, 1 })
-    Menu.addButton("Ajouter 1", "add", { itemId, 1 })
     Menu.addButton("Donner", "give", itemId)
 end
 
