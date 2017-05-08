@@ -13,7 +13,6 @@ AddEventHandler('es:playerLoaded', function(source)
 	user:setMoney((user.money))
 	TriggerClientEvent('es:activatedirtyMoney', source, user.dirty_money)
 	end)
-	end)
 end)
 
 RegisterServerEvent('mission:completed')
