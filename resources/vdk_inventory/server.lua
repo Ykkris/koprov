@@ -19,7 +19,7 @@ AddEventHandler("onResourceStart", function("vdk_inventory")
       
       end
         
-end
+end)
 
 AddEventHandler("item:getItems", function()
     items = {}
