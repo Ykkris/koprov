@@ -15,10 +15,10 @@ AddEventHandler('paycheck:salary', function()
 
     if job == 2 then
       user:addMoney(salary_job)
-      TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Salaire metier reçu : + "..salary_job.." ~g~€")
+      TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Salaire metier reçu : + "..salary_job.." ~g~$")
 	elseif job == 3 then
 	  user:addMoney(salary_job)
-	  TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Salaire metier reçu : + "..salary_job.." ~g~€")
+	  TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Salaire metier reçu : + "..salary_job.." ~g~$")
     end
   end)
 end)

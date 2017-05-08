@@ -375,7 +375,7 @@ function DoesPlayerHaveWeapon(model,button,y,selected, source)
 		if t then
 			drawMenuRight("OWNED",weashop.menu.x,y,selected)
 		else
-			drawMenuRight(button.costs.." €",weashop.menu.x,y,selected)
+			drawMenuRight(button.costs.." $",weashop.menu.x,y,selected)
 		end
 end
 
