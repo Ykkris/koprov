@@ -15,6 +15,7 @@ pz = {}
 -- UNE SEULE PERSONNE PEUT UTILISER LA COMMANDE A LA FOIS : pour changer cela, on pourrait ajouter une data dans Player = {...,...,...,...}
 TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 	-- L'utilisateur est un administrateur.
+	RconPrint(tostring(args[1].. "   "..tostring(args[2])))
 	if args[1] == 'commencer' then
 		utilise = true
 		TriggerClientEvent('mazone:demarrage', source, args)
