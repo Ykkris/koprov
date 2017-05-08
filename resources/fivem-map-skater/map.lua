@@ -1,3 +1,3 @@
-spawnpoint 'a_m_y_skater_01' { x = -802.311, y = 175.056, z = 72.8446 }
+spawnpoint 'a_m_y_skater_01' { x = -1827.58, y = 2624.977, z = 2.817 }
 
 --

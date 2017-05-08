@@ -1,5 +1,5 @@
 --Variables
-local recoltDistance = 10
+local recoltDistance = 5
 local timeForRecolt = 4000 --1000 for 1 second
 --
 
