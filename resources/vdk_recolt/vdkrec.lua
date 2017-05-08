@@ -34,7 +34,7 @@ AddEventHandler("cli:getJobs", function(listJobs)
 			Citizen.Trace(tostring(item.job_id))
 			Citizen.Trace(tostring(jobId))
 			if(item.job_id == jobId) then
-				if(jobId ~= 6)
+				if(jobId ~= 6) then
 				setBlip(item.fx, item.fy, item.fz, 17)
 				setBlip(item.tx, item.ty, item.tz, 18)
 				setBlip(item.sx, item.sy, item.sz, 19)
