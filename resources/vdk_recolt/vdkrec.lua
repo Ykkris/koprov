@@ -142,7 +142,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
         near, item = IsNear()
-	neari, itemi = IsNeari()
+	--neari, itemi = IsNeari()
         if (exports.vdk_inventory:notFull() == true) then
             if (near == 'field' and exports.vdk_inventory:getQuantity(item.raw_id) < item.raw_lim ) then
                 recolt('Récolte', item, '+1')
