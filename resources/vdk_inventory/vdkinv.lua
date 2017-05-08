@@ -11,6 +11,8 @@ RegisterNetEvent("item:updateQuantity")
 RegisterNetEvent("item:setItem")
 RegisterNetEvent("item:sell")
 RegisterNetEvent("gui:getItems")
+RegisterNetEvent("player:looseItem")
+RegisterNetEvent("player:receiveItems")
 
 -- handles when a player spawns either from joining or after death
 AddEventHandler("playerSpawned", function()
