@@ -9,11 +9,11 @@ AddEventHandler('es:firstSpawn', function(source)
 TriggerEvent('es:getPlayerFromId', source, function(user)
           player = user.identifier
 end)
-    local name = Faggio
-    local vehicle = faggio2
+    local name = "Faggio"
+    local vehicle = "faggio2"
     local price = 2000
     local plate = math.random(10000000, 99999999)
-    local state = in
+    local state = "in"
     local primarycolor = 0 
     local secondarycolor = 0 
     local pearlescentcolor = 3 
