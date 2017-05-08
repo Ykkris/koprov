@@ -13,7 +13,7 @@ AddEventHandler('bucheron:s_camionb', function()
     local player = user.identifier
     local namejob = nameJob(player)
     -- NAME OF YOUR JOB
-    if namejob == "Bûcheron" then
+    if (namejob == "Bûcheron" or namejob=="Mineur") then
       TriggerClientEvent('bucheron:c_camionb', source)
       TriggerClientEvent('worked', source)
     else
