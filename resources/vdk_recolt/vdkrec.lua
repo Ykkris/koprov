@@ -6,6 +6,7 @@ local timeForRecolt = 4000 --1000 for 1 second
 local near
 local jobId = 1
 JOBS = {}
+ILLJ = {}
 BLIPS = {}
 
 RegisterNetEvent("jobs:getJobs")
@@ -31,8 +32,6 @@ AddEventHandler("cli:getJobs", function(listJobs)
 	
     Citizen.CreateThread(function()
         for _, item in pairs(JOBS) do
-			Citizen.Trace(tostring(item.job_id))
-			Citizen.Trace(tostring(jobId))
 			if(item.job_id == jobId) then
 				if(jobId ~= 6) then
 				setBlip(item.fx, item.fy, item.fz, 17)
@@ -45,12 +44,35 @@ AddEventHandler("cli:getJobs", function(listJobs)
 end)
 
 -- Control if the player of is near of a place of job
+--function IsNeari()
+--    local ply = GetPlayerPed(-1)
+--    local plyCoords = GetEntityCoords(ply, 0)
+--	if(IsPedInAnyVehicle(ply, true) == false) then
+			
+--		local distance_field = GetDistanceBetweenCoords(6.fx, 6.fy, item.fz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+--		local distance_treatment = GetDistanceBetweenCoords(item.tx, item.ty, item.tz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+--		local distance_seller = GetDistanceBetweenCoords(item.sx, item.sy, item.sz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+		
+--		if (distance_field <= recoltDistance) then
+					--jobId = k
+--			return 'field', item
+--		elseif (distance_treatment <= recoltDistance) then
+					--jobId = k
+--			return 'treatment', item
+--		elseif (distance_seller <= recoltDistance) then
+					--jobId = k
+--			return 'seller', item
+--		end
+--	end
+--end
+
 function IsNear()
     local ply = GetPlayerPed(-1)
     local plyCoords = GetEntityCoords(ply, 0)
 	if(IsPedInAnyVehicle(ply, true) == false) then
+			
 		for k, item in ipairs(JOBS) do
-			if(item.job_id == jobId or item.job_id == 6) then
+			if(item.job_id == jobId) then  -- if(item.job_id == jobId or item.job_id == 6) then
 				local distance_field = GetDistanceBetweenCoords(item.fx, item.fy, item.fz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
 				local distance_treatment = GetDistanceBetweenCoords(item.tx, item.ty, item.tz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
 				local distance_seller = GetDistanceBetweenCoords(item.sx, item.sy, item.sz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
@@ -120,6 +142,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
         near, item = IsNear()
+	neari, itemi = IsNeari()
         if (exports.vdk_inventory:notFull() == true) then
             if (near == 'field' and exports.vdk_inventory:getQuantity(item.raw_id) < item.raw_lim ) then
                 recolt('Récolte', item, '+1')
