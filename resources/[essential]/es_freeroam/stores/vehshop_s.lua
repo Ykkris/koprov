@@ -3,9 +3,9 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 RegisterServerEvent('CheckMoneyForVeh')
 RegisterServerEvent('BuyForVeh')
-RegisterServerEvent('es:firstSpawn')
+RegisterServerEvent('es:playerLoaded')
 
-AddEventHandler('es:firstSpawn', function(source)
+AddEventHandler('es:playerLoaded', function(source)
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
         local name = "Faggio"
