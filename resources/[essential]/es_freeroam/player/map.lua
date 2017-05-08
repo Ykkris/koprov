@@ -59,7 +59,7 @@ local blips = {
     --{name="Casino", id=207, x=925.329, y=46.152, z=80.908 },
     {name="Maze Bank Arena", id=135, x=-250.604, y=-2030.000, z=30.000},
     {name="Stripbar", id=121, x=134.476, y=-1307.887, z=28.983},
-    {name="Downtown Cab Co", id=375, x=900.461, y=-181.466, z=73.89},
+    {name="Downtown Cab Co", id=198, x=900.461, y=-181.466, z=73.89},
     -- Gas stations
     {name="Gas Station", id=361, x=49.4187,   y=2778.793,  z=58.043},
     {name="Gas Station", id=361, x=263.894,   y=2606.463,  z=44.983},
@@ -108,6 +108,8 @@ local blips = {
     --{name="LS Customs", id=72, x= 118.485, y= 6619.560, z= 31.802},
 
     {name="Fourrière", id=68, x= 377.137, y= -1613.56, z= 29.2919},
+    {name="Bateau", id=371, x= 107.2117, y= -3085.819, z= 5.9999},
+    {name="Camion", id=318, x= -31.124, y= -2653.691, z= 5.0162},
   }
 
 Citizen.CreateThread(function()
