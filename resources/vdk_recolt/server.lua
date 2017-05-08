@@ -16,6 +16,7 @@ AddEventHandler("jobs:getJobs", function ()
 		end
 	else
 		jobs = result
+		Citizen.Trace(tostring(jobs))
 	end
     TriggerClientEvent("cli:getJobs", source, jobs)
 end)
