@@ -42,6 +42,8 @@ AutoStartResources:
     - cotcot
     - hitime
     - frfuel
+    - bucherongarage
+    - taxicar
 
 # do change
 RconPassword: koprobestv
