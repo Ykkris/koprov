@@ -41,6 +41,7 @@ AutoStartResources:
     - thecops
     - cotcot
     - hitime
+    - frfuel
 
 # do change
 RconPassword: koprobestv

@@ -88,7 +88,7 @@ function Menu.renderButtons()
 local yoffset = 0.3
 local xoffset = 0
 
-		SetTextFont(0)
+		SetTextFont(1)
 		SetTextScale(0.0,0.35)
 		SetTextColour(255, 255, 255, 255)
 		SetTextCentre(true)
@@ -97,23 +97,23 @@ local xoffset = 0
 		SetTextEntry("STRING") 
 		AddTextComponentString(string.upper(MenuTitle))
 		DrawText((xoffset + 0.05), (yoffset - 0.05 - 0.0125 ))
-		Menu.renderBox(xoffset,0.2,(yoffset - 0.05),0.05,20,30,10,255)
+		Menu.renderBox(xoffset,0.2,(yoffset - 0.05),0.05,231,76,60,255)
 		
 		
 	for id, settings in pairs(Menu.GUI) do
 		local screen_w = 0
 		local screen_h = 0
 		screen_w, screen_h =  GetScreenResolution(0, 0)
-		boxColor = {42,63,17,255}
+		boxColor = {255,255,255,255}
 		
 		if(settings["active"]) then
-			boxColor = {107,158,44,255}
+			boxColor = {208,208,208,255}
 		end
 		SetTextFont(0)
 		SetTextScale(0.0,0.35)
-		SetTextColour(255, 255, 255, 255)
+		SetTextColour(0, 0, 0, 0)
 		SetTextCentre(true)
-		SetTextDropShadow(0, 0, 0, 0, 0)
+		-- SetTextDropShadow(0, 0, 0, 0, 0)
 		SetTextEdge(0, 0, 0, 0, 0)
 		SetTextEntry("STRING") 
 		AddTextComponentString(settings["name"])
