@@ -48,6 +48,7 @@ AutoStartResources:
     - pecheurgarage
     - mazone
     - knockout
+    - medicgarage
 
 # do change
 RconPassword: koprobestv

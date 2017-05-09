@@ -110,6 +110,7 @@ local blips = {
     {name="Fourrière", id=68, x= 377.137, y= -1613.56, z= 29.2919},
     {name="Bateau", id=371, x= 107.2117, y= -3085.819, z= 5.9999},
     {name="Camion", id=318, x= -31.124, y= -2653.691, z= 5.0162},
+    {name="Médecin", id=153, x= 329, y= -1472.5, z= 29.8},
   }
 
 Citizen.CreateThread(function()
