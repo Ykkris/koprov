@@ -2,7 +2,7 @@ local Proxy = require("resources/vRP/lib/Proxy")
 
 vRP = Proxy.getInterface("vRP")
 
-ocal permission = {
+local permission = {
 	kick = 1,
 	normal = 0,
 	ban = 3
