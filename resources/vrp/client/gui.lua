@@ -119,7 +119,7 @@ Citizen.CreateThread(function()
     if IsControlJustPressed(3,177) then SendNUIMessage({act="event",event="CANCEL"}) end
 
     -- INPUT_PHONE, open general menu
-    if IsControlJustPressed(3,27) then vRPserver.openMainMenu({}) end
+    if IsControlJustPressed(3,213) then vRPserver.openMainMenu({}) end
 
     -- F5,F6 (control michael, control franklin)
     if IsControlJustPressed(1,166) then SendNUIMessage({act="event",event="F5"}) end
