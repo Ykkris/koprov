@@ -4,6 +4,7 @@ PreParseResources:
     - mapmanager
 
 AutoStartResources:
+    - vrp
     - essentialmode
     - es_admin
     - es_freeroam
