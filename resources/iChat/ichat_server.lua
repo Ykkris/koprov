@@ -18,7 +18,7 @@ end)
 
 -- 911 CALL
 TriggerEvent('es:addAdminCommand', '911', permission.normal, function(source, args, user)
-	 vRP.getUserId({source},function(user_id)
+	 vRP.getUserId({source},function(firstname, name)
 	local Prenom = firstname
 	local Nom = name
 			end)
@@ -32,7 +32,7 @@ end)
 -- ME
 -- TAXI
 TriggerEvent('es:addAdminCommand', 'Taxi', permission.normal, function(source, args, user)
-	 vRP.getUserId({source},function(user_id)
+	 vRP.getUserId({source},function(firstname, name)
 	local Prenom = firstname
 	local Nom = name
 			end)
