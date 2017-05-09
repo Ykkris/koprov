@@ -10,6 +10,8 @@ server_scripts {
 	"modules/identity.lua",
 	"modules/gui.lua",
 	"modules/emotes.lua",
+	"modules/player_state.lua",
+	"modules/map.lua",
 
 
 	-- basic implementations
@@ -20,7 +22,9 @@ client_scripts {
 	"client/Tunnel.lua",
   	"client/Proxy.lua",
 	"client/base.lua",
-	"client/gui.lua"
+	"client/gui.lua",
+	"client/map.lua",
+	"client/player_state.lua"
 }
 
 -- client files
