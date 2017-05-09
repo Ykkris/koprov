@@ -10,7 +10,7 @@ MySQL:open(database.host, database.name, database.username, database.password)
 
 RegisterServerEvent("essence:payer")
 AddEventHandler("essence:payer", function(litres) -- source, litres en float
-  local prix = litre
+  local prix = litres
   TriggerEvent('es:getPlayerFromId', source, function(user)
         user:removeMoney(prix)
   
