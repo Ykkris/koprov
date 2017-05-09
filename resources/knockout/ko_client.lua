@@ -42,3 +42,8 @@ function ShowNotification(text)
 	AddTextComponentString(text)
 	DrawNotification(false, false)
 end
+
+function Knocked(player,knockstate)
+		
+		
+end
