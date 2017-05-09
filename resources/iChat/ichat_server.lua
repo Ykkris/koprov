@@ -19,7 +19,7 @@ end)
 -- 911 CALL
 TriggerEvent('es:addAdminCommand', '911', permission.normal, function(source, args, user)
 	vRP.getUserIdentity(source ,function(user_id)
- 			local = PlayerName
+ 			local PlayerName = user_id
 	table.remove(args, 1)
 	TriggerClientEvent('chatMessage', -1, "^5[911]", {30, 144, 255}, " (^1 Identity: ^3" .. PlayerName .." | "..source.."^0 ) " .. table.concat(args, " "))
 	end)
@@ -31,7 +31,7 @@ end)
 -- TAXI
 TriggerEvent('es:addAdminCommand', 'Taxi', permission.normal, function(source, args, user)
 	vRP.getUserIdentity(source ,function(user_id)
- 			local = PlayerName
+ 			local PlayerName = user_id
 
 	table.remove(args, 1)
 	TriggerClientEvent('chatMessage', -1, "^5[Taxi]", {30, 144, 255}, " (^1 Identity: ^3" .. PlayerName .." | "..source.."^0 ) " .. table.concat(args, " "))
