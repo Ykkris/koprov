@@ -49,7 +49,6 @@ AutoStartResources:
     - mazone
     - knockout
     - medicgarage
-    - iChat
 
 # do change
 RconPassword: koprobestv

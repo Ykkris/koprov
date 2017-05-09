@@ -7,11 +7,11 @@ ui_page "gui/index.html"
 server_scripts {
 	"base.lua",
 	"modules/group.lua",
-	"modules/identity.lua",
 	"modules/gui.lua",
-	"modules/emotes.lua",
 	"modules/player_state.lua",
 	"modules/map.lua",
+	"modules/identity.lua",
+	"modules/emotes.lua",
 
 
 	-- basic implementations
@@ -24,6 +24,7 @@ client_scripts {
 	"client/base.lua",
 	"client/gui.lua",
 	"client/map.lua",
+	"cfg/client.lua",
 	"client/player_state.lua"
 }
 

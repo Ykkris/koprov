@@ -158,7 +158,7 @@ local function ch_identity(player,choice)
             vRP.prompt(player,lang.cityhall.identity.prompt_age(),"",function(player,age)
               age = tonumber(age)
               if age >= 16 and age <= 150 then
-                if vRP.tryPayment(user_id,cfg.new_identity_cost) then
+                 if vRP.tryPayment(user_id,cfg.new_identity_cost) then
                   local registration = vRP.generateRegistrationNumber()
                   local phone = vRP.generatePhoneNumber()
 
