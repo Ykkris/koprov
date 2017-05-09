@@ -14,6 +14,12 @@ function updatejob(player, id)
   TriggerClientEvent("recolt:updateJobs", source, job)
 end
 
+RegisterServerEvent('jobs:updatejob')
+AddEventHandler('jobs:updatejob'), function(player)
+  local exec = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier'", {['@identifier'] = player})
+  --local result = MySQL  
+end)
+
 RegisterServerEvent('jobssystem:jobs')
 AddEventHandler('jobssystem:jobs', function(id)
   TriggerEvent('es:getPlayerFromId', source, function(user)
