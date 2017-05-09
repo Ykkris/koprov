@@ -12,7 +12,7 @@ RegisterServerEvent("essence:payer")
 AddEventHandler("essence:payer", function(litres) -- source, litres en float
   local prix = litre
   TriggerEvent('es:getPlayerFromId', source, function(user)
-        user:removeMoney((amount))
+        user:removeMoney((prix))
   
   end)
 end)
