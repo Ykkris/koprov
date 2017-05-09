@@ -25,7 +25,6 @@ TriggerEvent('es:addAdminCommand', '911', permission.normal, function(source, ar
 	table.remove(args, 1)
 	
 	TriggerClientEvent('chatMessage', -1, "^5[911]", {30, 144, 255}, " (^1 Identity: ^3" .. Prenom .. " " .. Nom .. " " .." | "..source.."^0 ) " .. table.concat(args, " "))
-	end)
 			end, function(source, args, user)
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficienct permissions!")
 end)
