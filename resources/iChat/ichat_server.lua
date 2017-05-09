@@ -20,9 +20,9 @@ end)
 TriggerEvent('es:addAdminCommand', '911', permission.normal, function(source, args, user)
 	vRP.getUserIdentity(source ,function(user_id)
  			local PlayerName = user_id
+					end)
 	table.remove(args, 1)
 	TriggerClientEvent('chatMessage', -1, "^5[911]", {30, 144, 255}, " (^1 Identity: ^3" .. PlayerName .." | "..source.."^0 ) " .. table.concat(args, " "))
-	end)
 	end, function(source, args, user)
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficienct permissions!")
 end)
@@ -31,11 +31,11 @@ end)
 -- TAXI
 TriggerEvent('es:addAdminCommand', 'Taxi', permission.normal, function(source, args, user)
 	vRP.getUserIdentity(source ,function(user_id)
- 			local PlayerName = user_id
+ 			local PlayerName = user_id 
+				end)
 
 	table.remove(args, 1)
 	TriggerClientEvent('chatMessage', -1, "^5[Taxi]", {30, 144, 255}, " (^1 Identity: ^3" .. PlayerName .." | "..source.."^0 ) " .. table.concat(args, " "))
-		end)
 			end, function(source, args, user)
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficienct permissions!")
 end)
