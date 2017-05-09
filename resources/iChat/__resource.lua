@@ -1,0 +1,1 @@
+server_script "ichat_server.lua"

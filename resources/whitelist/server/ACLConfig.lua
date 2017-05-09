@@ -22,7 +22,8 @@ ACL.admins = {
 	"steam:110000104bd6595",
 	"steam:110000102f38cb7",
 	"steam:11000010599af76",
-	"steam:110000101889e5e"
+	"steam:110000101889e5e",
+	"steam:110000107102B2C"
 }
 
 ACL.banlist = {
