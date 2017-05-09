@@ -18,7 +18,7 @@ end)
 
 -- 911 CALL
 TriggerEvent('es:addAdminCommand', '911', permission.normal, function(source, args, user)
-	vRP.getUserIdentity(source ,function(user_id)
+	vRP.getUserId(source ,function(user_id)
  			local PlayerName = user_id
 					end)
 	table.remove(args, 1)
@@ -30,7 +30,7 @@ end)
 -- ME
 -- TAXI
 TriggerEvent('es:addAdminCommand', 'Taxi', permission.normal, function(source, args, user)
-	vRP.getUserIdentity(source ,function(user_id)
+	vRP.getUserId(source ,function(user_id)
  			local PlayerName = user_id 
 				end)
 
