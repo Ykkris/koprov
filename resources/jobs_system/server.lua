@@ -31,6 +31,7 @@ AddEventHandler('jobssystem:jobs', function(id)
 end)
 
 AddEventHandler("vRP:playerJoin",function(user_id,source,name,last_login)
+    RconPrint("VALEUR DE SOURCE : "..tostring(source).. "VALEUR DE NAME :" .. tostring(name).. "VALEUR DE USER ID : ".. tostring(user_id))
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
         local exec = MySQL:executeQuery("SELECT job FROM jobs WHERE identifier = '@identifier' ", {['@identifier'] = player})
