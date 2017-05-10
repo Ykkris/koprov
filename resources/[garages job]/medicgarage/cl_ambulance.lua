@@ -69,9 +69,9 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		DrawMarker(1, 392.398, -1434.503, 28.4475, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
+		DrawMarker(1, 404.911, -1433.288, 28.435, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
 
-		if GetDistanceBetweenCoords(392.398, -1434.503, 28.4475, GetEntityCoords(LocalPed())) < 1 then
+		if GetDistanceBetweenCoords(404.911, -1433.288, 29.435, GetEntityCoords(LocalPed())) < 1 then
 			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre une ~b~ambulance', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
@@ -93,11 +93,12 @@ Citizen.Wait(0)
 		Wait(1)
 	end
 	local plate = math.random(100, 900)
-	-- local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), -0.5, 20.0, 2.0)
-	local spawned_camion = CreateVehicle(vehicle, 412.0924, -1422.7177, 29.4427, false, true)
+	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), -0.5, 20.0, 2.0)
+	local spawned_camion = CreateVehicle(vehicle, coords, 412.0924, -1422.7177, 29.4427, false, true)
+	SetVehicleHasBeenOwnedByPlayer(vehicle, myPed)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, ""..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	-- Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
+	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
 end)
