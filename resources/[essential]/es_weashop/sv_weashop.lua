@@ -2,6 +2,12 @@
 require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
+local clock = os.clock
+function sleep(n)  -- seconds
+	 local t0 = clock()
+	while clock() - t0 <= n do end
+end
+
 local max_number_weapons = 6 --maximum number of weapons that the player can buy. Weapons given at spawn doesn't count.
 local cost_ratio = 100 --Ratio for withdrawing the weapons. This is price/cost_ratio = cost.
 
@@ -69,7 +75,7 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_weapons WHERE identifier = '@username'",{['@username'] = playerID})
 		local result = MySQL:getResults(executed_query, {'weapon_model','withdraw_cost'}, "identifier")
 	
-		delay = 500
+		sleep(10)	
 		if(result)then
 			for k,v in ipairs(result) do
 				-- if (tonumber(user.money) >= tonumber(v.withdraw_cost)) then
