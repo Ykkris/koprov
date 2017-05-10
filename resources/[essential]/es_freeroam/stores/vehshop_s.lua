@@ -41,23 +41,33 @@ AddEventHandler('CheckMoneyForVeh', function(name, vehicle, price)
         count = count + 1
       end
       if count == 5 then
-        TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Garage plein!\n")
+          SetNotificationTextEntry("STRING")
+          AddTextComponentString("Ton garage est ~r~plein~w~")
+          DrawNotification(false, false)
       else
         if (tonumber(user.money) >= tonumber(price)) then
           user:removeMoney((price))
           TriggerClientEvent('FinishMoneyCheckForVeh', source, name, vehicle, price)
-          TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Bonne route!\n")
+          SetNotificationTextEntry("STRING")
+          AddTextComponentString("Vehicule ~g~livré~w~")
+          DrawNotification(false, false)
         else
-          TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Fonds insuffisants!\n")
+          SetNotificationTextEntry("STRING")
+          AddTextComponentString("Tu n'as pas assez d'argent")
+          DrawNotification(false, false)
        end
       end
    else
       if (tonumber(user.money) >= tonumber(price)) then
         user:removeMoney((price))
         TriggerClientEvent('FinishMoneyCheckForVeh', source, name, vehicle, price)
-        TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Bonne route!\n")
+        SetNotificationTextEntry("STRING")
+          AddTextComponentString("Vehicule ~r~livré~w~")
+          DrawNotification(false, false)
       else
-          TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Fonds insuffisants!\n")
+          SetNotificationTextEntry("STRING")
+          AddTextComponentString("Tu n'as pas assez d'argent")
+          DrawNotification(false, false)
       end 
     end
   end)

@@ -27,14 +27,17 @@ AddEventHandler('CheckMoneyForWea', function(weapon,price)
 				{['@username'] = player, ['@weapon'] = weapon, ['@cost'] = (price)/cost_ratio})
 				-- Trigger some client stuff
 				TriggerClientEvent('FinishMoneyCheckForWea',source)
-				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Toi tu vas faire une connerie!\n")
 			else
 				TriggerClientEvent('ToManyWeapons',source)
-				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Tu as atteint la limite d'arme ! (max: "..max_number_weapons..")\n")
+				SetNotificationTextEntry("STRING")
+     			AddTextComponentString("Tu as atteint la limite d'armes")
+      			DrawNotification(false, false)
 			end
 		else
 			-- Inform the player that he needs more money
-			TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Reviens me voir avec de la thune !\n")
+			SetNotificationTextEntry("STRING")
+      		AddTextComponentString("Tu n'as pas assez d'argent")
+      		DrawNotification(false, false)
 		end
 	end)
 end)

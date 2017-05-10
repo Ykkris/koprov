@@ -442,7 +442,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 		Citizen.Wait(1000)
 		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
-			drawNotification("La zone est encombrée") 
+			drawNotification("La zone est ~r~encombré~w~") 
 		else
 			if state == "out" then
 				drawNotification("Ce véhicule n'est pas dans le garage")
@@ -456,7 +456,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 				SetVehicleOnGroundProperly(veh)
 				SetVehicleColours(veh, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false) 
-				drawNotification("Véhicule sorti, bonne route!")				
+				drawNotification("Véhicule ~g~sorti~w~, bonne route!")				
 				TriggerServerEvent('garages:SetVehOut', plate)
 			end   
 			CloseCreator()
@@ -495,7 +495,7 @@ AddEventHandler('garages:RemoveVehicle', function(found, plate, cassei)
 			--end
 			--SetEntityAsMissionEntity(caissei, true, true)
 			--Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
-			drawNotification("Véhicule rentré")
+			drawNotification("Véhicule ~r~rentré~w~")
 			--TriggerServerEvent('garages:SetVehIn', plate)
 			--else
 			--	drawNotification("Aucun véhicule n'est sur la zone")

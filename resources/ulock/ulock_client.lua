@@ -32,12 +32,12 @@ AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh)
 
       SetVehicleDoorsLocked(veh, 2)
       SetNotificationTextEntry("STRING")
-      AddTextComponentString("Véhicule fermé")
+      AddTextComponentString("Véhicule ~r~fermé~w~")
       DrawNotification(false, false)
     else
       SetVehicleDoorsLocked(veh, 1)
       SetNotificationTextEntry("STRING")
-      AddTextComponentString("Véhicule ouvert")
+      AddTextComponentString("Véhicule ~g~ouvert~w~")
       DrawNotification(false, false)
     end
   else
