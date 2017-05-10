@@ -30,7 +30,7 @@ AddEventHandler('jobssystem:jobs', function(id)
   end)
 end)
 
-AddEventHandler("vRP:playerJoin",function(user_id,source,name,last_login)
+AddEventHandler('es:playerLoaded', function(source)
     RconPrint("VALEUR DE SOURCE : "..tostring(source).. "VALEUR DE NAME :" .. tostring(name).. "VALEUR DE USER ID : ".. tostring(user_id))
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
