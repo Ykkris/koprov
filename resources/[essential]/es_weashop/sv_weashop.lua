@@ -44,6 +44,7 @@ end)
 
 
 AddEventHandler("es:playerLoaded", function(spawn)
+	RconPrint("Player Loaded : ".. tostring(spawn).. tostring(source))
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
 	end)
@@ -52,6 +53,7 @@ end)
 
 RegisterServerEvent("weaponshop:playerSpawned")
 AddEventHandler("weaponshop:playerSpawned", function(spawn)
+	RconPrint("Player Spawned : ".. tostring(spawn).. tostring(source))
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
 	end)
@@ -59,6 +61,7 @@ end)
 
 RegisterServerEvent("weaponshop:GiveWeaponsToPlayer")
 AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
+	RconPrint("Give weapon to : ".. tostring(player))
 	TriggerEvent('es:getPlayerFromId', player, function(user)
 		local playerID = user.identifier
 		local delay = nil
