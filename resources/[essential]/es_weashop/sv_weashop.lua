@@ -2,11 +2,11 @@
 require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
-local clock = os.clock
+--[[local clock = os.clock
 function sleep(n)  -- seconds
 	 local t0 = clock()
 	while clock() - t0 <= n do end
-end
+end--]]
 
 local max_number_weapons = 6 --maximum number of weapons that the player can buy. Weapons given at spawn doesn't count.
 local cost_ratio = 100 --Ratio for withdrawing the weapons. This is price/cost_ratio = cost.
@@ -51,9 +51,11 @@ end)
 
 AddEventHandler("es:playerLoaded", function(source)
 		RconPrint("SOURCE : ".. tostring(source))
+		SetTimeout(15000,function()
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
 	end)
+end)
 end)
 
 
@@ -67,11 +69,11 @@ end)
 
 RegisterServerEvent("weaponshop:GiveWeaponsToPlayer")
 AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
-	local testt= false
+	--[[local testt= false
 		if not(local) then test(player)
 				testt = true
 				CancelEvent()
-		end
+		end--]]
 	RconPrint("GIVE WEAPON TO : ".. tostring(player))
 	TriggerEvent('es:getPlayerFromId', player, function(user)
 		local playerID = user.identifier
@@ -96,7 +98,7 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 	end)
 end)
 
-function test(player)
+--[[function test(player)
 	sleep(4)
 	TriggerEvent("weaponshop:GiveWeaponsToPlayer", player)
-end
+end]]--
