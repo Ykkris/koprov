@@ -30,7 +30,7 @@ AddEventHandler('jobssystem:jobs', function(id)
   end)
 end)
 
-AddEventHandler("playerSpawned", function(spawn)
+AddEventHandler("vRP:playerJoin",function(user_id,source,name,last_login)
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
         local exec = MySQL:executeQuery("SELECT job FROM jobs WHERE identifier = '@identifier' ", {['@identifier'] = player})
