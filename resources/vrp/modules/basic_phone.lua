@@ -99,14 +99,14 @@ function vRP.getPhoneSMS(user_id)
 end
 
 -- build phone menu
-local phone_menu = {name=lang.phone.title(),css={top="75px",header_color="rgba(0,125,255,0.75)"}}
+local phone_menu = {name=lang.phone.title(),css={top="75px",header_color="rgba(231,76,60,0.75)"}}
 
 local function ch_directory(player,choice)
   local user_id = vRP.getUserId(player)
   if user_id ~= nil then
     local phone_directory = vRP.getPhoneDirectory(user_id)
     -- build directory menu
-    local menu = {name=choice,css={top="75px",header_color="rgba(0,125,255,0.75)"}}
+    local menu = {name=choice,css={top="75px",header_color="rgba(231,76,60,0.75)"}}
 
     local ch_add = function(player, choice) -- add to directory
       vRP.prompt(player,lang.phone.directory.add.prompt_number(),"",function(player,phone)
@@ -125,7 +125,7 @@ local function ch_directory(player,choice)
 
     local ch_entry = function(player, choice) -- directory entry menu
       -- build entry menu
-      local emenu = {name=choice,css={top="75px",header_color="rgba(0,125,255,0.75)"}}
+      local emenu = {name=choice,css={top="75px",header_color="rgba(231,76,60,0.75)"}}
 
       local name = choice
       local phone = phone_directory[name] or ""

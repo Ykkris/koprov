@@ -6,7 +6,7 @@ local lang = vRP.lang
 
 local emotes = cfg.emotes
 
-local menu = {name=lang.emotes.title(),css={top="75px",header_color="rgba(0,125,255,0.75)"}}
+local menu = {name=lang.emotes.title(),css={top="75px",header_color="rgba(231,76,60,0.75)"}}
 
 -- clear current emotes
 menu[lang.emotes.clear.title()] = {function(player,choice) 
