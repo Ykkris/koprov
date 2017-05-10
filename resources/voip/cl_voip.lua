@@ -6,6 +6,7 @@ voip['default'] = {name = 'default', setting = 7.0}
 
 AddEventHandler('onClientMapStart', function()
 	NetworkSetTalkerProximity(voip['default'].setting)
+	NetworkGetPlayerLoudness(0.04)
 end)
 
 RegisterNetEvent('pv:voip')
