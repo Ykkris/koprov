@@ -44,7 +44,6 @@ end)
 
 
 AddEventHandler("es:playerLoaded", function(source)
-	RconPrint("Player Loaded : ".. tostring(spawn).. tostring(source))
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
 	end)
