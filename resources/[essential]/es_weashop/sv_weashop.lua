@@ -49,6 +49,12 @@ AddEventHandler("es:playerLoaded", function(spawn)
 	end)
 end)
 
+AddEventHandler("es:playerLoaded", function(spawn)
+	TriggerEvent('es:getPlayerFromId', source, function(user)
+		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
+	end)
+end)
+
 RegisterServerEvent("weaponshop:playerSpawned")
 AddEventHandler("weaponshop:playerSpawned", function(spawn)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
