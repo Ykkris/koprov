@@ -6,8 +6,12 @@ end)
 
 -- Allows the server to spawn the player
 RegisterNetEvent('es_freeroam:spawnPlayer')
-AddEventHandler('es_freeroam:spawnPlayer', function(x, y, z)
-    exports.spawnmanager:spawnPlayer({x = x, y = y, z = z})
+AddEventHandler('es_freeroam:spawnPlayer', function(x, y, z, revenir_pos)
+    if not(revenir_pos) then
+        exports.spawnmanager:spawnPlayer({x = x, y = y, z = z})
+    --else 
+        --TriggerServerEvent("respawnmoi")
+    end
 end)
 
   AddEventHandler("playerSpawned", function(spawn)
