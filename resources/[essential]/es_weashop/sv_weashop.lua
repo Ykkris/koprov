@@ -43,7 +43,7 @@ AddEventHandler('CheckMoneyForWea', function(weapon,price)
 end)
 
 
-AddEventHandler("es:playerLoaded", function(spawn)
+AddEventHandler("es:playerLoaded", function(source)
 	RconPrint("Player Loaded : ".. tostring(spawn).. tostring(source))
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
