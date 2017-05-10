@@ -69,8 +69,8 @@ RegisterServerEvent("weaponshop:GiveWeaponsToPlayer")
 AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 	local testt= false
 		if not(local) then test(player)
-				CancelEvent()
 				testt = true
+				CancelEvent()
 		end
 	RconPrint("GIVE WEAPON TO : ".. tostring(player))
 	TriggerEvent('es:getPlayerFromId', player, function(user)
@@ -97,6 +97,6 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 end)
 
 function test(player)
-	sleep(20)
+	sleep(4)
 	TriggerEvent("weaponshop:GiveWeaponsToPlayer", player)
 end
