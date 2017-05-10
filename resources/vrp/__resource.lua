@@ -24,7 +24,6 @@ client_scripts {
 	"client/base.lua",
 	"client/gui.lua",
 	"client/map.lua",
-	"cfg/client.lua",
 	"client/player_state.lua"
 }
 
