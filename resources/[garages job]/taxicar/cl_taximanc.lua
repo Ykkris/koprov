@@ -69,9 +69,9 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		DrawMarker(1, 904.5086, -173.662, 73.0755, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 185, 169, 65, 200, 0, 0, 0, 0)
+		DrawMarker(1, 908.17, -176.68, 73.166, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 185, 169, 65, 200, 0, 0, 0, 0)
 
-		if GetDistanceBetweenCoords(904.5086, -173.662, 74.0755, GetEntityCoords(LocalPed())) < 1 then
+		if GetDistanceBetweenCoords(908.17, -176.68, 74.166, GetEntityCoords(LocalPed())) < 1 then
 			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre un ~b~taxis', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
@@ -93,11 +93,12 @@ Citizen.Wait(0)
 		Wait(1)
 	end
 	local plate = math.random(100, 900)
-	-- local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_car = CreateVehicle(vehicle, 908.9624, -177.1851, 74.2001, true, false)
+	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+	local spawned_car = CreateVehicle(vehicle, coords, 908.9624, -177.1851, 74.2001, true, false)
+	SetEntityAsMissionEntity(vehicle, true, true)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "CAB "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	-- Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
+	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
 end)

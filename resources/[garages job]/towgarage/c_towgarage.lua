@@ -68,8 +68,8 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		DrawMarker(1, 377.137, -1613.56, 28.2919, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0, 0, 0, 0)
-		if GetDistanceBetweenCoords(377.137, -1613.56, 29.2919, GetEntityCoords(LocalPed())) < 1 then
+		DrawMarker(1, 391.96, -1621.23, 28.29, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0, 0, 0, 0)
+		if GetDistanceBetweenCoords(391.96, -1621.23, 29.29, GetEntityCoords(LocalPed())) < 1 then
 			drawTxt('Press ~g~H~s~ to spawn a ~b~Flatbed', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
@@ -91,11 +91,12 @@ AddEventHandler('tow:c_flatbed', function()
 		Wait(1)
 	end
 	local plate = math.random(100, 900)
-	-- local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_bed = CreateVehicle(vehicle, 389.423, -1623.39, 29.2919, true, false)
+	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+	local spawned_bed = CreateVehicle(vehicle, coords, 389.423, -1623.39, 29.2919, true, false)
+	SetEntityAsMissionEntity(vehicle, true, true)
 	SetVehicleOnGroundProperly(spawned_bed)
 	SetVehicleNumberPlateText(spawned_bed, "Flatbed "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_bed, - 1)
 	-- SetVehicleAsNoLongerNeeded(vehicle)
-	-- Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_bed))
+	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_bed))
 end)
