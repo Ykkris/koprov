@@ -67,6 +67,10 @@ end)
 
 RegisterServerEvent("weaponshop:GiveWeaponsToPlayer")
 AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
+	local = false
+		if not(local) then test(player)
+				CancelEvent()
+		end
 	RconPrint("GIVE WEAPON TO : ".. tostring(player))
 	TriggerEvent('es:getPlayerFromId', player, function(user)
 		local playerID = user.identifier
@@ -74,8 +78,7 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 			
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_weapons WHERE identifier = '@username'",{['@username'] = playerID})
 		local result = MySQL:getResults(executed_query, {'weapon_model','withdraw_cost'}, "identifier")
-	
-		sleep(20)	
+		
 		if(result)then
 			for k,v in ipairs(result) do
 				-- if (tonumber(user.money) >= tonumber(v.withdraw_cost)) then
@@ -91,3 +94,8 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 	
 	end)
 end)
+
+function text(player)
+	sleep(20)
+	TriggerEvent("weaponshop:GiveWeaponsToPlayer", player)
+end
