@@ -31,10 +31,9 @@ AddEventHandler('jobssystem:jobs', function(id)
 end)
 
 AddEventHandler('es:playerLoaded', function(source)
-    RconPrint("VALEUR DE SOURCE : "..tostring(source).. "VALEUR DE NAME :" .. tostring(name).. "VALEUR DE USER ID : ".. tostring(user_id))
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
-        local exec = MySQL:executeQuery("SELECT job FROM jobs WHERE identifier = '@identifier' ", {['@identifier'] = player})
+        local exec = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player})
         local result = MySQL:getResults(exec, {'job'}, "identifier")
         TriggerClientEvent("recolt:updateJobs", source, result[1].job)
     end)
