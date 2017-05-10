@@ -4,7 +4,7 @@ TriggerEvent("es:setDefaultSettings", {
 
 RegisterServerEvent('playerSpawn')
 AddEventHandler('playerSpawn', function()
-	TriggerClientEvent('es_freeroam:spawnPlayer', source, spawnCoords.x, spawnCoords.y, spawnCoords.z)
+	TriggerClientEvent('es_freeroam:spawnPlayer', source, spawnCoords.x, spawnCoords.y, spawnCoords.z, false)
 end)
 
 AddEventHandler('es:playerLoaded', function(source)
