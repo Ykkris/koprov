@@ -35,7 +35,7 @@ AddEventHandler("playerSpawned", function(spawn)
         local player = user.identifier
         local exec = MySQL:executeQuery("SELECT job FROM jobs WHERE identifier = '@identifier' ", {['@identifier'] = player})
         local result = MySQL:getResults(exec, {'job'}, "identifier")
-        TriggerClientEvent("recolt:updateJobs", source, job)
+        TriggerClientEvent("recolt:updateJobs", source, result[1].job)
     end)
 end)
 
