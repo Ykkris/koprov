@@ -165,7 +165,7 @@ Citizen.CreateThread(function()
 								Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(jobs.blip[1]))
 								jobs.blip[1] = nil
 							end
-							DrawMissionText("Your client is  ~r~dead~w~. Find anotherone.", 5000)
+							DrawMissionText("Le client est ~r~mort~w~. Trouve-en un autre.", 5000)
 						else
 							if jobs.flag[1] == 1 and jobs.flag[2] > 0 then
 								Wait(1000)
@@ -179,7 +179,7 @@ Citizen.CreateThread(function()
 									ClearPedTasksImmediately(jobs.peds[1])
 									Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
 									jobs.peds[1] = nil
-									DrawMissionText("Client ~r~tired to wait~w~. Find anotherone.", 5000)
+									DrawMissionText("Le client est ~r~fatigué d'attendre~w~. Trouve-en un autre.", 5000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 								else
@@ -210,7 +210,7 @@ Citizen.CreateThread(function()
 									ClearPedTasksImmediately(jobs.peds[1])
 									Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
 									jobs.peds[1] = nil
-									DrawMissionText("~r~Client not going with you~w~. Find anotherone.", 5000)
+									DrawMissionText("~r~Le client ne vient pas avec vous~w~. Trouve-en un autre.", 5000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 								else
@@ -224,10 +224,10 @@ Citizen.CreateThread(function()
 										jobs.flag[2] = GetRandomIntInRange(1, 62)
 										local street = table.pack(GetStreetNameAtCoord(jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]]))
 										if street[2] ~= 0 and street[2] ~= nil then
-											local streetname = string.format("~c~Take me to the %s, nearby %s", GetStreetNameFromHashKey(street[1]),GetStreetNameFromHashKey(street[2]))
+											local streetname = string.format("~c~Amène moi à : %s, proche de : %s", GetStreetNameFromHashKey(street[1]),GetStreetNameFromHashKey(street[2]))
 											DrawMissionText(streetname, 5000)
 										else
-											local streetname = string.format("~c~Take me to the %s", GetStreetNameFromHashKey(street[1]))
+											local streetname = string.format("~c~Amène moi à %s", GetStreetNameFromHashKey(street[1]))
 											DrawMissionText(streetname, 5000)
 										end
 										jobs.blip[1] = AddBlipForCoord(jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]])
@@ -250,10 +250,10 @@ Citizen.CreateThread(function()
 									Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
 									jobs.peds[1] = nil
 									Wait(6000)
-									DrawMissionText("~g~You have delivered client!", 5000)
-									-- pay money on something
+									DrawMissionText("~g~Vous avez déposé le client!", 5000)
+									TriggerServerEvent("taxi:getpaid")
 									Wait(8000)
-									DrawMissionText("Drive around and look for ~h~~y~passengers~w~.", 10000)
+									DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 								end
@@ -263,7 +263,7 @@ Citizen.CreateThread(function()
 						if jobs.flag[1] > 0 then
 							jobs.flag[1] = 0
 							jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
-							DrawMissionText("Drive around and look for ~h~~y~passengers~w~.", 10000)
+							DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
 							if jobs.blip[1] ~= nil and DoesBlipExist(jobs.blip[1]) then
 								Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(jobs.blip[1]))
 								jobs.blip[1] = nil
@@ -282,7 +282,7 @@ Citizen.CreateThread(function()
 									ClearPedTasksImmediately(jobs.peds[1])
 									SetBlockingOfNonTemporaryEvents(jobs.peds[1], 1)
 									TaskStandStill(jobs.peds[1], 1000*jobs.flag[2])
-									DrawMissionText("~g~Client~w~ wait for you. Drive nearby", 5000)
+									DrawMissionText("~g~Le client~w~ t'attend. Vas à côté", 5000)
 									local lblip = AddBlipForEntity(jobs.peds[1])
 									SetBlipAsFriendly(lblip, 1)
 									SetBlipColour(lblip, 2)
@@ -290,7 +290,7 @@ Citizen.CreateThread(function()
 								else
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
-									DrawMissionText("Drive around and look for ~h~~y~clients~w~.", 10000)
+									DrawMissionText("Conduit un peu et trouve un ~h~~y~client~w~.", 10000)
 								end
 							end
 						end
@@ -299,12 +299,12 @@ Citizen.CreateThread(function()
 					if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), GetEntityCoords(jobs.cars[1]), true) > 30.0001 then
 						StopJob(1)
 					else
-						DrawMissionText("Get back in your car to continue. Or go away to stop working.", 1)
+						DrawMissionText("Reviens dans ta voiture. Ou part pour arrêter le service.", 1)
 					end
 				end
 			else
 				StopJob(1)
-				DrawMissionText("Taxi is ~h~~r~destroyed~w~.", 5000)
+				DrawMissionText("Le taxi est ~h~~r~cassé~w~.", 5000)
 			end
 		end
 	end
