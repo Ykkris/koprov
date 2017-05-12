@@ -9,7 +9,7 @@ cfg.db = {
 }
 
 cfg.save_interval = 60 -- seconds
-cfg.whitelist = true
+cfg.whitelist = false
 
 cfg.lang = "fr"
 
