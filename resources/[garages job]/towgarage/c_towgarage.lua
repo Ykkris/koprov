@@ -54,7 +54,7 @@ local cmd = {
 }
 
 function InitMenuVehicules()
-	MenuTitle = "Dépantout"
+	MenuTitle = "Depan'tout"
 	ClearMenu()
 	Menu.addButton("Flatbed", "callSE", cmd["flatbed"].event)
 end

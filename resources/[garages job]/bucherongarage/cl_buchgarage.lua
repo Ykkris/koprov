@@ -52,12 +52,14 @@ local Keys = {
 -- NEW VERSION
 local cmd = {
 	["camionb"] = { event = 'bucheron:s_camionb' }
+	["camionc"] = { event = 'bucheron:s_camionc'}
 }
 
 function InitMenuVehicules()
 	MenuTitle = "SpawnJobs"
 	ClearMenu()
 	Menu.addButton("Camion", "callSE", cmd["camionb"].event)
+	Menu.addButton("Camion 2", "callSE", cmd["camionc"].event)
 end
 
 function callSE(evt)
@@ -88,6 +90,28 @@ Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
 	local vehicle = GetHashKey('rubble')
+	RequestModel(vehicle)
+	while not HasModelLoaded(vehicle) do
+		Wait(1)
+	end
+	local plate = math.random(100, 900)
+	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+	local spawned_camion = CreateVehicle(vehicle, coords, -14.0791, -2658.8503, 6.00430, true, false)
+	SetEntityInvincible(vehicle, true)
+	SetVehicleHasBeenOwnedByPlayer(vehicle, myPed)
+	SetVehicleOnGroundProperly(spawned_car)
+	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
+	SetPedIntoVehicle(myPed, spawned_car, - 1)
+	-- SetModelAsNoLongerNeeded(vehicle)
+	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
+end)
+
+RegisterNetEvent('bucheron:c_camionc')
+AddEventHandler('bucheron:c_camionc', function()
+Citizen.Wait(0)
+	local myPed = GetPlayerPed(-1)
+	local player = PlayerId()
+	local vehicle = GetHashKey('tiptruck2')
 	RequestModel(vehicle)
 	while not HasModelLoaded(vehicle) do
 		Wait(1)

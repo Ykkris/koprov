@@ -21,3 +21,18 @@ AddEventHandler('bucheron:s_camionb', function()
     end
   end)
 end)
+
+RegisterServerEvent('bucheron:s_camionc')
+AddEventHandler('bucheron:s_camionc', function()
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    local player = user.identifier
+    local namejob = nameJob(player)
+    -- NAME OF YOUR JOB
+    if (namejob == "Bûcheron" or namejob=="Mineur") then
+      TriggerClientEvent('bucheron:c_camionc', source)
+      TriggerClientEvent('worked', source)
+    else
+      TriggerClientEvent('notworked', source)
+    end
+  end)
+end)
