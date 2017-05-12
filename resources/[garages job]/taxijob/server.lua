@@ -6,4 +6,4 @@ AddEventHandler("taxi:getpaid", function()
     
   end)
   
-end)
+end) 
