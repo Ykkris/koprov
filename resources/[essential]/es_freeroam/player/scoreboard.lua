@@ -17,7 +17,7 @@ local Settings = {
 	--See: https://wiki.gtanet.work/index.php?title=Game_Controls
 
 	--MultiplayerInfo / Z
-	[20] = true,
+	[10] = true,
 
 	--Detonate / G
 	--[47] = true,
