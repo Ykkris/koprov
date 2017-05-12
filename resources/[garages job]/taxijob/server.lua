@@ -1,5 +1,3 @@
-
-
 RegisterServerEvent("taxi:getpaid")
 AddEventHandler("taxi:getpaid", function()
     -- prendre la source -> user -> user:addMoney()
