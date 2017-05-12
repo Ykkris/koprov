@@ -31,7 +31,7 @@ local weashop = {
 			}
 		},
 		["Melee"] = {
-			title = "Melee weapons",
+			title = "Armes de mêlée",
 			name = "Melee",
 			buttons = {
 				{title = "Knife", name = "Knife", costs = 800, description = {}, model = "WEAPON_Knife"},
@@ -69,23 +69,23 @@ local weashop = {
 				--{title = "Flare Gun", name = "FlareGun", costs = 2900, description = {}, model = "WEAPON_FlareGun"},
 			}
 		},
-		["MachineGuns"] = {
-			title = "Machine guns",
-			name = "MachineGuns",
-			buttons = {
-				-- {title = "MicroSMG", name = "MicroSMG", costs = 15000, description = {}, model = "WEAPON_MicroSMG"},
-				-- {title = "Machine Pistol", name = "MachinePistol", costs = 155000, description = {}, model = "WEAPON_MachinePistol"},
-				-- {title = "SMG", name = "SMG", costs = 25000, description = {}, model = "WEAPON_SMG"},
-				-- {title = "Assault SMG", name = "AssaultSMG", costs = 18000, description = {}, model = "WEAPON_AssaultSMG"},
-				-- {title = "Combat PDW", name = "CombatPDW", costs = 85000, description = {}, model = "WEAPON_CombatPDW"},
-				-- {title = "MG", name = "MG", costs = 30000, description = {}, model = "WEAPON_MG"},
-				-- {title = "Combat MG", name = "CombatMG", costs = 120000, description = {}, model = "WEAPON_CombatMG"},
-				-- {title = "Gusenberg", name = "Gusenberg", costs = 120000, description = {}, model = "WEAPON_Gusenberg"},
-				-- {title = "Mini SMG", name = "MiniSMG", costs = 120000, description = {}, model = "WEAPON_MiniSMG"}, -- Machine gun au marché noir
-			}
-		},
+		-- ["MachineGuns"] = {
+		-- 	title = "Machine guns",
+		-- 	name = "MachineGuns",
+		-- 	buttons = {
+		-- 		-- {title = "MicroSMG", name = "MicroSMG", costs = 15000, description = {}, model = "WEAPON_MicroSMG"},
+		-- 		-- {title = "Machine Pistol", name = "MachinePistol", costs = 155000, description = {}, model = "WEAPON_MachinePistol"},
+		-- 		-- {title = "SMG", name = "SMG", costs = 25000, description = {}, model = "WEAPON_SMG"},
+		-- 		-- {title = "Assault SMG", name = "AssaultSMG", costs = 18000, description = {}, model = "WEAPON_AssaultSMG"},
+		-- 		-- {title = "Combat PDW", name = "CombatPDW", costs = 85000, description = {}, model = "WEAPON_CombatPDW"},
+		-- 		-- {title = "MG", name = "MG", costs = 30000, description = {}, model = "WEAPON_MG"},
+		-- 		-- {title = "Combat MG", name = "CombatMG", costs = 120000, description = {}, model = "WEAPON_CombatMG"},
+		-- 		-- {title = "Gusenberg", name = "Gusenberg", costs = 120000, description = {}, model = "WEAPON_Gusenberg"},
+		-- 		-- {title = "Mini SMG", name = "MiniSMG", costs = 120000, description = {}, model = "WEAPON_MiniSMG"}, -- Machine gun au marché noir
+		-- 	}
+		-- },
 		["Shotguns"] = {
-			title = "Shotgun",
+			title = "Fusil à pompe",
 			name = "Shotguns",
 			buttons = {
 				--{title = "Pump Shotgun", name = "PumpShotgun", costs = 150000, description = {}, model = "WEAPON_PumpShotgun"},
@@ -98,43 +98,43 @@ local weashop = {
 				--{title = "Auto Shotgun", name = "Autoshotgun", costs = 450000, description = {}, model = "WEAPON_Autoshotgun"},
 			}
 		},
-		["AssaultRifles"] = {
-			title = "Assault Rifles",
-			name = "AssaultRifles",
-			buttons = {
-				-- {title = "Assault Rifle", name = "AssaultRifle", costs = 250000, description = {}, model = "WEAPON_AssaultRifle"},
-				-- {title = "Carbine Rifle", name = "CarbineRifle", costs = 250000, description = {}, model = "WEAPON_CarbineRifle"},
-				-- {title = "Advanced Rifle", name = "AdvancedRifle", costs = 300000, description = {}, model = "WEAPON_AdvancedRifle"},
-				-- {title = "Special Carbine", name = "SpecialCarbine", costs = 310000, description = {}, model = "WEAPON_SpecialCarbine"},
-				-- {title = "Bullpup Rifle", name = "BullpupRifle", costs = 350000, description = {}, model = "WEAPON_BullpupRifle"},
-				-- {title = "FCompact Rifle", name = "CompactRifle", costs = 400000, description = {}, model = "WEAPON_CompactRifle"}, -- marché nbir
-			}
-		},
-		["SniperRifles"] = {
-			title = "Sniper Rifles",
-			name = "SniperRifles",
-			buttons = {
-				-- {title = "Sniper Rifle", name = "SniperRifle", costs = 500000, description = {}, model = "WEAPON_SniperRifle"},
-				-- {title = "Heavy Sniper", name = "HeavySniper", costs = 800000, description = {}, model = "WEAPON_HeavySniper"},
-				-- {title = "Marksman Rifle", name = "MarksmanRifle", costs = 1000000, description = {}, model = "WEAPON_MarksmanRifle"}, -- marché noir
-			}
-		},
-		["HeavyWeapons"] = {
-			title = "Heavy Weapons",
-			name = "HeavyWeapons",
-			buttons = {
-				-- {title = "Grenade Launcher", name = "GrenadeLauncher", costs = 500000, description = {}, model = "WEAPON_GrenadeLauncher"},
-				-- {title = "RPG", name = "RPG", costs = 800000, description = {}, model = "WEAPON_RPG"},
-				-- {title = "Minigun", name = "Minigun", costs = 1000000, description = {}, model = "WEAPON_Minigun"},
-				-- {title = "Firework", name = "Firework", costs = 1000000, description = {}, model = "WEAPON_Firework"},
-				-- {title = "Railgun", name = "Railgun", costs = 999999999, description = {}, model = "WEAPON_Railgun"},
-				-- {title = "Homing Launcher", name = "HomingLauncher", costs = 1000000, description = {}, model = "WEAPON_HomingLauncher"},
-				-- {title = "Smoke-grenade Launcher", name = "GrenadeLauncherSmoke", costs = 1000000, description = {}, model = "WEAPON_GrenadeLauncherSmoke"},
-				-- {title = "Compact Launcher", name = "CompactLauncher", costs = 1000000, description = {}, model = "WEAPON_CompactLauncher"},
-			}
-		},
+		-- ["AssaultRifles"] = {
+		-- 	title = "Assault Rifles",
+		-- 	name = "AssaultRifles",
+		-- 	buttons = {
+		-- 		-- {title = "Assault Rifle", name = "AssaultRifle", costs = 250000, description = {}, model = "WEAPON_AssaultRifle"},
+		-- 		-- {title = "Carbine Rifle", name = "CarbineRifle", costs = 250000, description = {}, model = "WEAPON_CarbineRifle"},
+		-- 		-- {title = "Advanced Rifle", name = "AdvancedRifle", costs = 300000, description = {}, model = "WEAPON_AdvancedRifle"},
+		-- 		-- {title = "Special Carbine", name = "SpecialCarbine", costs = 310000, description = {}, model = "WEAPON_SpecialCarbine"},
+		-- 		-- {title = "Bullpup Rifle", name = "BullpupRifle", costs = 350000, description = {}, model = "WEAPON_BullpupRifle"},
+		-- 		-- {title = "FCompact Rifle", name = "CompactRifle", costs = 400000, description = {}, model = "WEAPON_CompactRifle"}, -- marché nbir
+		-- 	}
+		-- },
+		-- ["SniperRifles"] = {
+		-- 	title = "Sniper Rifles",
+		-- 	name = "SniperRifles",
+		-- 	buttons = {
+		-- 		-- {title = "Sniper Rifle", name = "SniperRifle", costs = 500000, description = {}, model = "WEAPON_SniperRifle"},
+		-- 		-- {title = "Heavy Sniper", name = "HeavySniper", costs = 800000, description = {}, model = "WEAPON_HeavySniper"},
+		-- 		-- {title = "Marksman Rifle", name = "MarksmanRifle", costs = 1000000, description = {}, model = "WEAPON_MarksmanRifle"}, -- marché noir
+		-- 	}
+		-- },
+		-- ["HeavyWeapons"] = {
+		-- 	title = "Heavy Weapons",
+		-- 	name = "HeavyWeapons",
+		-- 	buttons = {
+		-- 		-- {title = "Grenade Launcher", name = "GrenadeLauncher", costs = 500000, description = {}, model = "WEAPON_GrenadeLauncher"},
+		-- 		-- {title = "RPG", name = "RPG", costs = 800000, description = {}, model = "WEAPON_RPG"},
+		-- 		-- {title = "Minigun", name = "Minigun", costs = 1000000, description = {}, model = "WEAPON_Minigun"},
+		-- 		-- {title = "Firework", name = "Firework", costs = 1000000, description = {}, model = "WEAPON_Firework"},
+		-- 		-- {title = "Railgun", name = "Railgun", costs = 999999999, description = {}, model = "WEAPON_Railgun"},
+		-- 		-- {title = "Homing Launcher", name = "HomingLauncher", costs = 1000000, description = {}, model = "WEAPON_HomingLauncher"},
+		-- 		-- {title = "Smoke-grenade Launcher", name = "GrenadeLauncherSmoke", costs = 1000000, description = {}, model = "WEAPON_GrenadeLauncherSmoke"},
+		-- 		-- {title = "Compact Launcher", name = "CompactLauncher", costs = 1000000, description = {}, model = "WEAPON_CompactLauncher"},
+		-- 	}
+		-- },
 		["ThrownWeapons"] = {
-			title = "Thrown Weapons",
+			title = "Armes de jet",
 			name = "ThrownWeapons",
 			buttons = {
 				-- {title = "Grenade", name = "Grenade", costs = 1500, description = {}, model = "WEAPON_Grenade"},
