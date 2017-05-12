@@ -51,8 +51,8 @@ local Keys = {
 
 -- NEW VERSION
 local cmd = {
-	["camionb"] = { event = 'bucheron:s_camionb' }
-	["camionc"] = { event = 'bucheron:s_camionc'}
+	["camionb"] = { event = 'bucheron:s_camionb' },
+	["camionc"] = { event = 'bucheron:s_camionc'},
 }
 
 function InitMenuVehicules()

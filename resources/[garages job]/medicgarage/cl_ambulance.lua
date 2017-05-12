@@ -69,7 +69,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		DrawMarker(1, 404.911, -1433.288, 28.435, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
+		DrawMarker(1, 404.911, -1433.288, 28.435, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 68, 198, 17, 200, 0, 0, 0, 0)
 
 		if GetDistanceBetweenCoords(404.911, -1433.288, 29.435, GetEntityCoords(LocalPed())) < 1 then
 			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre une ~b~ambulance', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
