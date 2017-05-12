@@ -1,8 +1,13 @@
+
+
 local lang = {
   common = {
+    welcome = "Bienvenue. Utilise les touches du téléphone pour les menus.~n~dernière connexion: {1}",
     no_player_near = "~r~Pas de joueur à proximité.",
     invalid_value = "~r~Valeur incorrecte.",
-    invalid_name = "~r~Nom incorrect."
+    invalid_name = "~r~Nom incorrect.",
+    not_found = "~r~Non trouvé.",
+    request_refused = "~r~Requête refusée."
   },
   survival = {
     starving = "Affamé",
@@ -25,7 +30,7 @@ local lang = {
     iteminfo = "({1})<br /><br />{2}",
     give = {
       title = "Donner",
-      description = "Donner un item au joueur le plus proche.",
+      description = "Donner un objet au joueur le plus proche.",
       prompt = "Quantité à donner (max {1}):",
       given = "Vous avez donné ~r~{1} ~s~{2}.",
       received = "Vous avez reçu ~g~{1} ~s~{2}.",
@@ -58,11 +63,11 @@ local lang = {
       description = "Annuaire des entreprises",
       dprev = "> Précédent",
       dnext = "> Suivant",
-      info = "<em>capital: </em>{1} $<br /><em>propriétaire: </em>{2} {3}<br /><em>immatriculation: </em>{4}<br /><em>téléphone: </em>{5}"
+      info = "<em>Capital: </em>{1} $<br /><em>Propriétaire: </em>{2} {3}<br /><em>Immatriculation: </em>{4}<br /><em>Téléphone: </em>{5}"
     },
     info = {
       title = "Information sur l'entreprise",
-      info = "<em>nom: </em>{1}<br /><em>capital: </em>{2} $<br /><em>capital de transfert: </em>{3} $<br /><br/>Le capital de transfert représente la quantité d'argent transférée pour une période. Le maximum ne peut pas dépasser le capital de l'entreprise."
+      info = "<em>Nom: </em>{1}<br /><em>Capital: </em>{2} $<br /><em>Capital de transfert: </em>{3} $<br /><br/>Le capital de transfert représente la quantité d'argent transférée pour une période. Le maximum ne peut pas dépasser le capital de l'entreprise."
     },
     addcapital = {
       title = "Ajout de capital",
@@ -93,11 +98,70 @@ local lang = {
       description = "Creez une nouvelle identité, frais de création = {1} $.",
       prompt_firstname = "Entrez votre prénom:",
       prompt_name = "Entrez votre nom de famille:",
-      prompt_age = "Entrez votre âge:",
+      prompt_age = "Entrez votre âge:"
     },
     menu = {
       title = "Identité",
-      info = "<em>Nom: </em>{1}<br /><em>Prénom: </em>{2}<br /><em>Age: </em>{3}<br /><em> n° de matricule: </em>{4}<br /><em>téléphone: </em>{5}"
+      info = "<em>Nom: </em>{1}<br /><em>Prénom: </em>{2}<br /><em>Age: </em>{3}<br /><em>N° d'immatriculation: </em>{4}<br /><em>Téléphone: </em>{5}"
+    }
+  },
+  police = {
+    cloakroom = {
+      title = "Vestiaire",
+      uniform = {
+        title = "Uniforme",
+        description = "Mettre l'uniforme."
+      }
+    },
+    pc = {
+      title = "PC",
+      searchreg = {
+        title = "Recherche d'identité",
+        description = "Recherche d'identité par matricule.",
+        prompt = "Entrez le matricule:"
+      },
+      closebusiness = {
+        title = "Fermer l'entreprise",
+        description = "Fermer l'entreprise du joueur le plus proche",
+        request = "Êtes vous sûr de vouloir fermer l'entreprise {3} gérée par {1} {2} ?",
+        closed = "~g~Entreprise fermée."
+      },
+      trackveh = {
+        title = "Localisation de véhicule",
+        description = "Localisation de véhicule par immatriculation.",
+        prompt_reg = "Entrez l'immatriculation:",
+        prompt_note = "Entrez une note ou une raison:",
+        tracking = "~b~Localisation commencée.",
+        track_failed = "~b~Recherche de {1}~s~ ({2}) ~n~~r~Echouée.",
+        tracked = "{1} ({2}) localisé."
+      }
+    },
+    menu = {
+      handcuff = {
+        title = "Menotter",
+        description = "Menotter/démenotter le joueur le plus proche."
+      },
+      putinveh = {
+        title = "Mettre dans le véhicule",
+        description = "Mettre le joueur le plus proche dans le véhicule le plus proche."
+      },
+      askid = {
+        title = "Demander les papiers",
+        description = "Demander les papiers d'identité du joueur le plus proche.",
+        request = "Voulez vous montrer vos papiers d'identité ?",
+        request_hide = "Fermer les informations d'identité.",
+        asked = "Demande des papiers..."
+      },
+      check = {
+        title = "Fouiller le joueur",
+        description = "Fouiller l'argent, les objets et les armes du joueur le plus proche.",
+        request_hide = "Fermer le rapport de fouille.",
+        info = "<em>Argent: </em>{1} $<br /><br /><em>Inventaire: </em>{2}<br /><br /><em>Armes: </em>{3}",
+        checked = "Vous avez été fouillé."
+      }
+    },
+    identity = {
+      info = "<em>Nom: </em>{1}<br /><em>Prénom: </em>{2}<br /><em>Age: </em>{3}<br /><em>N° d'immatriculation: </em>{4}<br /><em>Téléphone: </em>{5}<br /><em>Entreprise: </em>{6}<br /><em>Capital de l'entreprise: </em>{7} $"
     }
   },
   phone = {
@@ -135,14 +199,15 @@ local lang = {
     },
     service = {
       title = "Service",
-      description = "Appelez un service ou un n° d'urgence."
+      description = "Appelez un service ou un n° d'urgence.",
+      prompt = "Si besoin, entrez un message pour le service:"
     }
   },
   emotes = {
     title = "Emotes",
     clear = {
-      title = "> Stopper",
-      description = "Stopper toutes les emotes en cours."
+      title = "> Arrêter",
+      description = "Arrête toutes les emotes en cours."
     }
   },
   garage = {
@@ -175,4 +240,5 @@ local lang = {
     title = "Magasin de vêtements"
   }
 }
+
 return lang

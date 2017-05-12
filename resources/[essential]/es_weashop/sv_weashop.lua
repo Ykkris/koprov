@@ -2,12 +2,6 @@
 require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
---[[local clock = os.clock
-function sleep(n)  -- seconds
-	 local t0 = clock()
-	while clock() - t0 <= n do end
-end--]]
-
 local max_number_weapons = 6 --maximum number of weapons that the player can buy. Weapons given at spawn doesn't count.
 local cost_ratio = 100 --Ratio for withdrawing the weapons. This is price/cost_ratio = cost.
 
@@ -33,35 +27,20 @@ AddEventHandler('CheckMoneyForWea', function(weapon,price)
 				{['@username'] = player, ['@weapon'] = weapon, ['@cost'] = (price)/cost_ratio})
 				-- Trigger some client stuff
 				TriggerClientEvent('FinishMoneyCheckForWea',source)
+				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Toi tu vas faire une connerie!\n")
 			else
 				TriggerClientEvent('ToManyWeapons',source)
-				SetNotificationTextEntry("STRING")
-     			AddTextComponentString("Tu as atteint la limite d'armes")
-      			DrawNotification(false, false)
+				TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Tu as atteint la limite d'arme ! (max: "..max_number_weapons..")\n")
 			end
 		else
 			-- Inform the player that he needs more money
-			SetNotificationTextEntry("STRING")
-      		AddTextComponentString("Tu n'as pas assez d'argent")
-      		DrawNotification(false, false)
+			TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "Reviens me voir avec de la thune !\n")
 		end
 	end)
 end)
 
-
-AddEventHandler("es:playerLoaded", function(source)
-		RconPrint("SOURCE : ".. tostring(source))
-		--SetTimeout(15000,function()
-	TriggerEvent('es:getPlayerFromId', source, function(user)
-		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
-	end)
---end)
-end)
-
-
 RegisterServerEvent("weaponshop:playerSpawned")
 AddEventHandler("weaponshop:playerSpawned", function(spawn)
-	--RconPrint("SPAWN ET SOURCE EN DEUXIEME : ".. tostring(spawn).. tostring(source))
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
 	end)
@@ -69,19 +48,14 @@ end)
 
 RegisterServerEvent("weaponshop:GiveWeaponsToPlayer")
 AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
-	--[[local testt= false
-		if not(local) then test(player)
-				testt = true
-				CancelEvent()
-		end--]]
-	--RconPrint("GIVE WEAPON TO : ".. tostring(player))
 	TriggerEvent('es:getPlayerFromId', player, function(user)
 		local playerID = user.identifier
 		local delay = nil
 			
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_weapons WHERE identifier = '@username'",{['@username'] = playerID})
 		local result = MySQL:getResults(executed_query, {'weapon_model','withdraw_cost'}, "identifier")
-		
+	
+		delay = 500
 		if(result)then
 			for k,v in ipairs(result) do
 				-- if (tonumber(user.money) >= tonumber(v.withdraw_cost)) then
@@ -97,8 +71,3 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 	
 	end)
 end)
-
---[[function test(player)
-	sleep(4)
-	TriggerEvent("weaponshop:GiveWeaponsToPlayer", player)
-end]]--

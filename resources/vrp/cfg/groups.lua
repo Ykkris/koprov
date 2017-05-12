@@ -21,12 +21,30 @@ cfg.groups = {
     "player.kick",
     "player.ban",
     "player.unban",
-    "player.custom_emote"
+    "player.custom_emote",
+    "player.coords"
   },
   -- the group user is auto added to all logged players
   ["user"] = {
     "player.phone"
-  }
+  },
+  ["police"] = {
+    "police.cloakroom",
+    "police.pc",
+    "police.handcuff",
+    "police.putinveh",
+    "police.askid",
+    "police.check",
+    "police.service"
+  },
+  ["taxi"] = {
+    _config = { gtype = "job" },
+    "taxi.service"
+  },
+  ["depanneur"] = {
+  _config = { gtype = "job"},
+  "tow.service"
+}
 }
 
 -- groups are added dynamically using the API or the menu, but you can add group when an user join here

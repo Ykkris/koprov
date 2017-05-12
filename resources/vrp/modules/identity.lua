@@ -158,7 +158,7 @@ local function ch_identity(player,choice)
             vRP.prompt(player,lang.cityhall.identity.prompt_age(),"",function(player,age)
               age = tonumber(age)
               if age >= 16 and age <= 150 then
-                 if vRP.tryPayment(user_id,cfg.new_identity_cost) then
+                if vRP.tryPayment(user_id,cfg.new_identity_cost) then
                   local registration = vRP.generateRegistrationNumber()
                   local phone = vRP.generatePhoneNumber()
 
@@ -207,7 +207,7 @@ local function build_client_cityhall(source) -- build the city hall area/marker/
   if user_id ~= nil then
     local x,y,z = table.unpack(cfg.city_hall)
 
-    vRPclient.addBlip(source,{x,y,z,181,4,lang.cityhall.title()})
+    vRPclient.addBlip(source,{x,y,z,cfg.blip[1],cfg.blip[2],lang.cityhall.title()})
     vRPclient.addMarker(source,{x,y,z-1,0.7,0.7,0.5,0,255,125,125,150})
 
     vRP.setArea(source,"vRP:cityhall",x,y,z,1,1.5,cityhall_enter,cityhall_leave)

@@ -7,7 +7,7 @@ local handCuffed = false
 
 -- Location to enable an officer service
 local takingService = {
-  {x=457.956909179688, y=-992.72314453125, z=30.6895866394043}
+  {x=452.041, y=-980.194, z=29.689}
 }
 
 AddEventHandler("playerSpawned", function()
@@ -211,9 +211,9 @@ Citizen.CreateThread(function()
         if(isCop) then
 			if(isNearTakeService()) then
 				if(isInService) then
-					drawTxt("Press ~g~E~s~ to stop working as cop.",0,1,0.5,0.8,0.6,255,255,255,255)
+					drawTxt("Appuyez sur ~g~E~s~ pour prendre le service.",0,1,0.5,0.8,0.6,255,255,255,255)
 				else
-					drawTxt("Press ~g~E~s~ to take your service.",0,1,0.5,0.8,0.6,255,255,255,255)
+					drawTxt("Appuyez sur ~g~E~s~ arrêter le service.",0,1,0.5,0.8,0.6,255,255,255,255)
 				end
 				if IsControlJustPressed(1, 38)  then
 					isInService = not isInService
@@ -221,12 +221,12 @@ Citizen.CreateThread(function()
 					if(isInService) then
 						
 						--Thanks to Xtas3
-						SetPedPropIndex(GetPlayerPed(-1), 0, 46, 0, 2)            --Casquette Police
-						SetPedComponentVariation(GetPlayerPed(-1), 11, 55, 0, 2)  --Chemise Police
-						SetPedComponentVariation(GetPlayerPed(-1), 8, 58, 0, 2)   --Ceinture+matraque Police 
-						SetPedComponentVariation(GetPlayerPed(-1), 4, 35, 0, 2)   --Pantalon Police
-						SetPedComponentVariation(GetPlayerPed(-1), 6, 24, 0, 2)   -- Chaussure Police
-						SetPedComponentVariation(GetPlayerPed(-1), 10, 8, 0, 2) --grade 0
+						-- SetPedPropIndex(GetPlayerPed(-1), 0, 46, 0, 2)            --Casquette Police
+						-- SetPedComponentVariation(GetPlayerPed(-1), 11, 55, 0, 2)  --Chemise Police
+						-- SetPedComponentVariation(GetPlayerPed(-1), 8, 58, 0, 2)   --Ceinture+matraque Police 
+						-- SetPedComponentVariation(GetPlayerPed(-1), 4, 35, 0, 2)   --Pantalon Police
+						-- SetPedComponentVariation(GetPlayerPed(-1), 6, 24, 0, 2)   -- Chaussure Police
+						-- SetPedComponentVariation(GetPlayerPed(-1), 10, 8, 0, 2) --grade 0
 						
 						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_NIGHTSTICK"), true, true)
 						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL50"), 150, true, true)

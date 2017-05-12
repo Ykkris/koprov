@@ -2,10 +2,13 @@
 local cfg = {}
 
 -- city hall position
--- cfg.city_hall = {-425.66708374023, 1123.1030273438, 325.85446166992}
+cfg.city_hall = {1854.21, 3685.51, 34.2671}
+
+-- cityhall blip {blipid,blipcolor}
+cfg.blip = {181,4}
 
 -- cost of a new identity
--- cfg.new_identity_cost = 0
+cfg.new_identity_cost = 100
 
 -- phone format (max: 20 chars, use D for a random digit)
 cfg.phone_format = "DDD-DDDD"

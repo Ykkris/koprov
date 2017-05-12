@@ -7,11 +7,13 @@ ui_page "gui/index.html"
 server_scripts {
 	"base.lua",
 	"modules/group.lua",
+	"modules/admin.lua",
 	"modules/gui.lua",
 	"modules/player_state.lua",
 	"modules/map.lua",
 	"modules/identity.lua",
 	"modules/emotes.lua",
+	"modules/police.lua",
 
 
 	-- basic implementations
@@ -21,10 +23,13 @@ server_scripts {
 client_scripts {
 	"client/Tunnel.lua",
   	"client/Proxy.lua",
+  	"cfg/client.lua",
 	"client/base.lua",
 	"client/gui.lua",
+	"client/player_state.lua",
 	"client/map.lua",
-	"client/player_state.lua"
+	"client/identity.lua",
+	"client/police.lua"
 }
 
 -- client files

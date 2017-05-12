@@ -1,12 +1,12 @@
 local voip = {}
-voip['default'] = {name = 'default', setting = 7.0}
+voip['default'] = {name = 'default', setting = 5.0}
 -- voip['local'] = {name = 'local', setting = 10.0}
 -- voip['whisper'] = {name = 'whisper', setting = 2.0}
 -- voip['yell'] = {name = 'yell', setting = 25.0}
 
 AddEventHandler('onClientMapStart', function()
 	NetworkSetTalkerProximity(voip['default'].setting)
-	NetworkGetPlayerLoudness(0.04)
+	NetworkGetPlayerLoudness(0.03)
 end)
 
 RegisterNetEvent('pv:voip')

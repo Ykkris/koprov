@@ -527,6 +527,6 @@ AddEventHandler('garages:enteredVehicle', function(data)
 
 	local car = GetVehiclePedIsIn(GetPlayerPed(-1), false)
 	if car then
-        SetEntityAsMissionEntity(car,true,true)
+        SetVehicleHasBeenOwnedByPlayer(car, GetPlayerPed(-1))
  	end
 end)
