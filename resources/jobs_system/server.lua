@@ -20,6 +20,13 @@ end
   --local result = MySQL  
 --end)
 
+AddEventHandler('es:playerLoaded', function(source)
+TriggerEvent('es:getPlayerFromId', source, function(user)
+local jobName = nameJob(source)
+TriggerClientEvent("jobssystem:updateJob", source, jobName)
+end)
+end)
+
 RegisterServerEvent('jobssystem:jobs')
 AddEventHandler('jobssystem:jobs', function(id)
 TriggerEvent('es:getPlayerFromId', source, function(user)
