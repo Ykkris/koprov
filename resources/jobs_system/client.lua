@@ -59,6 +59,17 @@ function changeJob(id)
   TriggerServerEvent("jobssystem:jobs", id)
 end
 
+RegisterNetEvent('jobssystem:updateJob')
+AddEventHandler('jobssystem:updateJob', function(nameJob)
+local id = PlayerId()
+local playerName = GetPlayerName(id)
+SendNUIMessage({
+updateJob = true,
+job = nameJob,
+player = playerName
+})
+end)
+
 ---------------------------------- CITIZEN ----------------------------------
 
 Citizen.CreateThread(function()

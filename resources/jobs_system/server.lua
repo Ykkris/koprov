@@ -22,12 +22,20 @@ end
 
 RegisterServerEvent('jobssystem:jobs')
 AddEventHandler('jobssystem:jobs', function(id)
-  TriggerEvent('es:getPlayerFromId', source, function(user)
-        local player = user.identifier
-        local nameJob = nameJob(id)
-        updatejob(player, id)
-        TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Votre métier est maintenant : ".. nameJob)
-  end)
+TriggerEvent('es:getPlayerFromId', source, function(user)
+local player = user.identifier
+local nameJob = nameJob(id)
+updatejob(player, id)
+TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Votre métier est maintenant : ".. nameJob)
+TriggerClientEvent("jobssystem:updateJob", source, nameJob)
+end)
+end)
+
+AddEventHandler('es:playerLoaded', function(source)
+TriggerEvent('es:getPlayerFromId', source, function(user)
+local jobName = nameJob(source)
+TriggerClientEvent("jobssystem:updateJob", source, jobName)
+end)
 end)
 
 AddEventHandler('es:playerLoaded', function(source)
