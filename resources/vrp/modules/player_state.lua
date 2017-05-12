@@ -20,12 +20,12 @@ AddEventHandler("vRP:playerSpawned", function()
       if data.customization ~= nil then
         vRPclient.setCustomization(source,{data.customization},function()
           if data.weapons ~= nil then -- load saved weapons
-            vRPclient.giveWeapons(source,{data.weapons,true})
+            --vRPclient.giveWeapons(source,{data.weapons,true})
           end
         end)
       else
         if data.weapons ~= nil then -- load saved weapons
-          vRPclient.giveWeapons(source,{data.weapons,true})
+          --vRPclient.giveWeapons(source,{data.weapons,true})
         end
       end
  
@@ -41,7 +41,7 @@ AddEventHandler("vRP:playerSpawned", function()
 
       -- load character customization
       if data.customization ~= nil then
-        vRPclient.setCustomization(source,{data.customization})
+        --vRPclient.setCustomization(source,{data.customization})
       end
     end
 
@@ -78,7 +78,7 @@ function tvRP.updateWeapons(weapons)
   if user_id ~= nil then
     local data = vRP.getUserDataTable(user_id)
     if data ~= nil then
-      data.weapons = weapons
+      --data.weapons = weapons
     end
   end
 end
@@ -88,7 +88,7 @@ function tvRP.updateCustomization(customization)
   if user_id ~= nil then
     local data = vRP.getUserDataTable(user_id)
     if data ~= nil then
-      data.customization = customization
+      --data.customization = customization
     end
   end
 end
