@@ -49,6 +49,7 @@ AutoStartResources:
     - mazone
     - knockout
     - medicgarage
+    - taxijob
 
 # do change
 RconPassword: koprobestv
