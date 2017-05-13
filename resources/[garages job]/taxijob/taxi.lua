@@ -138,15 +138,20 @@ end
 
 Citizen.CreateThread(function()
 	while true do
+		local isTaxi = false
 		Wait(0)
 		if onJob == 0 then
-			if IsControlJustPressed(1, 214) or IsDisabledControlJustPressed(1, 214) then -- DEL
-				if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
-					if IsVehicleModel(GetVehiclePedIsUsing(GetPlayerPed(-1)), GetHashKey("taxi", _r)) then
-						StartJob(1)
+			TriggerServerEvent("jobs:wichone", 9) -- ID TAXI DANS LA FONCTION
+			Wait(500)
+			if not(isTaxi) then DrawMissionText("La centrale ne reconnait pas votre identité!", 1)
+			else
+				if IsControlJustPressed(1, 214) or IsDisabledControlJustPressed(1, 214) then -- DEL
+					if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
+						if IsVehicleModel(GetVehiclePedIsUsing(GetPlayerPed(-1)), GetHashKey("taxi", _r)) then
+							StartJob(1)
+						end
 					end
 				end
-			end
 		elseif onJob == 1 then
 			if DoesEntityExist(jobs.cars[1]) and IsVehicleDriveable(jobs.cars[1], 0) then
 				if IsPedSittingInVehicle(GetPlayerPed(-1), jobs.cars[1]) then
@@ -252,7 +257,9 @@ Citizen.CreateThread(function()
 									Wait(6000)
 									DrawMissionText("~g~Vous avez déposé le client!", 5000)
 									TriggerServerEvent("taxi:getpaid")
-									Wait(8000)
+									-- local x = os.clock() éventuellement pour mettre un tomer mission
+									local randome_wait = GetRandomIntInRange(35, 60)*100 -- de 35 à 60 secondes
+									Wait(random_wait)
 									DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
@@ -309,3 +316,9 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+
+AddEventHandler("jobs:yesornot", function(yesornot)
+	isTaxi = yesornot
+end)
+	
+
