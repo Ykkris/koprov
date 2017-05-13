@@ -58,7 +58,7 @@ end)
 AddEventHandler("jobs:wichone", function(job_id) -- return le job au client
     TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
-    local req = MySQL:executeQuery("SELECT job from users WHERE identifier = '@identifier' ", {['@identifier'] = player })
+    local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
     local resultat = MySQL:getResults(exec, {'job'}, "identifier")
     if job_id == resultat[1] then
       local retour = true
