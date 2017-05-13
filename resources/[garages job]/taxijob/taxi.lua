@@ -263,7 +263,7 @@ Citizen.CreateThread(function()
 									DrawMissionText("~g~Vous avez déposé le client!", 5000)
 									TriggerServerEvent("taxi:getpaid")
 									-- local x = os.clock() éventuellement pour mettre un tomer mission
-									local randome_wait = GetRandomIntInRange(35, 60)*100 -- de 35 à 60 secondes
+									local random_wait = GetRandomIntInRange(35, 60)*100 -- de 35 à 60 secondes
 									Wait(random_wait)
 									DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
 									jobs.flag[1] = 0
