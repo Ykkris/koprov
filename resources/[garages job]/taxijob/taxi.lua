@@ -319,7 +319,7 @@ Citizen.CreateThread(function()
 	end
 end)
 
-RegisterServerEvent("jobs:yesornot")
+RegisterNetEvent("jobs:yesornot")
 AddEventHandler("jobs:yesornot", function(yesornot)
 	isTaxi = yesornot
 end)
