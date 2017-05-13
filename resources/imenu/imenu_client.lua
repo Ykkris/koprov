@@ -230,7 +230,7 @@ Citizen.CreateThread(function()
 			end
 		end  
 		
-		if vehshop.opened and IsPedInAnyVehicle(GetPlayerPed(-1), true) then -- enlever le menu quand le joueur n'est pas dans un vehicle
+		if vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) then -- enlever le menu quand le joueur n'est pas dans un vehicle
 				CloseCreator()
 		end
 			
