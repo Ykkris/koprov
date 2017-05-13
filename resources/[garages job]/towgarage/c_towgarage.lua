@@ -69,12 +69,14 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		DrawMarker(1, 391.96, -1621.23, 28.29, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0, 0, 0, 0)
-		if GetDistanceBetweenCoords(391.96, -1621.23, 29.29, GetEntityCoords(LocalPed())) < 1 then
+		if GetDistanceBetweenCoords(391.96, -1621.23, 29.29, GetEntityCoords(LocalPed())) < 2 then
 			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaître une ~b~dépanneuse', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
 				Menu.hidden = not Menu.hidden
 			end
+		elseif (GetDistanceBetweenCoords(391.96, -1621.23, 29.29, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
+				Menu.hidden = not Menu.hidden
 		end
 		Menu.renderGUI()
 	end
