@@ -11,6 +11,7 @@ utilise = {0, 0}
 px = {}
 py = {}
 
+
 -- UNE SEULE PERSONNE PEUT UTILISER LA COMMANDE A LA FOIS : pour changer cela, on pourrait ajouter une data dans Player = {...,...,...,...}
 TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 	-- L'utilisateur est un administrateur.
@@ -67,9 +68,9 @@ end)
 
 AddEventHandler('bugevent', function(x, y , z)
   RconPrint("ON EST BIEN DANS L EVENT SERVER POINT CLIENT")
-	Points[ #Points + 1] = x
-	Points[ #Points + 1] = y
-	RconPrint("test :"tostring(Points[1]))
+	px[ #px + 1] = x
+	py[ #py + 1] = y
+	RconPrint("test :"tostring(px[1]).. " ".. tostring(py[1]))
 	TriggerClientEvent('mazone:notification', source, "Point ajouté ! (/mazone sauvegarder) (/mazone arret)")
   CancelEvent()
 end)
@@ -77,13 +78,13 @@ end)
 
 function AjouterBDD(Points)
 
-    local c = #Points
-    for i =1, c ,2 do
+    local c = #px
+    for i =1, c  do
         MySQL:executeQuery("INSERT INTO zones (`nom`, `x`, `y`) VALUES ('@name', @x, @y)",
                   { 
 				  ['@nom'] = name,
-				  ['@x'] = Points[i], 
-				  ['@y'] = Points[i+1]
+				  ['@x'] = px[i], 
+				  ['@y'] = py[i]
 				  }
 						  )
     end
