@@ -146,7 +146,7 @@ Citizen.CreateThread(function()
 							TriggerServerEvent("jobs:wichone", 9) -- ID TAXI DANS LA FONCTION
 							Wait(500)
 							if not(isTaxi) then 
-								DrawMissionText("La centrale ne reconnait pas votre identité!", 1)
+								DrawMissionText("La centrale ne reconnait pas votre identité!", 1000)
 							else
 								StartJob(1)
 								isTaxi = false
