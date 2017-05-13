@@ -40,7 +40,7 @@ AddEventHandler('CheckMoneyForVeh', function(name, vehicle, price)
       for _ in pairs(result) do
         count = count + 1
       end
-      if count == 5 then
+      if count == 15 then
           TriggerClientEvent("veh_s:notif", source, "Ton garage est ~r~Plein!~w~")
       else
         if (tonumber(user.money) >= tonumber(price)) then
