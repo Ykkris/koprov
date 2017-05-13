@@ -53,15 +53,6 @@ end, function(source, args, user)
      -- L'utilisateur n'a pas la permission.
 end)
 
-AddEventHandler("mazone:sauvegardebdd", function()
-	AjouterBDD(Points)
-end)
-
-AddEventHandler('mazone:pointclient', function(point)
-  AjoutPoint(point)
-  CancelEvent()
-end)
-
 function AjoutPoint(point)
 	RconPrint("AJOUT POINT OKOK OK OK OK OK KO KOK OKO KOK OK OK OK KO KO KOK OK")
 	Points[ #Points + 1] = point.x
@@ -69,6 +60,17 @@ function AjoutPoint(point)
 	RconPrint("test :"tostring(Points[1]))
 	TriggerClientEvent('mazone:notification', source, "Point ajouté ! (/mazone sauvegarder) (/mazone arret)")
 end
+
+AddEventHandler("mazone:sauvegardebdd", function()
+	AjouterBDD(Points)
+end)
+
+AddEventHandler('mazone:pointclient', function(point)
+  RconPrint("ON EST BIEN DANS L EVENT SERVER POINT CLIENT")
+  AjoutPoint(point)
+  CancelEvent()
+end)
+
 
 function AjouterBDD(Points)
 
