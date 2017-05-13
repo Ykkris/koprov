@@ -1,6 +1,7 @@
 require "resources/essentialmode/lib/MySQL"
 MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
+RegisterServerEvent("jobs:wichone") -- return le job au client
 
 function nameJob(id)
   local executed_query = MySQL:executeQuery("SELECT * FROM jobs WHERE job_id = '@namejob'", {['@namejob'] = id})
@@ -54,3 +55,14 @@ AddEventHandler('es:playerLoaded', function(source)
     end)
 end)
 
+AddEventHandler("jobs:wichone", function(job_id) -- return le job au client
+    local player = user.identifier
+    local req = MySQL:executeQuery("SELECT job from users WHERE identifier = '@identifier' ", {['@identifier'] = player })
+    local resultat = MySQL:getResults(exec, {'job'}, "identifier")
+    if job_id == resultat[1] then
+      local retour = true
+    else 
+      local retour = false
+    TrigerClientEvent("jobs:yesornot", sender, retour)
+end)
+ 
