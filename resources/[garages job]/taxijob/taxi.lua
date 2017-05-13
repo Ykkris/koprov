@@ -152,6 +152,7 @@ Citizen.CreateThread(function()
 						end
 					end
 				end
+			end
 		elseif onJob == 1 then
 			if DoesEntityExist(jobs.cars[1]) and IsVehicleDriveable(jobs.cars[1], 0) then
 				if IsPedSittingInVehicle(GetPlayerPed(-1), jobs.cars[1]) then
