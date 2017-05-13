@@ -10,7 +10,6 @@ RegisterServerEvent('mazone:sauvegardebdd')
 utilise = false
 px = {}
 py = {}
-pz = {}
 
 -- UNE SEULE PERSONNE PEUT UTILISER LA COMMANDE A LA FOIS : pour changer cela, on pourrait ajouter une data dans Player = {...,...,...,...}
 TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
@@ -32,10 +31,9 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 			TriggerClientEvent('mazone:sauvegarder', source, args)
 			utilise = false
 			name = args[3]
-			Wait(300)
+			Wait(1000)
 			px = {}
 			py = {}
-			pz = {}
 		else
 			TriggerClientEvent('mazone:notification', source, "Tu n'as pas rentré le nom de ta zone ou ce n'est pas un string : /mazone sauvegarder nom [STRING]")
 		end
@@ -48,7 +46,6 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 		utilise = false
 		px = {}
 		py = {}
-		pz = {}
 	end
 	
 end, function(source, args, user) 
@@ -66,33 +63,19 @@ end)
 function AjoutPoint(point)
 	Points[ #Points + 1] = point.x
 	Points[ #Points + 1] = point.y
-	Points[ #Points + 1] = point.z
 	RconPrint("test :"tostring(Points[1]))
 	TriggerClientEvent('mazone:notification', source, "Point ajouté ! (/mazone sauvegarder) (/mazone arret)")
 end
 
---function AjouterBDD(Points)
-
-	--local c = #px
-	--for i =1 , c do
-	
-	
-		--MySQL:executeQuery("INSERT INTO zones (`nom`, `x`, `y`, `z`) VALUES ('@name', @x, @y, @z)", { ['@nom'] = name, ['@x'] = px[ i ], ['@y'] = py[ i + 1 ], [@z] = pz[ i + 2 ] })
-	--end
-
-
---end
-
 function AjouterBDD(Points)
 
     local c = #Points
-    for i =1, c ,3 do
-        MySQL:executeQuery("INSERT INTO zones (`nom`, `x`, `y`, `z`) VALUES ('@name', @x, @y, @z)",
+    for i =1, c ,2 do
+        MySQL:executeQuery("INSERT INTO zones (`nom`, `x`, `y`) VALUES ('@name', @x, @y)",
                   { 
 				  ['@nom'] = name,
 				  ['@x'] = Points[i], 
 				  ['@y'] = Points[i+1], 
-				  ['@z'] = Points[i+2] 
 				  }
 						  )
     end
