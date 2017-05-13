@@ -229,9 +229,9 @@ Citizen.CreateThread(function()
 						-- SetPedComponentVariation(GetPlayerPed(-1), 10, 8, 0, 2) --grade 0
 						
 						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_NIGHTSTICK"), true, true)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL50"), 150, true, true)
+						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL"), 50, true, true)
 						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_STUNGUN"), true, true)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PUMPSHOTGUN"), 150, true, true)
+						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PUMPSHOTGUN"), 25, true, true)
 					else
 						local playerPed = GetPlayerPed(-1)
 						
