@@ -4,6 +4,7 @@ MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 RegisterServerEvent("jobs:wichone") -- return le job au client
 
 function nameJob(id)
+  RconPrint(tostring(id))
   local executed_query = MySQL:executeQuery("SELECT * FROM jobs WHERE job_id = '@namejob'", {['@namejob'] = id})
   local result = MySQL:getResults(executed_query, {'job_name'}, "job_id")
   return result[1].job_name
@@ -49,6 +50,7 @@ end)
 AddEventHandler('es:playerLoaded', function(source)
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
+        RconPrint(tostring(player))
         local exec = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player})
         local result = MySQL:getResults(exec, {'job'}, "identifier")
         TriggerClientEvent("recolt:updateJobs", source, result[1].job)
