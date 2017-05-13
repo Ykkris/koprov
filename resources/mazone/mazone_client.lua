@@ -19,7 +19,7 @@ AddEventHandler('mazone:demarrage', function(args)
 	utilise = true
 end)
 
-AddEventHandler('mazone:pointage', function(args)
+AddEventHandler('mazone:pointage', function()
 	local point = GetEntityCoords(GetPlayerPed(-1), true)
 	Citizen.Trace(tostring(point.x) .." " .. tostring(point.y))
 	TriggerServerEvent("mazone:pointclient", point)
