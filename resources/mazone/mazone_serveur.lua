@@ -21,14 +21,14 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 		TriggerClientEvent('mazone:notification', source, "Demarrage effectué, /mazone point ou /mazone sauvegarder maintenant")
 		
 	else if (args[2] == 'point' and utilise[1] == 1) then
-		TriggerClientEvent('mazone:pointage', source, args)
+		TriggerClientEvent('mazone:pointage', source)
 		else TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 		end
 	end
 	
 	if (args[2] == 'sauvegarder' and utilise[1] == 1) then
 		if args[3] ~= nil then
-			TriggerClientEvent('mazone:sauvegarder', source, args)
+			TriggerClientEvent('mazone:sauvegarder', source)
 			utilise = {0}
 			name = args[3]
 			Wait(1000)
