@@ -23,7 +23,7 @@ AddEventHandler('mazone:pointage', function()
 	Citizen.Trace("TEST")
 	point = GetEntityCoords(GetPlayerPed(-1))
 	Citizen.Trace(tostring(point.x) .." " .. tostring(point.y))
-	TriggerServerEvent("bugevent", point)
+	TriggerServerEvent("bugevent", table.unpack(point))
 	CancelEvent()
 end)
 
