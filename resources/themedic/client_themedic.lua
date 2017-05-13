@@ -6,7 +6,7 @@ local existingVeh = nil
 
 -- Location to take service
 local takingService = {
-	{x=347, y=-1457, z=41.5}
+	{x=347.72, y=-1456.62, z=41.50}
 }
 
 AddEventHandler("playerSpawned", function()
