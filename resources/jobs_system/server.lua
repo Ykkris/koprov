@@ -60,6 +60,7 @@ AddEventHandler("jobs:wichone", function(job_id) -- return le job au client
     local player = user.identifier
     local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
     local resultat = MySQL:getResults(req, {'job'}, "identifier")
+    RconPrint(tostring(job_id)..tostring(resultat[1]))
     if job_id == resultat[1] then
       retour = true
     else 
