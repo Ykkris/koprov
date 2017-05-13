@@ -20,9 +20,14 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 		TriggerClientEvent('mazone:demarrage', source, args)
 		TriggerClientEvent('mazone:notification', source, "Demarrage effectué, /mazone point ou /mazone sauvegarder maintenant")
 		
-	else if (args[2] == 'point' and utilise[1] == 1) then
-		TriggerClientEvent('mazone:pointage', source)
-		else TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
+	else 
+		RconPrint("utilise : "..tostring(utilise[1]).. " Arg2 : "..tostring(args[2]).. "Et arg1 :".. tostring(arg[1]))
+		if (args[2] == 'point' and utilise[1] == 1) then
+			RconPrint("On est bien dans point et utilisé")
+			TriggerClientEvent('mazone:pointage', source)
+			RconPrint("On a bien Trigger l'event")
+		else 
+			TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 		end
 	end
 	
