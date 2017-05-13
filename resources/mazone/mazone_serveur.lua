@@ -70,7 +70,7 @@ AddEventHandler('bugevent', function(x, y , z)
   RconPrint("ON EST BIEN DANS L EVENT SERVER POINT CLIENT")
 	px[ #px + 1] = x
 	py[ #py + 1] = y
-	RconPrint("test :"tostring(px[1]).. " ".. tostring(py[1]))
+	RconPrint("test :"tostring(px[2]).. " ".. tostring(py[2]))
 	TriggerClientEvent('mazone:notification', source, "Point ajouté ! (/mazone sauvegarder) (/mazone arret)")
   CancelEvent()
 end)
