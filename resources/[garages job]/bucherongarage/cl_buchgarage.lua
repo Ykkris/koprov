@@ -79,7 +79,7 @@ Citizen.CreateThread(function()
 				InitMenuVehicules()
 				Menu.hidden = not Menu.hidden
 			end
-		elseif (GetDistanceBetweenCoords(-14.61, -2658.18, 6.00, GetEntityCoords(LocalPed())) > 3 and !Menu.hidden) then
+		elseif (GetDistanceBetweenCoords(-14.61, -2658.18, 6.00, GetEntityCoords(LocalPed())) > 3 and not Menu.hidden) then
 				Menu.hidden = not Menu.hidden
 		end
 		Menu.renderGUI()
