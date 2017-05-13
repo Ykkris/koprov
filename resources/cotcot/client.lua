@@ -18,4 +18,5 @@ Citizen.CreateThread(function()
       end
             pop_finish = true
     end
+    return 1
 end)
