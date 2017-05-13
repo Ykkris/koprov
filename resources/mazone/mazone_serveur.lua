@@ -65,10 +65,10 @@ AddEventHandler("mazone:sauvegardebdd", function()
 	AjouterBDD(Points)
 end)
 
-AddEventHandler('bugevent', function(point)
+AddEventHandler('bugevent', function(x, y , z)
   RconPrint("ON EST BIEN DANS L EVENT SERVER POINT CLIENT")
-	Points[ #Points + 1] = point.x
-	Points[ #Points + 1] = point.y
+	Points[ #Points + 1] = x
+	Points[ #Points + 1] = y
 	RconPrint("test :"tostring(Points[1]))
 	TriggerClientEvent('mazone:notification', source, "Point ajouté ! (/mazone sauvegarder) (/mazone arret)")
   CancelEvent()
