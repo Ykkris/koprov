@@ -7,7 +7,7 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 RegisterServerEvent('mazone:pointclient')
 RegisterServerEvent('mazone:sauvegardebdd')
 
-utilise = false
+utilise = {0}
 px = {}
 py = {}
 
@@ -16,20 +16,20 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 	-- L'utilisateur est un administrateur.
 	RconPrint(tostring(args[1].. "   "..tostring(args[2])))
 	if args[2] == 'commencer' then
-		utilise = true
+		utilise = {1}
 		TriggerClientEvent('mazone:demarrage', source, args)
 		TriggerClientEvent('mazone:notification', source, "Demarrage effectué, /mazone point ou /mazone sauvegarder maintenant")
 		
-	else if (args[2] == 'point' and utilise) then
+	else if (args[2] == 'point' and utilise[1] == 1) then
 		TriggerClientEvent('mazone:pointage', source, args)
 		else TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 		end
 	end
 	
-	if (args[2] == 'sauvegarder' and utilise) then
+	if (args[2] == 'sauvegarder' and utilise[1] == 1) then
 		if args[3] ~= nil then
 			TriggerClientEvent('mazone:sauvegarder', source, args)
-			utilise = false
+			utilise = {0}
 			name = args[3]
 			Wait(1000)
 			px = {}
@@ -41,9 +41,9 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 		--TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 	end
 	
-	if (args[2] == 'arret' and utilise) then
+	if (args[2] == 'arret' and utilise[1] == 1) then
 		TrigerClientEvent('mazone:arret', source, args)
-		utilise = false
+		utilise = {0}
 		px = {}
 		py = {}
 	end
