@@ -230,6 +230,10 @@ Citizen.CreateThread(function()
 			end
 		end  
 		
+		if vehshop.opened and IsPedInAnyVehicle(GetPlayerPed(-1), true) then -- enlever le menu quand le joueur n'est pas dans un vehicle
+				CloseCreator()
+		end
+			
 		if vehshop.opened then
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu]
@@ -386,6 +390,7 @@ end
 			StopLimitator()
 		end
 	elseif this == "Eteindre le moteur" then
+			CloseCreator()
 			OpenCreator()
 
 	end
@@ -475,6 +480,7 @@ function ToggleEngineOff()
 		SetVehicleUndriveable(playerVeh, engine)
 	end
 	engine = false
+	CloseCreator()
 	OpenCreator()
 end
 
