@@ -82,7 +82,7 @@ function AjouterBDD(Points)
     for i =2, c  do
         MySQL:executeQuery("INSERT INTO zones (`nom`, `x`, `y`) VALUES ('@name', @x, @y)",
                   { 
-				  ['@nom'] = name,
+				  ['@name'] = name,
 				  ['@x'] = px[i], 
 				  ['@y'] = py[i]
 				  }
