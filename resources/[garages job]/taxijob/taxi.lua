@@ -146,14 +146,14 @@ Citizen.CreateThread(function()
 						if IsVehicleModel(GetVehiclePedIsUsing(GetPlayerPed(-1)), GetHashKey("taxi", _r)) then
 							TriggerServerEvent("jobs:wichone", 9) -- ID TAXI DANS LA FONCTION
 							Wait(500)
-							if not(isTaxi) then 
-								DrawMissionText("La centrale ne reconnait pas votre identité!", 1000)
-								Citizen.Trace("on est dans le isTaxi false")
-							else
-								Citizen.Trace("on est bien dans le else")
-								isTaxi = false
-								StartJob(1)
-							end
+							--if not(isTaxi) then 
+								--DrawMissionText("La centrale ne reconnait pas votre identité!", 1000)
+								--Citizen.Trace("on est dans le isTaxi false")
+							--else
+								--Citizen.Trace("on est bien dans le else")
+								--isTaxi = false
+								--StartJob(1)
+							--end
 						end
 					end
 				end
@@ -325,6 +325,12 @@ end)
 RegisterNetEvent("jobs:yesornot")
 AddEventHandler("jobs:yesornot", function(yesornot)
 	isTaxi = yesornot
+	if isTaxi == true then
+		StartJob(1)
+		isTaxi = false
+	else
+		DrawMissionText("La centrale ne reconnait pas votre identité!", 1000)		
+	end
 end)
 	
 
