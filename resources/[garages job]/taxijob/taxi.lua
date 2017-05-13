@@ -141,18 +141,19 @@ Citizen.CreateThread(function()
 		local isTaxi = false
 		Wait(0)
 		if onJob == 0 then
-			TriggerServerEvent("jobs:wichone", 9) -- ID TAXI DANS LA FONCTION
-			Wait(500)
-			if not(isTaxi) then DrawMissionText("La centrale ne reconnait pas votre identité!", 1)
-			else
 				if IsControlJustPressed(1, 214) or IsDisabledControlJustPressed(1, 214) then -- DEL
 					if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
 						if IsVehicleModel(GetVehiclePedIsUsing(GetPlayerPed(-1)), GetHashKey("taxi", _r)) then
-							StartJob(1)
+							TriggerServerEvent("jobs:wichone", 9) -- ID TAXI DANS LA FONCTION
+							Wait(500)
+							if not(isTaxi) then 
+								DrawMissionText("La centrale ne reconnait pas votre identité!", 1)
+							else
+								StartJob(1)
+							end
 						end
 					end
 				end
-			end
 		elseif onJob == 1 then
 			if DoesEntityExist(jobs.cars[1]) and IsVehicleDriveable(jobs.cars[1], 0) then
 				if IsPedSittingInVehicle(GetPlayerPed(-1), jobs.cars[1]) then
