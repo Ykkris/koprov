@@ -18,6 +18,7 @@ local function ch_emote(player,choice)
   local emote = emotes[choice]
   if emote then
     vRPclient.playAnim(player,emote)
+    Wait(1000)
   end
 end
 
