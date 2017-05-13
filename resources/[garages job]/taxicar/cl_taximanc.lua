@@ -71,12 +71,14 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		DrawMarker(1, 908.17, -176.68, 73.166, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 185, 169, 65, 200, 0, 0, 0, 0)
 
-		if GetDistanceBetweenCoords(908.17, -176.68, 74.166, GetEntityCoords(LocalPed())) < 1 then
+		if GetDistanceBetweenCoords(908.17, -176.68, 74.166, GetEntityCoords(LocalPed())) < 2 then
 			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre un ~b~taxi', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
 				Menu.hidden = not Menu.hidden
 			end
+		elseif (GetDistanceBetweenCoords(908.17, -176.68, 74.166, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
+				Menu.hidden = not Menu.hidden
 		end
 		Menu.renderGUI()
 	end
