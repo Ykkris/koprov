@@ -768,3 +768,10 @@ AddEventHandler('playerSpawned', function(spawn)
 		firstspawn = 1
 	end
 end)
+
+RegisterNetEvent("veh_s:notif")
+AddEventHandler("veh_s:notif", function(text)
+	 SetNotificationTextEntry("STRING")
+         AddTextComponentString(text)
+         DrawNotification(false, false)		
+end)
