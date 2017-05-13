@@ -75,7 +75,7 @@ function AjouterBDD(Points)
                   { 
 				  ['@nom'] = name,
 				  ['@x'] = Points[i], 
-				  ['@y'] = Points[i+1], 
+				  ['@y'] = Points[i+1]
 				  }
 						  )
     end
