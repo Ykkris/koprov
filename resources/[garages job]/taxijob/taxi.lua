@@ -135,10 +135,9 @@ function StopJob(jobid)
 		jobs.flag[2] = nil
 	end
 end
-
+isTaxi = false
 Citizen.CreateThread(function()
 	while true do
-		local isTaxi = false
 		Wait(0)
 		if onJob == 0 then
 				if IsControlJustPressed(1, 214) or IsDisabledControlJustPressed(1, 214) then -- DEL
@@ -150,6 +149,7 @@ Citizen.CreateThread(function()
 								DrawMissionText("La centrale ne reconnait pas votre identité!", 1)
 							else
 								StartJob(1)
+								isTaxi = false
 							end
 						end
 					end
