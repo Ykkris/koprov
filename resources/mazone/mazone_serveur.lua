@@ -38,7 +38,7 @@ TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 			TriggerClientEvent('mazone:notification', source, "Tu n'as pas rentré le nom de ta zone ou ce n'est pas un string : /mazone sauvegarder nom [STRING]")
 		end
 	else
-		TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
+		--TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 	end
 	
 	if (args[2] == 'arret' and utilise) then
