@@ -5,7 +5,7 @@ require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 RegisterServerEvent('mazone:pointclient')
-RegisterServerEvent('mazone:sauvegardebdd')
+RegisterServerEvent('bugevent')
 
 utilise = {0, 0}
 px = {}
@@ -65,7 +65,7 @@ AddEventHandler("mazone:sauvegardebdd", function()
 	AjouterBDD(Points)
 end)
 
-AddEventHandler('mazone:pointclient', function(point)
+AddEventHandler('bugevent', function(point)
   RconPrint("ON EST BIEN DANS L EVENT SERVER POINT CLIENT")
 	Points[ #Points + 1] = point.x
 	Points[ #Points + 1] = point.y
