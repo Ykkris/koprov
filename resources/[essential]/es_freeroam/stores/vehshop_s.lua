@@ -41,33 +41,23 @@ AddEventHandler('CheckMoneyForVeh', function(name, vehicle, price)
         count = count + 1
       end
       if count == 5 then
-          SetNotificationTextEntry("STRING")
-          AddTextComponentString("Ton garage est ~r~plein~w~")
-          DrawNotification(false, false)
+          TriggerClientEvent("veh_s:notif", source, "Ton garage est ~r~Plein!~w~")
       else
         if (tonumber(user.money) >= tonumber(price)) then
           user:removeMoney((price))
           TriggerClientEvent('FinishMoneyCheckForVeh', source, name, vehicle, price)
-          SetNotificationTextEntry("STRING")
-          AddTextComponentString("Vehicule ~g~livré~w~")
-          DrawNotification(false, false)
+          TriggerClientEvent("veh_s:notif", source, "Vehicule ~r~Livré!~w~")
         else
-          SetNotificationTextEntry("STRING")
-          AddTextComponentString("Tu n'as pas assez d'argent")
-          DrawNotification(false, false)
+          TriggerClientEvent("veh_s:notif", source, "Tu n'as pas assez d'argent")
        end
       end
    else
       if (tonumber(user.money) >= tonumber(price)) then
         user:removeMoney((price))
         TriggerClientEvent('FinishMoneyCheckForVeh', source, name, vehicle, price)
-        SetNotificationTextEntry("STRING")
-          AddTextComponentString("Vehicule ~r~livré~w~")
-          DrawNotification(false, false)
+        TriggerClientEvent("veh_s:notif", source, "Vehicule ~r~Livré!~w~")
       else
-          SetNotificationTextEntry("STRING")
-          AddTextComponentString("Tu n'as pas assez d'argent")
-          DrawNotification(false, false)
+        TriggerClientEvent("veh_s:notif", source, "Tu n'as pas assez d'argent")
       end 
     end
   end)
