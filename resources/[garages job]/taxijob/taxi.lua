@@ -3,6 +3,7 @@ onJob = 0
 jobs = {peds = {}, flag = {}, blip = {}, cars = {}, coords = {cx={}, cy={}, cz={}}}
 
 function StartJob(jobid)
+	Citizen.Trace("test")
 	if jobid == 1 then -- taxi
 		showLoadingPromt("Loading work: Taxi Driver", 2000, 3)
 		jobs.coords.cx[1],jobs.coords.cy[1],jobs.coords.cz[1] = 293.476,-590.163,42.7371
