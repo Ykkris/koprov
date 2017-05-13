@@ -25,7 +25,7 @@ AddEventHandler('mazone:pointage', function()
 	TriggerServerEvent("mazone:pointclient", point)
 end)
 
-AddEventHandler('mazone:sauvegarder', function(args)
+AddEventHandler('mazone:sauvegarder', function()
 	utilise = false
 	TriggerServerEvent("mazone:sauvegardebdd")
 	VoirNotification("Vous venez d'enregistrer les points, ") -- Valeur a afficher	
