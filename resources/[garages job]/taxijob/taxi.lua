@@ -148,7 +148,9 @@ Citizen.CreateThread(function()
 							Wait(500)
 							if not(isTaxi) then 
 								DrawMissionText("La centrale ne reconnait pas votre identité!", 1000)
+								Citizen.Trace("on est dans le isTaxi false")
 							else
+								Citizen.Trace("on est bien dans le else")
 								isTaxi = false
 								StartJob(1)
 							end
