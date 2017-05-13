@@ -28,7 +28,8 @@ cfg.emotes = {
   },
   ["Salute"] = {true,{{"mp_player_int_uppersalute","mp_player_int_salute",1}},false},
   ["Rock"] = {true,{{"mp_player_introck","mp_player_int_rock",1}},false},
-  ["Why"] = {true,{{"gestures@f@standing@casual","gesture_why",1}},false}
+  ["Why"] = {true,{{"gestures@f@standing@casual","gesture_why",1}},false},
+  ["Hello"] = {true,{{"gestures@m@standing@casual","gesture_hello",1}},false}
 }
 
 return cfg
