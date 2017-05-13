@@ -16,13 +16,13 @@ AddEventHandler('chatMessageEntered', function(name, color, message)
 end)
 
 -- player join messages
-AddEventHandler('playerActivated', function()
-    TriggerClientEvent('chatMessage', -1, '', { 0, 0, 0 }, '^2* ' .. GetPlayerName(source) .. ' joined.')
-end)
+--AddEventHandler('playerActivated', function()
+    --TriggerClientEvent('chatMessage', -1, '', { 0, 0, 0 }, '^2* ' .. GetPlayerName(source) .. ' joined.')
+--end)
 
-AddEventHandler('playerDropped', function(reason)
-    TriggerClientEvent('chatMessage', -1, '', { 0, 0, 0 }, '^2* ' .. GetPlayerName(source) ..' left (' .. reason .. ')')
-end)
+--AddEventHandler('playerDropped', function(reason)
+    --TriggerClientEvent('chatMessage', -1, '', { 0, 0, 0 }, '^2* ' .. GetPlayerName(source) ..' left (' .. reason .. ')')
+--end)
 
 -- say command handler
 AddEventHandler('rconCommand', function(commandName, args)
