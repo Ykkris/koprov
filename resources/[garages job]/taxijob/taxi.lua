@@ -325,6 +325,7 @@ end)
 RegisterNetEvent("jobs:yesornot")
 AddEventHandler("jobs:yesornot", function(yesornot)
 	isTaxi = yesornot
+	Citizen.Trace(tostring(isTaxi))
 	if isTaxi == true then
 		StartJob(1)
 		isTaxi = false
