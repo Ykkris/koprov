@@ -64,7 +64,7 @@ AddEventHandler("jobs:wichone", function(job_id) -- return le job au client
       local retour = true
     else 
       local retour = false
-    TrigerClientEvent("jobs:yesornot", source, retour)
+    TriggerClientEvent("jobs:yesornot", source, retour)
     end
    end)
 end)
