@@ -14,18 +14,14 @@ py = {}
 -- UNE SEULE PERSONNE PEUT UTILISER LA COMMANDE A LA FOIS : pour changer cela, on pourrait ajouter une data dans Player = {...,...,...,...}
 TriggerEvent('es:addCommand', 'mazone', function(source, args, user)
 	-- L'utilisateur est un administrateur.
-	RconPrint(tostring(args[1].. "   "..tostring(args[2])))
 	if args[2] == 'commencer' then
 		utilise = {1, 0}
 		TriggerClientEvent('mazone:demarrage', source, args)
 		TriggerClientEvent('mazone:notification', source, "Demarrage effectué, /mazone point ou /mazone sauvegarder maintenant")
 		
 	else 
-		RconPrint("utilise : "..tostring(utilise[1]).. " Arg2 : "..tostring(args[2]).. "Et arg1 :".. tostring(args[1]))
 		if (args[2] == 'point' and utilise[1] == 1) then
-			RconPrint("On est bien dans point et utilisé")
 			TriggerClientEvent('mazone:pointage', source)
-			RconPrint("On a bien Trigger l'event")
 		else 
 			TriggerClientEvent('mazone:notification', source, "Tu n'as même pas initié le pointage !")
 		end
@@ -63,9 +59,11 @@ end)
 
 AddEventHandler('mazone:pointclient', function(point)
   AjoutPoint(point)
+  CancelEvent()
 end)
 
 function AjoutPoint(point)
+	RconPrint("AJOUT POINT OKOK OK OK OK OK KO KOK OKO KOK OK OK OK KO KO KOK OK")
 	Points[ #Points + 1] = point.x
 	Points[ #Points + 1] = point.y
 	RconPrint("test :"tostring(Points[1]))
