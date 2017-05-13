@@ -60,24 +60,24 @@ end)
 
 RegisterServerEvent('police:targetCheckInventory')
 AddEventHandler('police:targetCheckInventory', function(t)
-	TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, checkInventory(t))
+	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, checkInventory(t))
 end)
 
 RegisterServerEvent('police:finesGranted')
 AddEventHandler('police:finesGranted', function(t, amount)
-	TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, GetPlayerName(t).. " paid a $"..amount.." fines.")
+	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, GetPlayerName(t).. " paid a $"..amount.." fines.")
 	TriggerClientEvent('police:payFines', t, amount)
 end)
 
 RegisterServerEvent('police:cuffGranted')
 AddEventHandler('police:cuffGranted', function(t)
-	TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, GetPlayerName(t).. " toggle cuff (except if it's a cop :3 ) !")
+	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, GetPlayerName(t).. " toggle cuff (except if it's a cop :3 ) !")
 	TriggerClientEvent('police:getArrested', t)
 end)
 
 RegisterServerEvent('police:forceEnterAsk')
 AddEventHandler('police:forceEnterAsk', function(t, v)
-	TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, GetPlayerName(t).. " get to the car ! (if he's cuffed :) )")
+	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, GetPlayerName(t).. " get to the car ! (if he's cuffed :) )")
 	TriggerClientEvent('police:forcedEnteringVeh', t, v)
 end)
 
@@ -87,7 +87,7 @@ TriggerEvent('es:addCommand', 'check', function(source, args, user)
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:checkInventory', source)
 		else
-			TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "You don't have the permission to do this !")
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 		end
 	end)
 end)
@@ -97,16 +97,16 @@ TriggerEvent('es:addCommand', 'fines', function(source, args, user)
 		local isCop = s_checkIsCop(player.identifier)
 		if(isCop ~= "nil") then
 			if(#args < 3) then
-				TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "Usage : /fines [id] [amount]")
+				TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Usage : /fines [id] [amount]")
 			else
 				if(GetPlayerName(tonumber(args[2])) ~= nil)then
 					TriggerClientEvent('police:fines', source, args[2], args[3])
 				else
-					TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "No player with this ID !")
+					TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player with this ID !")
 				end
 			end
 		else
-			TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "You don't have the permission to do this !")
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 		end
 	end)
 end)
@@ -117,7 +117,7 @@ TriggerEvent('es:addCommand', 'cuff', function(source, args, user)
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:cuff', source)
 		else
-			TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "You don't have the permission to do this !")
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 		end
 	end)
 end)
@@ -128,7 +128,7 @@ TriggerEvent('es:addCommand', 'forceEnter', function(source, args, user)
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:forceEnter', source)
 		else
-			TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "You don't have the permission to do this !")
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 		end
 	end)
 end)
@@ -141,34 +141,34 @@ TriggerEvent('es:addAdminCommand', 'copadd', 100000, function(source, args, user
 			local player = tonumber(args[2])
 			TriggerEvent("es:getPlayerFromId", player, function(target)
 				addCop(target.identifier)
-				TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "Roger that !")
-				TriggerClientEvent('chatMessage', player, 'SYSTEM', {255, 0, 0}, "Congrats, you're now a cop !")
+				TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Roger that !")
+				TriggerClientEvent('es_freeroam:notify', player, "CHAR_STEVE", 1, "LSPD", false, "Congrats, you're now a cop !")
 				TriggerClientEvent('police:nowCop', player)
 			end)
 		else
-			TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "No player with this ID !")
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player with this ID !")
 		end
 	end
 end, function(source, args, user) 
-	TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "You don't have the permission to do this !")
+	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 end)
 
 TriggerEvent('es:addAdminCommand', 'coprem', 100000, function(source, args, user) 
      if(not args[2]) then
-		TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "Usage : /coprem [ID]")	
+		TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Usage : /coprem [ID]")	
 	else
 		if(GetPlayerName(tonumber(args[2])) ~= nil)then
 			local player = tonumber(args[2])
 			TriggerEvent("es:getPlayerFromId", player, function(target)
 				remCop(target.identifier)
-				TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "Roger that !")
-				TriggerClientEvent('chatMessage', player, 'SYSTEM', {255, 0, 0}, "You're no longer a cop !")
+				TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Roger that !")
+				TriggerClientEvent('es_freeroam:notify', player, "CHAR_STEVE", 1, "LSPD", false, "You're no longer a cop !")
 				TriggerClientEvent('police:noLongerCop', player)
 			end)
 		else
-			TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "No player with this ID !")
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player with this ID !")
 		end
 	end
 end, function(source, args, user) 
-	TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "You don't have the permission to do this !")
+	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 end)

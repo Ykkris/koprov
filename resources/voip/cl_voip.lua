@@ -1,5 +1,5 @@
 local voip = {}
-voip['default'] = {name = 'default', setting = 4.0}
+voip['default'] = {name = 'default', setting = 2.0}
 -- voip['local'] = {name = 'local', setting = 10.0}
 -- voip['whisper'] = {name = 'whisper', setting = 2.0}
 -- voip['yell'] = {name = 'yell', setting = 25.0}

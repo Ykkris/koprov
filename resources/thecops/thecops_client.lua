@@ -54,10 +54,10 @@ AddEventHandler('police:checkInventory', function()
 		if(distance ~= -1 and distance < 1) then
 			TriggerServerEvent("police:targetCheckInventory", GetPlayerServerId(t))
 		else
-			TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "No player near you !")
+			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you !")
 		end
 	else
-		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Please take your service first !")
+		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
 	end
 end)
 
@@ -66,7 +66,7 @@ AddEventHandler('police:fines', function(t, amount)
 	if(isInService) then
 		TriggerServerEvent("police:finesGranted", t, amount)
 	else
-		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Please take your service first !")
+		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
 	end
 end)
 
@@ -77,10 +77,10 @@ AddEventHandler('police:cuff', function(t)
 		if(distance ~= -1 and distance < 1) then
 			TriggerServerEvent("police:cuffGranted", GetPlayerServerId(t))
 		else
-			TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "No player near you (maybe get closer) !")
+			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you (maybe get closer) !")
 		end
 	else
-		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Please take your service first !")
+		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
 	end
 end)
 
@@ -89,9 +89,9 @@ AddEventHandler('police:getArrested', function()
 	if(isCop == false) then
 		handCuffed = not handCuffed
 		if(handCuffed) then
-			TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "You are now cuff.")
+			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You are now cuff.")
 		else
-			TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Freedom !")
+			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Freedom !")
 		end
 	end
 end)
@@ -99,7 +99,7 @@ end)
 RegisterNetEvent('police:payFines')
 AddEventHandler('police:payFines', function(amount)
 	TriggerServerEvent('bank:withdrawAmende', amount)
-	TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "You paid a $"..amount.." fine.")
+	TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You paid a $"..amount.." fine.")
 end)
 
 RegisterNetEvent('police:dropIllegalItem')
@@ -116,10 +116,10 @@ AddEventHandler('police:forceEnter', function(id)
 			Citizen.Trace("Veh : " .. v)
 			TriggerServerEvent("police:forceEnterAsk", GetPlayerServerId(t), v)
 		else
-			TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "No player near you (maybe get closer) !")
+			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you (maybe get closer) !")
 		end
 	else
-		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Please take your service first !")
+		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
 	end
 end)
 
@@ -229,9 +229,9 @@ Citizen.CreateThread(function()
 						-- SetPedComponentVariation(GetPlayerPed(-1), 10, 8, 0, 2) --grade 0
 						
 						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_NIGHTSTICK"), true, true)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL"), 50, true, true)
+						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL50"), 150, true, true)
 						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_STUNGUN"), true, true)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PUMPSHOTGUN"), 25, true, true)
+						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PUMPSHOTGUN"), 150, true, true)
 					else
 						local playerPed = GetPlayerPed(-1)
 						

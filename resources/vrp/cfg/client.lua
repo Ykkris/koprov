@@ -4,5 +4,5 @@ cfg = {}
 
 cfg.iplload = true
 
-cfg.voice_proximity = 25.0
+cfg.voice_proximity = 2.0
 
