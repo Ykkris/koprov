@@ -5,7 +5,6 @@
 
 limitator = false
 engine = true
-isPolice = false
 
 AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("police:checkIsCop")
@@ -245,7 +244,7 @@ Citizen.CreateThread(function()
 				OpenCreator()
 			end
 		end
-					
+
 		if vehshop.opened then
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu]
@@ -267,7 +266,7 @@ Citizen.CreateThread(function()
 
 					if button ~= "Police" then
 						drawMenuButton(button,vehshop.menu.x,y,selected)
-					elseif button == "Police" and isClop then 
+					elseif button == "Police" and isCop then 
 						drawMenuButton(button,vehshop.menu.x,y,selected)
 					end
 					
