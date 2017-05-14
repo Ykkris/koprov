@@ -478,8 +478,8 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 
 	if resultat ~= nil then
 		resultat_n = tonumber(resultat)
-		local GetPlayerPed(-1), 10 = GetClosestPlayer()
-		TriggerServerEvent("Iphone:amande", resultat_n, )
+		local target_player, distance = GetClosestPlayer()
+		TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
 	end
 	CloseMenu()
 
