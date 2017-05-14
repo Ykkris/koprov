@@ -469,10 +469,12 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing = false
+			ShowNotification("Amande annulée")
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing = false
 			local resultat = GetOnscreenKeyboardResult()
+			ShowNotification("Amande envoyé")
 		end
 	end
 
@@ -513,4 +515,10 @@ function GetClosestPlayer()
 	end
 	
 	return closestPlayer, closestDistance
+end
+
+function ShowNotification(message)
+	SetNotificationTextEntry("STRING")
+	AddTextComponentString(message)
+	DrawNotification(false, false)
 end
