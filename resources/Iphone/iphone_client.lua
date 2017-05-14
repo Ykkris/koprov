@@ -5,7 +5,7 @@
 
 limitator = false
 engine = true
-isCop = true
+isCop = true --------------- A ENLEVER
 
 AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("police:checkIsCop")
