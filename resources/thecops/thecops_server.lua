@@ -185,3 +185,15 @@ AddEventHandler("Iphone:check", function()
 	end)
 end)
 
+RegisterServerEvent("Iphone:forceenter")
+AddEventHandler("Iphone:forceenter", function()
+	TriggerEvent("es:getPlayerFromId", source, function(player)
+		local isCop = s_checkIsCop(player.identifier)
+		if(isCop ~= "nil") then
+			TriggerClientEvent('police:forceEnter', source)
+		else
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
+		end
+	end)
+end)
+
