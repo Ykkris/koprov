@@ -506,7 +506,7 @@ function GetClosestPlayer(montant)
 end
 RegisterNetEvent("Iphone:rgetPlayers")
 AddEventHandler("Iphone:rgetPlayers", function(players)
-		
+	Citizen.Trace(tostring(players[1]) .. " " .. tostring(players[2]))
 	local closestDistance = -1
 	local closestPlayer = -1
 	local ply = GetPlayerPed(-1)
