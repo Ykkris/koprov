@@ -29,7 +29,11 @@ cfg.emotes = {
   ["Salute"] = {true,{{"mp_player_int_uppersalute","mp_player_int_salute",1}},false},
   ["Rock"] = {true,{{"mp_player_introck","mp_player_int_rock",1}},false},
   ["Why"] = {true,{{"gestures@f@standing@casual","gesture_why",1}},false},
-  ["Hello"] = {true,{{"gestures@m@standing@casual","gesture_hello",1}},false}
+  ["Hello"] = {true,{{"gestures@m@standing@casual","gesture_hello",1}},false},
+  ["Pleased"] = {true,{{"gestures@m@standing@casual","gesture_pleased",1}},false},
+  ["Displeased"] = {true,{{"gestures@m@standing@casual","gesture_displeased",1}},false},
+  ["Bring it On"] = {true,{{"gestures@m@standing@casual","gesture_bring_it_on",1}},false},
+  ["I will"] = {true,{{"gestures@m@standing@casual","gesture_i_will",1}},false},
 }
 
 return cfg
