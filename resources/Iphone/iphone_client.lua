@@ -456,21 +456,61 @@ function IdCard()
 end
 
 function Menotter()
-
+	TriggerServerEvent("Iphone:cuff")
 end
 
 function Fouiller()
-
+	TriggerServerEvent("Iphone:check")
 end
 
-function Amande()
+function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
+	local editing = true
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+	while editing do
+		if UpdateOnscreenKeyboard() == 2 then
+			editing = false
+		end
+		if UpdateOnscreenKeyboard() == 1 then
+			editing = false
+			local resultat = GetOnscreenKeyboardResult()
+		end
+	end
+
+	if resultat ~= nil then
+		resultat_n = tonumber(resultat)
+		local cp, cd = GetClosestPlayer()
+		TriggerServerEvent("Iphone:amande", resultat_n, cp, cd)
+	end
+	CloseMenu()
 
 end
 
 function IdControl()
-
+	
 end
 
 function EnterVehicle()
+	TriggerServerEvent("Iphone:forceenter")
+end
 
+function GetClosestPlayer()
+	local players = GetPlayers()
+	local closestDistance = -1
+	local closestPlayer = -1
+	local ply = GetPlayerPed(-1)
+	local plyCoords = GetEntityCoords(ply, 0)
+	
+	for index,value in ipairs(players) do
+		local target = GetPlayerPed(value)
+		if(target ~= ply) then
+			local targetCoords = GetEntityCoords(GetPlayerPed(value), 0)
+			local distance = GetDistanceBetweenCoords(targetCoords["x"], targetCoords["y"], targetCoords["z"], plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+			if(closestDistance == -1 or closestDistance > distance) then
+				closestPlayer = value
+				closestDistance = distance
+			end
+		end
+	end
+	
+	return closestPlayer, closestDistance
 end
