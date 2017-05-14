@@ -488,6 +488,8 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 		Citizen.Trace(tostring(resultat_n))
 		local target_player, distance = GetClosestPlayer()
 		Citizen.Trace(tostring(target_player) .. " " .. tostring(distance))
+		test = GetPlayerServerId(targer_player)
+		Citizen.Trace(tostring(test))
 		TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
 
 	CloseCreator()
