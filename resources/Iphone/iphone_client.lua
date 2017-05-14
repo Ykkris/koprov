@@ -544,5 +544,5 @@ function GetPlayers(players)
         end
     end
 
-    return players	
+    return playerrs	
 end
