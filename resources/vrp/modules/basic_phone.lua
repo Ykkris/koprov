@@ -254,7 +254,7 @@ local function ch_service_alert(player,choice) -- alert a service
     vRPclient.getPosition(player,{},function(x,y,z)
       vRP.prompt(player,lang.phone.service.prompt(),"",function(player, msg)
         vRPclient.notify(player,{service.notify}) -- notify player
-        vRP.sendServiceAlert(choice,x,y,z,msg) -- send service alert
+        vRP.sendServiceAlert(choice,x,y,z,msg, GetPlayerServerId(-1)) -- send service alert
       end)
     end)
   end
