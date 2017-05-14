@@ -211,6 +211,7 @@ end)
 
 RegisterServerEvent("Iphone:amande") -- TriggerServerEvent("Iphone:amande", resultat_n, cp, cd)
 AddEventHandler("Iphone:amande", function(amount, cp, cd)
+	RconPrint(tostring(amount)..tostring(cp)..tostring(cd))
 	TriggerEvent("es:getPlayerFromId", source, function(player)
 		local isCop = s_checkIsCop(player.identifier)
 		if(isCop ~= "nil") then
