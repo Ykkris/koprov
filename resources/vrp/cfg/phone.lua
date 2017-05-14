@@ -40,6 +40,14 @@ cfg.services = {
   alert_permission = "tow.service",
   alert_notify = "~y~Dépannage:~n~~s~",
   notify = "~y~Vous avez appelé un dépanneur."
+},
+  ["Médecin"] = {
+  blipid = 446,
+  blipcolor = 60,
+  alert_time = 300,
+  alert_permission = "medic.service",
+  alert_notify = "~y~Médecin:~n~~s~",
+  notify = "~y~Vous avez appelé un médecin."
 }
 }
 
