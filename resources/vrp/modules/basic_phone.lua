@@ -7,34 +7,78 @@ local htmlEntities = require("resources/vrp/lib/htmlEntities")
 local services = cfg.services
 
 -- api
-
+local job_id  =
+  {
+    2, 9, 8, 3 -- Id Policier, Taxi, Tow, Médecin.
+  }
 -- Send a service alert to all service listeners
 --- service: service name
 --- x,y,z: coordinates
 --- notify: 
-function vRP.sendServiceAlert(service_name,x,y,z,msg)
+function vRP.sendServiceAlert(service_name,x,y,z,msg, askinplayer)
   local service = services[service_name]
   if service then
-    local players = {}
-    for k,v in pairs(vRP.rusers) do
-      local player = vRP.getUserSource(tonumber(k))
+    local availible = {}
+    --local players = {}
+    --for k,v in pairs(vRP.rusers) do
+      --local player = vRP.getUserSource(tonumber(k))
       -- check user
-      if vRP.hasPermission(k,service.alert_permission) and player ~= nil then
-        table.insert(players,player)
+      --if vRP.hasPermission(k,service.alert_permission) and player ~= nil then
+        --table.insert(players,player)
+      --end
+    --end
+                                  --[[ IZIO AJOUTS ]] --
+  local players = GetPlayers()
+  for k,v in pairs(players) do
+      local player = k
+      TriggerEvent('es:getPlayerFromId', k, function(user)
+        
+        local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' AND intervention ='@intervention' ", {['@identifier'] = user.identifier, ['@intervention'] = 0 })
+        local resultat = MySQL:getResults(req, {'job', 'intervention'}, "identifier")
+            if resultat ~= nil then
+              if (resultat.job[1] == ToServiceId(service_name) and resultat.intervention[1] == 0) then 
+                table.insert(availible, k)
+              end
+            end
+          
       end
-    end
-
+   end
+  end -- on ferme le if
+end -- on ferme la fonction
+  
+    --local count = 0 
+    --SetTimeout(15000, function()  Je délocalise chaque service sinon c'est la merde
+    --end)
+    
+    
+    
+    
+                                  --|------------------|--
     -- send notify and alert
-    for k,v in pairs(players) do
-      vRPclient.notify(v,{service.alert_notify..msg})
+function drawBlips(player) 
+
+      vRPclient.notify(player,{service.alert_notify..msg})
       -- add position for service.time seconds
       vRPclient.addBlip(v,{x,y,z,service.blipid,service.blipcolor,"("..service_name..") "..msg}, function(bid)
         SetTimeout(service.alert_time*1000,function()
           vRPclient.removeBlip(v,{bid})
         end)
       end)
-    end
-  end
+end
+  --end -- end du if
+--end -- end la fonction
+    
+function ToServiceID(name)
+      if name == "Police" then
+        return job_id[1]
+      elseif name == "Taxi" then
+        return job_id[2]
+      elseif name == "Dépanneur" then
+        return job_id[3]
+      elseif name == "Médecin" then
+        return job_id[4]
+      end
+      else return false
 end
 
 -- send an sms from an user to a phone number
