@@ -230,7 +230,7 @@ end)
 RegisterServerEvent("Iphone:getPlayers") -- TriggerServerEvent("Iphone:getPlayers")
 AddEventHandler("Iphone:getPlayers", function()
 	players = GetPlayers()		
-	TriggerClientEvent("Iphone:rgetPlayers", players)	
+	TriggerClientEvent("Iphone:rgetPlayers",source, players)	
 end)
 
 
