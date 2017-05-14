@@ -529,3 +529,15 @@ function ShowNotification(message)
 	AddTextComponentString(message)
 	DrawNotification(false, false)
 end
+
+function GetPlayers()
+	local players = {}
+
+    for i = 0, 31 do
+        if NetworkIsPlayerActive(i) then
+            table.insert(players, i)
+        end
+    end
+
+    return players	
+end
