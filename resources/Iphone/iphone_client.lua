@@ -31,15 +31,15 @@ local index = {
 
 local vehshop = {
 	opened = false,
-	title = "Téléphone",
+	title = "Telephone",
 	currentmenu = "main",
 	lastmenu = nil,
 	currentpos = nil,
 	selectedbutton = 0,
 	marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
 	menu = {
-		x = 0.3,
-		y = 0.6,
+		x = 0.1,
+		y = 0.4,
 		width = 0.2,
 		height = 0.04,
 		buttons = 10,
@@ -48,18 +48,18 @@ local vehshop = {
 		scale = 0.4,
 		font = 0,
 		["main"] = {  
-			title = "Téléphone", 
+			title = "Telephone", 
 			name = "main",
 			buttons = { 
-				{name = "Téléphone", description = ""},
+				{name = "Telephone", description = ""},
 				{name = "Emotes", description = ""},
-				{name = "Carte d'identité", description = ""},
+				{name = "Carte d'identite", description = ""},
 				{name = "Police", description = "", isPolice}
 			}
 		},
-		["Téléphone"] = {  -- avant vehicles
-			title = "Téléphone", 
-			name = "Téléphone",
+		["Telephone"] = {  -- avant vehicles
+			title = "Telephone", 
+			name = "Telephone",
 			buttons = { 
 				{name = "Coffre", description = ''},
 				{name = "Capot", description = ''},
@@ -81,9 +81,9 @@ local vehshop = {
 				{name = "Enlever la limite", description = ''},
 			}
 		},
-		["Carte d'identité"] = {
-			title = "Carte d'identité", 
-			name = "Carte d'identité",
+		["Carte d'identite"] = {
+			title = "Carte d'identite", 
+			name = "Carte d'identite",
 			buttons = { 
 			}
 		},
@@ -91,11 +91,11 @@ local vehshop = {
 			title = "Police",
 			name = "Police",
 			buttons = {
-				{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identité, obligé a rentrer dans le vehicle
+				{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identite, oblige a rentrer dans le vehicle
 				{name = "Fouiller", description = ""},
 				{name = "Amande", description = ""},
-				{name = "Controler l'identité", description = ""},
-				{name = "Faire rentrer dans le véhicule", description = ""}
+				{name = "Controler l'identite", description = ""},
+				{name = "Faire rentrer dans le vehicule", description = ""}
 			}
 
 		}
@@ -325,58 +325,36 @@ function ButtonSelected(button)
 	local ped = GetPlayerPed(-1)
 	local this = vehshop.currentmenu -- menu
 	local btn = button.name --Gerer les portes
-	-- Gros ajout très très désordonné ------------ Contactez Izio au 06.....
+
 	
-	if 
+	-- Gros ajout très très desordonne ------------ Contactez Izio au 06....
+	--if 
+	  --  btn == "Coffre" then dtd(btn)
+--elseif  btn == "Capot" then dtd(btn)
+--elseif  btn == "Avant gauche" then dtd(btn)
+--elseif  btn == "Avant droite" then dtd(btn)
+--elseif  btn == "Arrière gauche" then dtd(btn)
+--elseif  btn == "Arrière droite" then dtd(btn)
+--elseif btn == "10"  then OpenLimitator(tonumber(btn))
+--elseif btn == "30"  then OpenLimitator(tonumber(btn))
+--elseif btn == "50"  then OpenLimitator(tonumber(btn))
+--elseif btn == "90"  then OpenLimitator(tonumber(btn))
+--elseif btn == "110"  then OpenLimitator(tonumber(btn))
+--elseif btn == "Enlever la limite"  then OpenLimitator(500) -- trop hacky
+--elseif btn == "Eteindre le moteur" then ToggleEngineOff()
+--end	---------------------------------------------------------------------------
 
-	    btn == "Coffre" then dtd(btn)
-
-elseif  btn == "Capot" then dtd(btn)
-
-elseif  btn == "Avant gauche" then dtd(btn)
-
-elseif  btn == "Avant droite" then dtd(btn)
-
-elseif  btn == "Arrière gauche" then dtd(btn)
-
-elseif  btn == "Arrière droite" then dtd(btn)
----
-
-elseif btn == "10"  then OpenLimitator(tonumber(btn))
-
-elseif btn == "30"  then OpenLimitator(tonumber(btn))
-
-elseif btn == "50"  then OpenLimitator(tonumber(btn))
-
-elseif btn == "90"  then OpenLimitator(tonumber(btn))
-
-elseif btn == "110"  then OpenLimitator(tonumber(btn))
-
-elseif btn == "Enlever la limite"  then OpenLimitator(500) -- trop hacky
----
-
-
-elseif btn == "Eteindre le moteur" then ToggleEngineOff()
-
-
-end
-	
-	
-	
-	
-	
-	
-	
-	---------------------------------------------------------------------------
 	if this == "main" then
-		if btn == "Gérer les portes" then
-			OpenMenu('portes')
-		elseif btn == "Limitateur de vitesse" then
-			OpenMenu('limitateur')
-		elseif btn == "Eteindre le moteur" then
-			OpenMenu("moteur")
+		if btn == "Telephone" then
+			OpenMenu('Telepgone')
+		elseif btn == "Emotes" then
+			OpenMenu('Emotes')
+		elseif btn == "Carte d'identite" then
+			OpenMenu("Carte d'identite")
+		elseif btn == "Police" and isCop then
+			OpenMenu("Police")
 		end
-	elseif this == "Gérer les portes" then
+	elseif this == "Gerer les portes" then
 		if btn == "Coffre" then
 			OpenCloseDoor('Coffre')
 		elseif btn == "Capot" then
@@ -413,11 +391,13 @@ end
 
 function OpenMenu(menu)
 	vehshop.lastmenu = vehshop.currentmenu
-	if menu == "portes" then
+	if menu == "Telephone" then
 		vehshop.lastmenu = "main"
-	elseif menu == "limitateur"  then
+	elseif menu == "Emotes"  then
 		vehshop.lastmenu = "main"
-	elseif menu == "moteur" then
+	elseif menu == "Carte d'identite" then
+		vehshop.lastmenu = "main"
+	elseif menu == "Police" then
 		vehshop.lastmenu = "main"
 	end
 
@@ -447,61 +427,6 @@ function stringstarts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
 
-function dtd(dumbledor)
-	if dumbledor == "Coffre" then  OpenCloseDoor(5)
-		elseif dumbledor == "Capot" then  OpenCloseDoor(4)
-		elseif dumbledor == "Avant gauche" then  OpenCloseDoor(0)
-		elseif dumbledor == "Avant droite" then  OpenCloseDoor(1)
-		elseif dumbledor == "Arrière gauche" then OpenCloseDoor(2)
-		elseif dumbledor == "Arrière droite" then OpenCloseDoor(3)
-	
-	end
-end
-	
-function OpenCloseDoor(dumbledoor)
-
-	
-
-	local isdoordamaged = IsVehicleDoorDamaged(playerVeh, dumbledoor)
-	
-	if isdoordamaged then ShowNotification("La porte est cassé.")
-	end
-	
-	local angle = GetVehicleDoorAngleRatio(playerVeh, dumbledoor)
-	
-	if angle == 0 then
-		ShowNotification("La porte est ouverte.")
-		SetVehicleDoorOpen(playerVeh, dumbledoor, false, false)
-	else
-		ShowNotification("La porte est fermé.")
-		SetVehicleDoorShut(playerVeh, dumbledoor, false)
-	
-	--GET_VEHICLE_DOOR_ANGLE_RATIO
-	--SET_VEHICLE_DOOR_OPEN	
-	end
-end
-
-function OpenLimitator(acombienjetelimitemonbro)
-	okjetelimiteaca = tonumber(acombienjetelimitemonbro) / 3.6
-	SetEntityMaxSpeed(playerVeh, toFloat(okjetelimiteaca))
-	limitator = true
-	OpenCreator()
-	  
-end
-
-function ToggleEngineOff()
-	if engine then
-		SetVehicleEngineOn(playerVeh, false, true)
-		SetVehicleUndriveable(playerVeh, engine)
-	end
-	engine = false
-	CloseCreator()
-	OpenCreator()
-end
-
-function toFloat(number)
-	return number+0.0
-end
 
 function ShowNotification(message)
 	SetNotificationTextEntry("STRING")
@@ -509,13 +434,3 @@ function ShowNotification(message)
 	DrawNotification(false, false)
 end
 
-function StopLimitator()
-	local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-	SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
-	ShowNotification("Limitateur enlevé")
-end
-
---AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh, running)
---  isrunning = running
---  isyourcar = playerGotThisVeh
--- end)
