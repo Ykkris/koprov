@@ -230,9 +230,6 @@ end)
 RegisterServerEvent("Iphone:getPlayers") -- TriggerServerEvent("Iphone:getPlayers")
 AddEventHandler("Iphone:getPlayers", function()
 	players = GetPlayers()
-	for i=1, #players do
-	RconPrint(tostring(i))
-	end
 	TriggerClientEvent("Iphone:rgetPlayers",source, players)	
 end)
 
