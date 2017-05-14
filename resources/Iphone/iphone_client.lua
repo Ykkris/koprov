@@ -466,6 +466,7 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 	local editing = true
 	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
 	while editing do
+		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing = false
 		end
@@ -477,8 +478,8 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 
 	if resultat ~= nil then
 		resultat_n = tonumber(resultat)
-		local cp, cd = GetClosestPlayer()
-		TriggerServerEvent("Iphone:amande", resultat_n, cp, cd)
+		local GetPlayerPed(-1), 10 = GetClosestPlayer()
+		TriggerServerEvent("Iphone:amande", resultat_n, )
 	end
 	CloseMenu()
 
