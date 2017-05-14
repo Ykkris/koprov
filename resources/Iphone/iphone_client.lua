@@ -539,7 +539,7 @@ function GetPlayers(players)
 	local playerrs = {}
 
     for i = 1, #players do
-        if NetworkIsPlayerActive(i) then
+        if players[i] ~= nil then
             table.insert(playerrs, i)
         end
     end
