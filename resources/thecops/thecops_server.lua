@@ -173,8 +173,8 @@ end, function(source, args, user)
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 end)
 
-RegisterServerEvent("check")
-AddEventHandler("check", function()
+RegisterServerEvent("Iphone:check")
+AddEventHandler("Iphone:check", function()
 	TriggerEvent("es:getPlayerFromId", source, function(player)
 		local isCop = s_checkIsCop(player.identifier)
 		if(isCop ~= "nil") then
