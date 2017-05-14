@@ -481,7 +481,7 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 		local target_player, distance = GetClosestPlayer()
 		TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
 	end
-	CloseMenu()
+	CloseCreator()
 
 end
 
