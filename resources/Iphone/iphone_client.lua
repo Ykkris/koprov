@@ -52,24 +52,24 @@ local vehshop = {
 			title = "Telephone", 
 			name = "Telephone",
 			buttons = { 
-				{name = "Coffre", description = ''},
-				{name = "Capot", description = ''},
-				{name = "Avant gauche", description = ''},
-				{name = "Avant droite", description = ''},
-				{name = "Arrière gauche", description = ''},
-				{name = "Arrière droite", description = ''},
+				{name = "Repertoire", description = ''},
+				{name = "Boite de reception", description = ''},
+				{name = "Services", description = ''},
 			}
 		},
 		["Emotes"] = {
 			title = "Emotes", 
 			name = "Emotes",
 			buttons = { 
-				{name = "10", description = ''},
-				{name = "30", description = ''},
-				{name = "50", description = ''},
-				{name = "90", description = ''},
-				{name = "110", description = ''},
-				{name = "Enlever la limite", description = ''},
+				{name = "Arreter l'emote", description = ''},
+				{name = "Handsup", description = ''},
+				{name = "No", description = ''},
+				{name = "Damn", description = ''},
+				{name = "Dance", description = ''},
+				{name = "Salute", description = ''},
+				{name = "Rock", description = ''},
+				{name = "Why", description = ''},
+				--{name = "110", description = ''},  AJOUTER UNE LIGNE POUR CHAQUE EMOTE PLUS VOIR LIGNE ~340 
 			}
 		},
 		["Carte d'identite"] = {
@@ -338,7 +338,7 @@ function ButtonSelected(button)
 
 	if this == "main" then
 		if btn == "Telephone" then
-			OpenMenu('Telepgone')
+			OpenMenu('Telephone')
 		elseif btn == "Emotes" then
 			OpenMenu('Emotes')
 		elseif btn == "Carte d'identite" then
@@ -346,37 +346,46 @@ function ButtonSelected(button)
 		elseif btn == "Police" and isCop then
 			OpenMenu("Police")
 		end
-	elseif this == "Gerer les portes" then
-		if btn == "Coffre" then
-			OpenCloseDoor('Coffre')
-		elseif btn == "Capot" then
-			OpenCloseDoor('Capot')
-		elseif btn == "Avant gauche" then
-			OpenCloseDoor('Avant gauche')
-		elseif btn == "Avant Droite" then
-			OpenCloseDoor('Avant Droite')
-		elseif btn == "Arrière gauche" then
-			OpenCloseDoor("Arrière gauche")
-		elseif btn == "Arrière droite" then
-			OpenCloseDoor('Arrière droite')
+	elseif this == "Emotes" then
+		if btn == "Arreter l'emote" then
+			Emote(0)
+		elseif btn == "Handsup" then
+			Emote(1)
+		elseif btn == "No" then
+			Emote(2)
+		elseif btn == "Damn" then
+			Emote(3)
+		elseif btn == "Dance" then
+			Emote(4)
+		elseif btn == "Salute" then
+			Emote(5)
+		elseif btn == "Rock" then
+			Emote(6)
+		elseif btn == "Why" then
+			Emote(7)
 		end
-	elseif this == "Limitateur de vitesse" then
-		if btn == "10" then
-			OpenLimitator('10')
-		elseif btn == "30" then
-			OpenLimitator('30')
-		elseif btn == "50" then
-			OpenLimitator('50')
-		elseif btn == "90" then
-			OpenLimitator('90')
-		elseif btn == "110" then
-			OpenLimitator("110")
-		elseif btn == "Enlever la limite" then
-			StopLimitator()
+	elseif this == "Telephone" then
+		if btn == "Repertoire" then
+			Repertoire()
+		elseif btn == "Boite de reception" then
+			BoiteReception()
+		elseif btn == "Services" then
+			Services()
 		end
-	elseif this == "Eteindre le moteur" then
-			CloseCreator()
-			OpenCreator()
+	elseif this == "Carte d'identite" then
+			IdCard()
+	elseif this == "Police" then
+		if btn == "Menotter" then
+			Menotter()
+		elseif btn == "Fouiller" then
+			Fouiller()
+		elseif btn == "Amande" then
+			Amande()
+		elseif btn == "Contrer l'identite" then
+			IdControl()
+		elseif btn == "Faire rentrer dans le vehicule" then
+			EnterVehicle()
+		end
 
 	end
 end
@@ -426,3 +435,42 @@ function ShowNotification(message)
 	DrawNotification(false, false)
 end
 
+function Emote(id) -- 0 - 7
+
+end
+
+function Repertoire()
+
+end
+
+function BoiteReception()
+
+end
+
+function Services()
+
+end
+
+function IdCard()
+
+end
+
+function Menotter()
+
+end
+
+function Fouiller()
+
+end
+
+function Amande()
+
+end
+
+function IdControl()
+
+end
+
+function EnterVehicle()
+
+end
