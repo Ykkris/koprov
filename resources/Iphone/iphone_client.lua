@@ -505,7 +505,15 @@ function EnterVehicle()
 end
 
 function GetClosestPlayer()
-	local players = GetPlayers()
+	TriggerServerEvent("Iphone:getPlayers")
+	Wait(500)
+	local a = closestPlayer
+	local b = closestDistance
+	return a, b
+end
+RegisterNetEvent("Iphone:rgetPlayers")
+AddEventHandler("Iphone:rgetPlayers", function(players)
+		
 	local closestDistance = -1
 	local closestPlayer = -1
 	local ply = GetPlayerPed(-1)
@@ -522,9 +530,8 @@ function GetClosestPlayer()
 			end
 		end
 	end
-	
-	return closestPlayer, closestDistance
-end
+		
+end)
 
 function ShowNotification(message)
 	SetNotificationTextEntry("STRING")
