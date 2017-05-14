@@ -506,6 +506,7 @@ function GetClosestPlayer(montant)
 end
 RegisterNetEvent("Iphone:rgetPlayers")
 AddEventHandler("Iphone:rgetPlayers", function(players)
+	players = GetPlayers()
 	Citizen.Trace(tostring(players[1]) .. " " .. tostring(players[2]))
 	local closestDistance = -1
 	local closestPlayer = -1
@@ -534,12 +535,12 @@ function ShowNotification(message)
 	DrawNotification(false, false)
 end
 
-function GetPlayers()
-	local players = {}
+function GetPlayers(players)
+	local playerrs = {}
 
-    for i = 0, 31 do
+    for i = 1, #players do
         if NetworkIsPlayerActive(i) then
-            table.insert(players, i)
+            table.insert(playerrs, i)
         end
     end
 
