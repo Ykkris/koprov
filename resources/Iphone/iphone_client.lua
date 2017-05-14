@@ -471,11 +471,13 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 		if UpdateOnscreenKeyboard() == 2 then
 			editing = false
 			ShowNotification("Amande annulée")
+			
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing = false
 			local resultat = GetOnscreenKeyboardResult()
 			ShowNotification("Amande envoyé")
+			ShowNotification(tostring(resultat))
 		end
 	end
 
