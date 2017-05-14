@@ -20,15 +20,6 @@ AddEventHandler('police:receiveIsCop', function(result)
 	end
 end)
 
-local index = {
-	ad = 1,
-	ag = 0,
-	dd = 3,
-	dg = 2,
-	ca= 4,
-	co= 5,
-	}
-
 local vehshop = {
 	opened = false,
 	title = "Telephone",
@@ -39,7 +30,7 @@ local vehshop = {
 	marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
 	menu = {
 		x = 0.1,
-		y = 0.4,
+		y = 0.15,
 		width = 0.2,
 		height = 0.04,
 		buttons = 10,
@@ -47,14 +38,14 @@ local vehshop = {
 		to = 10,
 		scale = 0.4,
 		font = 0,
-		["main"] = {  
+		["main"] = {
 			title = "Telephone", 
 			name = "main",
 			buttons = { 
 				{name = "Telephone", description = ""},
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
-				{name = "Police", description = "", isPolice}
+				{name = "Police", description = ""}
 			}
 		},
 		["Telephone"] = {  -- avant vehicles
@@ -96,7 +87,7 @@ local vehshop = {
 				{name = "Amande", description = ""},
 				{name = "Controler l'identite", description = ""},
 				{name = "Faire rentrer dans le vehicule", description = ""}
-			}
+			},
 
 		}
 	}
@@ -249,6 +240,7 @@ Citizen.CreateThread(function()
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu]
 			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
+			Citizen.Trace("Titre : " ..tostring(vehshop.title))
 			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
 			drawTxt(vehshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
 			local y = vehshop.menu.y + 0.12
