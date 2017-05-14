@@ -5,6 +5,7 @@
 
 limitator = false
 engine = true
+isCop = true
 
 AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("police:checkIsCop")
