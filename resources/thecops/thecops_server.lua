@@ -209,3 +209,21 @@ AddEventHandler("Iphone:cuff", function()
 	end)
 end)
 
+RegisterServerEvent("Iphone:amande") -- TriggerServerEvent("Iphone:amande", resultat_n, cp, cd)
+AddEventHandler("Iphone:amande", function(amount, cp, cd)
+	TriggerEvent("es:getPlayerFromId", source, function(player)
+		local isCop = s_checkIsCop(player.identifier)
+		if(isCop ~= "nil") then
+
+				if(GetPlayerName(cp) ~= nil and cd <= 5 )then
+					TriggerClientEvent('police:fines', source, cp, amount)
+				else
+					TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Pas de joueur à porté!")
+				end
+			end
+		else
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "T'es pas flic!")
+		end
+	end)
+end)
+
