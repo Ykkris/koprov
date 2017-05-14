@@ -172,3 +172,16 @@ TriggerEvent('es:addAdminCommand', 'coprem', 100000, function(source, args, user
 end, function(source, args, user) 
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 end)
+
+RegisterServerEvent("check")
+AddEventHandler("check", function()
+	TriggerEvent("es:getPlayerFromId", source, function(player)
+		local isCop = s_checkIsCop(player.identifier)
+		if(isCop ~= "nil") then
+			TriggerClientEvent('police:checkInventory', source)
+		else
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
+		end
+	end)
+end)
+
