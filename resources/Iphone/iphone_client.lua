@@ -240,7 +240,6 @@ Citizen.CreateThread(function()
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu]
 			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
-			Citizen.Trace("Titre : " ..tostring(vehshop.title))
 			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
 			drawTxt(vehshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
 			local y = vehshop.menu.y + 0.12
