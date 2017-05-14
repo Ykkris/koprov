@@ -477,11 +477,13 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 			editing = false
 			local resultat = GetOnscreenKeyboardResult()
 			ShowNotification("Amande envoyé")
+			Citizen.Trace(resultat)
 			ShowNotification(tostring(resultat))
 		end
 	end
 
 	if resultat ~= nil then
+		Citizen.Trace("RESULTAT DIFFERENT DE NIL")
 		resultat_n = tonumber(resultat)
 		local target_player, distance = GetClosestPlayer()
 		TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
