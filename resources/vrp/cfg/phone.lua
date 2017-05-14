@@ -22,7 +22,7 @@ cfg.services = {
     blipcolor = 38,
     alert_time = 300, -- 5 minutes
     alert_permission = "police.service",
-    alert_notify = "~r~Alerte police:~n~~s~",
+    alert_notify = "~r~Police:~n~~s~",
     notify = "~b~Vous avez appelé la police."
   },
   ["Taxi"] = {
@@ -30,7 +30,7 @@ cfg.services = {
     blipcolor = 5,
     alert_time = 300,
     alert_permission = "taxi.service",
-    alert_notify = "~y~Alerte taxi:~n~~s~",
+    alert_notify = "~y~Taxi:~n~~s~",
     notify = "~y~Vous avez appelé un taxi."
   },
   ["Dépanneur"] = {
