@@ -220,7 +220,6 @@ AddEventHandler("Iphone:amande", function(amount, cp, cd)
 				else
 					TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Pas de joueur à porté!")
 				end
-			end
 		else
 			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "T'es pas flic!")
 		end
