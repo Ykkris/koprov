@@ -20,6 +20,8 @@ function checkIsCop(identifier)
 	end
 end
 
+
+
 function s_checkIsCop(identifier)
 	local query = MySQL:executeQuery("SELECT * FROM police WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
 	local result = MySQL:getResults(query, {'rank'}, "identifier")
@@ -178,6 +180,15 @@ TriggerEvent('es:addAdminCommand', 'coprem', 100000, function(source, args, user
 end, function(source, args, user) 
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 end)
+RegisterServerEvent("Iphone:checkid") -- RETURN THE RP PLAYER NAME
+AddEventHandler("Iphone:checkid", function(target)
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+		local query = MySQL:executeQuery("SELECT nom_rp FROM users WHERE identifier = '@identifier'", { ['@identifier'] = user.identifier})
+		local result = MySQL:getResults(query, {'nom_rp'}, "identifier")	
+	end)
+	TriggerClientEvent("Iphone:rcheckid", source, result.nom_rp[1])
+		
+end
 
 RegisterServerEvent("Iphone:check")
 AddEventHandler("Iphone:check", function()
