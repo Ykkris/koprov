@@ -122,8 +122,8 @@ end)
 
 Citizen.CreateThread(
 	function()
-		local x = 313.6910
-		local y = -1465.0611
+		local x = 307.619
+		local y = - 1459.215
 		local z = 46.509
 
 		while true do
@@ -269,7 +269,7 @@ function SpawnHelou()
 
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityGivenWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_helou = CreateVehicle(vehicle, coords, 313.6910, -1465.0611, 70.509, true, false)
+	local spawned_helou = CreateVehicle(vehicle, coords, 307.619, - 1459.215, 46.509, true, false)
 
 	SetVehicleOnGroundProperly(spawned_helou)
 	SetVehicleNumberPlateText(spawned_helou, "MEDIC")
