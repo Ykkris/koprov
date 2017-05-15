@@ -1,0 +1,30 @@
+.container {
+	width: 350px;
+	height: 210px;
+	background: url(card.png) no-repeat center;
+	font-family: sans-serif;
+	font-size: 15px;
+}
+
+.container .card {
+	position: relative;
+	top: 95px;
+	left: 50px;
+}
+
+.container .card p {
+	font-weight: bold;
+}
+
+.container .card .txtfix {
+	position: absolute;
+	top: -16px;
+	left: 0;
+}
+
+.container .card .txtdyna {
+	text-transform: uppercase;
+	position: absolute;
+	top: -16px;
+	left: 85px;
+}
