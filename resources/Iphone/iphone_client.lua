@@ -577,7 +577,7 @@ AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
 	
 	----------PARTIE UI -----------
 	guiEnabled = not guiEnabled
-	
+	Citizen.Trace("ON EST BIEN DANS RGETIDUI")
 	if guiEnabled then
 	    	SendNUIMessage({
 		type = "enableui",
