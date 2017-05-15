@@ -1,11 +1,11 @@
 $(document).ready(function (){
 
         function openMain() {
-             $(".body").css("display", "container");
+             $(".container").css("display", "block");
         }
 
         function closeMain() {
-              $(".body").css("display", "none");
+              $(".container").css("display", "none");
         }
 
         window.addEventListener("message", function(event){
