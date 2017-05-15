@@ -268,8 +268,8 @@ function SpawnHelou()
 	end
 
 	local plate = math.random(100, 900)
-	local coords = GetOffsetFromEntityGivenWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_helou = CreateVehicle(vehicle, coords, 307.619, - 1459.215, 46.509, true, false)
+	local coords = GetOffsetFromEntityGivenWorldCoords(GetPlayerPed(-1), 0, 0, 10)
+	local spawned_helou = CreateVehicle(vehicle, coords, true, false)
 
 	SetVehicleOnGroundProperly(spawned_helou)
 	SetVehicleNumberPlateText(spawned_helou, "MEDIC")
