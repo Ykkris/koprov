@@ -343,7 +343,7 @@ function ButtonSelected(button)
 		elseif btn == "Emotes" then
 			OpenMenu('Emotes')
 		elseif btn == "Carte d'identite" then
-			OpenMenu("Carte d'identite")
+			IdCard()
 		elseif btn == "Police" and isCop then
 			OpenMenu("Police")
 		end
@@ -373,8 +373,6 @@ function ButtonSelected(button)
 		elseif btn == "Services" then
 			Services()
 		end
-	elseif this == "Carte d'identite" then
-			IdCard()
 	elseif this == "Police" then
 		if btn == "Menotter" then
 			Menotter()
