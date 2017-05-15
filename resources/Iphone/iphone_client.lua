@@ -382,7 +382,7 @@ function ButtonSelected(button)
 			Fouiller()
 		elseif btn == "Amande" then
 			Amande()
-		elseif btn == "Contrer l'identite" then
+		elseif btn == "Controler l'identite" then
 			IdControl()
 		elseif btn == "Faire rentrer dans le vehicule" then
 			EnterVehicle()
