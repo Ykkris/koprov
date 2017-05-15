@@ -45,7 +45,7 @@ local four = {
 local fakecar = {model = '', car = nil}
 local four_locations = {{
 entering = {402.459,-1633.436,29.291}, -- point de spawn 
-outside = {409.284, -1622.797.377,29.291} -- ouverture du menu
+outside = {409.284, -1622.797,29.291} -- ouverture du menu
 
 }}
 
@@ -168,15 +168,14 @@ function firstToUpper(str)
 	return (str:gsub("^%l", string.upper))
 end
 
-
 AddEventHandler('playerDropped', function(drop)
 	CheckForVehicle()
 end)
 
-function CheckForVehicle(x,y,z)
+function CheckForVehicle() 
 	Citizen.CreateThread(function()		
 		Citizen.Wait(500)
-		local caissei = GetClosestVehicle(x, y, z, 3.000, 0, 70)
+		local caissei = GetPlayersLastVehicle()
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then
@@ -441,7 +440,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 	local secondarycolor = secondarycolor
 	Citizen.CreateThread(function()			
 		Citizen.Wait(1000)
-		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
+		local caisseo = GetClosestVehicle(409.284, -1622.797,29.291, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
 			drawNotification("La zone est ~r~encombré~w~") 
 		else
@@ -452,7 +451,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 				while not HasModelLoaded(car) do
 					Citizen.Wait(0)
 				end
-				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
+				veh = CreateVehicle(car, 409.284, -1622.797,29.291, 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
 				SetEntityAsMissionEntity(veh, true, true)
 				SetVehicleHasBeenOwnedByPlayer(veh, myPed)
@@ -483,10 +482,10 @@ AddEventHandler('fours:RemoveVehicle', function(found, plate, cassei)
 			Citizen.Wait(1000)
 			local present = true
 			while present do
-				local car = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
+				local car = GetPlayersLastVehicle()
 				Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(car))
 				Citizen.Wait(500)
-				local test_car = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
+				local test_car = GetPlayersLastVehicle()
 				test_plate = GetVehicleNumberPlateText(test_car)
 				if plate ~= test_plate then
 					present = false
