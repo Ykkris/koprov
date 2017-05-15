@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	$('.tlastname').html('');
-	$('.tfirstname').html('');
-	$('.tid').html('');
+	if (event.data.type == "enableui") {
+		$('.tlastname').html('');
+		$('.tfirstname').html('');
+		$('.tid').html('');
+	}
 });
