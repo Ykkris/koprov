@@ -486,7 +486,7 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 
 		resultat_n = tonumber(resultat)
 		Citizen.Trace(tostring(resultat_n))
-		GetClosestPlayer(resultat_n)
+		Fines(resultat_n)
 		--TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
 
 	CloseCreator()
@@ -501,13 +501,35 @@ function EnterVehicle()
 	TriggerServerEvent("Iphone:forceenter")
 end
 
-function GetClosestPlayer(montant)
-	TriggerServerEvent("Iphone:getPlayers")
+function Fines(amount)
+	t, distance = GetClosestPlayer()
+	if(distance ~= -1 and distance < 3) then
+		TriggerServerEvent("police:finesGranted", GetPlayerServerId(t), amount)
+	else
+		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "No player near you (maybe get closer) !")
+	end
 end
-RegisterNetEvent("Iphone:rgetPlayers")
-AddEventHandler("Iphone:rgetPlayers", function(rplayers)
-	players = GetPlayers(rplayers)
-	Citizen.Trace(tostring(players[1]) .. " " .. tostring(players[2]))
+
+function ShowNotification(message)
+	SetNotificationTextEntry("STRING")
+	AddTextComponentString(message)
+	DrawNotification(false, false)
+end
+
+function GetPlayers()
+    local players = {}
+
+    for i = 0, 31 do
+        if NetworkIsPlayerActive(i) then
+            table.insert(players, i)
+        end
+    end
+
+    return players
+end
+
+function GetClosestPlayer()
+	local players = GetPlayers()
 	local closestDistance = -1
 	local closestPlayer = -1
 	local ply = GetPlayerPed(-1)
@@ -525,26 +547,5 @@ AddEventHandler("Iphone:rgetPlayers", function(rplayers)
 		end
 	end
 	
-	TriggerServerEvent("Iphone:amande", montant, closestPlayer,closestDistance)
-	
-end)
-
-function ShowNotification(message)
-	SetNotificationTextEntry("STRING")
-	AddTextComponentString(message)
-	DrawNotification(false, false)
-end
-
-function GetPlayers(rplayers)
-	local test = {}
-	Citizen.Trace(tostring(rplayers))
-    for i = 1, #rplayers do
-        
-	    Citizen.Trace(tostring(rplayers[i]))
-	if rplayers[i] ~= nil then
-            table.insert(test, rplayers[i])
-        end
-    end
-
-    return test	
+	return closestPlayer, closestDistance
 end
