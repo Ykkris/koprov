@@ -571,26 +571,25 @@ AddEventHandler("Iphone:rcheckid", function(first_name, last_name, matricule)
 end)
 
 RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
-AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
+AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, phone, gender)
 	
 	----------PARTIE UI -----------
 	guiEnabled = not guiEnabled
 	Citizen.Trace("ON EST BIEN DANS RGETIDUI")
 	if guiEnabled then
-		Citizen.Trace("ENABLE ! firstname = " ..tostring(firstname) .. "last name : " ..tostring(lastename) .. "Matricule :  "..tostring(matricule))
 	    	SendNUIMessage({
 		type = "enableui",
 		tlastname = lastename,
 		tfirstname = firstname,
-		tid = matricule
+		tid = matricule,
+		tphone = phone
+		tgender = gender
 	    })
-		Citizen.Trace("test : enable")	
+
 	else
-		Citizen.Trace("DISABLE ! firstname = " ..tostring(firstname) .. "last name : " ..tostring(lastename) .. "Matricule :  "..tostring(matricule))
 		SendNUIMessage({
 			type = "disableui"
 		})
-		Citizen.Trace("test : disable")
 		
 	end
 end)
