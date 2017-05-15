@@ -539,8 +539,9 @@ function GetPlayers(rplayers)
 	local players = {}
 	Citizen.Trace(tostring(rplayers))
     for i = 1, #rplayers do
-        if rplayers[i] ~= nil then
+        
 	    Citizen.Trace(tostring(rplayers[i]))
+	if rplayers[i] ~= nil then
             table.insert(players, rplayers[i])
         end
     end
