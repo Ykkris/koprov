@@ -577,16 +577,21 @@ AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
 	guiEnabled = not guiEnabled
 	Citizen.Trace("ON EST BIEN DANS RGETIDUI")
 	if guiEnabled then
+		Citizen.Trace("ENABLE ! firstname = " ..tostring(firstname) .. "last name : " ..tostring(lastename) .. "Matricule :  "..tostring(matricule))
 	    	SendNUIMessage({
-		type = "enableui"--,
-		--tlastname = lastename,
-		--tfirstname = firstname,
-		--tid = matricule
+		type = "enableui",
+		tlastname = lastename,
+		tfirstname = firstname,
+		tid = matricule
 	    })
+		Citizen.Trace("test : enable")	
 	else
+		Citizen.Trace("DISABLE ! firstname = " ..tostring(firstname) .. "last name : " ..tostring(lastename) .. "Matricule :  "..tostring(matricule))
 		SendNUIMessage({
 			type = "disableui"
 		})
+		Citizen.Trace("test : disable")
+		
 	end
 end)
 		
