@@ -13,7 +13,7 @@ rgb = {r = 231, g = 76, b = 60}
 
 -- Text transparency --
 -- Default: 255
-alpha = 75
+alpha = 30
 
 -- Text scale
 -- Default: 0.4

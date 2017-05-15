@@ -34,7 +34,8 @@ local txt = {
 		['res'] = 'Appuyez sur ~g~E~s~ pour réanimer le joueur',
 		['notDoc'] = 'Vous n\'êtes pas ambulancier',
 		['stopService'] = 'Vous n\'êtes plus en service',
-		['startService'] = 'Début du service'
+		['startService'] = 'Début du service',
+		['getHelou'] = 'Appuyez sur ~g~E~s~ pour obtenir un hélicopter'
   },
 
 	['en'] = {
@@ -113,6 +114,32 @@ Citizen.CreateThread(
 
 					if (IsControlJustReleased(1, 51)) then
 						SpawnAmbulance()
+					end
+				end
+			end
+		end
+end)
+
+Citizen.CreateThread(
+	function()
+		local x = 313.6910
+		local y = -1465.0611
+		local z = 46.509
+
+		while true do
+			Citizen.Wait(1)
+
+			local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
+
+			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) and isInService and jobId == 3 then
+
+				DrawMarker(1, x, y, z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 255, 165, 0, 165, 0, 0, 0,0)
+
+				if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 2.0) then
+					DisplayHelpText(txt[lang]['getHelou'])
+
+					if (IsControlJustReleased(1, 51)) then
+						SpawnHelou()
 					end
 				end
 			end
@@ -226,6 +253,29 @@ function SpawnAmbulance()
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	SetModelAsNoLongerNeeded(vehicle)
 	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+end
+
+function SpawnHelou()
+	Citizen.Wait(0)
+	local myPed = GetPlayerPed(-1)
+	local player = PlayerId()
+	local vehicle = GetHashKey('buzzard2')
+
+	RequestModel(vehicle)
+
+	while not HasModelLoaded(vehicle) do
+		Wait(1)
+	end
+
+	local plate = math.random(100, 900)
+	local coords = GetOffsetFromEntityGivenWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+	local spawned_helou = CreateVehicle(vehicle, coords, 313.6910, -1465.0611, 70.509, true, false)
+
+	SetVehicleOnGroundProperly(spawned_helou)
+	SetVehicleNumberPlateText(spawned_helou, "MEDIC")
+	SetPedIntoVehicle(myPed, spawned_helou, - 1)
+	SetModelAsNoLongerNeeded(vehicle)
+	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_helou))
 end
 
 function StartEmergency(x, y, z, playerID, sourcePlayerInComa)
