@@ -496,8 +496,9 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 
 end
 
-function IdControl()
-	
+function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClosestPlayer
+	target = 0
+	TriggerServerEvent("Iphone:checkid", target)
 end
 
 function SortirVehicle()
