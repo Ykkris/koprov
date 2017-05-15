@@ -455,7 +455,7 @@ function Services()
 end
 
 function IdCard()
-	TriggerServerEvent("Iphone:getidui", GetPlayerServerId(GetPlayerPed(-1)))
+	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(GetPlayerPed(-1)), 0)
 end
 
 RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
@@ -518,8 +518,9 @@ end
 
 function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClosestPlayer
 	local target, distance = GetClosestPlayer()
-	TriggerServerEvent("Iphone:checkid", target)
+	TriggerServerEvent("Iphone:checkid", target, 1)
 end
+
 
 function SortirVehicle()
 	t, distance = GetClosestPlayer()
@@ -584,8 +585,8 @@ function GetClosestPlayer()
 end
 
 RegisterServerEvent("Iphone:rcheckid")
-AddEventHandler("Iphone:rcheckid", function(target_id)
-	ShowNotification("L'identité de la personne est : ".. target_id)		
+AddEventHandler("Iphone:rcheckid", function(first_name, last_name, matricule)
+	ShowNotification("L'identité de la personne est : ".. first_name .. " " .. last_name .. " | " .. " Matricule : " .. matricule)		
 		
 end)
 		
