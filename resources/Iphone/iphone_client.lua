@@ -3,9 +3,9 @@
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
 
-limitator = false
-engine = true
+
 isCop = true --------------- A ENLEVER
+guiEnabled = false
 
 AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("police:checkIsCop")
@@ -455,8 +455,28 @@ function Services()
 end
 
 function IdCard()
-
+	TriggerServerEvent("Iphone:getidui", GetPlayerPed(-1))
 end
+
+RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
+AddEvenHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
+	
+	----------PARTIE UI -----------
+	guiEnabled = not guiEnabled
+	
+	if guiEnabled then
+	    	SendNUIMessage({
+		type = "enableui",
+		tlastname = lastename,
+		tfirstname = firstname,
+		tid = matricule
+	    })
+	else
+		SendNUIMessage({
+			type = "diableui"	
+		})
+	end
+end)
 
 function Menotter()
 	TriggerServerEvent("Iphone:cuff")
