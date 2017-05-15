@@ -536,15 +536,15 @@ function ShowNotification(message)
 end
 
 function GetPlayers(rplayers)
-	local players = {}
+	local test = {}
 	Citizen.Trace(tostring(rplayers))
     for i = 1, #rplayers do
         
 	    Citizen.Trace(tostring(rplayers[i]))
 	if rplayers[i] ~= nil then
-            table.insert(players, rplayers[i])
+            table.insert(test, rplayers[i])
         end
     end
 
-    return players	
+    return test	
 end
