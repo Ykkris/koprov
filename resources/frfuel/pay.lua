@@ -29,7 +29,7 @@ AddEventHandler("essence:payer", function(litres) -- source, litres en float
 	local player = user.identifier
     	local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
     	local resultat = MySQL:getResults(req, {'job'}, "identifier")
-    	if (id_medecin == resultat[1].job) or (id_policier == resultat[1].job)  then
+    	if (3 == resultat[1].job) or (2 == resultat[1].job)  then
       		retour = true
     	else 
       		retour = false
