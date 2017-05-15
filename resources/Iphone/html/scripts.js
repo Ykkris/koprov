@@ -10,9 +10,9 @@ $(document).ready(function (){
 
         window.addEventListener("message", function(event){
               if (event.data.type == "enableui") {
-                        $(".tlastname").text(event.data.tlastname);
-                        $(".tfirstname").text(event.data.tfirstname);
-                        $(".tid").text(event.data.tid);
+                        //$(".tlastname").text(event.data.tlastname);
+                        //$(".tfirstname").text(event.data.tfirstname);
+                        //$(".tid").text(event.data.tid);
                         openMain();
                         
                 }
