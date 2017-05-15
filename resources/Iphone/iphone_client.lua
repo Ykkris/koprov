@@ -582,7 +582,7 @@ AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, pho
 		tlastname = lastename,
 		tfirstname = firstname,
 		tid = matricule,
-		tphone = phone
+		tphone = phone,
 		tgender = gender
 	    })
 
