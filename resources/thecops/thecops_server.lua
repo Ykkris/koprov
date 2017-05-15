@@ -181,15 +181,17 @@ end, function(source, args, user)
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
 end)
 RegisterServerEvent("Iphone:checkid") -- RETURN THE RP PLAYER NAME
-AddEventHandler("Iphone:checkid", function(target)
-	TriggerEvent("es:getPlayerFromId", source, function(user)
-		local query = MySQL:executeQuery("SELECT nom_rp FROM users WHERE identifier = '@identifier'", { ['@identifier'] = user.identifier})
-		local result = MySQL:getResults(query, {'nom_rp'}, "identifier")	
-	end)
-	TriggerClientEvent("Iphone:rcheckid", source, result.nom_rp[1])
-		
+AddEventHandler("Iphone:checkid", function(target, puiorpcops) -- 0 pour ui et 1 pour cops
+	TriggerEvent("es:getPlayerFromId", target, function(user)
+		local query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", { ['@identifier'] = user.identifier})
+		local result = MySQL:getResults(query, {'first_name', 'last_name', 'matricule'}, "identifier")
+		if puiorpcops == 1 then
+			TriggerClientEvent("Iphone:rcheckid", source, result.first_name[1], result.last_name[1], result.matricule[1])
+		elseif puiorpcops == 0 then
+			TriggerClientEvent("Iphone:rgetidui", source, result.first_name[1], result.last_name[1], result.matricule[1])		
+	end)	
 end
-
+	
 RegisterServerEvent("Iphone:check")
 AddEventHandler("Iphone:check", function()
 	TriggerEvent("es:getPlayerFromId", source, function(player)
@@ -244,11 +246,11 @@ AddEventHandler("Iphone:amande", function(amount, cp, cd)
 	end)
 end)
 
-RegisterServerEvent("Iphone:getPlayers") -- TriggerServerEvent("Iphone:getPlayers")
-AddEventHandler("Iphone:getPlayers", function()
-	players = GetPlayers()
-	TriggerClientEvent("Iphone:rgetPlayers",source, players)	
-end)
+--RegisterServerEvent("Iphone:getPlayers") -- TriggerServerEvent("Iphone:getPlayers")
+--AddEventHandler("Iphone:getPlayers", function()
+--	players = GetPlayers()
+--	TriggerClientEvent("Iphone:rgetPlayers",source, players)	
+--end)
 
 
 
