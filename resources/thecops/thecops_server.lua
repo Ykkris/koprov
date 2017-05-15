@@ -186,9 +186,9 @@ AddEventHandler("Iphone:checkid", function(target, puiorpcops) -- 0 pour ui et 1
 		local query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", { ['@identifier'] = user.identifier})
 		local result = MySQL:getResults(query, {'first_name', 'last_name', 'matricule'}, "identifier")
 		if puiorpcops == 1 then
-			TriggerClientEvent("Iphone:rcheckid", source, result.first_name[1], result.last_name[1], result.matricule[1])
+			TriggerClientEvent("Iphone:rcheckid", source, result[1].first_name, result[1].last_name, result[1].matricule)
 		elseif puiorpcops == 0 then
-			TriggerClientEvent("Iphone:rgetidui", source, result.first_name[1], result.last_name[1], result.matricule[1])
+			TriggerClientEvent("Iphone:rgetidui", source, result[1].first_name, result[1].last_name, result[1].matricule)
 		end
 	end)	
 end
