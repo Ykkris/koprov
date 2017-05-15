@@ -497,7 +497,9 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 end
 
 function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClosestPlayer
+	Citizen.Trace('On est dans le control ID')
 	local target, distance = GetClosestPlayer()
+	Citizen.Trace('target : ' ..tostring(target))
 	TriggerServerEvent("Iphone:checkid", target, 1)
 end
 
