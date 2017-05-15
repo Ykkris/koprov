@@ -453,7 +453,7 @@ function Services()
 end
 
 function IdCard()
-	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(PlayerID()), 0)
+	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(PlayerId()), 0)
 end
 
 function Menotter()
