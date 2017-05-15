@@ -24,8 +24,8 @@ RegisterServerEvent("essence:payer") -- IL FAUDRAIT AUSSI VERIFIER S'IL/ELLE EST
 AddEventHandler("essence:payer", function(litres) -- source, litres en float
   local prix = math.ceil(litres)
   TriggerEvent('es:getPlayerFromId', source, function(user)
-	local id_medecin = VARIABLE_A_CHANGER
-	local id_policier = VARIABLE_A_CHANGER
+	local id_medecin = 3
+	local id_policier = 2
 	local player = user.identifier
     	local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
     	local resultat = MySQL:getResults(req, {'job'}, "identifier")
