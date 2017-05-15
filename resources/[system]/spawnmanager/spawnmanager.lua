@@ -4,6 +4,12 @@ local spawnPoints = {}
 -- auto-spawn enabled flag
 local autoSpawnEnabled = false
 local autoSpawnCallback
+local playerInComa = false
+
+-- From cl_healthplayer
+AddEventHandler('es_em:playerInComa', function()
+  playerInComa = true
+end)
 
 -- support for mapmanager maps
 AddEventHandler('getMapDirectives', function(add)
@@ -270,10 +276,6 @@ function spawnPlayer(spawnIdx, cb)
         --loadScene(spawn.x, spawn.y, spawn.z)
         --ForceLoadingScreen(false)
 
-        while not HasCollisionLoadedAroundEntity(ped) do
-            Citizen.Wait(0)
-        end
-
         ShutdownLoadingScreen()
 
         DoScreenFadeIn(500)
@@ -310,7 +312,7 @@ Citizen.CreateThread(function()
             -- check if we want to autospawn
             if autoSpawnEnabled then
                 if NetworkIsPlayerActive(PlayerId()) then
-                    if (diedAt and (GetTimeDifference(GetGameTimer(), diedAt) > 2000)) or respawnForced then
+                    if (not playerInComa) and ((diedAt and (GetTimeDifference(GetGameTimer(), diedAt) > 2000)) or respawnForced) then
                         Citizen.Trace("forcin' respawn\n")
 
                         if autoSpawnCallback then
@@ -339,3 +341,16 @@ function forceRespawn()
     spawnLock = false
     respawnForced = true
 end
+
+--[[AddEventHandler('playerInfoCreated', function()
+    loadSpawns(json.encode({
+        spawns = {
+            { x = -238.511, y = 954.025, z = 11.0803, heading = 90.0, model = 'ig_brucie' },
+            { x = -310.001, y = 945.603, z = 14.3728, heading = 90.0, model = 'ig_bulgarin' },
+        }
+    }))
+end)
+
+AddEventHandler('playerActivated', function()
+    respawnForced = true
+end)]]

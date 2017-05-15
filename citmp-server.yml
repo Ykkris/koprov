@@ -4,7 +4,6 @@ PreParseResources:
     - mapmanager
 
 AutoStartResources:
-    - vrp
     - essentialmode
     - es_admin
     - es_freeroam
@@ -17,6 +16,7 @@ AutoStartResources:
     - hardcap # prevents the game from breaking
     - skinchanger
     - kmh
+    - emergency
     - loadingscreen
     - assets
     - garages
@@ -48,9 +48,8 @@ AutoStartResources:
     - pecheurgarage
     - mazone
     - knockout
-    - medicgarage
     - taxijob
-    - themedic
+    - Iphone
 
 # do change
 RconPassword: koprobestv
