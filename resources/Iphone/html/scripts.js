@@ -1,7 +1,7 @@
 $(document).ready(function (){
 
         function openMain() {
-             $(".body").css("display", "block");
+             $(".body").css("display", "container");
         }
 
         function closeMain() {
