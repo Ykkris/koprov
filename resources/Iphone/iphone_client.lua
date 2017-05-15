@@ -561,3 +561,11 @@ function GetClosestPlayer()
 	
 	return closestPlayer, closestDistance
 end
+
+RegisterServerEvent("Iphone:rcheckid")
+AddEventHandler("Iphone:rcheckid", function(target_id)
+	ShowNotification("L'identité de la personne est : ".. target_id)		
+		
+end)
+		
+
