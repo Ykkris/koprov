@@ -8,4 +8,5 @@ files({
     'client/html/scripts.js',
     'client/html/style.css',
     'client/html/card.png'
+    'client/html/jquery-3.2.1.min.js'
 })
