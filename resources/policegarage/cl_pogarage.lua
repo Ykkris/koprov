@@ -104,14 +104,14 @@ Citizen.CreateThread(function()
 		elseif (GetDistanceBetweenCoords(436.516, -1022.16, 27.662, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
 				Menu.hidden = not Menu.hidden
 		end
-		end
 		if GetDistanceBetweenCoords(449.359, - 980.727, 42.60, GetEntityCoords(LocalPed())) < 2 then
 			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre un ~b~Helicopter', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuHelico()
 				Menu.hidden = not Menu.hidden
 			end
-		elseif (GetDistanceBetweenCoords(449.359, -980.727, 42.60, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
+		end
+		if (GetDistanceBetweenCoords(449.359, -980.727, 42.60, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
 				Menu.hidden = not Menu.hidden
 		end
 		Menu.renderGUI()
