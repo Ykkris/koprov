@@ -87,7 +87,8 @@ local vehshop = {
 				{name = "Fouiller", description = ""},
 				{name = "Amande", description = ""},
 				{name = "Controler l'identite", description = ""},
-				{name = "Faire rentrer dans le vehicule", description = ""}
+				{name = "Faire rentrer dans le vehicule", description = ""},
+				{name = "Faire sortir du le vehicule", description = ""}
 			},
 
 		}
@@ -385,6 +386,8 @@ function ButtonSelected(button)
 			IdControl()
 		elseif btn == "Faire rentrer dans le vehicule" then
 			EnterVehicle()
+		elseif btn == "Faire sortir du le vehicule" then
+			SortirVehicle()
 		end
 
 	end
@@ -495,6 +498,15 @@ end
 
 function IdControl()
 	
+end
+
+function SortirVehicle()
+	t, distance = GetClosestPlayer()
+	if(distance ~= -1 and distance < 3) then
+		TriggerServerEvent("police:confirmUnseat", GetPlayerServerId(t))
+	else
+		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "No player near you (maybe get closer) !")
+	end
 end
 
 function EnterVehicle()
