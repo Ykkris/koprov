@@ -573,7 +573,7 @@ AddEventHandler("Iphone:rcheckid", function(first_name, last_name, matricule)
 end)
 
 RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
-AddEvenHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
+AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
 	
 	----------PARTIE UI -----------
 	guiEnabled = not guiEnabled
