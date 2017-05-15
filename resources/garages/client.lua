@@ -437,6 +437,7 @@ function stringstarts(String,Start)
 end
 
 function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
+	local myPed = GetPlayerPed(-1)
 	local car = GetHashKey(vehicle)
 	local plate = plate
 	local state = state
@@ -457,6 +458,8 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 				end
 				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
+				SetEntityAsMissionEntity(veh, true, true)
+				SetVehicleHasBeenOwnedByPlayer(veh, myPed)
 				SetVehicleOnGroundProperly(veh)
 				SetVehicleColours(veh, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false) 
