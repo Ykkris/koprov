@@ -1,33 +1,6 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="jquery-3.2.1.min.js" type="text/javascript"></script>
-	<script> 
-	$(document).ready(function (){
-
-        function openMain() {
-             $(".container").css("display", "block");
-        }
-
-        function closeMain() {
-              $(".container").css("display", "none");
-        }
-
-        window.addEventListener("message", function(event){
-              if (event.data.type == "enableui") {
-                        openMain();
-                        $(".tlastname").text(event.data.tlastname);
-                        $(".tfirstname").text(event.data.tfirstname);
-                        $(".tid").text(event.data.tid);
-                        
-                }
-               else if (event.data.type == "disableui") {
-                        closeMain();
-                }
-        })
-});
-	</script>
-	
-
 	<style type="text/css">
 		.container {
 			width: 350px;
@@ -64,6 +37,34 @@
 </head>
 
 <body>
+	<script> 
+	$(document).ready(function (){
+
+        function openMain() {
+             $(".container").css("display", "block");
+        }
+
+        function closeMain() {
+              $(".container").css("display", "none");
+        }
+
+        window.addEventListener("message", function(event){
+              if (event.data.type == "enableui") {
+		        $(".tlastname").text(event.data.tlastname);
+                        $(".tfirstname").text(event.data.tfirstname);
+                        $(".tid").text(event.data.tid);
+                        openMain();
+                        
+                        
+                }
+               else if (event.data.type == "disableui") {
+                        closeMain();
+                }
+        })
+});
+</script>	
+	
+	
 	<div class="container">
 		<div class="card">
 			<div class="txtfix">
