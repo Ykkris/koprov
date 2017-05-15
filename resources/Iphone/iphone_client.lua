@@ -500,7 +500,7 @@ function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClose
 	Citizen.Trace('On est dans le control ID')
 	local target, distance = GetClosestPlayer()
 	Citizen.Trace('target : ' ..tostring(target))
-	TriggerServerEvent("Iphone:checkid", target, 1)
+	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(target), 1)
 end
 
 
