@@ -75,6 +75,12 @@ AddEventHandler('police:cuffGranted', function(t)
 	TriggerClientEvent('police:getArrested', t)
 end)
 
+RegisterServerEvent('police:confirmUnseat')
+AddEventHandler('police:confirmUnseat', function(t)
+	TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, GetPlayerName(t).. " is out !")
+	TriggerClientEvent('police:unseatme', t)
+end)
+
 RegisterServerEvent('police:forceEnterAsk')
 AddEventHandler('police:forceEnterAsk', function(t, v)
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, GetPlayerName(t).. " get to the car ! (if he's cuffed :) )")
