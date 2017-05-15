@@ -517,7 +517,7 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 end
 
 function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClosestPlayer
-	target = 0
+	local target, distance = GetClosestPlayer()
 	TriggerServerEvent("Iphone:checkid", target)
 end
 
