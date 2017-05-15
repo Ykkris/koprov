@@ -11,9 +11,9 @@ $(document).ready(function (){
         window.addEventListener("message", function(event){
               if (event.data.type == "enableui") {
                         openMain();
-                        $(".tlastname").html("");
-                        $(".tfirstname").html("");
-                        $(".tid").html("");
+                        $(".tlastname").html(event.data.tlastname);
+                        $(".tfirstname").html(event.data.tfirstname);
+                        $(".tid").html(event.data.tid);
                 }
                else if (event.data.type == "disableui") {
                         closeMain();
