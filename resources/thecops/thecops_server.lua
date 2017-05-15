@@ -188,6 +188,7 @@ AddEventHandler("Iphone:checkid", function(target, puiorpcops) -- 0 pour ui et 1
 		if puiorpcops == 1 then
 			TriggerClientEvent("Iphone:rcheckid", source, result[1].first_name, result[1].last_name, result[1].matricule)
 		elseif puiorpcops == 0 then
+			RconPrint("ON EST BIEN DANS LE CAS OU C'EST 0")
 			TriggerClientEvent("Iphone:rgetidui", source, result[1].first_name, result[1].last_name, result[1].matricule)
 		end
 	end)	
