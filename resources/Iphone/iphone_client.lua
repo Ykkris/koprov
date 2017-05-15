@@ -88,7 +88,7 @@ local vehshop = {
 				{name = "Amande", description = ""},
 				{name = "Controler l'identite", description = ""},
 				{name = "Faire rentrer dans le vehicule", description = ""},
-				{name = "Faire sortir du le vehicule", description = ""}
+				{name = "Faire sortir du vehicule", description = ""}
 			},
 
 		}
@@ -386,7 +386,7 @@ function ButtonSelected(button)
 			IdControl()
 		elseif btn == "Faire rentrer dans le vehicule" then
 			EnterVehicle()
-		elseif btn == "Faire sortir du le vehicule" then
+		elseif btn == "Faire sortir du vehicule" then
 			SortirVehicle()
 		end
 
@@ -457,26 +457,6 @@ end
 function IdCard()
 	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(GetPlayerPed(-1)), 0)
 end
-
-RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
-AddEvenHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
-	
-	----------PARTIE UI -----------
-	guiEnabled = not guiEnabled
-	
-	if guiEnabled then
-	    	SendNUIMessage({
-		type = "enableui",
-		tlastname = lastename,
-		tfirstname = firstname,
-		tid = matricule
-	    })
-	else
-		SendNUIMessage({
-			type = "diableui"	
-		})
-	end
-end)
 
 function Menotter()
 	TriggerServerEvent("Iphone:cuff")
@@ -588,6 +568,26 @@ RegisterServerEvent("Iphone:rcheckid")
 AddEventHandler("Iphone:rcheckid", function(first_name, last_name, matricule)
 	ShowNotification("L'identité de la personne est : ".. first_name .. " " .. last_name .. " | " .. " Matricule : " .. matricule)		
 		
+end)
+
+RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
+AddEvenHandler("Iphone:rgetidui", function(firstname, lastename, matricule)
+	
+	----------PARTIE UI -----------
+	guiEnabled = not guiEnabled
+	
+	if guiEnabled then
+	    	SendNUIMessage({
+		type = "enableui",
+		tlastname = lastename,
+		tfirstname = firstname,
+		tid = matricule
+	    })
+	else
+		SendNUIMessage({
+			type = "disableui"
+		})
+	end
 end)
 		
 
