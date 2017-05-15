@@ -455,7 +455,7 @@ function Services()
 end
 
 function IdCard()
-	TriggerServerEvent("Iphone:getidui", GetPlayerPed(-1))
+	TriggerServerEvent("Iphone:getidui", GetPlayerServerId(GetPlayerPed(-1)))
 end
 
 RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
