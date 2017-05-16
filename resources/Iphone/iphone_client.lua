@@ -4,7 +4,7 @@
 -- RegisterNetEvent('veh:rcheckveh')
 
 
-isCop = true --------------- A ENLEVER
+isCop = false --------------- A ENLEVER
 guiEnabled = false
 
 AddEventHandler("playerSpawned", function()
