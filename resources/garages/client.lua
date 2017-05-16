@@ -465,7 +465,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false) 
 				drawNotification("Véhicule ~g~sorti~w~, bonne route!")				
 				TriggerServerEvent('garages:SetVehOut', plate)
-				--TriggerServerEvent('fours:SetVehIn', plate)
+				TriggerServerEvent('fours:SetVehIn', plate)
 			end   
 			CloseCreator()
 		end
