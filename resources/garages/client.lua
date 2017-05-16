@@ -48,7 +48,7 @@ garage_locations = nil
 local garage_locations = {}
 garage_locations[1] = {{
 entering = {213.769,-808.965,29.914}, 
-outside = {215.124, -791.377,29.936}
+outside = {215.124,-791.377,29.936}
 }}
 garages_locations[2] = {{
 entering = {402.459,-1633.436,28.291},
@@ -187,7 +187,7 @@ end
 function CheckForVehicle()
 	Citizen.CreateThread(function()		
 		Citizen.Wait(500)
-		local caissei = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
+		local caissei = GetClosestVehicle(garage_locations.outside[1], garage_locations.outside[2], 3.000, 0, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then
@@ -462,7 +462,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor, four)
 	local four = four
 	Citizen.CreateThread(function()			
 		Citizen.Wait(1000)
-		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
+		local caisseo = GetClosestVehicle(garage_locations.outside[1], garage_locations.outside[2], 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
 			drawNotification("La zone est ~r~encombré~w~") 
 		else
@@ -473,7 +473,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor, four)
 				while not HasModelLoaded(car) do
 					Citizen.Wait(0)
 				end
-				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
+				veh = CreateVehicle(car, garage_locations.outside[1], garage_locations.outside[2], 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
 				SetEntityAsMissionEntity(veh, true, true)
 				SetVehicleHasBeenOwnedByPlayer(veh, myPed)
