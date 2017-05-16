@@ -11,21 +11,30 @@ AddEventHandler('fours:SetVehIn', function(plate)
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehiclefour WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
-    local found = false
-    local state = 'in'
+    local state = 'out'
     if(result)then
       for k,v in ipairs(result)do
         if v.vehicle_plate == plate then
-          found = true
           MySQL:executeQuery("UPDATE user_vehiclefour SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
           {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
         end
       end
     end
-
-    TriggerClientEvent('fours:RemoveVehicle', source, found, plate, cassei)
+    --TriggerClientEvent('fours:RemoveVehicle', source, found, plate, cassei)
   end)
 end)
+
+AddEventHandler('playerDropped', function()
+    if(User_vehiclefour[source])then
+        TriggerEvent("es:playerDropped", user_vehiclefour[source])
+        local state ='in'
+        MySQL:executeQuery("UPDATE user_vehiclefour SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
+          {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
+
+        User_vehiclefour[source] = nil
+    end
+end)
+
 
 -- Updates the vehicle linked to the mentionned plate as out
 AddEventHandler('fours:SetVehOut', function(plate)
