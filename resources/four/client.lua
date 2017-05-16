@@ -1,6 +1,6 @@
-RegisterNetEvent('four:RemoveVehicle')
-RegisterNetEvent('four:DisplayVehicles')
-RegisterNetEvent('four:enteredVehicle')
+RegisterNetEvent('fours:RemoveVehicle')
+RegisterNetEvent('fours:DisplayVehicles')
+RegisterNetEvent('fours:enteredVehicle')
 
 local Keys = {
 	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57, 
@@ -89,6 +89,7 @@ function ShowFourBlips(bool)
 			BeginTextCommandSetBlipName("STRING")
 			AddTextComponentString('Fourrière')
 			EndTextCommandSetBlipName(blip)
+			print(blip)
 			SetBlipAsShortRange(blip,true)
 			SetBlipAsMissionCreatorBlip(blip,true)
 			table.insert(four_blips, {blip = blip, pos = loc})
@@ -468,6 +469,7 @@ local firstspawn = 0
 	if firstspawn == 0 then
 		ShowfourBlips(true)
 		firstspawn = 1
+		print(firstspawn)
 	end
 end)
 
