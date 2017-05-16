@@ -23,7 +23,7 @@ end)
 
 local vehshop = {
 	opened = false,
-	title = "Telephone",
+	title = "Poche et Actions",
 	currentmenu = "main",
 	lastmenu = nil,
 	currentpos = nil,
@@ -46,6 +46,7 @@ local vehshop = {
 				{name = "Telephone", description = ""},
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
+				{name = "Services", description = ""},
 				{name = "Police", description = ""}
 			}
 		},
@@ -55,7 +56,7 @@ local vehshop = {
 			buttons = { 
 				{name = "Repertoire", description = ''},
 				{name = "Boite de reception", description = ''},
-				{name = "Services", description = ''},
+				{name = "Envoyer un SMS", description = ''},
 			}
 		},
 		["Emotes"] = {
@@ -79,6 +80,16 @@ local vehshop = {
 			buttons = { 
 			}
 		},
+		["Services"] = {
+			title = "Services", 
+			name = "Services",
+			buttons = {
+				{name = "Police ", description = ""},
+				{name = "Médecin", description = ""},
+				{name = "Dépanneur", description = ""},
+				{name = "Taxi", description = ""}
+			}
+		},
 		["Police"] = {
 			title = "Police",
 			name = "Police",
@@ -88,10 +99,11 @@ local vehshop = {
 				{name = "Amande", description = ""},
 				{name = "Controler l'identite", description = ""},
 				{name = "Faire rentrer dans le vehicule", description = ""},
-				{name = "Faire sortir du vehicule", description = ""}
-			},
+				{name = "Faire sortir du vehicule [WIP]", description = ""}
+			}
+		},
 
-		}
+		
 	}
 }
 
@@ -241,12 +253,23 @@ Citizen.CreateThread(function()
 		if vehshop.opened then
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu]
-			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
-			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
-			drawTxt(vehshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
-			local y = vehshop.menu.y + 0.12
-			buttoncount = tablelength(menu.buttons)
-			local selected = false
+
+				if isCop and vehshop.currentmenu == "main" then
+					buttoncount = tablelength(menu.buttons)
+				elseif vehshop.currentmenu == "main" then
+					buttoncount = tablelength(menu.buttons) - 1
+				else buttoncount = tablelength(menu.buttons)
+				end
+
+				drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
+				drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
+				drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
+				local y = vehshop.menu.y + 0.12
+				
+				local selected = false
+
+
+			testtest = false
 			
 			for i,button in pairs(menu.buttons) do
 				if i >= vehshop.menu.from and i <= vehshop.menu.to then
@@ -257,16 +280,15 @@ Citizen.CreateThread(function()
 						selected = false
 					end
 
-					if button ~= "Police" andisCop then
+					if button.name ~= "Police" then
 						drawMenuButton(button,vehshop.menu.x,y,selected)
 						y = y + 0.04
-					elseif button == "Police" and not(isCop) then 
-					 -- RIEN
-					else 
+					elseif button.name == "Police" and isCop  then 
 						drawMenuButton(button,vehshop.menu.x,y,selected)
 						y = y + 0.04
 					end
 					
+					--y = y + 0.04
 					
 					if selected and IsControlJustPressed(1,201) then
 						ButtonSelected(button)
@@ -349,6 +371,8 @@ function ButtonSelected(button)
 			IdCard()
 		elseif btn == "Police" and isCop then
 			OpenMenu("Police")
+		elseif btn == "Services" then
+			OpenMenu("Services")
 		end
 	elseif this == "Emotes" then
 		if btn == "Arreter l'emote" then
@@ -368,14 +392,16 @@ function ButtonSelected(button)
 		elseif btn == "Why" then
 			Emote(7)
 		end
+
 	elseif this == "Telephone" then
 		if btn == "Repertoire" then
 			Repertoire()
 		elseif btn == "Boite de reception" then
 			BoiteReception()
-		elseif btn == "Services" then
-			Services()
+		elseif btn == "Envoyer un SMS" then
+			SendSMS()
 		end
+
 	elseif this == "Police" then
 		if btn == "Menotter" then
 			Menotter()
@@ -391,6 +417,16 @@ function ButtonSelected(button)
 			SortirVehicle()
 		end
 
+	elseif this == "Services" then
+		if btn == "Police " then 
+			Services(1)
+		elseif btn == "Médecin" then 
+			Service(2)
+		elseif btn == "Dépanneur" then 
+			Service(3)
+		elseif btn == "Taxi" then 
+			Service(4)
+		end
 	end
 end
 
@@ -403,6 +439,8 @@ function OpenMenu(menu)
 	elseif menu == "Carte d'identite" then
 		vehshop.lastmenu = "main"
 	elseif menu == "Police" then
+		vehshop.lastmenu = "main"
+	elseif menu == "Services" then
 		vehshop.lastmenu = "main"
 	end
 
@@ -441,14 +479,23 @@ end
 
 function Emote(id) -- 0 - 7
 	
-	if id == 0 then    end
-	elseif id == 1 then  TaskHandsUp(GetPlayerPed(-1), 1000, GetPlayerPed(-1), -1, true)  end 
-	elseif id == 2 then    end
-	elseif id == 3 then    end
-	elseif id == 4 then    end
-	elseif id == 5 then    end
-	elseif id == 6 then    end
-	elseif id == 7 then    end
+	if id == 0 then  
+		test=0
+	elseif id == 1 then  
+		TaskHandsUp(GetPlayerPed(-1), 1000, GetPlayerPed(-1), -1, true) 
+	elseif id == 2 then    
+		test=0
+	elseif id == 3 then    
+		test=0
+	elseif id == 4 then    
+		test=0
+	elseif id == 5 then    
+		test=0
+	elseif id == 6 then    
+		test=0
+	elseif id == 7 then    
+		test=0
+	end
 end
 
 function PlayEmote(dict, flags)
@@ -462,7 +509,7 @@ RequestAnimDict(dict, flags)
             	i = i+1
         	end
 
-			if HasAnimDictLoaded(dict)
+			if HasAnimDictLoaded(dict) then
 				TaskPlayAnim(GetPlayerPed(-1),dict,name,8,1,-1,flags,0,0,0,0)
 		 	end
 
@@ -470,6 +517,10 @@ RequestAnimDict(dict, flags)
         	while GetEntityAnimCurrentTime(GetPlayerPed(-1),dict,name) <= 0.95 and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
 				Citizen.Wait(0)
         	end
+
+end
+
+function SendSMS()
 
 end
 
@@ -486,7 +537,7 @@ function Services(nom_service)
 end
 
 function NameServiceToIdService(nom_service)
-	if 
+
 end
 
 function IdCard()
