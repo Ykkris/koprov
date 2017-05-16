@@ -526,15 +526,3 @@ AddEventHandler('four:enteredVehicle', function(data)
         SetVehicleHasBeenOwnedByPlayer(car, GetPlayerPed(-1))
  	end
 end)
-
-Citizen.CreateThread(function()
-	Citizen.Wait(300000) -- every 30000ms = 300s = 5m
-	local caissei = GetVehiclePedIsIn(player, true)
-	if caissei ~= nil then
-		SetEntityAsMissionEntity(caissei, true, true)	
-		local platecaissei = GetVehicleNumberPlateText(caissei)
-		TriggerServerEvent('fours:SetVehIn', platecaissei)
-	end
-end) 
-
-

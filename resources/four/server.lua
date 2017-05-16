@@ -9,14 +9,15 @@ RegisterServerEvent('fours:GetPlayerVehs')
 AddEventHandler('fours:SetVehIn', function(plate)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehiclefour WHERE identifier = '@username'",{['@username'] = player})
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
     local state = 'out'
     if(result)then
       for k,v in ipairs(result)do
         if v.vehicle_plate == plate then
-          MySQL:executeQuery("UPDATE user_vehiclefour SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
-          {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
+           MySQL:executeQuery("INSERT INTO user_vehiclefour (`identifier`, `vehicle_model`, `vehicle_price`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primarycolor', '@secondarycolor')",
+                            {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
+            -- insert vehicle dans table de la four
         end
       end
     end
@@ -30,6 +31,9 @@ AddEventHandler('playerDropped', function()
         local state ='in'
         MySQL:executeQuery("UPDATE user_vehiclefour SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
           {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
+          -- ajout vehicule en in dans la table de la four et suppresion des donnèes de la table garage
+         MySQL:executeQuery("DELETE FROM user_vehicle (`identifier`, `vehicle_model`, `vehicle_price`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primarycolor', '@secondarycolor')",
+                            {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
 
         User_vehiclefour[source] = nil
     end

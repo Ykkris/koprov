@@ -19,6 +19,9 @@ AddEventHandler('garages:SetVehIn', function(plate)
           found = true
           MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
           {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
+
+          MySQL:executeQuery("DELETE FROM user_vehiclefour (`identifier`, `vehicle_model`, `vehicle_price`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primarycolor', '@secondarycolor')",
+                            {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
         end
       end
     end

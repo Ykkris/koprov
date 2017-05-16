@@ -392,7 +392,7 @@ function ButtonSelected(button)
 			CheckForVehicle()
 		elseif btn == "Sortir ton véhicule" then
 			TriggerServerEvent('garages:GetPlayerVehs',source)
-			--TriggerServerEvent('garages:CheckForSpawnVeh',source)
+			TriggerServerEvent('garages:CheckForSpawnVeh',source)
 		end
 	elseif this == "list" then
 		garage.currentmenu = "main"
@@ -465,6 +465,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false) 
 				drawNotification("Véhicule ~g~sorti~w~, bonne route!")				
 				TriggerServerEvent('garages:SetVehOut', plate)
+				--TriggerServerEvent('fours:SetVehIn', plate)
 			end   
 			CloseCreator()
 		end
