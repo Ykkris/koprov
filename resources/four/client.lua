@@ -175,7 +175,7 @@ end)
 function CheckForVehicle() 
 	Citizen.CreateThread(function()		
 		Citizen.Wait(500)
-		local caissei = GetPlayersLastVehicle()
+		local caissei = GetVehiclePedIsIn(PlayerPedId(), 1)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then
