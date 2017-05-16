@@ -52,6 +52,7 @@ AutoStartResources:
     - Iphone
     - afkkick
     - compass
+    - four
 
 # do change
 RconPassword: koprobestv
