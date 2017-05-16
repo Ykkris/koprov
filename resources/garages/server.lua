@@ -19,14 +19,31 @@ AddEventHandler('garages:SetVehIn', function(plate)
           found = true
           MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
           {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
-
-          MySQL:executeQuery("DELETE FROM user_vehiclefour (`identifier`, `vehicle_model`, `vehicle_price`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primarycolor', '@secondarycolor')",
-                            {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
         end
       end
     end
 
     TriggerClientEvent('garages:RemoveVehicle', source, found, plate, cassei)
+  end)
+end)
+
+AddEventHandler('playerDropped', function(player)
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    local player = user.identifier
+
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
+    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate', 'vehicle_four'}, "identifier")
+    local found = false
+    local four ='yes'
+    if(resut)then
+      for k,v in ipairs(result)do
+        if v.vehicle_plate == plate then
+          found = true
+          MySQL:executeQuery("UPDATE user_vehicle SET vehicle_four='@four' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
+          {['@username'] = player, ['@plate'] = plate, ['@state'] = state, ['@four'] = four})
+        end
+      end
+    end
   end)
 end)
 
@@ -37,9 +54,10 @@ AddEventHandler('garages:SetVehOut', function(plate)
     local player = user.identifier
     local plate = plate
     local state = "out"
+    local four = "no"
 
-    MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
-      {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
+    MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' AND vehicle_four'@four' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
+      {['@username'] = player, ['@plate'] = plate, ['@state'] = state, ['@four'] = four})
   end)
 end)
 
@@ -48,8 +66,8 @@ AddEventHandler('garages:GetPlayerVehs', function(plate)
   --print('garages:GetPlayerVehs')
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'in'",{['@username'] = player})
-    local result = MySQL:getResults(executed_query, {'vehicle_name', 'vehicle_model', 'vehicle_plate', 'vehicle_colorprimary', 'vehicle_colorsecondary', 'vehicle_state'}, "identifier")
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'in' AND vehicle_four = 'no'",{['@username'] = player})
+    local result = MySQL:getResults(executed_query, {'vehicle_name', 'vehicle_model', 'vehicle_plate', 'vehicle_colorprimary', 'vehicle_colorsecondary', 'vehicle_state', 'vehicle_four'}, "identifier")
     local buttons = {}
 
     if(result)then
@@ -61,8 +79,9 @@ AddEventHandler('garages:GetPlayerVehs', function(plate)
         local primarycolor = v.vehicle_colorprimary
         local secondarycolor = v.vehicle_colorsecondary
         local state = v.vehicle_state
+        local four = v.vehicle_four
         
-        table.insert(buttons, {name = name, model = model, plate = plate, primarycolor= primarycolor, secondarycolor = secondarycolor, state = state})
+        table.insert(buttons, {name = name, model = model, plate = plate, primarycolor= primarycolor, secondarycolor = secondarycolor, state = state, four = four})
 
       end
     end

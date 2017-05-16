@@ -44,11 +44,16 @@ local garage = {
 }
 
 local fakecar = {model = '', car = nil}
-local garage_locations = {{
+garage_locations = nil
+local garage_locations = {}
+garage_locations[1] = {{
 entering = {213.769,-808.965,29.914}, 
 outside = {215.124, -791.377,29.936}
 }}
-
+garages_locations[2] = {{
+entering = {402.459,-1633.436,28.291},
+outside = {409.284,-1622.797,28.291}
+}}
 
 local garage_blips ={}
 local inrangeofgarage = false
@@ -78,66 +83,77 @@ function IsPlayerInRangeOfGarage()
 	return inrangeofgarage
 end
 
-function ShowGarageBlips(bool)
+function ShowGarageBlips(bool)	
 	if bool and #garage_blips == 0 then
-		for station,pos in pairs(garage_locations) do
-			local loc = pos
-			pos = pos.entering
-			local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
-			SetBlipSprite(blip,357)
-			SetBlipColour(blip, 3)
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString('Garage')
-			EndTextCommandSetBlipName(blip)
-			SetBlipAsShortRange(blip,true)
-			SetBlipAsMissionCreatorBlip(blip,true)
-			table.insert(garage_blips, {blip = blip, pos = loc})
+		for _,garage_loc in pairs(garages_locations) do
+			for station,pos in pairs(garage_loc) do
+				local loc = pos
+				pos = pos.entering
+				local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
+				SetBlipSprite(blip,357)
+				SetBlipColour(blip, 3)
+				BeginTextCommandSetBlipName("STRING")
+				local counter = 0
+				if counter == 0 then
+					AddTextComponentString('Garage')
+					counter = 1
+				else
+					AddTextComponentString('Fourrière')
+					counter = 0
+				end
+				EndTextCommandSetBlipName(blip)
+				SetBlipAsShortRange(blip,true)
+				SetBlipAsMissionCreatorBlip(blip,true)
+				table.insert(garage_blips, {blip = blip, pos = loc})
+			end
+			Citizen.CreateThread(function()
+				while #garage_blips > 0 do
+					Citizen.Wait(0)
+					local inrange = false
+					for i,b in ipairs(garage_blips) do
+						DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
+						if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 2 then
+							drawTxt('Appuie sur ~g~Entrée~s~ ouvrir le menu',0,1,0.5,0.8,0.6,255,255,255,255)
+							currentlocation = b
+							inrange = true
+							garage_locations = b.pos
+						end
+					end
+					inrangeofgarage = inrange
+				end
+			end)
+			Citizen.CreateThread(function()
+				while #garage_blips > 0 do
+					Citizen.Wait(0)
+					local inrange = true
+					for i,b in ipairs(garage_blips) do
+						DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,255,255,0,200,0,0,0,0)
+						if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 4 then
+							drawTxt('Entrée et Sortie des véhicules, ne pas encombrer inutilement.',0,1,0.5,0.8,0.6,255,255,255,255)
+							currentlocation = b
+							inrange = true
+							garage_locations = b.pos
+						end
+					end
+					inrangeofgarage = inrange
+				end
+			end)
+			Citizen.CreateThread(function()
+				while #garage_blips > 0 do
+					Citizen.Wait(0)
+					local inrange = true
+					for i,b in ipairs(garage_blips) do
+						DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,255,255,0,200,0,0,0,0)
+						if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 5 then
+							drawTxt('',0,1,0.5,0.8,0.6,255,255,255,255)
+							currentlocation = b
+							inrange = true
+						end
+					end
+					inrangeofgarage = inrange
+				end
+			end)
 		end
-		Citizen.CreateThread(function()
-			while #garage_blips > 0 do
-				Citizen.Wait(0)
-				local inrange = false
-				for i,b in ipairs(garage_blips) do
-					DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-					if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 2 then
-						drawTxt('Appuie sur ~g~Entrée~s~ ouvrir le menu',0,1,0.5,0.8,0.6,255,255,255,255)
-						currentlocation = b
-						inrange = true
-					end
-				end
-				inrangeofgarage = inrange
-			end
-		end)
-		Citizen.CreateThread(function()
-			while #garage_blips > 0 do
-				Citizen.Wait(0)
-				local inrange = true
-				for i,b in ipairs(garage_blips) do
-					DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-					if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 4 then
-						drawTxt('Entrée et Sortie des véhicules, ne pas encombrer inutilement.',0,1,0.5,0.8,0.6,255,255,255,255)
-						currentlocation = b
-						inrange = true
-					end
-				end
-				inrangeofgarage = inrange
-			end
-		end)
-		Citizen.CreateThread(function()
-			while #garage_blips > 0 do
-				Citizen.Wait(0)
-				local inrange = true
-				for i,b in ipairs(garage_blips) do
-					DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-					if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 5 then
-						drawTxt('',0,1,0.5,0.8,0.6,255,255,255,255)
-						currentlocation = b
-						inrange = true
-					end
-				end
-				inrangeofgarage = inrange
-			end
-		end)
 	elseif bool == false and #garage_blips > 0 then
 		for i,b in ipairs(garage_blips) do
 			if DoesBlipExist(b.blip) then
@@ -392,12 +408,12 @@ function ButtonSelected(button)
 			CheckForVehicle()
 		elseif btn == "Sortir ton véhicule" then
 			TriggerServerEvent('garages:GetPlayerVehs',source)
-			TriggerServerEvent('garages:CheckForSpawnVeh',source)
+			--TriggerServerEvent('garages:CheckForSpawnVeh',source)
 		end
 	elseif this == "list" then
 		garage.currentmenu = "main"
 		garage.opened = false
-		SpawnVehicle(button.model, button.plate, button.state, button.primarycolor, button.secondarycolor)
+		SpawnVehicle(button.model, button.plate, button.state, button.primarycolor, button.secondarycolor, button.four)
 	end
 end
 
@@ -436,13 +452,14 @@ function stringstarts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
 
-function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
+function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor, four)
 	local myPed = GetPlayerPed(-1)
 	local car = GetHashKey(vehicle)
 	local plate = plate
 	local state = state
 	local primarycolor = primarycolor
 	local secondarycolor = secondarycolor
+	local four = four
 	Citizen.CreateThread(function()			
 		Citizen.Wait(1000)
 		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
@@ -465,7 +482,6 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false) 
 				drawNotification("Véhicule ~g~sorti~w~, bonne route!")				
 				TriggerServerEvent('garages:SetVehOut', plate)
-				TriggerServerEvent('fours:SetVehIn', plate)
 			end   
 			CloseCreator()
 		end
