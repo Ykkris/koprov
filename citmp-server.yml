@@ -53,6 +53,7 @@ AutoStartResources:
     - afkkick
     - compass
     - four
+    - SelCloth
 
 # do change
 RconPassword: koprobestv
