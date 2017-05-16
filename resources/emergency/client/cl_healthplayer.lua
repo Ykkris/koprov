@@ -180,7 +180,7 @@ end
 
 function ResPlayer()
 	isRes = true
-	-- TriggerServerEvent('es_em:sv_removeMoney')
+	TriggerServerEvent('es_em:sv_removeMoney')
 	TriggerServerEvent("item:reset")
 	NetworkResurrectLocalPlayer(357.757, -597.202, 28.6314, true, true, false)
 end
