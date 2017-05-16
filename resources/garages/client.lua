@@ -44,17 +44,10 @@ local garage = {
 }
 
 local fakecar = {model = '', car = nil}
-garage_locations = nil
-local garages_locations = {}
-garages_locations[1] = {{
+local garage_locations = {{
 entering = {213.769,-808.965,29.914}, 
 outside = {215.124, -791.377,29.936}
 }}
-garage_locations[2]= {{
-entering = {402.459,-1633.43,28.29},
-outside = {409.284,-1622.797,28.29}
-}}
-
 
 
 local garage_blips ={}
@@ -87,7 +80,6 @@ end
 
 function ShowGarageBlips(bool)
 	if bool and #garage_blips == 0 then
-		for _,garage_loc in pairs(garages_locations) do
 		for station,pos in pairs(garage_locations) do
 			local loc = pos
 			pos = pos.entering
@@ -109,7 +101,6 @@ function ShowGarageBlips(bool)
 					DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 					if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 2 then
 						drawTxt('Appuie sur ~g~Entrée~s~ ouvrir le menu',0,1,0.5,0.8,0.6,255,255,255,255)
-						garage_locations = b.pos
 						currentlocation = b
 						inrange = true
 					end
@@ -125,7 +116,6 @@ function ShowGarageBlips(bool)
 					DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 					if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 4 then
 						drawTxt('Entrée et Sortie des véhicules, ne pas encombrer inutilement.',0,1,0.5,0.8,0.6,255,255,255,255)
-						garage_locations = b.pos
 						currentlocation = b
 						inrange = true
 					end
@@ -141,7 +131,6 @@ function ShowGarageBlips(bool)
 					DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 					if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 5 then
 						drawTxt('',0,1,0.5,0.8,0.6,255,255,255,255)
-						garage_locations = b.pos
 						currentlocation = b
 						inrange = true
 					end
@@ -158,7 +147,6 @@ function ShowGarageBlips(bool)
 		end
 		garage_blips = {}
 	end
-end
 end
 
 function f(n)
@@ -183,7 +171,7 @@ end
 function CheckForVehicle()
 	Citizen.CreateThread(function()		
 		Citizen.Wait(500)
-		local caissei = GetClosestVehicle(garage_locations.outside[1], garage_locations.outside[2], garage_locations.outside[3], 3.000, 0, 70)
+		local caissei = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then
@@ -458,7 +446,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor, four)
 	local four = four
 	Citizen.CreateThread(function()			
 		Citizen.Wait(1000)
-		local caisseo = GetClosestVehicle(garage_locations.outside[1], garage_locations.outside[2], garage_locations.outside[3], 3.000, 0, 70)
+		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
 			drawNotification("La zone est ~r~encombré~w~") 
 		else
@@ -469,7 +457,7 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor, four)
 				while not HasModelLoaded(car) do
 					Citizen.Wait(0)
 				end
-				veh = CreateVehicle(car, garage_locations.outside[1], garage_locations.outside[2], garage_locations.outside[3], 0.0, true, false)
+				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
 				SetEntityAsMissionEntity(veh, true, true)
 				SetVehicleHasBeenOwnedByPlayer(veh, myPed)
@@ -527,7 +515,7 @@ end)
 
 AddEventHandler('garages:SendToFourier', function(found, plate, cassei)
 	if found == false then
-		-- no vehicle to send
+		
 	else
 		Citizen.CreateThread(function()
 			Citizen.Wait(1000)
