@@ -45,8 +45,8 @@ local garage = {
 
 local fakecar = {model = '', car = nil}
 local garage_locations = {{
-entering = {402.459,-1633.436,29.291}, -- point de spawn 
-outside = {409.284, -1622.797,29.291} -- ouverture du menu
+entering = {402.459,-1633.436,28.291}, -- point de spawn 
+outside = {409.284, -1622.797,28.291} -- ouverture du menu
 }}
 
 
