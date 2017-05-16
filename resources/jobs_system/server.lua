@@ -14,6 +14,7 @@ function updatejob(player, id)
   local job = id
   MySQL:executeQuery("UPDATE users SET `job`='@value' WHERE identifier = '@identifier'", {['@value'] = job, ['@identifier'] = player})
   TriggerClientEvent("recolt:updateJobs", source, job)
+  TriggerClientEvent("service:updateJobs", source, job)
 end
 
 --RegisterServerEvent('jobs:updatejob')
@@ -56,6 +57,7 @@ AddEventHandler('es:playerLoaded', function(source)
         local exec = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player})
         local result = MySQL:getResults(exec, {'job'}, "identifier")
         TriggerClientEvent("recolt:updateJobs", source, result[1].job)
+        TriggerClientEvent("service:onloaded", source, resut[1].job)
     end)
 end)
 
