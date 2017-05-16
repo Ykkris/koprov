@@ -50,6 +50,8 @@ AutoStartResources:
     - knockout
     - taxijob
     - Iphone
+    - afkkick
+    - compass
 
 # do change
 RconPassword: koprobestv

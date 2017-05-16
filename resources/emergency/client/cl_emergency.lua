@@ -19,7 +19,7 @@ local Keys = {
 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
-local lang = 'fr'
+local lang = 'en'
 
 local txt = {
   ['fr'] = {
@@ -34,8 +34,7 @@ local txt = {
 		['res'] = 'Appuyez sur ~g~E~s~ pour réanimer le joueur',
 		['notDoc'] = 'Vous n\'êtes pas ambulancier',
 		['stopService'] = 'Vous n\'êtes plus en service',
-		['startService'] = 'Début du service',
-		['getHelou'] = 'Appuyez sur ~g~E~s~ pour obtenir un hélicopter'
+		['startService'] = 'Début du service'
   },
 
 	['en'] = {
@@ -57,6 +56,8 @@ local txt = {
 local isInService = false
 local jobId = -1
 local notificationInProgress = false
+local playerInComaIsADoc = false
+local callAlreadyTaken = false
 
 --[[
 ################################
@@ -66,9 +67,9 @@ local notificationInProgress = false
 
 Citizen.CreateThread(
 	function()
-		local x = 347.72
-		local y = -1456.62
-		local z = 41.50
+		local x = 1155.26
+		local y = -1520.82
+		local z = 34.84
 
 		while true do
 			Citizen.Wait(1)
@@ -96,16 +97,16 @@ end)
 
 Citizen.CreateThread(
 	function()
-		local x = 406.871
-		local y = -1427.79
-		local z = 29.4387
+		local x = 1140.41
+		local y = -1608.15
+		local z = 34.6939
 
 		while true do
 			Citizen.Wait(1)
 
 			local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
 
-			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) and isInService and jobId == 3 then
+			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) and isInService and jobId == 11 then
 				-- Service car
 				DrawMarker(1, x, y, z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 255, 165, 0,165, 0, 0, 0,0)
 
@@ -155,32 +156,15 @@ end)
 RegisterNetEvent('es_em:sendEmergencyToDocs')
 AddEventHandler('es_em:sendEmergencyToDocs',
 	function(reason, playerIDInComa, x, y, z, sourcePlayerInComa)
-		local callAlreadyTaken = false
+		callAlreadyTaken = false
 		local playerServerId = GetPlayerServerId(PlayerId())
-		local playerInComaIsADoc = false
 
 		if playerIDInComa == playerServerId then playerInComaIsADoc = true else playerInComaIsADoc = false end
 
-		RegisterNetEvent('es_em:callTaken')
-		AddEventHandler('es_em:callTaken',
-			function(playerName, playerID)
-				callAlreadyTaken = true
-
-				if isInService and jobId == 3 and not playerInComaIsADoc then
-					SendNotification(txt[lang]['callTaken'] .. playerName .. '~s~')
-				end
-
-				if playerServerId == playerID then
-					TriggerServerEvent('es_em:sv_sendMessageToPlayerInComa', sourcePlayerInComa)
-					StartEmergency(x, y, z, playerIDInComa, sourcePlayerInComa)
-				end
-		end)
-
 		Citizen.CreateThread(
 			function()
-				if isInService and jobId == 3 and not playerInComaIsADoc then
+				if isInService and jobId == 11 and not playerInComaIsADoc then
 					local controlPressed = false
-
 
 					while notificationInProgress do
 						Citizen.Wait(0)
@@ -205,7 +189,7 @@ AddEventHandler('es_em:sendEmergencyToDocs',
 						if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
 							callAlreadyTaken = true
 							controlPressed = true
-							TriggerServerEvent('es_em:getTheCall', GetPlayerName(PlayerId()), playerServerId)
+							TriggerServerEvent('es_em:getTheCall', GetPlayerName(PlayerId()), playerServerId, x, y, z, sourcePlayerInComa)
 						end
 
 						if callAlreadyTaken or controlPressed then
@@ -217,6 +201,22 @@ AddEventHandler('es_em:sendEmergencyToDocs',
 		)
 	end
 )
+
+RegisterNetEvent('es_em:callTaken')
+AddEventHandler('es_em:callTaken',
+	function(playerName, playerID, x, y, z, sourcePlayerInComa)
+		local playerServerId = GetPlayerServerId(PlayerId())
+		callAlreadyTaken = true
+
+		if isInService and jobId == 11 and not playerInComaIsADoc then
+			SendNotification(txt[lang]['callTaken'] .. playerName .. '~s~')
+		end
+
+		if playerServerId == playerID then
+			TriggerServerEvent('es_em:sv_sendMessageToPlayerInComa', sourcePlayerInComa)
+			StartEmergency(x, y, z, sourcePlayerInComa)
+		end
+end)
 
 RegisterNetEvent('es_em:cl_setJobId')
 AddEventHandler('es_em:cl_setJobId',
@@ -246,7 +246,7 @@ function SpawnAmbulance()
 
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_car = CreateVehicle(vehicle, coords, 406.871, -1427.79, 29.4387, true, false)
+	local spawned_car = CreateVehicle(vehicle, coords, 431.436, - 996.786, 25.1887, true, false)
 
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "MEDIC")
@@ -278,7 +278,7 @@ function SpawnHelou()
 	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_helou))
 end
 
-function StartEmergency(x, y, z, playerID, sourcePlayerInComa)
+function StartEmergency(x, y, z, sourcePlayerInComa)
 	BLIP_EMERGENCY = AddBlipForCoord(x, y, z)
 
 	SetBlipSprite(BLIP_EMERGENCY, 2)
@@ -311,7 +311,7 @@ end
 function GetService()
 	local playerPed = GetPlayerPed(-1)
 
-	if jobId ~= 3 then
+	if jobId ~= 11 then
 		SendNotification(txt[lang]['notDoc'])
 		return
 	end

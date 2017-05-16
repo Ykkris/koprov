@@ -19,7 +19,7 @@ local Keys = {
 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
-local lang = 'fr'
+local lang = 'en'
 
 local txt = {
   ['fr'] = {
@@ -117,6 +117,10 @@ end)
 ################################
 --]]
 
+AddEventHandler("playerSpawned", function(spawn)
+    exports.spawnmanager:setAutoSpawn(false)
+end)
+
 -- Triggered when player died by environment
 AddEventHandler('baseevents:onPlayerDied',
   function(playerId, reasonID)
@@ -143,12 +147,16 @@ AddEventHandler('es_em:cl_sendMessageToPlayerInComa',
 RegisterNetEvent('es_em:cl_resurectPlayer')
 AddEventHandler('es_em:cl_resurectPlayer',
 	function()
-		isRes = true
-		SendNotification(txt[lang]['res'])
 		local playerPed = GetPlayerPed(-1)
-		ResurrectPed(playerPed)
-		SetEntityHealth(playerPed, GetPedMaxHealth(playerPed)/2)
-		ClearPedTasksImmediately(playerPed)
+		isRes = true
+
+		if IsEntityDead(playerPed) then
+			SendNotification(txt[lang]['res'])
+
+			ResurrectPed(playerPed)
+			SetEntityHealth(playerPed, GetPedMaxHealth(playerPed)/2)
+			ClearPedTasksImmediately(playerPed)
+		end
 	end
 )
 
@@ -172,7 +180,7 @@ end
 
 function ResPlayer()
 	isRes = true
-	-- TriggerServerEvent('es_em:sv_removeMoney')
+	TriggerServerEvent('es_em:sv_removeMoney')
 	TriggerServerEvent("item:reset")
 	NetworkResurrectLocalPlayer(357.757, -597.202, 28.6314, true, true, false)
 end
@@ -202,7 +210,6 @@ function OnPlayerDied(playerId, reasonID, reason)
 	)
 
 	SendNotification(txt[lang]['respawn'])
-	TriggerEvent('es_em:playerInComa')
 
 	Citizen.CreateThread(
 		function()

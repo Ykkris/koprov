@@ -9,7 +9,7 @@
 
 require "resources/essentialmode/lib/MySQL"
 
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "monpasse")
 
 RegisterServerEvent('es_em:sendEmergency')
 AddEventHandler('es_em:sendEmergency',
@@ -24,10 +24,10 @@ AddEventHandler('es_em:sendEmergency',
 
 RegisterServerEvent('es_em:getTheCall')
 AddEventHandler('es_em:getTheCall',
-  function(playerName, playerID)
+  function(playerName, playerID, x, y, z, sourcePlayerInComa)
     TriggerEvent("es:getPlayers", function(players)
       for i,v in pairs(players) do
-        TriggerClientEvent('es_em:callTaken', i, playerName, playerID)
+        TriggerClientEvent('es_em:callTaken', i, playerName, playerID, x, y, z, sourcePlayerInComa)
       end
     end)
   end
@@ -58,7 +58,7 @@ AddEventHandler('es_em:sv_getDocConnected',
       for i,v in pairs(players) do
         identifier = GetPlayerIdentifiers(i)
         if (identifier ~= nil) then
-          local executed_query = MySQL:executeQuery("SELECT identifier, job_id, job_name FROM users LEFT JOIN jobs ON jobs.job_id = users.job WHERE users.identifier = '@identifier' AND job_id = 3 AND enService = 1", {['@identifier'] = identifier[1]})
+          local executed_query = MySQL:executeQuery("SELECT identifier, job_id, job_name FROM users LEFT JOIN jobs ON jobs.job_id = users.job WHERE users.identifier = '@identifier' AND job_id = 11 AND enService = 1", {['@identifier'] = identifier[1]})
           local result = MySQL:getResults(executed_query, {'job_id'}, "identifier")
 
           if (result[1] ~= nil) then
