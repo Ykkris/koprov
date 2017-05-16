@@ -36,7 +36,7 @@ local vehshop = {
 		height = 0.04,
 		buttons = 10,
 		from = 1,
-		to = 10,
+		to = 7,
 		scale = 0.4,
 		font = 0,
 		["main"] = {
@@ -257,13 +257,16 @@ Citizen.CreateThread(function()
 						selected = false
 					end
 
-					if button ~= "Police" then
+					if button ~= "Police" andisCop then
 						drawMenuButton(button,vehshop.menu.x,y,selected)
-					elseif button == "Police" and isCop then 
+						y = y + 0.04
+					elseif button == "Police" and not(isCop) then 
+					 -- RIEN
+					else 
 						drawMenuButton(button,vehshop.menu.x,y,selected)
+						y = y + 0.04
 					end
 					
-					y = y + 0.04
 					
 					if selected and IsControlJustPressed(1,201) then
 						ButtonSelected(button)
@@ -437,6 +440,36 @@ function ShowNotification(message)
 end
 
 function Emote(id) -- 0 - 7
+	
+	if id == 0 then    end
+	elseif id == 1 then  TaskHandsUp(GetPlayerPed(-1), 1000, GetPlayerPed(-1), -1, true)  end 
+	elseif id == 2 then    end
+	elseif id == 3 then    end
+	elseif id == 4 then    end
+	elseif id == 5 then    end
+	elseif id == 6 then    end
+	elseif id == 7 then    end
+end
+
+function PlayEmote(dict, flags)
+
+RequestAnimDict(dict, flags)
+          local i = 0
+
+        	while not HasAnimDictLoaded(dict) and i < 1000 do -- max time, 10 seconds
+            	Citizen.Wait(10)
+            	RequestAnimDict(dict)
+            	i = i+1
+        	end
+
+			if HasAnimDictLoaded(dict)
+				TaskPlayAnim(GetPlayerPed(-1),dict,name,8,1,-1,flags,0,0,0,0)
+		 	end
+
+			Citizen.Wait(0)
+        	while GetEntityAnimCurrentTime(GetPlayerPed(-1),dict,name) <= 0.95 and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
+				Citizen.Wait(0)
+        	end
 
 end
 
@@ -448,8 +481,12 @@ function BoiteReception()
 
 end
 
-function Services()
+function Services(nom_service)
 
+end
+
+function NameServiceToIdService(nom_service)
+	if 
 end
 
 function IdCard()
