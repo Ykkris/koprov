@@ -92,19 +92,21 @@ Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
 	local vehicle = GetHashKey('rubble')
+
 	RequestModel(vehicle)
+
 	while not HasModelLoaded(vehicle) do
 		Wait(1)
 	end
+
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
 	local spawned_camion = CreateVehicle(vehicle, coords, -14.0791, -2658.8503, 6.00430, true, false)
-	SetEntityAsMissionEntity( spawn_camion, true, true)
-	SetVehicleHasBeenOwnedByPlayer(vehicle, myPed)
+
 	SetVehicleOnGroundProperly(spawned_car)
-	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
+	SetVehicleNumberPlateText(spawned_car, ""..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
-	-- SetModelAsNoLongerNeeded(vehicle)
+	SetModelAsNoLongerNeeded(vehicle)
 	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
 end)
 
@@ -114,18 +116,20 @@ Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
 	local vehicle = GetHashKey('tiptruck2')
+
 	RequestModel(vehicle)
+
 	while not HasModelLoaded(vehicle) do
 		Wait(1)
 	end
+
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
 	local spawned_camion = CreateVehicle(vehicle, coords, -14.0791, -2658.8503, 6.00430, true, false)
-	SetEntityAsMissionEntity(spawned_camion, true, true)
-	SetVehicleHasBeenOwnedByPlayer(spawned_camion, myPed)
+
 	SetVehicleOnGroundProperly(spawned_car)
-	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
+	SetVehicleNumberPlateText(spawned_car, ""..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
-	-- SetModelAsNoLongerNeeded(vehicle)
+	SetModelAsNoLongerNeeded(vehicle)
 	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
 end)

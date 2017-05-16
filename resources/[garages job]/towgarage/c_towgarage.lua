@@ -88,18 +88,20 @@ AddEventHandler('tow:c_flatbed', function()
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
 	local vehicle = GetHashKey('flatbed')
+
 	RequestModel(vehicle)
+
 	while not HasModelLoaded(vehicle) do
 		Wait(1)
 	end
+
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
 	local spawned_bed = CreateVehicle(vehicle, coords, 389.423, -1623.39, 29.2919, true, false)
-	SetEntityAsMissionEntity( spawned_bed, true, true)
-	SetVehicleHasBeenOwnedByPlayer(spawned_bed, myPed)
+
 	SetVehicleOnGroundProperly(spawned_bed)
 	SetVehicleNumberPlateText(spawned_bed, "Flatbed "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_bed, - 1)
-	-- SetVehicleAsNoLongerNeeded(vehicle)
+	SetVehicleAsNoLongerNeeded(vehicle)
 	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_bed))
 end)

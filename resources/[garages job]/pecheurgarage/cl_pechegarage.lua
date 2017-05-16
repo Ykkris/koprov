@@ -86,14 +86,17 @@ end)
 
 RegisterNetEvent('pecheur:c_bateaup')
 AddEventHandler('pecheur:c_bateaup', function()
-Citizen.Wait(0)
+	Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
 	local vehicle = GetHashKey('tug')
+
 	RequestModel(vehicle)
+
 	while not HasModelLoaded(vehicle) do
 		Wait(1)
 	end
+	
 	local plate = math.random(100, 900)
 	-- local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), -0.5, 20.0, 2.0)
 	local spawned_camion = CreateVehicle(vehicle, 95.381, -3085.819, 5.597, false, true)
