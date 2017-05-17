@@ -63,21 +63,14 @@ AddEventHandler('CheckMoneyForVeh', function(name, vehicle, price)
   end)
 end)
 
-AddEventHandler('BuyForVeh', function(name, vehicle, price, plate, primarycolor, secondarycolor, pearlescentcolor, wheelcolor)
+AddEventHandler('BuyForVeh', function(vehicle, plate, primarycolor, secondarycolor)
   TriggerEvent('es:getPlayerFromId', source, function(user)
-
-    local player = user.identifier
-    local name = name
-    local price = price
-    local vehicle = vehicle
+    local player = user.identifier 
     local plate = plate
     local state = "out"
     local primarycolor = primarycolor
     local secondarycolor = secondarycolor
-    local pearlescentcolor = pearlescentcolor
-    local wheelcolor = wheelcolor
-    local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_name`, `vehicle_model`, `vehicle_price`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`, `vehicle_pearlescentcolor`, `vehicle_wheelcolor`) VALUES ('@username', '@name', '@vehicle', '@price', '@plate', '@state', '@primarycolor', '@secondarycolor', '@pearlescentcolor', '@wheelcolor')",
-    {['@username'] = player, ['@name'] = name, ['@vehicle'] = vehicle, ['@price'] = price, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor, ['@pearlescentcolor'] = pearlescentcolor, ['@wheelcolor'] = wheelcolor})
-
+    local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primarycolor', '@secondarycolor')",
+    {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
   end)
 end)
