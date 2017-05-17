@@ -48,6 +48,9 @@ AddEventHandler('playerDropped', function()
 		MySQL:executeQuery("UPDATE users SET `money`='@value', `dirty_money`='@v2' WHERE identifier = '@identifier'",
 		{['@value'] = Users[source].money, ['@v2'] = Users[source].dirty_money, ['@identifier'] = Users[source].identifier})
 
+
+        MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='four' WHERE identifier='@username' AND vehicle_state='out'", 
+        {['@username'] = Users[source].identifier})
 		Users[source] = nil
 	end
 end)
