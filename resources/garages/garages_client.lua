@@ -174,14 +174,10 @@ function CheckForVehicle()
 		local caissei = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
-		if DoesEntityExist(caissei) then
-			if GetvehicleEngineHealth(caissei) < 500 then
-				drawNotification("Ton véhicule n'est pas en bon état, vas d'abord le réparer.")
-			elseif GetvehicleEngineHealth(caissei) >= 500 then
-				TriggerServerEvent('garages:SetVehIn', platecaissei)
-			else
-				drawNotification("Aucun véhicule n'est sur la zone")					
-			end
+		if DoesEntityExist(caissei) then			
+			TriggerServerEvent('garages:SetVehIn', platecaissei)
+		else
+			drawNotification("Aucun véhicule n'est sur la zone")
 		end   
 		CloseCreator()
 	end)
@@ -437,7 +433,6 @@ function stringstarts(String,Start)
 end
 
 function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
-	local myPed = GetPlayerPed(-1)
 	local car = GetHashKey(vehicle)
 	local plate = plate
 	local state = state
@@ -458,8 +453,6 @@ function SpawnVehicle(vehicle, plate, state, primarycolor, secondarycolor)
 				end
 				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
-				SetEntityAsMissionEntity(veh, true, true)
-				SetVehicleHasBeenOwnedByPlayer(veh, myPed)
 				SetVehicleOnGroundProperly(veh)
 				SetVehicleColours(veh, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false) 
