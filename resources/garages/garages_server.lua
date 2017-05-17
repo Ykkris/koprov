@@ -27,25 +27,6 @@ AddEventHandler('garages:SetVehIn', function(plate)
   end)
 end)
 
---AddEventHandler('playerDropped', function(player)
---  TriggerEvent('es:getPlayerFromId', source, function(user)
---    local player = user.identifier
---    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
---    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate', 'vehicle_four'}, "identifier")
---   local found = false
---    local four ='yes'
---   if(resut)then
---     for k,v in ipairs(result)do
---       if v.vehicle_plate == plate then
---         found = true
---          MySQL:executeQuery("UPDATE user_vehicle SET vehicle_four='@four' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
---          {['@username'] = player, ['@plate'] = plate, ['@state'] = state, ['@four'] = four})
---        end
---      end
---    end
--- end)
---end)
-
 -- Updates the vehicle linked to the mentionned plate as out
 AddEventHandler('garages:SetVehOut', function(plate)
   --print('garages:SetVehOut')

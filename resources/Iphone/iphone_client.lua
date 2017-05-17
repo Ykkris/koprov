@@ -508,7 +508,7 @@ end
 function Emote(id) -- 0 - 7
 	
 	if id == 0 then  
-		test=0
+		PlayEmote("mp_player_int_uppersalute","mp_player_int_salute",1)
 	elseif id == 1 then  
 		TaskHandsUp(GetPlayerPed(-1), 1000, GetPlayerPed(-1), -1, true) 
 	elseif id == 2 then    
@@ -526,7 +526,7 @@ function Emote(id) -- 0 - 7
 	end
 end
 
-function PlayEmote(dict, flags)
+function PlayEmote(dict, name, flags)
 
 RequestAnimDict(dict, flags)
           local i = 0
