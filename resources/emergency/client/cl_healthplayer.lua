@@ -186,7 +186,20 @@ function ResPlayer()
 	TriggerServerEvent("item:reset")
 	TriggerServerEvent("skin_customization:SpawnPlayer")
 	RemoveAllPedWeapons(GetPlayerPed(-1),true)
-	NetworkResurrectLocalPlayer(357.757, -597.202, 28.6314, true, true, false)
+	NetworkResurrectLocalPlayer(342.394, -1397.949, 32.509, true, true, false)
+	SetPedMotionBlur(GetPlayerPed(-1), true)
+	RequestAnimSet("MOVE_M@DRUNK@SLIGHTLYDRUNK")
+	while not HasAnimSetLoaded("MOVE_M@DRUNK@SLIGHTLYDRUNK") do
+		Citizen.Wait(0)
+	end
+	SetPedMovementClipset(GetPlayerPed(-1), "MOVE_M@DRUNK@SLIGHTLYDRUNK", true)
+	SetPedIsDrunk(GetPlayerPed(-1), true)
+	Citizen.Wait(1000)
+	DoScreenFadeIn(5000)
+	ClearTimecycleModifier()
+	ResetPedMovementClipset(GetPlayerPed(-1), 0)
+	SetPedIsDrunk(GetPlayerPed(-1), false)
+	SetPedMotionBlur(GetPlayerPed(-1), false)
 end
 
 function OnPlayerDied(playerId, reasonID, reason)
