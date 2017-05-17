@@ -531,7 +531,7 @@ function PlayEmote(dict, name, flags)
 RequestAnimDict(dict, flags)
           local i = 0
 
-        	while not HasAnimDictLoaded(dict) and i < 1000 do -- max time, 10 seconds
+        	while not HasAnimDictLoaded(dict) and i < 500 do -- max time, 10 seconds
             	Citizen.Wait(10)
             	RequestAnimDict(dict)
             	i = i+1
