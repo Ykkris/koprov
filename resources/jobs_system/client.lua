@@ -11,6 +11,7 @@ local jobs = {
   {name="Bûcheron", id=7},
   {name="Pêcheur", id=8},
   {name="Taxis", id=9},
+  {name="Pizzayolo", id=10},
 }
 
 isopen = false

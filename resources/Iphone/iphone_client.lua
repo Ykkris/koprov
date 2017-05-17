@@ -508,7 +508,7 @@ end
 function Emote(id) -- 0 - 7
 	
 	if id == 0 then  
-		PlayEmote("mp_player_int_uppersalute","mp_player_int_salute",1)
+		PlayEmote("mp_player_int_uppersalute","mp_player_int_salute",32)
 	elseif id == 1 then  
 		TaskHandsUp(GetPlayerPed(-1), 1000, GetPlayerPed(-1), -1, true) 
 	elseif id == 2 then    
@@ -531,7 +531,7 @@ function PlayEmote(dict, name, flags)
 RequestAnimDict(dict, flags)
           local i = 0
 
-        	while not HasAnimDictLoaded(dict) and i < 500 do -- max time, 10 seconds
+        	while not HasAnimDictLoaded(dict) and i < 250 do -- max time, 10 seconds
             	Citizen.Wait(10)
             	RequestAnimDict(dict)
             	i = i+1

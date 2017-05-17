@@ -53,6 +53,8 @@ AutoStartResources:
     - afkkick
     - compass
     - SelCloth
+    - pizzajob
+    - interiors
 
 # do change
 RconPassword: koprobestv
