@@ -3,9 +3,25 @@
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
 
+local Keys = {
+	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
+	["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177,
+	["TAB"] = 37, ["Q"] = 44, ["W"] = 32, ["E"] = 38, ["R"] = 45, ["T"] = 245, ["Y"] = 246, ["U"] = 303, ["P"] = 199, ["["] = 39, ["]"] = 40, ["ENTER"] = 18,
+	["CAPS"] = 137, ["A"] = 34, ["S"] = 8, ["D"] = 9, ["F"] = 23, ["G"] = 47, ["H"] = 74, ["K"] = 311, ["L"] = 182,
+	["LEFTSHIFT"] = 21, ["Z"] = 20, ["X"] = 73, ["C"] = 26, ["V"] = 0, ["B"] = 29, ["N"] = 249, ["M"] = 244, [","] = 82, ["."] = 81,
+	["LEFTCTRL"] = 36, ["LEFTALT"] = 19, ["SPACE"] = 22, ["RIGHTCTRL"] = 70,
+	["HOME"] = 213, ["PAGEUP"] = 10, ["PAGEDOWN"] = 11, ["DELETE"] = 178,
+	["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173,
+	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
+}
+
+
+
 
 isCop = false --------------- A ENLEVER
 guiEnabled = false
+ActualJob = 0
+notificationInProgress = false
 
 AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("police:checkIsCop")
@@ -20,6 +36,18 @@ AddEventHandler('police:receiveIsCop', function(result)
 		rank = result
 	end
 end)
+
+RegisterNetEvent("service:updateJobs")
+AddEventHandler("service:updateJobs", function(jobid)
+	ActualJob = jobid
+end)
+
+RegisterNetEvent("service:onloaded")
+AddEventHandler("service:onloaded", function(jobid)
+	ActualJob = jobid
+	
+end)
+
 
 local vehshop = {
 	opened = false,
@@ -419,13 +447,13 @@ function ButtonSelected(button)
 
 	elseif this == "Services" then
 		if btn == "Police " then 
-			Services(1)
+			Services(btn)
 		elseif btn == "Médecin" then 
-			Service(2)
+			Services(btn)
 		elseif btn == "Dépanneur" then 
-			Service(3)
+			Services(btn)
 		elseif btn == "Taxi" then 
-			Service(4)
+			Services(btn)
 		end
 	end
 end
@@ -533,12 +561,120 @@ function BoiteReception()
 end
 
 function Services(nom_service)
+	if nom_service == "Police " then
 
+		TriggerServerEvent('service:connectedbyid', 2)	
+
+		Citizen.CreateThread(
+		function()
+			while isCopConnected == nil do
+				Citizen.Wait(1)
+
+				RegisterNetEvent('services:cbcopconnected')
+				AddEventHandler('services:cbcopconnected',
+					function(cb)
+						isCopConnected = cb
+						if not(isCopConnected) then
+							ShowNotification("Pas de policiers en ville")
+						else
+							local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+							local x = p_coords.x
+							local y = p_coords.y
+							local z = p_coords.z
+							TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
+						end
+					end
+				)
+			end
+		end)
+
+	elseif nom_service == "Médecin" then
+
+		TriggerServerEvent('service:connectedbyid', 3)
+
+		Citizen.CreateThread(
+		function()
+			while isMedicConnected == nil do
+				Citizen.Wait(1)
+
+				RegisterNetEvent('services:cbmedconnected')
+				AddEventHandler('services:cbmedconnected',
+					function(cb)
+						isMedicConnected = cb
+						if not(isMedicConnected) then
+							ShowNotification("Pas de médecins en ville")
+						else
+							local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+							local x = p_coords.x
+							local y = p_coords.y
+							local z = p_coords.z
+							TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
+						end
+					end
+				)
+			end
+		end)
+
+	elseif nom_service == "Taxi" then
+
+		TriggerServerEvent('service:connectedbyid', 9)	
+
+		Citizen.CreateThread(
+		function()
+			while isTaxiConnected == nil do
+				Citizen.Wait(1)
+
+				RegisterNetEvent('services:cbtaxconnected')
+				AddEventHandler('services:cbtaxconnected',
+					function(cb)
+						isTaxiConnected = cb
+						if not(isTaxiConnected) then
+							ShowNotification("Pas de taxis en ville")
+						else
+							local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+							local x = p_coords.x
+							local y = p_coords.y
+							local z = p_coords.z
+							TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
+						end
+					end
+				)
+			end
+		end)
+
+	elseif nom_service == "Dépanneur" then
+
+		TriggerServerEvent('service:connectedbyid', 4)
+
+		Citizen.CreateThread(
+		function()
+			while isDepanConnected == nil do
+				Citizen.Wait(1)
+
+				RegisterNetEvent('services:cbdepconnected')
+				AddEventHandler('services:cbdepconnected',
+					function(cb)
+						isDepanConnected = cb
+
+						if not(isDepanConnected) then
+							ShowNotification("Pas de dépanneurs en ville")
+						else 
+							local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+							local x = p_coords.x
+							local y = p_coords.y
+							local z = p_coords.z
+							TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
+						end
+					end
+				)
+			end
+		end)
+
+
+
+	end
 end
 
-function NameServiceToIdService(nom_service)
-
-end
 
 function IdCard()
 	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(PlayerId()), 0)
@@ -566,7 +702,7 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 			editing = false
 			resultat = GetOnscreenKeyboardResult()
 			ShowNotification("Amande envoyé")
-			Citizen.Trace(resultat)
+			
 			ShowNotification(tostring(resultat))
 		end
 	end
@@ -574,7 +710,7 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 
 
 		resultat_n = tonumber(resultat)
-		Citizen.Trace(tostring(resultat_n))
+		
 		Fines(resultat_n)
 		--TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
 
@@ -583,9 +719,9 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 end
 
 function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClosestPlayer
-	Citizen.Trace('On est dans le control ID')
+	
 	local target, distance = GetClosestPlayer()
-	Citizen.Trace('target : ' ..tostring(target))
+	
 	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(target), 1)
 end
 
@@ -663,7 +799,7 @@ AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, pho
 	
 	----------PARTIE UI -----------
 	guiEnabled = not guiEnabled
-	Citizen.Trace("ON EST BIEN DANS RGETIDUI")
+	
 	if guiEnabled then
 	    	SendNUIMessage({
 		type = "enableui",
@@ -681,5 +817,127 @@ AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, pho
 		
 	end
 end)
-		
 
+RegisterNetEvent('service:sendserviceto')
+AddEventHandler('service:sendserviceto',
+	function(service_id, playersender, x, y, z, sourceplayersender)
+		callAlreadyTaken = false
+		local playerServerId = GetPlayerServerId(PlayerId())
+
+		if playersender == playerServerId then playersenderisreceiver = true else playersenderisreceiver = false end
+
+		Citizen.CreateThread(
+			function()
+				if ActualJob == service_id and not playersenderisreceiver then  --  C'EST ICI QU'IL FAUDRAIT CHECKER S'IL EST EN SERVICE SI LE SERVICEID = POLICIER/MEDIC MAIS BON FLEMME POUR LE MOMENT
+					local controlPressed = false
+
+					while notificationInProgress do
+						Citizen.Wait(0)
+					end
+
+					local notifReceivedAt = GetGameTimer()
+
+					if not callAlreadyTaken then
+						ShowNotification('<b>~r~Appel : ~s~ <br><br>~b~quelqu\'un a besoin de votre service~s~: </b>')
+						ShowNotification('<b>Appuyez sur ~g~Y~s~ pour prendre l\'appel</b>')
+					end
+
+					while not controlPressed and not callAlreadyTaken do
+						Citizen.Wait(0)
+						notificationInProgress = true
+
+						if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 10000) then -- APPEL REDUIT à 10 SECONDES POUR LES SERVICES
+							callAlreadyTaken = true
+							ShowNotification('L\'appel a été pris par ~b~')
+						end
+
+						if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
+						
+							callAlreadyTaken = true
+							controlPressed = true
+
+							
+							TriggerServerEvent('service:takecall', service_id ,GetPlayerName(PlayerId()), playerServerId, x, y, z, sourceplayersender)
+						end
+
+						if callAlreadyTaken or controlPressed then
+							notificationInProgress = false
+						end
+					end
+				end
+			end
+		)
+	end
+)
+
+RegisterNetEvent("service:calltaken")
+AddEventHandler("service:calltaken", function(service_id, playerName, playerID, x, y, z, sourceplayersender)
+	
+		local playerServerId = GetPlayerServerId(PlayerId())
+		callAlreadyTaken = true
+		if playerServerID == sourceplayersender then playersenderisreceiver = true else playersenderisreceiver=false end -- a changer le true
+		
+		if ActualJob == service_id and not playersenderisreceiver then  --ActualJob == service_id
+			ShowNotification('L\'appel a été pris par ~b~')
+		end
+		
+		if playerServerId == playerID then
+			TriggerServerEvent('service:ssendnotifservicesencer', sourceplayersender, service_id)
+			StartService(x, y, z, sourceplayersender, service_id)
+		end
+
+end)
+
+RegisterNetEvent('service:csendnotifservicesencer')
+AddEventHandler('service:csendnotifservicesencer',
+	function(service_id)
+		if service_id == 2 then servicetxt = "policer"
+		elseif service_id == 3 then servicetxt = "médecin"
+		elseif service_id == 9 then servicetxt = "taxi"
+		elseif service_id == 4 then servicetxt = "dépanneur"
+		end
+		ShowNotification("<b> Un </b>".. servicetxt .." est en train de venir")
+	end
+)
+
+function StartService(x, y, z, sourceplayersender, service_id)
+
+	Blipvariable = AddBlipForCoord(x, y, z)
+    N_0x80ead8e2e1d5d52e(Blipvariable)
+    SetBlipRoute(Blipvariable, 1)
+	
+	ShowNotification('L\'appelant vous à transmis ses données GPS')
+
+	Citizen.CreateThread(
+		function()
+			local isNear = false
+			local ped = GetPlayerPed(-1);
+			while not isNear do
+				Citizen.Wait(0)
+				isNear = isNearArea(x, y, z)
+
+				if isNear then
+						if Blipvariable ~= nil and DoesBlipExist(Blipvariable) then
+                            Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
+                            Blipvariable = nil
+                        end
+				end
+			end
+	end)
+
+end
+
+function isNearArea(x,y,z) -- Je ne vais pas utiliser le z finalement, à voir
+	local coords_player = GetEntityCoords(GetPlayerPed(-1), true)
+	local x2 = coords_player.x
+	local y2 = coords_player.y
+	local z2 = coords_player.z
+	local dist = GetDistanceBetweenCoords(x, y, z, x2, y2, z2, false)
+	
+
+	if dist > 10.0 then
+		return false
+	else
+		return true
+	end
+end

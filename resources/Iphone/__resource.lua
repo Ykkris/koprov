@@ -1,5 +1,5 @@
 client_script 'iphone_client.lua'
--- server_script 'iphone_server.lua'
+server_script 'iphone_server.lua'
 ui_page 'html/ui.html' --THIS IS IMPORTENT
 
 --[[The following is for the files which are need for you UI (like, pictures, the HTML file, css and so on) ]]--
