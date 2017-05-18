@@ -7,10 +7,6 @@ AddEventHandler("mymairie:identity",function(prenom, nom, age)
 	RconPrint(tostring(nom))
 	RconPrint(tostring(age))
 
-	local prenom = prenom,
-	local nom = nom,
-	local age = age,
-	local executed_query = MySQL:executeQuery("INSERT INTO users (`prenom`, `nom`, `age`) VALUES ('@prenom', '@nom', '@age')",
-												{['@prenom'] = prenom, ['@nom'] = nom, ['age'] = age})
-
+	local executed_query = MySQL:executeQuery("INSERT INTO users (`first_name`, `last_name`, `age`) VALUES ('@prenom', '@nom', '@age')",
+												{['@prenom'] = prenom, ['@nom'] = nom, ['@age'] = age})
 end)
