@@ -56,7 +56,7 @@ AddEventHandler('garages:PutVehFourGarages', function(vehicle)
 
     if joueur ~= nil then
 
-      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE identifier = '@username'",
+      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE identifier = '@username' AND vehicle_state ='out'",
       {['@username'] = player, ['@state'] = state})
 
     end
