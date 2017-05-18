@@ -17,7 +17,7 @@ local vehshop = {
 	lastmenu = nil,
 	currentpos = nil,
 	selectedbutton = 0,
-	marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
+	marker = { r = 0, g = 155, b = 255, a = 200, type = 1 },
 	menu = {
 		x = 0.9,
 		y = 0.2,
@@ -91,7 +91,7 @@ function drawMenuButton(button,x,y,selected)
 	else
 		DrawRect(x, y, menu.width, menu.height,0,0,0,150)
 	end
-	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.028)
+	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)
 end
 
 function drawMenuInfo(text)
@@ -105,6 +105,23 @@ function drawMenuInfo(text)
 	AddTextComponentString(txt)
 	DrawRect(0.675, 0.95, 0.65, 0.050, 0, 0, 0, 150)
 	DrawText(0.365, 0.934)
+end
+
+function drawMenuRight(txt,x,y,selected)
+	local menu = vehshop.menu
+	SetTextFont(menu.font)
+	SetTextProportional(0)
+	SetTextScale(menu.scale, menu.scale)
+	SetTextRightJustify(1)
+	if selected then
+		SetTextColour(0, 0, 0, 255)
+	else
+		SetTextColour(255, 255, 255, 255)
+	end
+	SetTextCentre(0)
+	SetTextEntry("STRING")
+	AddTextComponentString(txt)
+	DrawText(x + menu.width/2 - 0.03, y - menu.height/2 + 0.0028)	
 end
 
 function drawMenuHelp(x, y, txt)
@@ -201,11 +218,12 @@ Citizen.CreateThread(function()
 							ButtonSelected(button)
 						end
 					end
-				 end
+				end
 			end
 			if vehshop.opened then
-			if IsControlJustPressed(1,202) then
-				Back()
+				if IsControlJustPressed(1,202) then
+					Back()
+				end
 			end
 			if IsControlJustReleased(1,202) then
 				backlock = false
@@ -229,7 +247,6 @@ Citizen.CreateThread(function()
 				end	
 			end
 		end
-		
 	end
 end)
 
@@ -239,7 +256,7 @@ function ButtonSelected(button)
 	local btn = button.name
 
 	if
-		btn == "Enregistrez vous" then enregistremoi(btn)
+		btn == "Enregistrez vous" then EnregistreMoi(btn)
 	end
 end
 
@@ -254,3 +271,51 @@ function OpenMenu(menu)
 	vehshop.selectedbutton = 0
 	vehshop.currentmenu = menu
 end
+
+function EnregistreMoi()
+
+	local editing1 = true
+	local editing2 = true
+	local quit1 = false
+	local quit2 = false
+
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Prénom et Nom : [ESC] pour quitter.", "", "", "", 120)
+	while editing1 do
+		Wait(0)
+		if UpdateOnscreenKeyboard() == 2 then
+			editing1 = false
+			quit1 = true
+		end
+
+		if UpdateOnscreenKeyboard() == 1 then 
+			editing1 = false
+			resultat1 = GetOnscreenKeyboardResult()
+			DisplayHelpText("Entrez maintenant l'âge")
+		end
+	end
+
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Age : [ESC] pour quitter.", 0, 0, 0, 120)
+	while editing2 do
+		Wait(0)
+		if UpdateOnscreenKeyboard() == 2 then
+			editing2 = false
+			quit2 = true
+		end
+		if UpdateOnscreenKeyboard() == 1 then
+			editing2 = false
+			resultat2 = GetOnscreenKeyboardResult()
+			DisplayHelpText("Identité enregistréee.")
+		end
+	end
+
+		if not(quit1) and not(quit2) then
+			split(resultat1, "")
+			tablenomprenom = split(resultat1, "")
+			prenom = tablenomprenom[1]
+			nom = tablenomprenom[2]
+			age = tostring(resultat2)
+
+			TriggerServerEvent("mymairie:identity", prenom, nom, age)
+		end
+end
+
