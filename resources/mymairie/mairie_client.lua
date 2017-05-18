@@ -310,20 +310,19 @@ function EnregistreMoi()
 	
 		if not(quit1) and not(quit2) then
 			result = {}
-			Citizen.Trace(tostring(resultat1))
 		
 			for token in string.gmatch(resultat1, "[^%s]+") do
   				table.insert(result, token)
 			end
 		
-		Citizen.Trace(result[1])
+		Citizen.Trace(result[1].. "CEST BON OU PAS YKRISSSSSSSSS ? "..result[2])
 			--split(resultat1, "")
 			--tablenomprenom = split(resultat1, "")
 			--prenom = tablenomprenom[1]
 			--nom = tablenomprenom[2]
 			--age = tostring(resultat2)
 
-			TriggerServerEvent("mymairie:identity", prenom, nom, age)
+			--TriggerServerEvent("mymairie:identity", prenom, nom, age)
 		end
 end
 
