@@ -627,7 +627,7 @@ end
 
 					})
 
-   		TriggerServerEvent("Iphone:addcontact", name, number)
+   		TriggerServerEvent("Iphone:addcontact", resultat1, resultat2)
 
    		end
 
@@ -1077,6 +1077,13 @@ contacts = { {nom = "IZIO-BG", number = "555-1542"}, {nom = "test", number = "14
 												  
 
 --end
+
+end)
+
+RegisterNetEvent("Iphone:notif")
+AddEventHandler("Iphone:notif", function(text)
+
+ShowNotification(txt)
 
 end)
 

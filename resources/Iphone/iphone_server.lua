@@ -84,6 +84,25 @@ AddEventHandler('es:playerLoaded', function(source)
 		end)
 	end)
 
+RegisterServerEvent("Iphone:addcontact")
+AddEventHandler("Iphone:addcontact",function(pname, pnumber)
+
+
+		TriggerEvent('es:getPlayerFromId', source ,function(user)
+			
+
+
+			table.insert(user.contacts, {
+				name   = pname,
+				number = pnumber,
+			})
+
+			MySQL:executeQuery("INSERT INTO users (contacts) VALUES ('@contacts') WHERE identifier = '@identifier' ", {['@contacts'] = user.contacts, ['@identifier'] = user.identifier})
+		end)
+
+end)	
+
+
 
 RegisterServerEvent('service:connectedbyid')
 AddEventHandler('service:connectedbyid',
