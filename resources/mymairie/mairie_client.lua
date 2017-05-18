@@ -19,27 +19,27 @@ local vehshop = {
 	selectedbutton = 0,
 	marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
 	menu = {
-		x = 0.1,
-		y = 0.15,
+		x = 0.9,
+		y = 0.2,
 		width = 0.2,
 		height = 0.04,
 		buttons = 10,
 		from = 1,
-		to = 7,
+		to = 10,
 		scale = 0.4,
 		font = 0,
 		["main"] = {
-			title = "Enregistrez-vous",
+			title = "Registre",
 			name = "main",
-			buttons = {name = "Enregistrez-vous", description = ""}
-		},
-		["Enregistrez-vous"] = {
-			title = "Enregistrez-vous",
-			name = "Enregistrez-vous",
+			buttons = {name = "Enregistrez vous", description = ""}
 		},
 	}
 }
 
+
+local function LocalPed()
+	return GetPlayerPed(-1)
+end
 
 function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
 	SetTextFont(font)
@@ -96,17 +96,13 @@ function drawMenuInfo(text)
 	local menu = vehshop.menu
 	SetTextFont(menu.font)
 	SetTextProportional(0)
-	SetTextScale(menu.scale, menu.scale)
-	SetTextRightJustify(1)
-	if selected then
-		SetTextColour(0, 0, 0, 255)
-	else
-		SetTextColour(255, 255, 255, 255)
-	end
+	SetTextScale(0.45, 0.45)
+	SetTextColour(255, 255, 255, 255)
 	SetTextCentre(0)
 	SetTextEntry("STRING")
 	AddTextComponentString(txt)
-	DrawText(x + menu.width/2 - 0.03, y - menu.height/2 + 0.0028)
+	DrawRect(0.675, 0.95, 0.65, 0.050, 0, 0, 0, 150)
+	DrawText(0.365, 0.934)
 end
 
 function drawMenuHelp(x, y, txt)
@@ -151,80 +147,82 @@ function DisplayHelpText(str)
 	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end
 
-Citizen.CreateThread(
-	function()
-		local x = -1037.934
-		local y = -2737.966
-		local z = 20.169
+Citizen.CreateThread(function()
+	local x = -1037.934
+	local y = -2737.966
+	local z = 20.169
 
-		while true do
-			Citizen.Wait(1)
+	while true do
+		Citizen.Wait(1)
 
-			local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
+		local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
 
-			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) then
-				DrawMarker(1, x, y, z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 255, 0, 0, 200, 0, 0, 0, 0)
+		if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) then
 
-				if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 2.0) then
-					DisplayHelpText("Appuyez sur ~g~E~s~ pour vous enregistrer.")
-					if (IsControlJustPressed(1, 38)) then
-					 	if veshop.opened then
-					 		ClosedCreator()
-					 	else 
-					 		OpenCreator()
-					 	end
-					end
-				if veshop.opened then
-					local ped = LocalPed()
-					local menu = veshop.menu[veshop.currentmenu]
+			DrawMarker(1, x, y, z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 255, 0, 0,200, 0, 0, 0,0)
 
-					if veshop.currentmenu == "main" then
-						buttoncount = tablelength(menu.buttons)
-					elseif veshop.currentmenu == "main" then
-						buttoncount = tablelength(menu.buttons) - 1
-					else buttoncount = tablelength(menu.buttons)
-					end
+			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 2.0) then
+				DisplayHelpText("Appuyez sur ~g~E~s~ pour vous enregistrer.")
+			end
 
-					drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
-					drawMenuTitle(menu.title, vehshop.menu.x, vehshop.menu.y + 0.08)
-					drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
-					local y = vehshop.menu.y + 0.12
-
-					local selected = false
-
-					for i,button in pairs(menu.buttons) do
-						if i >= vehshop.menu.from and i <= vehshop.menu.to then
-
-							if i == vehshop.selectedbutton then
-								selected = true
-							else
-								selected = false
-							end
-
-							if button.name ~= "Enregistrez-vous" then
-								drawMenuButton(button, vehshop.menu.x,y,selected)
-								y = y + 0.04
-							end
-
-							if selected and IsControlJustPressed(1,201) then
-								ButtonSelected(button)
-							end
-						end
-					end
+			if (IsControlJustReleased(1, 38)) then
+				if vehshop.opened then
+					ClosedCreator()
 				end
+			else
+				OpenCreator()
+			end
+
+			if vehshop.opened then
+				local ped = LocalPed()
+				local menu = vehshop.menu[vehshop.currentmenu]
+				drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
+				drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
+				drawTxt(vehshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
+				local y = vehshop.menu.y + 0.12
+				buttoncount = tablelength(menu.buttons)
+				local selected = false
+
+				-- for i,button in pairs(menu.buttons) do
+				-- 	if i >= vehshop.menu.from and i <= vehshop.menu.to then
+
+				-- 		if i == vehshop.selectedbutton then
+				-- 			selected = true
+				-- 		else
+				-- 			selected = false
+				-- 		end
+				-- 		drawMenuButton(button,vehshop.menu.x,y,selected)
+
+				-- 		y = y + 0.04
+
+				-- 		if selected and IsControlJustPressed(1, 201) then
+				-- 			ButtonSelected(button)
+				-- 		end
+				-- 	end
+				-- end
 			end
 		end
 	end
 end)
 
+function ButtonSelected(button)
+	local ped = GetPlayerPed(-1)
+	local this = vehshop.currentmenu
+	local btn = button.name
+
+	if
+		btn == "Enregistrez vous" then enregistremoi(btn)
+	end
+end
+
 function OpenMenu(menu)
 	vehshop.lastmenu = vehshop.currentmenu
-	if menu == "Mairie" then
+	if menu == "Enregistrez vous" then
 		vehshop.lastmenu = "main"
 	end
 
 	vehshop.menu.from = 1
 	vehshop.menu.to = 10
 	vehshop.selectedbutton = 0
-	vehshop.currentmenu = menu	
+	vehshop.currentmenu = menu
 end
