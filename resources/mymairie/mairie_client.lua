@@ -19,26 +19,25 @@ local vehshop = {
 	selectedbutton = 0,
 	marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
 	menu = {
-	x = 0.1,
-	y = 0.15,
-	width = 0.2,
-	height = 0.04,
-	buttons = 10,
-	from = 1,
-	to = 7,
-	scale = 0.4,
-	font = 0,
-	["main"] = {
-	title = "Enregistrez-vous",
-	name = "main",
-	buttons = {name = "Enregistrez-vous", description = ""}
-}
-},
-
-["Enregistrez-vous"] = {
-	title = "Enregistrez-vous",
-	name = "Enregistrez-vous",
-}
+		x = 0.1,
+		y = 0.15,
+		width = 0.2,
+		height = 0.04,
+		buttons = 10,
+		from = 1,
+		to = 7,
+		scale = 0.4,
+		font = 0,
+		["main"] = {
+			title = "Enregistrez-vous",
+			name = "main",
+			buttons = {name = "Enregistrez-vous", description = ""}
+		},
+		["Enregistrez-vous"] = {
+			title = "Enregistrez-vous",
+			name = "Enregistrez-vous",
+		},
+	}
 }
 
 
@@ -134,6 +133,12 @@ function drawMenuTitle(txt,x,y)
 	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)
 end
 
+function tablelength(T)
+	local count = 0
+	for _ in pairs(T) do count = count + 1 end
+	return count
+end
+
 function Notify(text)
 	SetNotificationTextEntry("STRING")
 	AddTextComponentString(text)
@@ -162,13 +167,13 @@ Citizen.CreateThread(
 
 				if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 2.0) then
 					DisplayHelpText("Appuyez sur ~g~E~s~ pour vous enregistrer.")
-				if (IsControlJustPressed(1, 38)) then
-					 if veshop.opened then
-					 	ClosedCreator()
-					 else 
-					 	OpenCreator()
-					 end
-				end
+					if (IsControlJustPressed(1, 38)) then
+					 	if veshop.opened then
+					 		ClosedCreator()
+					 	else 
+					 		OpenCreator()
+					 	end
+					end
 				if veshop.opened then
 					local ped = LocalPed()
 					local menu = veshop.menu[veshop.currentmenu]
@@ -209,7 +214,7 @@ Citizen.CreateThread(
 				end
 			end
 		end
-	end	
+	end
 end)
 
 function OpenMenu(menu)
