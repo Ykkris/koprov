@@ -307,9 +307,15 @@ function EnregistreMoi()
 			DisplayHelpText("Identité enregistréee.")
 		end
 	end
-
+	
 		if not(quit1) and not(quit2) then
+			result = {}
 			Citizen.Trace(tostring(resultat1))
+		
+			for i in string.gmatch(resultat1, "[^%s]+") do
+  				result[i] = resultat1[i]
+			end
+		Citizen.Trace(result[1].. " " ..result[2])
 			--split(resultat1, "")
 			--tablenomprenom = split(resultat1, "")
 			--prenom = tablenomprenom[1]
