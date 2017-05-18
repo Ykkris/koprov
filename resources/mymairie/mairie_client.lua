@@ -168,9 +168,9 @@ Citizen.CreateThread(function()
 			if (IsControlJustReleased(1, 38)) then
 				if vehshop.opened then
 					ClosedCreator()
+				else 
+					OpenCreator()
 				end
-			else
-				OpenCreator()
 			end
 
 			if vehshop.opened then
@@ -183,23 +183,23 @@ Citizen.CreateThread(function()
 				buttoncount = tablelength(menu.buttons)
 				local selected = false
 
-				-- for i,button in pairs(menu.buttons) do
-				-- 	if i >= vehshop.menu.from and i <= vehshop.menu.to then
+				for i,button in pairs(menu.buttons) do
+					if i >= vehshop.menu.from and i <= vehshop.menu.to then
 
-				-- 		if i == vehshop.selectedbutton then
-				-- 			selected = true
-				-- 		else
-				-- 			selected = false
-				-- 		end
-				-- 		drawMenuButton(button,vehshop.menu.x,y,selected)
+						if i == vehshop.selectedbutton then
+							selected = true
+						else
+							selected = false
+						end
+						drawMenuButton(button,vehshop.menu.x,y,selected)
 
-				-- 		y = y + 0.04
+						y = y + 0.04
 
-				-- 		if selected and IsControlJustPressed(1, 201) then
-				-- 			ButtonSelected(button)
-				-- 		end
-				-- 	end
-				-- end
+						if selected and IsControlJustPressed(1, 201) then
+							ButtonSelected(button)
+						end
+					end
+				 end
 			end
 		end
 	end
