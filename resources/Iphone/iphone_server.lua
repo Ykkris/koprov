@@ -88,7 +88,7 @@ RegisterServerEvent("Iphone:addcontact")
 AddEventHandler("Iphone:addcontact",function(pname, pnumber)
 
 
-		TriggerEvent('es:getPlayerFromId', source ,function(user)
+		TriggerEvent("es:getPlayers", function(Users)
 			
 
 
