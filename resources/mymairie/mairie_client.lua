@@ -314,9 +314,7 @@ function EnregistreMoi()
 			for token in string.gmatch(resultat1, "[^%s]+") do
   				table.insert(result, token)
 			end
-		
-		Citizen.Trace(result[1].. "CEST BON OU PAS YKRISSSSSSSSS ? "..result[2])
-		
+				
 			prenom = result[1]
 			nom = result[2]	
 			age = resultat2
