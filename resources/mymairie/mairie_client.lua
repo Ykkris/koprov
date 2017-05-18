@@ -312,10 +312,11 @@ function EnregistreMoi()
 			result = {}
 			Citizen.Trace(tostring(resultat1))
 		
-			for i in string.gmatch(resultat1, "[^%s]+") do
-  				result[i] = i
-				Citizen.Trace("i")
+			for token in string.gmatch(resultat1, "[^%s]+") do
+  				table.insert(result, token)
 			end
+		
+		Citizen.Trace(result[1])
 			--split(resultat1, "")
 			--tablenomprenom = split(resultat1, "")
 			--prenom = tablenomprenom[1]
