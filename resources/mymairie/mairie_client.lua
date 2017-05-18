@@ -203,6 +203,32 @@ Citizen.CreateThread(function()
 					end
 				 end
 			end
+			if vehshop.opened then
+			if IsControlJustPressed(1,202) then
+				Back()
+			end
+			if IsControlJustReleased(1,202) then
+				backlock = false
+			end
+			if IsControlJustPressed(1,188) then
+				if vehshop.selectedbutton > 1 then
+					vehshop.selectedbutton = vehshop.selectedbutton -1
+					if buttoncount > 10 and vehshop.selectedbutton < vehshop.menu.from then
+						vehshop.menu.from = vehshop.menu.from -1
+						vehshop.menu.to = vehshop.menu.to - 1
+					end
+				end
+			end
+			if IsControlJustPressed(1,187)then
+				if vehshop.selectedbutton < buttoncount then
+					vehshop.selectedbutton = vehshop.selectedbutton +1
+					if buttoncount > 10 and vehshop.selectedbutton > vehshop.menu.to then
+						vehshop.menu.to = vehshop.menu.to + 1
+						vehshop.menu.from = vehshop.menu.from + 1
+					end
+				end	
+			end
+		end
 		end
 	end
 end)
