@@ -92,12 +92,12 @@ AddEventHandler("Iphone:addcontact",function(pname, pnumber)
 			
 
 
-			table.insert(user.contacts, {
+			table.insert(Users[source].contacts, {
 				name   = pname,
 				number = pnumber,
 			})
 
-			MySQL:executeQuery("INSERT INTO users (contacts) VALUES ('@contacts') WHERE identifier = '@identifier' ", {['@contacts'] = user.contacts, ['@identifier'] = user.identifier})
+			MySQL:executeQuery("INSERT INTO users (contacts) VALUES ('@contacts') WHERE identifier = '@identifier' ", {['@contacts'] = Users[source].contacts, ['@identifier'] = Users[source].identifier})
 		end)
 
 end)	
