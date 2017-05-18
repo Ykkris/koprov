@@ -45,40 +45,39 @@ local garage = {
   	}
 }
 
--- multiple garages by qzig thx 
 local fakecar = {model = '', car = nil}
 garage_locations = nil
 local garages_locations = {}
 garages_locations[1] = {{
+name = "Garage",
+bl = 357,
 entering = {213.769,-808.965,29.914}, 
 outside = {215.124, -791.377,29.936}
 }}
 garages_locations[2] = {{
+name = "Garage",
+bl = 357,
 entering = {-340.47,266.83,84.68},
 outside = {-339.48,286.18,84.5}
 }}
 garages_locations[3] = {{
+name = "Garage",
+bl = 357,
 entering = {-1184.2,-1509.36,3.65},
-outside = {-1187.3,-1491.18,3.38}
+outside = {-1188.3,-1491.18,3.38}
 }}
 garages_locations[4] = {{
-entering = {-88.4,6416.28,30.64},
-outside = {-79.89,6424.24,30.49}
+name = "Fourrière",
+bl = 68,
+entering = {408.12,-1655.53,28.29},
+outside = {405.17,-1642.47,28.29}
 }}
-garages_locations[5] = {{
-entering = {1706.04,4792.26,40.98},
-outside = {1712.5,4803.54,40.77}
-}}
-garages_locations[6] = {{
-entering = {1994.47,3776.54,31.18},
-outside = {1980.39,3778.78,31.18}
-}}
-
 
 
 
 local garage_blips ={}
 local inrangeofgarage = false
+local inrangeoffourier = false
 local currentlocation = nil
 local boughtcar = false
 
@@ -105,6 +104,10 @@ function IsPlayerInRangeOfGarage()
 	return inrangeofgarage
 end
 
+function IsPlayerInRangeOfFourier()
+	return inrangeoffourier
+end
+
 function ShowGarageBlips(bool)	
 	if bool and #garage_blips == 0 then
 		for _,garage_loc in pairs(garages_locations) do
@@ -112,10 +115,10 @@ function ShowGarageBlips(bool)
 				local loc = pos
 				pos = pos.entering
 				local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
-				SetBlipSprite(blip,357)
+				SetBlipSprite(blip, loc.bl)
 				SetBlipColour(blip, 3)
 				BeginTextCommandSetBlipName("STRING")
-				AddTextComponentString('Garage')
+				AddTextComponentString(loc.name)
 				EndTextCommandSetBlipName(blip)
 				SetBlipAsShortRange(blip,true)
 				SetBlipAsMissionCreatorBlip(blip,true)
@@ -125,6 +128,7 @@ function ShowGarageBlips(bool)
 				while #garage_blips > 0 do
 					Citizen.Wait(0)
 					local inrange = false
+					local inrangef = false
 					for i,b in ipairs(garage_blips) do
 						DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 						if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 2 then
@@ -133,8 +137,12 @@ function ShowGarageBlips(bool)
 							inrange = true
 							garage_locations = b.pos
 						end
+						if GetDistanceBetweenCoords(408.12,-1655.53,28.29,GetEntityCoords(LocalPed())) < 2 then
+							inrangef =true
+						end
 					end
 					inrangeofgarage = inrange
+					inrangeoffourier = inrangef
 				end
 			end)
 			Citizen.CreateThread(function()
@@ -149,8 +157,12 @@ function ShowGarageBlips(bool)
 							inrange = true
 							garage_locations = b.pos
 						end
+						if GetDistanceBetweenCoords(405.17,-1642.47,28.29,GetEntityCoords(LocalPed())) < 2 then
+							inrangef =true
+						end
 					end
 					inrangeofgarage = inrange
+					inrangeoffourier = inrangef
 				end
 			end)
 			Citizen.CreateThread(function()
@@ -164,8 +176,12 @@ function ShowGarageBlips(bool)
 							currentlocation = b
 							inrange = true
 						end
+						if GetDistanceBetweenCoords(405.17,-1642.47,28.29,GetEntityCoords(LocalPed())) < 2 then
+							inrangef =true
+						end
 					end
 					inrangeofgarage = inrange
+					inrangeoffourier = inrangef
 				end
 			end)
 		end
@@ -321,7 +337,11 @@ local backlock = false
 				if garage.opened then
 					CloseCreator()
 				else
+					if IsPlayerInRangeOfFourier() then
+					TriggerServerEvent('garages:CheckListVehFour',source)
+					else
 					TriggerServerEvent('garages:CheckListVeh',source)
+					end
 				end
 			end   
 		if garage.opened then
@@ -401,9 +421,9 @@ function ButtonSelected(button)
 end
 
 
---AddEventHandler("playerSpawned", function(spawn)
---    TriggerServerEvent("garages:PutVehInGarages",source)
---end)
+AddEventHandler("playerSpawned", function(spawn)
+    TriggerServerEvent("garages:PutVehFourGarages",source)
+end)
 
 AddEventHandler('FinishCheckForVeh', function(vehicle)
 	boughtcar = true

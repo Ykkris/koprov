@@ -7,6 +7,9 @@ RegisterServerEvent('garages:SetVehOut')
 RegisterServerEvent('garages:SetVehIn')
 RegisterServerEvent('garages:PutVehInGarages')
 RegisterServerEvent('garages:CheckListVeh')
+RegisterServerEvent('garages:CheckListVehFour')
+RegisterServerEvent('garages:PutVehFourGarages')
+
 
 AddEventHandler('garages:PutVehInGarages', function(vehicle)
   TriggerEvent('es:getPlayerFromId', source, function(user)
@@ -34,11 +37,51 @@ AddEventHandler('garages:PutVehInGarages', function(vehicle)
   end)
 end)
 
+AddEventHandler('garages:PutVehFourGarages', function(vehicle)
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+
+    local player = user.identifier
+    local state ="four"
+
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
+    local result = MySQL:getResults(executed_query, {'identifier'})
+
+    if(result)then
+      for k,v in ipairs(result)do
+        print(v.identifier)
+        joueur = v.identifier
+        local joueur = joueur
+       end
+    end
+
+    if joueur ~= nil then
+
+      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE identifier = '@username'",
+      {['@username'] = player, ['@state'] = state})
+
+    end
+  end)
+end)
+
+
 AddEventHandler('garages:CheckListVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
   local listveh = {}
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'in'",{['@username'] = player})
+    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
+    if(result)then
+    listveh = result
+  end
+  TriggerClientEvent('garages:ListVeh', source, listveh)
+  end)
+end)
+
+AddEventHandler('garages:CheckListVehFour', function()
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+  local listveh = {}
+    local player = user.identifier
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'four'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
     if(result)then
     listveh = result
