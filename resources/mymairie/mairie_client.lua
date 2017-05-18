@@ -309,11 +309,12 @@ function EnregistreMoi()
 	end
 
 		if not(quit1) and not(quit2) then
-			split(resultat1, "")
-			tablenomprenom = split(resultat1, "")
-			prenom = tablenomprenom[1]
-			nom = tablenomprenom[2]
-			age = tostring(resultat2)
+			Citizen.Trace(tostring(resultat1))
+			--split(resultat1, "")
+			--tablenomprenom = split(resultat1, "")
+			--prenom = tablenomprenom[1]
+			--nom = tablenomprenom[2]
+			--age = tostring(resultat2)
 
 			TriggerServerEvent("mymairie:identity", prenom, nom, age)
 		end
