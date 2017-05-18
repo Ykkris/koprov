@@ -31,7 +31,9 @@ local vehshop = {
 		["main"] = {
 			title = "Registre",
 			name = "main",
-			buttons = {name = "Enregistrez vous", description = ""}
+			buttons = { 
+				{name = "Enregistrez vous", description = ""}
+				  }
 		},
 	}
 }
