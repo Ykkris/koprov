@@ -316,13 +316,17 @@ function EnregistreMoi()
 			end
 		
 		Citizen.Trace(result[1].. "CEST BON OU PAS YKRISSSSSSSSS ? "..result[2])
+		
+			prenom = result[1]
+			nom = result[2]	
+			age = resultat2
 			--split(resultat1, "")
 			--tablenomprenom = split(resultat1, "")
 			--prenom = tablenomprenom[1]
 			--nom = tablenomprenom[2]
 			--age = tostring(resultat2)
 
-			--TriggerServerEvent("mymairie:identity", prenom, nom, age)
+			TriggerServerEvent("mymairie:identity", prenom, nom, age)
 		end
 end
 
