@@ -55,6 +55,7 @@ AutoStartResources:
     - SelCloth
     - pizzajob
     - interiors
+    - mymairie
 
 # do change
 RconPassword: koprobestv

@@ -1,0 +1,1 @@
+client_script "mairie_client.lua"
