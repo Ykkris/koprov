@@ -52,7 +52,7 @@ end)
 
 AddEventHandler("item:setItem", function(item, quantity)
     local player = getPlayerID(source)
-    MySQL:executeQuery("INSERT INTO user_inventory (`user_id`, `item_id`, `quantity`) VALUES ('@player', @item, @qty)",
+    MySQL:executeQuery("INSERT INTO user_inventory (`user_id`, `item_id`, `quantity`) VALUES ('@player', '@item', '@qty')", -- YKKRIS
         { ['@player'] = player, ['@item'] = item, ['@qty'] = quantity })
 end)
 
