@@ -38,8 +38,16 @@ local garage = {
 			title = "CATEGORIES",
 			name = "main",
 			buttons = {
-				--{name = "Rentrer ton véhicule", description = "rentrer le véhicule", action = "rentrer"},
+				{name = "Sort ton véhicule", description = "Sort ton vehicule", action = "sortir"},
 				--{name = "Sortir ton véhicule", description = "", action = "sortir"},
+			}
+    	},
+
+    	["side"] = {
+			title = "side",
+			name = "side",
+			buttons = {
+
 			}
     	},
   	}
@@ -421,7 +429,7 @@ function ButtonSelected(button)
 		if btn == "rentrer" then
 			TriggerServerEvent('garages:CheckForVeh')
 		elseif btn == "sortir" then
-			TriggerServerEvent('garages:CheckForSpawnVeh',description)
+			OpenMenu('side')
 		end
 	end
 end
@@ -553,7 +561,7 @@ end)
 
 AddEventHandler('garages:ListVeh', function(ListVeh)
 	local VEHS = ListVeh
-	local menu = garage.menu["main"]
+	local menu = garage.menu["side"]
 	local next = next
 	if next(VEHS) == nil then
 		table.insert(menu.buttons, {name = "No car in garage", description = "", action = ""})
