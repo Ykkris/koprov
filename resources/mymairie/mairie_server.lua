@@ -9,7 +9,7 @@ AddEventHandler("mymairie:identity",function(prenom, nom, age)
 	RconPrint(tostring(age))
 
 	MySQL:executeQuery("INSERT INTO users (`last_name`, `first_name`, `age`) VALUES ('@last_name', '@first_name' , '@age')",
-					{['@last_name'] = nom , ['@first_name'] = prenom , ['@age'] = age)
+					{['@last_name'] = nom , ['@first_name'] = prenom , ['@age'] = age)}
 				
 	end)
 end)
