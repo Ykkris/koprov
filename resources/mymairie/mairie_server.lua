@@ -8,7 +8,7 @@ AddEventHandler("mymairie:identity",function(prenom, nom, age)
 	RconPrint(tostring(nom))
 	RconPrint(tostring(age))
 
-	local executed_query = MySQL:executeQuery("UPDATE users (`first_name`, `last_name`, `age`) VALUES ('@prenom', '@nom', '@age') WHERE identifier='@identifier'",
-												{['@prenom'] = prenom, ['@nom'] = nom, ['@age'] = age, ['@identifier'] = user.identifier})
+	MySQL:executeQuery("INSERT INTO users (last_name, first_name, age) VALUES ('@last_name', '@first_name' , '@age' ) WHERE identifier = '@identifier' ",
+					{['@last_name'] = nom , ['@first_name'] = prenom , ['@age'] = age , ['@identifier'] = user.identifier})
 	end
 			end)
