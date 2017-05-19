@@ -50,10 +50,30 @@ AddEventHandler("update:getItems", function(player)  -- Ajout pour le OnResource
 end)
 
 
-AddEventHandler("item:setItem", function(item, quantity)
-    local player = getPlayerID(source)
-    MySQL:executeQuery("INSERT INTO user_inventory (`user_id`, `item_id`, `quantity`) VALUES ('@player', '@item', '@qty')", -- YKKRIS
-        { ['@player'] = player, ['@item'] = item, ['@qty'] = quantity })
+AddEventHandler("item:sell", function(id, qty, price)
+    TriggerEvent('es:getPlayerFromId', source, function(user)
+
+
+        local executed_query = MySQL:executeQuery("SELECT * FROM items WHERE illegal = '@illegal'' " , { ['@illegal'] = 1 })
+        local result = MySQL:getResults(executed_query, {'id'}, "illegal")
+
+        for i=1, #result, 1 do
+            if id == result[i].id then
+                ill = true
+                break
+            else
+                ill = false
+            end
+        end
+
+        local player = user.identifier
+        MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username' AND `item_id` = @id", { ['@username'] = player, ['@qty'] = tonumber(qty), ['@id'] = tonumber(id) })
+        if ill then
+            user:addMoney(tonumber(price))
+        else
+            user:addDirtyMoney(tonumber(price))
+        end
+    end)
 end)
 
 AddEventHandler("item:updateQuantity", function(qty, id)
@@ -70,6 +90,8 @@ AddEventHandler("item:sell", function(id, qty, price)
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
         MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username' AND `item_id` = @id", { ['@username'] = player, ['@qty'] = tonumber(qty), ['@id'] = tonumber(id) })
+        if id ==  
+                              -- on register les items illégaux (ON PEUT FAIRE BIEN PLUS PROPRE mais je veux faire ça rapide)
         user:addMoney(tonumber(price))
     end)
 end)
