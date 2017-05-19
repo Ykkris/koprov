@@ -4,9 +4,6 @@ MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 RegisterServerEvent("mymairie:identity")
 AddEventHandler("mymairie:identity",function(prenom, nom, age)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
-	RconPrint(tostring(prenom))
-	RconPrint(tostring(nom))
-	RconPrint(tostring(age))
 	
 	user:removeMoney(100)
 
