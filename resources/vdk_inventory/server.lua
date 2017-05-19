@@ -54,27 +54,35 @@ AddEventHandler("item:sell", function(id, qty, price)
     TriggerEvent('es:getPlayerFromId', source, function(user)
 
 
-        local executed_query = MySQL:executeQuery("SELECT * FROM items WHERE illegal = '@illegal'' " , { ['@illegal'] = 1 })
-        local result = MySQL:getResults(executed_query, {'id'}, "illegal")
-
-        for i=1, #result, 1 do
-            if id == result[i].id then
-                ill = true
-                break
-            else
-                ill = false
-            end
-        end
+        ill = isIllegal(id)
 
         local player = user.identifier
         MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username' AND `item_id` = @id", { ['@username'] = player, ['@qty'] = tonumber(qty), ['@id'] = tonumber(id) })
-        if ill then
+        if not(ill) then
             user:addMoney(tonumber(price))
         else
             user:addDirtyMoney(tonumber(price))
         end
     end)
 end)
+
+function isIllegal(id)
+      
+   local executed_query = MySQL:executeQuery("SELECT * FROM items WHERE illegal = '@illegal'' " , { ['@illegal'] = 1 })
+        local result = MySQL:getResults(executed_query, {'id'}, "illegal")
+      local ill = false
+        for i=1, #result, 1 do
+            if id == result[i].id then
+                ill = true
+            end
+        end
+            if ill
+                return true
+            else
+                return false
+            end   
+      
+end
 
 AddEventHandler("item:updateQuantity", function(qty, id)
     local player = getPlayerID(source)
