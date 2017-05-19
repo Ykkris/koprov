@@ -572,20 +572,24 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en gén�
 	elseif id == 2 then    
 		PlayEmote("amb@code_human_police_crowd_control@idle_a", "idle_a", 32, 0.85 ,0 , 0) -- Blabla bizarre
 	elseif id == 3 then    
-		PlayEmote("rcmnigel1bnmt_1b", "dance_intro_tyler", 32, 1 ,0, 0)	
-		PlayEmote("rcmnigel1bnmt_1b", "dance_loop_tyler", 32, 1 ,0 , 1)					-- Je te laisse en ajouter a ta guise, je t'en ai prévu quelqu'un déjà :) Faut jouer avec les FLAGS : 0,32 et 120 (et avec le multiplier)
+		PlayEmote("gestures@f@standing@casual","gesture_damn", 32, 0.95, 0, 0)					-- Je te laisse en ajouter a ta guise, je t'en ai prévu quelqu'un déjà :) Faut jouer avec les FLAGS : 0,32 et 120 (et avec le multiplier)
 	elseif id == 4 then    -- {"rcmnigel1bnmt_1b","dance_intro_tyler",1} & {"rcmnigel1bnmt_1b","dance_loop_tyler",1}
-		test=0
+		PlayEmote("rcmnigel1bnmt_1b", "dance_intro_tyler", 32, 1 ,0, 0)	
+		PlayEmote("rcmnigel1bnmt_1b", "dance_loop_tyler", 32, 1 ,0 , 1)	
 	elseif id == 5 then    
-		test=0
+		PlayEmote("amb@world_human_cheering@male_a", "base", 32, 1, 0, 0) -- applause loud
 	elseif id == 6 then    
-		test=0
+		PlayEmote("amb@world_human_smoking@male@male_a@enter", "enter", 32, 1, 0, 0)
+		PlayEmote("amb@world_human_smoking@male@male_a@idle_a", "idle_b", 1, 1, 0, 1) -- fumer / afk
+		PlayEmote("amb@world_human_smoking@male@male_a@exit", "exit", 32, 1, 0, 0)
 	elseif id == 7 then    
-		test=0
+		PlayEmote("amb@world_human_cheering@male_e", "base", 120, 1, 0, 0) -- applause calm
 	elseif id == 8 then    
-		test=0
+		PlayEmote("amb@world_human_drinking@beer@male@enter", "enter", 32, 1, 0, 0)
+		PlayEmote("amb@world_human_drinking@beer@male@idle_a", "idle_c", 1, 1, 0, 1) -- beer / af
+		PlayEmote("amb@world_human_drinking@beer@male@exit", "exit", 32, 1, 0, 0)
 	elseif id == 9 then    
-		test=0
+		PlayEmote("amb@world_human_muscle_flex@arms_in_front@base", "base", 32, 1, 0, 0)
 	elseif id == 10 then    
 		test=0
 	elseif id == 11 then    
@@ -610,7 +614,7 @@ function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 
 
           local i = 0
           	RequestAnimDict(dict)
-        	while not HasAnimDictLoaded(dict) and i < 500 do -- max time, 10 seconds
+        	while not HasAnimDictLoaded(dict) and i < 1000 do -- max time, 10 seconds
             	Citizen.Wait(10)
             	RequestAnimDict(dict)
             	i = i+1
