@@ -94,13 +94,21 @@ buttons = {
 	name = "Emotes",
 	buttons = { 
 	{name = "Arreter l'emote", description = ''},
-	{name = "Handsup", description = ''},
+	{name = "Surrender", description = ''},
 	{name = "No", description = ''},
 	{name = "Damn", description = ''},
 	{name = "Dance", description = ''},
 	{name = "Salute", description = ''},
 	{name = "Rock", description = ''},
 	{name = "Why", description = ''},
+	{name = "Noter Test", description = ''},
+	{name = "A changer 1", description = ''},
+	{name = "A changer 2", description = ''},
+	{name = "A changer 3", description = ''},
+	{name = "A changer 4", description = ''},
+	{name = "A changer 5", description = ''},
+	{name = "A changer 6", description = ''},
+	{name = "A changer 7", description = ''}
 				--{name = "110", description = ''},  AJOUTER UNE LIGNE POUR CHAQUE EMOTE PLUS VOIR LIGNE ~340 
 			}
 			},
@@ -433,7 +441,7 @@ function ButtonSelected(button)
 	elseif this == "Emotes" then
 		if btn == "Arreter l'emote" then
 			Emote(0)
-		elseif btn == "Handsup" then
+		elseif btn == "Surrender" then
 			Emote(1)
 		elseif btn == "No" then
 			Emote(2)
@@ -447,6 +455,22 @@ function ButtonSelected(button)
 			Emote(6)
 		elseif btn == "Why" then
 			Emote(7)
+		elseif btn == "Noter Test" then
+			Emote(8)
+		elseif btn == "A changer 1" then
+			Emote(9)
+		elseif btn == "A changer 2" then
+			Emote(10)
+		elseif btn == "A changer 3" then
+			Emote(11)
+		elseif btn == "A changer 4" then
+			Emote(12)
+		elseif btn == "A changer 5" then
+			Emote(13)
+		elseif btn == "A changer 6" then
+			Emote(14)
+		elseif btn == "A changer 7" then
+			Emote(15)
 		end
 
 	elseif this == "Telephone" then
@@ -539,16 +563,16 @@ function ShowNotification(message)
 	DrawNotification(false, false)
 end
 
-function Emote(id) -- 0 - 7
+function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en général d'après mes test LIS AUSSI LE PLAYEMOTE
 	
 	if id == 0 then  
-		PlayEmote("mp_player_int_uppersalute","mp_player_int_salute",32)
+		PlayEmote("on sen fou","grave ",120, 1)  -- arreter l'emote
 	elseif id == 1 then  
-		TaskHandsUp(GetPlayerPed(-1), 1000, GetPlayerPed(-1), -1, true) 
+		PlayEmote("random@arrests","kneeling_arrest_idle",32, 0) -- main en l'air en étant au sol
 	elseif id == 2 then    
-		test=0
+		PlayEmote("amb@code_human_police_crowd_control@idle_a", "idle_a", 32, 0) -- Blabla bizarre
 	elseif id == 3 then    
-		test=0
+		test=0						-- Je te laisse en ajouter a ta guise, je t'en ai prévu quelqu'un déjà :) Faut jouer avec les FLAGS : 0,32 et 120 (et avec le multiplier)
 	elseif id == 4 then    
 		test=0
 	elseif id == 5 then    
@@ -557,28 +581,58 @@ function Emote(id) -- 0 - 7
 		test=0
 	elseif id == 7 then    
 		test=0
+	elseif id == 8 then    
+		test=0
+	elseif id == 9 then    
+		test=0
+	elseif id == 10 then    
+		test=0
+	elseif id == 11 then    
+		test=0
+	elseif id == 12 then    
+		test=0
+	elseif id == 13 then    
+		test=0
+	elseif id == 14 then    
+		test=0
+	elseif id == 15 then    
+		test=0
 	end
 end
 
-function PlayEmote(dict, name, flags)
+function PlayEmote(dict, name, flags, duration ,stop) -- duration entre 0 et 1, c'est le multipliyer de l'action (0.5 tres rapide et 0.95 quasiment l'annimation normale)
+													  -- Stop 0 pour jouer une annimation et 1 pour arreter (donc 0 dans notre cas)
 
-RequestAnimDict(dict, flags)
+	if stop ~= 1 then
+    ClearPedSecondaryTask(GetPlayerPed(-1))
+    ClearPedTasks(GetPlayerPed(-1))
+
           local i = 0
-
-        	while not HasAnimDictLoaded(dict) and i < 250 do -- max time, 10 seconds
+          	RequestAnimDict(dict)
+        	while not HasAnimDictLoaded(dict) and i < 500 do -- max time, 10 seconds
             	Citizen.Wait(10)
             	RequestAnimDict(dict)
             	i = i+1
         	end
 
 			if HasAnimDictLoaded(dict) then
-				TaskPlayAnim(GetPlayerPed(-1),dict,name,8,1,-1,flags,0,0,0,0)
+				TaskPlayAnim(GetPlayerPed(-1),dict,name,8.0001,1,-1,flags,0,0,0,0)
 		 	end
 
+		 	Wait(0)
+
+		 	Citizen.Trace(tostring(GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name)))
+		 	Citizen.Trace(tostring(IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3)))
+
+		 	while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
 			Citizen.Wait(0)
-        	while GetEntityAnimCurrentTime(GetPlayerPed(-1),dict,name) <= 0.95 and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
-				Citizen.Wait(0)
-        	end
+			end
+			ClearPedTasksImmediately(GetPlayerPed(-1))
+
+
+	else
+    	ClearPedTasksImmediately(GetPlayerPed(-1))
+    end
 
 end
 
