@@ -10,5 +10,5 @@ AddEventHandler("mymairie:identity",function(prenom, nom, age)
 
 	MySQL:executeQuery("INSERT INTO users (last_name, first_name, age) VALUES ('@last_name', '@first_name' , '@age' ) WHERE identifier = '@identifier' ",
 					{['@last_name'] = nom , ['@first_name'] = prenom , ['@age'] = age , ['@identifier'] = user.identifier})
-	end
-			end)
+	end)
+end)
