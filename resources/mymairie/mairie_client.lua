@@ -12,7 +12,7 @@ local Keys = {
 
 local vehshop = {
 	opened = false,
-	title = "Mairie",
+	title = "Douane",
 	currentmenu = "main",
 	lastmenu = nil,
 	currentpos = nil,

@@ -108,7 +108,12 @@ buttons = {
 	{name = "A changer 4", description = ''},
 	{name = "A changer 5", description = ''},
 	{name = "A changer 6", description = ''},
-	{name = "A changer 7", description = ''}
+	{name = "A changer 7", description = ''},
+	{name = "A changer 8", description = ''},
+	{name = "A changer 9", description = ''},
+	{name = "A changer 10", description = ''},
+	{name = "A changer 11", description = ''},
+	{name = "A changer 12", description = ''}
 				--{name = "110", description = ''},  AJOUTER UNE LIGNE POUR CHAQUE EMOTE PLUS VOIR LIGNE ~340 
 			}
 			},
@@ -471,6 +476,16 @@ function ButtonSelected(button)
 			Emote(14)
 		elseif btn == "A changer 7" then
 			Emote(15)
+		elseif btn == "A changer 8" then
+			Emote(16)
+		elseif btn == "A changer 9" then
+			Emote(17)
+		elseif btn == "A changer 10" then
+			Emote(18)
+		elseif btn == "A changer 11" then
+			Emote(19)
+		elseif btn == "A changer 12" then
+			Emote(20)
 		end
 
 	elseif this == "Telephone" then
@@ -591,17 +606,38 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 	elseif id == 9 then    
 		PlayEmote("amb@world_human_muscle_flex@arms_in_front@base", "base", 32, 1, 0, 0)
 	elseif id == 10 then    
-		test=0
+		PlayEmote("amb@world_human_musician@guitar@male@idle_a", "idle_a", 153, 1, 0, 0)
 	elseif id == 11 then    
-		test=0
+		PlayEmote("amb@world_human_push_ups@male@enter", "enter", 32, 1, 0, 0)
+		PlayEmote("amb@world_human_push_ups@male@base", "base", 1, 1, 0, 1)
+		PlayEmote("amb@world_human_push_ups@male@exit", "exit", 32, 1, 0, 0)
 	elseif id == 12 then    
-		test=0
+		PlayEmote("missbigscore1", "idle_base", 153, 1, 0, 0)
 	elseif id == 13 then    
-		test=0
+		PlayEmote("amb@world_human_sunbathe@male@front@enter", "enter", 32, 1, 0, 0)
+		PlayEmote("amb@world_human_sunbathe@male@front@idle_a", "idle_a", 1, 1, 0, 1)
+		PlayEmote("amb@world_human_sunbathe@male@front@exit", "exit", 32, 1, 0, 0)
 	elseif id == 14 then    
-		test=0
-	elseif id == 15 then    
-		test=0
+		PlayEmote("amb@world_human_stand_mobile@male@text@enter", "enter", 32, 1, 0, 0)
+		PlayEmote("amb@world_human_stand_mobile@male@text@base", "base", 1, 1, 0, 1)
+		PlayEmote("amb@world_human_stand_mobile@male@text@exit", "exit", 32, 1, 0, 0)
+	elseif id == 15 then
+		PlayEmote("cellphone@", "cellphone_call_in", 32, 1, 0, 0)    
+		PlayEmote("cellphone@", "cellphone_call_listen_base", 153, 1, 0, 0)
+	elseif id == 16 then
+		PlayEmote("amb@world_human_sunbathe@male@back@enter", "enter", 0, 1, 0, 0)
+		PlayEmote("amb@world_human_sunbathe@male@back@base", "base", 1, 1, 0, 1)
+		PlayEmote("amb@world_human_sunbathe@male@back@exit", "exit", 0, 1, 0, 0)
+	elseif id == 17 then
+		PlayEmote("misscarsteal2peeing", "peeing_intro", 0, 1, 0, 0)
+		PlayEmote("misscarsteal2peeing", "peeing_loop", 1, 1, 0, 1)
+		PlayEmote("misscarsteal2peeing", "peeing_outro", 0, 1, 0, 0)
+	elseif id == 18 then
+		PlayEmote("taxi_hail", "fp_hail_taxi", 0, 1, 0, 0)
+	elseif id == 19 then
+		PlayEmote("amb@world_human_yoga@male@base", "base_a", 0, 1, 0, 0)
+	elseif id == 20 then
+		PlayEmote("amb@world_human_bum_standing@depressed@idle_a", "idle_b", 153, 1, 0, 0)
 	end
 end
 
@@ -614,7 +650,7 @@ function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 
 
           local i = 0
           	RequestAnimDict(dict)
-        	while not HasAnimDictLoaded(dict) and i < 1000 do -- max time, 10 seconds
+        	while not HasAnimDictLoaded(dict) and i < 500 do -- max time, 10 seconds
             	Citizen.Wait(10)
             	RequestAnimDict(dict)
             	i = i+1
