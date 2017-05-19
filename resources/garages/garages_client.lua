@@ -38,7 +38,7 @@ local garage = {
 			title = "CATEGORIES",
 			name = "main",
 			buttons = {
-				{name = "Rentrer ton véhicule", description = "rentrer le véhicule", action = "rentrer"},
+				--{name = "Rentrer ton véhicule", description = "rentrer le véhicule", action = "rentrer"},
 				--{name = "Sortir ton véhicule", description = "", action = "sortir"},
 			}
     	},
@@ -218,22 +218,28 @@ end
 function OpenCreator()
 	boughtcar = false
 	local ped = LocalPed()
+	local menu = garage.menu["main"]
 	local pos = currentlocation.pos.outside
 	local g = Citizen.InvokeNative(0xC906A7DAB05C8D2B,pos[1],pos[2],pos[3],Citizen.PointerValueFloat(),0)
+	if IsPlayerInRangeOfFourier() then 
+		else 
+			table.insert(menu.buttons, {name = "Rentrer ton véhicule", description = "rentrer le véhicule", action = "rentrer"}) 
+	end	
 	garage.currentmenu = "main"
 	garage.opened = true
 	garage.selectedbutton = 0
-	
 end
 
 local vehicle_price = 0
 
 function CloseCreator()
 	Citizen.CreateThread(function()
+		local menu = garage.menu["main"]
 		garage.opened = false
 		garage.menu.from = 1
 		garage.menu.to = 10
 		garage.menu[garage.currentmenu].buttons = {{name = "Rentrer ton véhicule", description = "", action = "rentrer"}}
+		table.remove(menu.buttons, 1)
 	end)
 end
 
@@ -496,7 +502,10 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primaryc
 				SetVehicleOnGroundProperly(veh)
 				SetVehicleColours(veh, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false)
-				SetVehicleDoorsLocked(veh, 2) 
+				SetVehicleDoorsLocked(veh, 2)
+				if IsPlayerInRangeOfFourier() then 
+					TriggerServerEvent('garages:ToPay') 
+				end 
 				drawNotification("Véhicule sorti, bonne route")				
 				TriggerServerEvent('garages:SetVehOut', plate)
 			end   
@@ -550,7 +559,7 @@ AddEventHandler('garages:ListVeh', function(ListVeh)
 		table.insert(menu.buttons, {name = "No car in garage", description = "", action = ""})
 	else
 		for _,v in pairs(VEHS)do
-			name_button = "Sortir " .. v.vehicle_model .. " (" .. v.vehicle_plate .. ")"
+			name_button = "Sortir " .. v.vehicle_name .. " (" .. v.vehicle_plate .. ")"
 			local description_button = v.vehicle_plate
 			table.insert(menu.buttons, {name = name_button, description = description_button, action = "sortir"})
 		end
