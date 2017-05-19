@@ -495,7 +495,8 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primaryc
 				SetVehicleNumberPlateText(veh, plate)
 				SetVehicleOnGroundProperly(veh)
 				SetVehicleColours(veh, primarycolor, secondarycolor)
-				SetEntityInvincible(veh, false) 
+				SetEntityInvincible(veh, false)
+				SetVehicleDoorsLocked(veh, 2) 
 				drawNotification("Véhicule sorti, bonne route")				
 				TriggerServerEvent('garages:SetVehOut', plate)
 			end   

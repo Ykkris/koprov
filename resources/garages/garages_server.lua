@@ -124,6 +124,8 @@ AddEventHandler('garages:SetVehOut', function(out_plate)
   
     local plate = out_plate
     local state = "out"
+    user:removeMoney(100)
+    TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Vous avez payé 100$ de frais de fourrière")
 
     MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
       {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
