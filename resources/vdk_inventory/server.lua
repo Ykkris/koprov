@@ -7,6 +7,7 @@ RegisterServerEvent("item:setItem")
 RegisterServerEvent("item:reset")
 RegisterServerEvent("item:sell")
 RegisterServerEvent("player:giveItem")
+RegisterServerEvent("item:resetoncoma")
 
 local items = {}
 
@@ -92,6 +93,12 @@ end)
 AddEventHandler("item:reset", function()
     local player = getPlayerID(source)
     MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username'", { ['@username'] = player, ['@qty'] = 0 })
+end)
+
+AddEventHandler("item:resetoncoma", function(playerserverid)
+   local player = getPlayerID(playerserverid)
+    MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username'", { ['@username'] = player, ['@qty'] = 0 })         
+            
 end)
 
 AddEventHandler("item:sell", function(id, qty, price)
