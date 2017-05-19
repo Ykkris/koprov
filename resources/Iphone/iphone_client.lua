@@ -566,14 +566,15 @@ end
 function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en général d'après mes test LIS AUSSI LE PLAYEMOTE
 	
 	if id == 0 then  
-		PlayEmote("on sen fou","grave ",120, 0.9 ,1)  -- arreter l'emote
+		PlayEmote("on sen fou","grave ",120, 0.9 ,1, 0)  -- arreter l'emote
 	elseif id == 1 then  
-		PlayEmote("random@arrests","kneeling_arrest_idle",32, 0.2 ,0) -- main en l'air en étant au sol | 0.2 en duration == TRES COURT
+		PlayEmote("random@arrests","kneeling_arrest_idle",32, 0.2 ,0 , 0) -- main en l'air en étant au sol | 0.2 en duration == TRES COURT
 	elseif id == 2 then    
-		PlayEmote("amb@code_human_police_crowd_control@idle_a", "idle_a", 32, 0.85 ,0) -- Blabla bizarre
+		PlayEmote("amb@code_human_police_crowd_control@idle_a", "idle_a", 32, 0.85 ,0 , 0) -- Blabla bizarre
 	elseif id == 3 then    
-		test=0						-- Je te laisse en ajouter a ta guise, je t'en ai prévu quelqu'un déjà :) Faut jouer avec les FLAGS : 0,32 et 120 (et avec le multiplier)
-	elseif id == 4 then    
+		PlayEmote("rcmnigel1bnmt_1b", "dance_intro_tyler", 32, 1 ,0, 0)	
+		PlayEmote("rcmnigel1bnmt_1b", "dance_loop_tyler", 32, 1 ,0 , 1)					-- Je te laisse en ajouter a ta guise, je t'en ai prévu quelqu'un déjà :) Faut jouer avec les FLAGS : 0,32 et 120 (et avec le multiplier)
+	elseif id == 4 then    -- {"rcmnigel1bnmt_1b","dance_intro_tyler",1} & {"rcmnigel1bnmt_1b","dance_loop_tyler",1}
 		test=0
 	elseif id == 5 then    
 		test=0
@@ -600,7 +601,7 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en gén�
 	end
 end
 
-function PlayEmote(dict, name, flags, duration ,stop) -- duration entre 0 et 1, c'est le multipliyer de l'action (0.5 tres rapide et 0.95 quasiment l'annimation normale)
+function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 et 1, c'est le multipliyer de l'action (0.5 tres rapide et 0.95 quasiment l'annimation normale)
 													  -- Stop 0 pour jouer une annimation et 1 pour arreter (donc 0 dans notre cas)
 
 	if stop ~= 1 then
@@ -623,11 +624,20 @@ function PlayEmote(dict, name, flags, duration ,stop) -- duration entre 0 et 1, 
 
 		 	Citizen.Trace(tostring(GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name)))
 		 	Citizen.Trace(tostring(IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3)))
-
-		 	while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
-			Citizen.Wait(0)
+		 	if loop ~= 1 then
+			 	while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
+					Citizen.Wait(0)
+				end
+				ClearPedTasksImmediately(GetPlayerPed(-1))
+			else
+				while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
+					Citizen.Wait(0)
+					if IsControlJustPressed(1, Keys['E']) then
+						ClearPedTasksImmediately(GetPlayerPed(-1))
+						break
+					end
+				end
 			end
-			ClearPedTasksImmediately(GetPlayerPed(-1))
 
 
 	else
