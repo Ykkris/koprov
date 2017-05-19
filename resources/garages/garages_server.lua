@@ -9,6 +9,7 @@ RegisterServerEvent('garages:PutVehInGarages')
 RegisterServerEvent('garages:CheckListVeh')
 RegisterServerEvent('garages:CheckListVehFour')
 RegisterServerEvent('garages:PutVehFourGarages')
+RegisterServerEvent('garages:ToPay')
 
 
 AddEventHandler('garages:PutVehInGarages', function(vehicle)
@@ -69,7 +70,7 @@ AddEventHandler('garages:CheckListVeh', function()
   local listveh = {}
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'in'",{['@username'] = player})
-    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
+    local result = MySQL:getResults(executed_query, {'vehicle_name', 'vehicle_plate'}, "identifier")
     if(result)then
     listveh = result
   end
@@ -82,7 +83,7 @@ AddEventHandler('garages:CheckListVehFour', function()
   local listveh = {}
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'four'",{['@username'] = player})
-    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
+    local result = MySQL:getResults(executed_query, {'vehicle_name', 'vehicle_plate'}, "identifier")
     if(result)then
     listveh = result
   end
@@ -102,6 +103,13 @@ AddEventHandler('garages:CheckForSpawnVeh', function(veh_plate)
     end
   end
   end)
+end)
+
+AddEventHandler('garages:ToPay', function()
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Vous avez payé 150$ de frais de fourrière")
+    user:removeMoney(150)
+    end)
 end)
 
 AddEventHandler('garages:CheckForVeh', function()
@@ -124,8 +132,6 @@ AddEventHandler('garages:SetVehOut', function(out_plate)
   
     local plate = out_plate
     local state = "out"
-    user:removeMoney(100)
-    TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Vous avez payé 100$ de frais de fourrière")
 
     MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
       {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
