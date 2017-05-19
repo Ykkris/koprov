@@ -166,6 +166,7 @@ function DisplayHelpText(str)
 	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end
 
+local backlock = false
 Citizen.CreateThread(function()
 	local x = -1037.934
 	local y = -2737.966
@@ -270,6 +271,20 @@ function OpenMenu(menu)
 	vehshop.menu.to = 10
 	vehshop.selectedbutton = 0
 	vehshop.currentmenu = menu
+end
+
+function Back()
+	if backlock then
+		return
+	end
+	backlock = true
+	if vehshop.currentmenu == "main" then
+		ClosedCreator()
+	elseif vehshop.currentmenu ~= "main" then
+		OpenMenu(vehshop.lastmenu)
+	else
+		OpenMenu(vehshop.lastmenu)
+	end
 end
 
 function EnregistreMoi()
