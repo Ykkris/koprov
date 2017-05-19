@@ -10,8 +10,7 @@ local jobs = {
   {name="Trafiquant", id=6},
   {name="Bûcheron", id=7},
   {name="Pêcheur", id=8},
-  {name="Taxis", id=9},
-  {name="Pizzayolo", id=10},
+  {name="Taxis", id=9}
 }
 
 isopen = false
