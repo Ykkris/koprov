@@ -146,7 +146,7 @@ Citizen.CreateThread(function()
         near, item = IsNear()
 	--Citizen.Trace(tostring(near == field))
 	--Citizen.Trace(tostring(jobId))
-	--neari, itemi = IsNeari()
+        neari, itemi = IsNeari()
         if (exports.vdk_inventory:notFull() == true) then
             if (near == 'field' and exports.vdk_inventory:getQuantity(item.raw_id) < item.raw_lim ) then
                 recolt('Récolte', item, '+1')
@@ -155,11 +155,26 @@ Citizen.CreateThread(function()
             elseif (near == 'seller' and exports.vdk_inventory:getQuantity(item.treat_id) > 0) then
                 recolt('Vente', item, '-1')
             end
+
+            if (neari == 'field' and exports.vdk_inventory:getQuantity(itemi.raw_id) < itemi.raw_lim ) then
+                recolt('Récolte', itemi, '+1')
+            elseif (neari == 'treatment' and exports.vdk_inventory:getQuantity(itemi.raw_id) > 0 and exports.vdk_inventory:getQuantity(itemi.treat_id) < itemi.treat_lim) then
+                recolt('Traitement', itemi, '+1')
+            elseif (neair == 'seller' and exports.vdk_inventory:getQuantity(itemi.treat_id) > 0) then
+                recolt('Vente', itemi, '-1')
+            end
+
         else
             if (near == 'treatment' and exports.vdk_inventory:getQuantity(item.raw_id) > 0 and exports.vdk_inventory:getQuantity(item.treat_id) < item.treat_lim) then
                 recolt('Traitement', item, '+1')
             elseif (near == 'seller' and exports.vdk_inventory:getQuantity(item.treat_id) > 0) then
                 recolt('Vente', item, '-1')
+            end
+
+            if (neari == 'treatment' and exports.vdk_inventory:getQuantity(itemi.raw_id) > 0 and exports.vdk_inventory:getQuantity(itemi.treat_id) < itemi.treat_lim) then
+                recolt('Traitement', itemi, '+1')
+            elseif (neari == 'seller' and exports.vdk_inventory:getQuantity(itemi.treat_id) > 0) then
+                recolt('Vente', itemi, '-1')
             end
         end
     end
