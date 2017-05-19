@@ -8,7 +8,7 @@ AddEventHandler("mymairie:identity",function(prenom, nom, age)
 	RconPrint(tostring(nom))
 	RconPrint(tostring(age))
 	
-	user:removeMoney(prix)
+	user:removeMoney(100)
 
 	MySQL:executeQuery("UPDATE users SET last_name = '@last_name', first_name = '@first_name', age = '@age' WHERE identifier = '@identifier' ",
 					{['@last_name'] = nom , ['@first_name'] = prenom , ['@age'] = age, ['@identifier'] = user.identifier})
