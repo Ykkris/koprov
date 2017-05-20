@@ -43,28 +43,31 @@ AddEventHandler("cli:getJobs", function(listJobs)
     end)
 end)
 
--- Control if the player of is near of a place of job
---function IsNeari()
---    local ply = GetPlayerPed(-1)
---    local plyCoords = GetEntityCoords(ply, 0)
---	if(IsPedInAnyVehicle(ply, true) == false) then
+function IsNeari()
+    local ply = GetPlayerPed(-1)
+    local plyCoords = GetEntityCoords(ply, 0)
+	if(IsPedInAnyVehicle(ply, true) == false) then
 			
---		local distance_field = GetDistanceBetweenCoords(6.fx, 6.fy, item.fz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
---		local distance_treatment = GetDistanceBetweenCoords(item.tx, item.ty, item.tz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
---		local distance_seller = GetDistanceBetweenCoords(item.sx, item.sy, item.sz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
-		
---		if (distance_field <= recoltDistance) then
-					--jobId = k
---			return 'field', item
---		elseif (distance_treatment <= recoltDistance) then
-					--jobId = k
---			return 'treatment', item
---		elseif (distance_seller <= recoltDistance) then
-					--jobId = k
---			return 'seller', item
---		end
---	end
---end
+        for k, item in ipairs(JOBS) do
+            if item.job_id == 6 then
+        		local distance_field = GetDistanceBetweenCoords(item.fx, item.fy, item.fz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+        		local distance_treatment = GetDistanceBetweenCoords(item.tx, item.ty, item.tz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+        		local distance_seller = GetDistanceBetweenCoords(item.sx, item.sy, item.sz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+        		
+        		if (distance_field <= recoltDistance) then
+        					--jobId = k
+        			return 'field', item
+        		elseif (distance_treatment <= recoltDistance) then
+        					--jobId = k
+        			return 'treatment', item
+        		elseif (distance_seller <= recoltDistance) then
+        					--jobId = k
+        			return 'seller', item
+        		end
+            end
+        end
+	end
+end
 
 function IsNear()
     local ply = GetPlayerPed(-1)
