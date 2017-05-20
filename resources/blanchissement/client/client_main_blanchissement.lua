@@ -4,8 +4,10 @@
 -- Version: v0.0.1
 -- Path: client/main.lua
 ------
-zoneBlanchissement = {x = 3597.546, y = 3678.030  , z = 40.808}
+zoneBlanchissement = {x = 3597.546, y = 3678.030  , z = 39.808}
 radius = 100.0
+isTrevor = false
+
 
 
 Citizen.CreateThread(function()
@@ -13,16 +15,19 @@ Citizen.CreateThread(function()
 
 	local isPlayerNear = isNear(GetPlayerPed(-1))
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		RequestModel( GetHashKey( "Trevor" ) )
-		hash = GetHashKey( "Trevor" )
+		if not(isTrevor) then
+			RequestModel( GetHashKey( "Trevor" ) )
+			hash = GetHashKey( "Trevor" )
 
-		while not HasModelLoaded( GetHashKey( "Trevor" ) ) ) do -- On attend qu'il finisse de charger le modèle
-	    	Wait(0)
-		end
+			while not HasModelLoaded( GetHashKey( "Trevor" ) ) do -- On attend qu'il finisse de charger le modèle
+		    	Wait(1000)
+		    	Citizen.Trace("PAS CHARGE")
+			end
 
-		Blanchisseur = CreatePed(28, hash, zoneBlanchissement, 0.0 ,true)
-        SetEntityAsMissionEntity(Blanchisseur, true, true)
-        SetEntityInvincible(Blanchisseur, true)
+			Blanchisseur = CreatePed(28, hash, zoneBlanchissement, 0.0 ,true)
+	        SetEntityAsMissionEntity(Blanchisseur, true, true)
+	        SetEntityInvincible(Blanchisseur, true)
+    	end
 
 	end
 
