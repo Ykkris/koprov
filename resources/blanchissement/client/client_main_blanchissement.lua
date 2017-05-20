@@ -14,9 +14,9 @@ Citizen.CreateThread(function()
 	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
 
 	local isPlayerNear = isNear(GetPlayerPed(-1))
-	Citizen.Trace(isPlayerNear)
+	Citizen.Trace(tostring(isPlayerNear))
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		Citizen.Trace(isTrevor)
+		Citizen.Trace(tostring(isTrevor))
 		if not(isTrevor) then
 			RequestModel( GetHashKey( "a_f_y_hippie_01" ) )
 			hash = GetHashKey( "a_f_y_hippie_01" )
@@ -26,7 +26,7 @@ Citizen.CreateThread(function()
 		    	Citizen.Trace("PAS CHARGE")
 			end
 
-			Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
+			Blanchisseur = CreatePed(4, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
 			Citizen.Trace("BLANCHISSEUR : ID : "..tostring(Blanchisseur))
 	        SetEntityAsMissionEntity(Blanchisseur, true, true)
 	        SetEntityInvincible(Blanchisseur, true)
