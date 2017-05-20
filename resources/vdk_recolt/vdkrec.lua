@@ -100,8 +100,6 @@ end
 -- Display the message of recolting/treating/selling and trigger the associated event(s)
 function recolt(text, item, rl)
     if (text == 'Récolte') then
-	ShowNotification(tostring(item.raw_item))
-	ShowNotification(tostring(item.raw_id))
         TriggerEvent("mt:missiontext", text .. ' en cours de ~g~' .. tostring(item.raw_item) .. '~s~...', timeForRecolt - 800)
         Citizen.Wait(timeForRecolt - 800)
 	
