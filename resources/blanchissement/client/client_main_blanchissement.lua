@@ -60,7 +60,7 @@ Citizen.CreateThread(function()
 
     	if isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
     		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 1000)
-	    	if IsControlJustPressed(1, Keys['E']) then
+	    	if   (IsControlJustReleased, Keys['E']) then 
 	    		DrawMissionText("TESTESTSETSETALALALALALALALALALALALALALAALALALLALALALALALALALLALALALAL", 5000)
 
 	    		TriggerServerEvent("blanchissement:sendblanchissement")
