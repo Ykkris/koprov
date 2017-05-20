@@ -79,12 +79,15 @@ function isIllegal(id)
    local executed_query = MySQL:executeQuery("SELECT * FROM items WHERE illegal = '@illegal'" , { ['@illegal'] = 1 })
         local result = MySQL:getResults(executed_query, {'id'}, "illegal")
       local ill = false
+      RconPrint(id)
         for i=1, #result, 1 do
             RconPrint(tostring(result[i].id))
             if id == result[i].id then
                 ill = true
+                
             end
         end
+      RconPrint(ill)
         return ill 
       
 end
