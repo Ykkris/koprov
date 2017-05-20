@@ -51,24 +51,28 @@ local garages_locations = {}
 garages_locations[1] = {{
 name = "Garage",
 bl = 357,
+cl = 3,
 entering = {213.769,-808.965,29.914}, 
 outside = {215.124, -791.377,29.936}
 }}
 garages_locations[2] = {{
 name = "Garage",
 bl = 357,
+cl = 3,
 entering = {-340.47,266.83,84.68},
 outside = {-339.48,286.18,84.5}
 }}
 garages_locations[3] = {{
 name = "Garage",
 bl = 357,
+cl = 3,
 entering = {-1184.2,-1509.36,3.65},
 outside = {-1188.3,-1491.18,3.38}
 }}
 garages_locations[4] = {{
 name = "Fourrière",
 bl = 68,
+cl = 1,
 entering = {408.12,-1655.53,28.29},
 outside = {405.17,-1642.47,28.29}
 }}
@@ -116,7 +120,7 @@ function ShowGarageBlips(bool)
 				pos = pos.entering
 				local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
 				SetBlipSprite(blip, loc.bl)
-				SetBlipColour(blip, 3)
+				SetBlipColour(blip, loc.cl)
 				BeginTextCommandSetBlipName("STRING")
 				AddTextComponentString(loc.name)
 				EndTextCommandSetBlipName(blip)
