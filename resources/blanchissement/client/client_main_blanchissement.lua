@@ -113,7 +113,7 @@ function IsSpecificPedHashNearPed(player, modelhash, radius)
 	Citizen.Trace("COUNT :  "..tostring(Count)) -- false
 	Citizen.Trace("ENTITY1:  "..tostring(entity1)) -- 0
 
-	if ped == nil then
+	if entity1 == nil then
 		return false
 	end
 
