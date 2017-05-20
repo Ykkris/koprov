@@ -69,7 +69,7 @@ AddEventHandler("item:sell", function(id, qty, price)
         if not(ill) then
             user:addMoney(tonumber(price))
         else
-            TriggerClientEvent("Iphone:notif", source, price)
+            RconPrint(price)
             user:addDirtyMoney(tonumber(price))
         end
     end)
