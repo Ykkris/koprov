@@ -165,7 +165,7 @@ Citizen.CreateThread(function()
                 recolt('Récolte', itemi, '+1')
             elseif (neari == 'treatment' and exports.vdk_inventory:getQuantity(itemi.raw_id) > 0 and exports.vdk_inventory:getQuantity(itemi.treat_id) < itemi.treat_lim) then
                 recolt('Traitement', itemi, '+1')
-            elseif (neair == 'seller' and exports.vdk_inventory:getQuantity(itemi.treat_id) > 0) then
+            elseif (neari == 'seller' and exports.vdk_inventory:getQuantity(itemi.treat_id) > 0) then
                 recolt('Vente', itemi, '-1')
             end
 
