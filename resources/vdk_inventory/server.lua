@@ -75,7 +75,7 @@ end)
 
 function isIllegal(id)
       
-   local executed_query = MySQL:executeQuery("SELECT * FROM items WHERE illegal = '@illegal'' " , { ['@illegal'] = 1 })
+   local executed_query = MySQL:executeQuery("SELECT * FROM items WHERE illegal = '@illegal'" , { ['@illegal'] = 1 })
         local result = MySQL:getResults(executed_query, {'id'}, "illegal")
       local ill = false
         for i=1, #result, 1 do
