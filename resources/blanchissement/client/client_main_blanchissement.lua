@@ -59,9 +59,9 @@ Citizen.CreateThread(function()
 		        -- GetClosestPed(x, y, z, radius, p4, p5, outPed, p7, p8, pedType)
     	end
 
-    	if IsNearPedFromPointWithRadius(GetPlayerPed(-1), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
+    	if isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
     		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 3000)
-	    	if IsControlJustPressed(1, Keys['E']) and IsNearPedFromPointWithRadius(GetPlayerPed(-1), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 3.0) and not(alreadySend) then
+	    	if IsControlJustPressed(1, Keys['E']) and isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 3.0) and not(alreadySend) then
 
 	    		TriggerServerEvent("blanchissement:sendblanchissement")
 
@@ -82,7 +82,7 @@ Citizen.CreateThread(function()
 
 	    		end)
 
-	    	elseif IsControlJustPressed(1, Keys['E']) and IsNearPedFromPointWithRadius(GetPlayerPed(-1), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 3.0) and alreadySend then
+	    	elseif IsControlJustPressed(1, Keys['E']) and isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 3.0) and alreadySend then
 	    		local message = math.random(1, #soulMessage)
 	    		DrawMissionText(soulMessage[message], 5000)
 	    		Citizen.Wait(5000)
