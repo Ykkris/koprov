@@ -20,8 +20,8 @@ Citizen.CreateThread(function()
 			hash = GetHashKey( "Trevor" )
 
 			while not HasModelLoaded( GetHashKey( "Trevor" ) ) do -- On attend qu'il finisse de charger le modèle
-		    	Wait(1000)
-		    	Citizen.Trace("PAS CHARGE")
+		    		Wait(1000)
+		    		Citizen.Trace("PAS CHARGE")
 			end
 
 			Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
