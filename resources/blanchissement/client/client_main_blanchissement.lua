@@ -49,6 +49,8 @@ Citizen.CreateThread(function()
 		Citizen.Trace(tostring(isPed))
 		if not(isPed) then
 			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
+
+			Citizen.Trace("TU ME VOIS OU PAS YKKRISSSSSS ????")
 				
 			blanchisseuse = CreatePedWithHashAtCoordsAndReturn(GetHashKey("a_f_y_hippie_01"), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
 
