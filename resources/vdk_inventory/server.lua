@@ -77,11 +77,7 @@ function isIllegal(id)
                 ill = true
             end
         end
-            if ill
-                return true
-            else
-                return false
-            end   
+        return ill 
       
 end
 
