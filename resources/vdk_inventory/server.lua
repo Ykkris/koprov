@@ -106,6 +106,7 @@ AddEventHandler("item:sell", function(id, qty, price)
         if not(ill) then
         user:addMoney(tonumber(price))
         else user:setDirtyMoney(tonumber(price))
+        end
     end)
 end)
 
