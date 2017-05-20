@@ -70,7 +70,7 @@ AddEventHandler("item:sell", function(id, qty, price)
             user:addMoney(tonumber(price))
         else
             local divisepardeux = tonumber(price) / 2
-            user:addDirtyMoney(tonumber(divisepardeux))
+            user:addDirty_Money(tonumber(divisepardeux))
         end
     end)
 end)
