@@ -46,7 +46,7 @@ Citizen.CreateThread(function()
 
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
 		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ), radius)
-		Citizen.Trace(isPed)
+		Citizen.Trace(tostring(isPed))
 		if not(isPed) then
 			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
 				
