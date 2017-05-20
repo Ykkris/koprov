@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
 			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
 
 				
-			blanchisseuse = CreatePedWithHashAtCoordsAndReturn(GetHashKey("a_f_y_hippie_01"), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
+			blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
 
 		    SetEntityAsMissionEntity(blanchisseuse, true, true)
 		    SetEntityInvincible(blanchisseuse, true)
@@ -129,9 +129,9 @@ function IsSpecificPedHashNearPed(player, modelhash, radius)
 
 end
 
-function CreatePedWithHashAtCoordsAndReturn(modelhash, x, y, z)
-    RequestModel( modelhash)
-    hash = GetHashKey( modelhash)
+function CreatePedWithHashAtCoordsAndReturn(model, x, y, z)
+    RequestModel( model)
+    hash = GetHashKey( model)
     local i = 0
     while not HasModelLoaded(hash) and i <= 5 do -- On attend qu'il finisse de charger le modèle
         Wait(200)
@@ -141,7 +141,7 @@ function CreatePedWithHashAtCoordsAndReturn(modelhash, x, y, z)
     if i == 5 then
         return "Error : Hash not loaded"
     else
-        local Ped = CreatePed(5, hash, x, y, z, 0.0 ,true) 
+        local Ped = CreatePed(5, hash, x, y, z, 0.0 ,true)
     end
     Citizen.Trace("PED :  "..tostring(Ped)) -- nil
     return Ped
