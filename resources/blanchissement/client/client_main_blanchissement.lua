@@ -117,7 +117,7 @@ function IsSpecificPedHashNearPed(player, modelhash, radius)
 		return false
 	end
 
-	local isSpecificPed = IsPedModel(ped, modelhash)
+	local isSpecificPed = IsPedModel(entity, modelhash)
 
 	Citizen.Trace("ISSPECIFICPED :  "..tostring(isSpecificPed))
 
