@@ -57,6 +57,8 @@ AutoStartResources:
     - interiors
     - mymairie
     - rent
+    - blanchissement
+    - Stores
 
 # do change
 RconPassword: koprobestv
