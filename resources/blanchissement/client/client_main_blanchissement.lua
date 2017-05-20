@@ -6,7 +6,7 @@
 ------
 zoneBlanchissement = {x = 3597.546, y = 3678.030  , z = 39.808}
 radius = 100.0
-isTrevor = true
+isTrevor = false
 
 
 
@@ -14,26 +14,27 @@ Citizen.CreateThread(function()
 	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
 
 	local isPlayerNear = isNear(GetPlayerPed(-1))
+	Citizen.Trace(isPlayerNear)
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
+		Citizen.Trace(isTrevor)
 		if not(isTrevor) then
 			RequestModel( GetHashKey( "Trevor" ) )
 			hash = GetHashKey( "Trevor" )
 
 			while not HasModelLoaded( GetHashKey( "Trevor" ) ) do -- On attend qu'il finisse de charger le modèle
-		    		Wait(1000)
-		    		Citizen.Trace("PAS CHARGE")
+		    	Wait(1000)
+		    	Citizen.Trace("PAS CHARGE")
 			end
 
 			Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
-			SetEntityAsMissionEntity(Blanchisseur, true, true)
-			SetEntityInvincible(Blanchisseur, true)
-		
-			isTrevor = false
-		end
+			Citizen.Trace("BLANCHISSEUR : ID : "..tostring(Blanchisseur))
+	        SetEntityAsMissionEntity(Blanchisseur, true, true)
+	        SetEntityInvincible(Blanchisseur, true)
     	end
 
-end)
+	end
 
+end)
 
 function isNear(player) -- on créer une fonction auxilliaire qu'on pourra ré-utiliser
 
