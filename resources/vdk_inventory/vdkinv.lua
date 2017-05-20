@@ -13,6 +13,7 @@ RegisterNetEvent("item:sell")
 RegisterNetEvent("gui:getItems")
 RegisterNetEvent("player:looseItem")
 RegisterNetEvent("player:receiveItem")
+RegisterNetEvent("player:sellItem")
 
 -- handles when a player spawns either from joining or after death
 AddEventHandler("playerSpawned", function()
@@ -59,6 +60,7 @@ function sell(arg)
     local item = ITEMS[itemId]
     item.quantity = item.quantity - 1
     TriggerServerEvent("item:sell", itemId, item.quantity, price)
+    Citizen.Trace("item ID : "..tostring(itemId) .. " Item quantitié: " .. tostring(item.quantity) .. " Item price : " .. tostring(item.price))
     InventoryMenu()
 end
 
