@@ -22,6 +22,12 @@ AddEventHandler("onResourceStart", function(vdk_inventory)
         
 end)
 
+AddEventHandler("item:setItem", function(item, quantity)
+    local player = getPlayerID(source)
+    MySQL:executeQuery("INSERT INTO user_inventory (`user_id`, `item_id`, `quantity`) VALUES ('@player', @item, @qty)",
+        { ['@player'] = player, ['@item'] = item, ['@qty'] = quantity })
+end)
+
 AddEventHandler("item:getItems", function()
     items = {}
     local player = getPlayerID(source)
