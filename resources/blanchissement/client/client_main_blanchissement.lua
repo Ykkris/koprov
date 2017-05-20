@@ -60,7 +60,7 @@ Citizen.CreateThread(function()
     	end
 
     	if isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
-    		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 30000)
+    		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 3000)
 	    	if IsControlJustPressed(1, Keys['E']) and isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 3.0) and not(alreadySend) then
 
 	    		TriggerServerEvent("blanchissement:sendblanchissement")
@@ -108,9 +108,10 @@ end
 function IsSpecificPedHashNearPed(player, modelhash, radius)
 	Citizen.Trace(tostring(modelhash))
 	local playerCoords = GetEntityCoords(player, true)
-	local ped = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, radius, 1, 0, 0, 0, -1)
+	local ped, t = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, radius, 1, 0, 0, 0, -1)
 
 	Citizen.Trace(tostring(ped))
+	Citizen.Trace(tostring(t))
 
 	if ped == nil then
 		return false
