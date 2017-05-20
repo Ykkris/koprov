@@ -97,18 +97,18 @@ AddEventHandler("item:resetoncoma", function(playerserverid)
             
 end)
 
-AddEventHandler("item:sell", function(id, qty, price)
-    ill = isIllegal(id)
-    TriggerEvent('es:getPlayerFromId', source, function(user)
-        local player = user.identifier
-        MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username' AND `item_id` = @id", { ['@username'] = player, ['@qty'] = tonumber(qty), ['@id'] = tonumber(id) })
+--AddEventHandler("item:sell", function(id, qty, price)
+    --ill = isIllegal(id)
+    --TriggerEvent('es:getPlayerFromId', source, function(user)
+        --local player = user.identifier
+        --MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username' AND `item_id` = @id", { ['@username'] = player, ['@qty'] = tonumber(qty), ['@id'] = tonumber(id) })
                               -- on register les items illégaux (ON PEUT FAIRE BIEN PLUS PROPRE mais je veux faire ça rapide)
-        if not(ill) then
-        user:addMoney(tonumber(price))
-        else user:setDirtyMoney(tonumber(price))
-        end
-    end)
-end)
+        --if not(ill) then
+        --user:addMoney(tonumber(price))
+        --else user:setDirtyMoney(tonumber(price))
+        --end
+    --end)
+--end)
 
 AddEventHandler("player:giveItem", function(item, name, qty, target)
     local player = getPlayerID(source)
