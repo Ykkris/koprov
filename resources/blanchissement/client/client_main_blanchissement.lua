@@ -14,9 +14,7 @@ Citizen.CreateThread(function()
 	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
 
 	local isPlayerNear = isNear(GetPlayerPed(-1))
-	Citizen.Trace(tostring(isPlayerNear))
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		Citizen.Trace(tostring(isTrevor))
 
 		outped, t = GetClosestPed(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, radius, 0, 0, 0, 0, 5)
 		Citizen.Trace(tostring(outped))
@@ -28,11 +26,9 @@ Citizen.CreateThread(function()
 
 			while not HasModelLoaded(hash) do -- On attend qu'il finisse de charger le modèle
 		    	Wait(1000)
-		    	Citizen.Trace("PAS CHARGE")
 			end
 
 			Blanchisseur = CreatePed(5, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
-			Citizen.Trace("BLANCHISSEUR : ID : "..tostring(Blanchisseur))
 	        SetEntityAsMissionEntity(Blanchisseur, true, true)
 	        SetEntityInvincible(Blanchisseur, true)
 
