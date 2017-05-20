@@ -69,8 +69,8 @@ AddEventHandler("item:sell", function(id, qty, price)
         if not(ill) then
             user:addMoney(tonumber(price))
         else
-            RconPrint(price)
-            user:addDirtyMoney(tonumber(price))
+            local divisepardeux = tonumber(price) / 2
+            user:addDirtyMoney(tonumber(divisepardeux))
         end
     end)
 end)
