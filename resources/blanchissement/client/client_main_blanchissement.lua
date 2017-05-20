@@ -45,7 +45,6 @@ Citizen.CreateThread(function()
 	local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, 100.0)
 
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		Citizen.Trace(tostring(isTrevor))
 		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ))
 		Citizen.Trace(isPed)
 		if not(isPed) then
