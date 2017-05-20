@@ -46,9 +46,7 @@ Citizen.CreateThread(function()
 
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
 		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ), radius)
-		Citizen.Trace("ISPED ?  "..tostring(isPed)) -- false
 		if not(isPed) then
-			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
 
 				
 			blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
@@ -62,8 +60,8 @@ Citizen.CreateThread(function()
 
     	if isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
     		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 1)
-	    	if IsControlJustPressed(1, Keys['E']) and not(alreadySend) then
-	    		DrawMissionText("TESTESTSETSET", 5000)
+	    	if IsControlJustPressed(1, Keys['E']) then
+	    		DrawMissionText("TESTESTSETSETALALALALALALALALALALALALALAALALALLALALALALALALALLALALALAL", 5000)
 
 	    		TriggerServerEvent("blanchissement:sendblanchissement")
 
