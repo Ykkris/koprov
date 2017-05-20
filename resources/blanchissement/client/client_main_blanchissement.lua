@@ -155,46 +155,47 @@ AddEventHandler("blanchissement:notification", function(text)
 end)
 
 AddEventHandler("blanchissement:mission", function()  -- le joueur à été séléctionné par le serveur
-	local time = os.clock()
-	DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Dépêche toi de venir, je t'envois les données GPS. Dans 15 minutes j'me casse avec le sac.", 20000)
-	local random = maths.random(1 , 3)
-	local zoneRecupRandom = zoneRecuperation[random]
+		local time = os.clock()
+		DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Dépêche toi de venir, je t'envois les données GPS. Dans 15 minutes j'me casse avec le sac.", 20000)
+		local random = maths.random(1 , 3)
+		local zoneRecupRandom = zoneRecuperation[random]
 
-	Blipvariable = AddBlipForCoord(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z)
-	N_0x80ead8e2e1d5d52e(Blipvariable)
-	SetBlipRoute(Blipvariable, 1)
-	SetBlipRouteColour(Blipvariable, 59)
+		Blipvariable = AddBlipForCoord(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z)
+		N_0x80ead8e2e1d5d52e(Blipvariable)
+		SetBlipRoute(Blipvariable, 1)
+		SetBlipRouteColour(Blipvariable, 59)
 
-	Citizen.CreateThread(function()
+		Citizen.CreateThread(function()
 
 
-		if isNearArea(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z) then
-			sac = CreateObject(modelHash, zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, true, 1, 1)
-			PlaceObjectOnGroundProperly(sac)
+			if isNearArea(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z) then
+				sac = CreateObject(modelHash, zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, true, 1, 1)
+				PlaceObjectOnGroundProperly(sac)
 
-			RequestModel(GetHashKey("prop_money_bag_01"))
-			while HasModelLoaded(GetHashKey("prop_money_bag_01")) do
-				Wait(10)
+				RequestModel(GetHashKey("prop_money_bag_01"))
+				while HasModelLoaded(GetHashKey("prop_money_bag_01")) do
+					Wait(10)
+				end
+
+				sac = CreateAmbientPickup(GetHashKey("PICKUP_MONEY_MED_BAG"), zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, 0, 0, GetHashKey("prop_money_bag_01"), 0, 1)
+				
+				--CreatePickup(GetHashKey('prop_money_bag_01'), location.x, location.y, location.z)
+				while not(HasPickupBeenCollected(sac)) or ((os.clock() - time) > 900) do
+					Wait(10)
+				end
+
+				if ((os.clock() - time) > 900) then
+					DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Trop tard, j'me tire avec le sac.", 10000)
+				else
+					TriggerServerEvent("mission:sendmoney")
+				end
+
+				if Blipvariable ~= nil and DoesBlipExist(Blipvariable) then
+					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
+					Blipvariable = nil
+				end
 			end
-
-			sac = CreateAmbientPickup(GetHashKey("PICKUP_MONEY_MED_BAG"), zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, 0, 0, GetHashKey("prop_money_bag_01"), 0, 1)
-			
-			--CreatePickup(GetHashKey('prop_money_bag_01'), location.x, location.y, location.z)
-			while not(HasPickupBeenCollected(sac)) or ((os.clock() - time) > 900) do
-				Wait(10)
-			end
-
-			if ((os.clock() - time) > 900 then
-				DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Trop tard, j'me tire avec le sac.", 10000)
-			else
-				TriggerServerEvent("mission:sendmoney")
-			end
-
-			if Blipvariable ~= nil and DoesBlipExist(Blipvariable) then
-				Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
-				Blipvariable = nil
-			end
-		end
+		end)
 	end)
 end)
 
