@@ -17,18 +17,20 @@ MySQL:open(database.host, database.name, database.username, database.password)
 
 tempsEntreChaqueMission = 2400000 -- 40 minutes (en ms)
 tempsEntreLeDepotEtLaPaye = 10800 -- 3 h (en secondes)
+first = false
 
-AddEventHandler("onResourceStart", function(resource)
-	if resource == "blanchissement" then
+AddEventHandler('onResourceStart', function(resource)
+	if not(first) and resource == "blanchissement" then
+		first = true
 		BlanchissementRandom()
 	end
 end)
 
 RegisterServerEvent("mission:sendmoney")
 AddEventHandler("mission:sendmoney", function()
-	TriggerEvent("getPlayerFromId", source, funtion(user)
+	TriggerEvent("es:getPlayerFromId", source, function(user)
 		local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
-		
+
 	    local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 		money = tonumber(resultat[1].dirty_money)
 		local rargent
@@ -38,20 +40,20 @@ AddEventHandler("mission:sendmoney", function()
 	 	if policier > 5 then 
 	 		rargent = money
 	 	else
-	 		rargent = money * Policier[nombrePolicier]
+	 		rargent = money * Policier[policier]
 	 	end
 
 	 	user:addMoney(rargent)
 	 	TriggerClientEvent("blanchissement:notification", source, "Tiens, allez casse toi p'tite merde !")
 	 end)
 
-end)
+end) 
 
 
 RegisterServerEvent("blanchissement:sendblanchissement")
-AddEventHAndler("blanchissement:sendblanchissement", function()
+AddEventHandler("blanchissement:sendblanchissement", function()
 
-	TriggerEvent("getPlayerFromId", source,function(user)
+	TriggerEvent("es:getPlayerFromId", source,function(user)
 
 		local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
     	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
@@ -95,18 +97,20 @@ function CalculMoney(bargent)
 	local multiplicateur = maths.random(Pallier[pallier], Pallier[pallier+1])
 
 	--if nombrePolicier == 0 then
-	return (bargent * multiplicateur)/100) --* 0.5
+	return ((bargent * multiplicateur)/100) --* 0.5
 	--else
 		--return (((bargent * multiplicateur)/100) * Policier[nombrePolicier])
 	--end
-end
+end --]]
 
 function BlanchissementRandom()
 	isInWait = false
 	isWaitingForLong = false
 	found = false
 
+
 	TriggerEvent("es:getPlayers", function(Users)
+
 		for k,v in pairs(Users) do
 
 			sargent = IsInWait(Users[k])
@@ -122,8 +126,8 @@ function BlanchissementRandom()
 
 		end
 	end)
-	SetTimeout(tempsEntreChaqueMission, BlanchissementRandom())
-end
+	SetTimeout(tempsEntreChaqueMission, BlanchissementRandom)
+end 
 
 function IsInWait(player)
 
@@ -150,14 +154,14 @@ function IsWaitingForLong(player)
     	return false
     end
 
-end
+end 
 
 function NombrePolicier()
 	local policier = 0
 	TriggerEvent("es:getPlayers", function(Users)
 		if Users==nil then return 0
 		else --2
-			for k,v in pairs(Users) -- Cela peut être optimisée en récupérant tous les identifier dont le job est 2 puis de faire une boucle qui va vérifier en interne (une seule requete au lieu de 1 jusqu'a 24) mais elle ne va se faire qu'une fois toutes les 20 minutes alors balek
+			for k,v in pairs(Users) do-- Cela peut être optimisée en récupérant tous les identifier dont le job est 2 puis de faire une boucle qui va vérifier en interne (une seule requete au lieu de 1 jusqu'a 24) mais elle ne va se faire qu'une fois toutes les 20 minutes alors balek
 				local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = Users[k].identifier })
 	    		local resultat = MySQL:getResults(req, {'job'}, "identifier")
 	    		if resultat[1].job == 2 then
@@ -170,4 +174,4 @@ function NombrePolicier()
 
 	end)
 	return policier
-end
+end 
