@@ -99,12 +99,12 @@ function Player:setDirtyMoney(m) --Setting the dirty money
 	self.dirty_money = m
 
 	if((prevMoney - newMoney) < 0)then
-		TriggerClientEvent("es:addeddMoney", self.source, math.abs(prevMoney - newMoney))
+		TriggerClientEvent("es:addedDirtyMoney", self.source, math.abs(prevMoney - newMoney))
 	else
-		TriggerClientEvent("es:removeddMoney", self.source, math.abs(prevMoney - newMoney))
+		TriggerClientEvent("es:removedDirtyMoney", self.source, math.abs(prevMoney - newMoney))
 	end
 
-	TriggerClientEvent('es:activatedMoney', self.source , self.dirty_money)
+	TriggerClientEvent('es:activateDirtyMoney', self.source , self.dirty_money)
 end
 
 function Player:addDirtyMoney(m) --Add dirty money to the player
@@ -112,8 +112,8 @@ function Player:addDirtyMoney(m) --Add dirty money to the player
 
 	self.dirty_money = newMoney
 
-	TriggerClientEvent("es:addeddMoney", self.source, m)
-	TriggerClientEvent('es:activatedMoney', self.source , self.dirty_money)
+	TriggerClientEvent("es:addedDirtyMoney", self.source, m)
+	TriggerClientEvent('es:activateDirtyMoney', self.source , self.dirty_money)
 end
 
 function Player:removeDirtyMoney(m) --Remove dirty money from the player
@@ -121,6 +121,6 @@ function Player:removeDirtyMoney(m) --Remove dirty money from the player
 
 	self.dirty_money = newMoney
 
-	TriggerClientEvent("es:removeddMoney", self.source, m)
-	TriggerClientEvent('es:activatedMoney', self.source , self.dirty_money)
+	TriggerClientEvent("es:removedDirtyMoney", self.source, m)
+	TriggerClientEvent('es:activateDirtyMoney', self.source , self.dirty_money)
 end
