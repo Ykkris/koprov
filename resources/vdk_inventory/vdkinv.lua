@@ -30,12 +30,8 @@ end)
 AddEventHandler("player:receiveItem", function(item, quantity)
     item = tonumber(item)
     if (ITEMS[item] == nil) then
-	Citizen.Trace(item.. " ITEM NIL")
-	Citizen.Trace(quantity)
         new(item, quantity)
     else
-	Citizen.Trace(item.. "  ITEM NON NIL")
-	Citizen.Trace(quantity)
         add({ item, quantity })
     end
 end)
