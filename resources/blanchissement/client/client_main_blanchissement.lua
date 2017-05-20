@@ -66,3 +66,7 @@ function IsSpecificPedHashNearPed(player, modelhash)
 	end
 
 end
+
+function CreatePedWithHashAtCoordsAndReturn(hash)
+	
+end
