@@ -61,7 +61,7 @@ Citizen.CreateThread(function()
     	end
 
     	if isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
-    		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 3000)
+    		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 1)
 	    	if IsControlJustPressed(1, Keys['E']) and not(alreadySend) then
 	    		DrawMissionText("TESTESTSETSET", 5000)
 
