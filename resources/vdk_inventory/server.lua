@@ -84,6 +84,7 @@ function isIllegal(id)
             RconPrint(tostring(result[i].id))
             if id == result[i].id then
                 ill = true
+                return ill
                 
             end
         end
