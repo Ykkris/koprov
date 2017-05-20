@@ -24,16 +24,16 @@ Citizen.CreateThread(function()
 		    	Citizen.Trace("PAS CHARGE")
 			end
 
-		Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
-	        SetEntityAsMissionEntity(Blanchisseur, true, true)
-	        SetEntityInvincible(Blanchisseur, true)
+			Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
+			SetEntityAsMissionEntity(Blanchisseur, true, true)
+			SetEntityInvincible(Blanchisseur, true)
 		
-		isTrevor = false
+			isTrevor = false
+		end
     	end
 
-	end
-
 end)
+
 
 function isNear(player) -- on créer une fonction auxilliaire qu'on pourra ré-utiliser
 
