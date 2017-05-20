@@ -30,8 +30,8 @@ Citizen.CreateThread(function()
 				SendNUIMessage({
 					setmoney = true,
 					money = cashy,
-					setdirtymoney = true,
-					dirtymoney = 0
+					setDirty_money = true,
+					dirty_money = cashy
 				})
 
 				loaded = false
