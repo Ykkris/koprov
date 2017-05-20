@@ -33,6 +33,9 @@
 						$(element).fadeOut(600, function() { $(this).remove(); })
 					}, 1000)
 				}
+				if(item.setDirty_money == true)
+					document.getElementById("dirty_cash").innerHTML = "<div><font style='color: rgb(125, 0, 0); font-weight: 700; margin-right: 6px;'>" + moneyIcon + "</font>" + addCommas(item.dirty_money);
+				
 				if(item.adddirtycash == true){
 					$(".tiny").remove();
 
@@ -68,7 +71,7 @@
 				}
 				if(item.setDisplay == true){
 					$("#money").css('opacity', item.display)
-					$("#dirtymoney").css('opacity', item.display)
+					$("#dirty_money").css('opacity', item.display)
 				}
 			})
 		}
