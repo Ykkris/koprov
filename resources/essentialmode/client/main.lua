@@ -87,16 +87,16 @@ end)
 RegisterNetEvent('es:activateDirtyMoney')
 AddEventHandler('es:activateDirtyMoney', function(e)
 	SendNUIMessage({
-		setDirty_money = true,
-		dirty_money = e
+		setdirtymoney = true,
+		dirtymoney = e
 	})
 end)
 
 RegisterNetEvent("es:addedDirtyMoney")
 AddEventHandler("es:addedDirtyMoney", function(m)
 	SendNUIMessage({
-		addDirty_cash = true,
-		dirty_money = m
+		adddirtycash = true,
+		dirtymoney = m
 	})
 
 end)
@@ -104,8 +104,8 @@ end)
 RegisterNetEvent("es:removedDirtyMoney")
 AddEventHandler("es:removedDirtyMoney", function(m)
 	SendNUIMessage({
-		removeDirty_cash = true,
-		dirty_money = m
+		removedirtycash = true,
+		dirtymoney = m
 	})
 end)
 
