@@ -14,13 +14,9 @@ Citizen.CreateThread(function()
 	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
 
 	local isPlayerNear = IsNear(GetPlayerPed(-1))
-	Citizen.Trace(tostring(isPlayerNear)
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		Citizen.Trace(tostring(isTrevor))
 		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ))
 		if not(isPed) then
-			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
-			if not(isTrevor) then
 				RequestModel( GetHashKey( "a_f_y_hippie_01" ) )
 				hash = GetHashKey( "a_f_y_hippie_01" )
 
@@ -38,7 +34,6 @@ Citizen.CreateThread(function()
 	    	end
     	end
 
-	end
 
 end)
 
