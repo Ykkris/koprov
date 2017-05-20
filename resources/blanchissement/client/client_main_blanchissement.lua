@@ -25,9 +25,9 @@ Keys = {
 
 zoneBlanchissement = {x = 3597.546, y = 3678.030  , z = 39.808}
 zoneRecuperation = {
-	{x = , y = , z = },
-	{x = , y = , z = },
-	{x = , y = , z = }
+	{x = 10.0, y = 20.0, z = 30.0},
+	{x = 10.0, y = 20.0, z = 30.0},
+	{x = 10.0, y = 20.0, z = 30.0}
 }
 radius = 100.0
 isPed = false
@@ -42,10 +42,10 @@ Citizen.CreateThread(function()
 
 	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
 
-	local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, 100.0)
+	local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, radius)
 
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ), 100.0)
+		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ), radius)
 		Citizen.Trace(isPed)
 		if not(isPed) then
 			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
