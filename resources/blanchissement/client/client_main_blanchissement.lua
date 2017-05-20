@@ -42,7 +42,7 @@ Citizen.CreateThread(function()
 
 	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
 
-	local isPlayerNear = IsNearPedFromPointWithRadius(GetPlayerPed(-1), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 100.0)
+	local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, 100.0)
 
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
 		Citizen.Trace(tostring(isTrevor))
@@ -98,7 +98,7 @@ end)
 function IsNear(player, point, radius) -- on créer une fonction auxilliaire qu'on pourra ré-utiliser
 
 	local playerCoords =  GetEntityCoords(player, true) -- true pour alive, sinon false qui renvois un Vecteur3 : c'est un array
-	local distance = GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z , true) -- onrécupère la distance entre le joueur et le point de blanchissement
+	local distance = GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, point.x, point.y, point.z , true) -- onrécupère la distance entre le joueur et le point de blanchissement
 
 	if distance < radius then -- Si la distance est plus petite que le rayon alors true ou false
 		return true
