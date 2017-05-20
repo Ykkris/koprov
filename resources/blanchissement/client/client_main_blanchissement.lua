@@ -24,7 +24,7 @@ Citizen.CreateThread(function()
 		    	Citizen.Trace("PAS CHARGE")
 			end
 
-			Blanchisseur = CreatePed(28, hash, zoneBlanchissement, 0.0 ,true)
+			Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
 	        SetEntityAsMissionEntity(Blanchisseur, true, true)
 	        SetEntityInvincible(Blanchisseur, true)
     	end
@@ -36,7 +36,7 @@ end)
 function isNear(player) -- on créer une fonction auxilliaire qu'on pourra ré-utiliser
 
 	local playerCoords =  GetEntityCoords(player, true) -- true pour alive, sinon false qui renvois un Vecteur3 : c'est un array
-	local distance = GetDistanceBetweenCoords(playerCoords, zoneBlanchissement, true) -- onrécupère la distance entre le joueur et le point de blanchissement
+	local distance = GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z , true) -- onrécupère la distance entre le joueur et le point de blanchissement
 
 	if distance < radius then -- Si la distance est plus petite que le rayon alors true ou false
 		return true
