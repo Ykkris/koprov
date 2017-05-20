@@ -55,6 +55,7 @@ function IsNeari()
         		local distance_seller = GetDistanceBetweenCoords(item.sx, item.sy, item.sz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
         		
         		if (distance_field <= recoltDistance) then
+					Citizen.Trace("Near Recolt i " .. tostring(item).. " " .. tostring(k))
         					--jobId = k
         			return 'field', item
         		elseif (distance_treatment <= recoltDistance) then
@@ -101,6 +102,7 @@ function recolt(text, item, rl)
     if (text == 'Récolte') then
         TriggerEvent("mt:missiontext", text .. ' en cours de ~g~' .. tostring(item.raw_item) .. '~s~...', timeForRecolt - 800)
         Citizen.Wait(timeForRecolt - 800)
+	
         TriggerEvent("player:receiveItem", tonumber(item.raw_id), 1)
         TriggerEvent("mt:missiontext", rl .. ' ~g~' .. tostring(item.raw_item) .. '~s~...', 800)
     elseif (text == 'Traitement') then
@@ -152,6 +154,7 @@ Citizen.CreateThread(function()
         neari, itemi = IsNeari()
         if (exports.vdk_inventory:notFull() == true) then
             if (near == 'field' and exports.vdk_inventory:getQuantity(item.raw_id) < item.raw_lim ) then
+		ShowNotification(item)
                 recolt('Récolte', item, '+1')
             elseif (near == 'treatment' and exports.vdk_inventory:getQuantity(item.raw_id) > 0 and exports.vdk_inventory:getQuantity(item.treat_id) < item.treat_lim) then
                 recolt('Traitement', item, '+1')
@@ -185,4 +188,10 @@ end)
 
 function Chat(debugg)
     TriggerEvent("chatMessage", '', { 0, 0x99, 255 }, tostring(debugg))
+end
+
+function ShowNotification(message)
+	SetNotificationTextEntry("STRING")
+	AddTextComponentString(message)
+	DrawNotification(false, false)
 end
