@@ -47,18 +47,17 @@ Citizen.CreateThread(function()
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
 		Citizen.Trace(tostring(isTrevor))
 		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ))
+		Citizen.Trace(isPed)
 		if not(isPed) then
 			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
-			if not(isTrevor) then
 				
-				blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
+			blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
 
-		        SetEntityAsMissionEntity(blanchisseuse, true, true)
-		        SetEntityInvincible(blanchisseuse, true)
-		        SetEntityProofs(blanchisseuse, 1, 1, 1, 1, 1, 1, 1, 1)
+		    SetEntityAsMissionEntity(blanchisseuse, true, true)
+		    SetEntityInvincible(blanchisseuse, true)
+		    SetEntityProofs(blanchisseuse, 1, 1, 1, 1, 1, 1, 1, 1)
 
 		        -- GetClosestPed(x, y, z, radius, p4, p5, outPed, p7, p8, pedType)
-	    	end
     	end
 
     	if IsNearPedFromPointWithRadius(GetPlayerPed(-1), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
