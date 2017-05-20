@@ -45,12 +45,12 @@ Citizen.CreateThread(function()
 	local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, 100.0)
 
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ))
+		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ), 100.0)
 		Citizen.Trace(isPed)
 		if not(isPed) then
 			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
 				
-			blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
+			blanchisseuse = CreatePedWithHashAtCoordsAndReturn(GetHashKey("a_f_y_hippie_01"), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
 
 		    SetEntityAsMissionEntity(blanchisseuse, true, true)
 		    SetEntityInvincible(blanchisseuse, true)
@@ -106,7 +106,7 @@ function IsNear(player, point, radius) -- on créer une fonction auxilliaire qu'
 	end
 end 
 
-function IsSpecificPedHashNearPed(player, modelhash)
+function IsSpecificPedHashNearPed(player, modelhash, radius)
 	local playerCoords = GetEntityCoords(player, true)
 	local ped = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, radius, 1, 0, 0, 0, -1)
 
@@ -124,9 +124,9 @@ function IsSpecificPedHashNearPed(player, modelhash)
 
 end
 
-function CreatePedWithHashAtCoordsAndReturn(model, x, y, z)
-    RequestModel( GetHashKey( model) )
-    hash = GetHashKey( model)
+function CreatePedWithHashAtCoordsAndReturn(modelhash, x, y, z)
+    RequestModel( modelhash)
+    hash = GetHashKey( modelhash)
     local i = 0
     while not HasModelLoaded(hash) and i <= 5 do -- On attend qu'il finisse de charger le modèle
         Wait(200)
