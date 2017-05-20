@@ -92,7 +92,7 @@ function Player:getSessionVar(key)
 	return self.session[key]
 end
 
-function Player:setDirtyMoney(m) --Setting the dirty money
+function Player:setDirty_Money(m)
 	local prevMoney = self.dirty_money
 	local newMoney : double = m
 
@@ -107,7 +107,8 @@ function Player:setDirtyMoney(m) --Setting the dirty money
 	TriggerClientEvent('es:activateDirtyMoney', self.source , self.dirty_money)
 end
 
-function Player:addDirtyMoney(m) --Add dirty money to the player
+-- Adds to player dirty money (required to call this from now)
+function Player:addDirty_Money(m)
 	local newMoney : double = self.dirty_money + m
 
 	self.dirty_money = newMoney
@@ -116,7 +117,7 @@ function Player:addDirtyMoney(m) --Add dirty money to the player
 	TriggerClientEvent('es:activateDirtyMoney', self.source , self.dirty_money)
 end
 
-function Player:removeDirtyMoney(m) --Remove dirty money from the player
+function Player:removeDirty_Money(m)
 	local newMoney : double = self.dirty_money - m
 
 	self.dirty_money = newMoney
