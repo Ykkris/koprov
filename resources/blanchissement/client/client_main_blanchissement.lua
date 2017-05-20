@@ -196,8 +196,8 @@ AddEventHandler("blanchissement:mission", function()  -- le joueur à été sél
 				end
 			end
 		end)
-	end)
 end)
+
 
 function isNearArea(x,y,z,radius) -- Je ne vais pas utiliser le z finalement, à voir
 	local coords_player = GetEntityCoords(GetPlayerPed(-1), true)
