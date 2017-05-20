@@ -64,10 +64,10 @@ AddEventHandler("blanchissement:sendblanchissement", function()
 
     	local time = os.time()
 
-    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money' WHERE identifier = '@identifier' ",
-					{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney,['@identifier'] = user.identifier})
+    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
+					{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = 0,['@identifier'] = user.identifier})
 
-
+    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
 
 	end)
 
