@@ -157,7 +157,7 @@ end)
 AddEventHandler("blanchissement:mission", function()  -- le joueur à été séléctionné par le serveur
 	local time = os.clock()
 	DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Dépêche toi de venir, je t'envois les données GPS. Dans 15 minutes j'me casse avec le sac.", 20000)
-	lcoal random = maths.random(1 , 3)
+	local random = maths.random(1 , 3)
 	local zoneRecupRandom = zoneRecuperation[random]
 
 	Blipvariable = AddBlipForCoord(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z)
