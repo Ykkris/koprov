@@ -41,6 +41,14 @@ AddEventHandler('playerConnecting', function(name, setCallback)
 	end
 end)
 
+AddEventHandler('es:playerLoaded', function(source)
+	-- Get the players money amount
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+	user:setMoney((user.money))
+	user:setDirty_Money((user.dirty_money))
+	end)
+end)
+
 AddEventHandler('playerDropped', function()
 	if(Users[source])then
 		TriggerEvent("es:playerDropped", Users[source])
