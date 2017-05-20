@@ -14,7 +14,7 @@ Citizen.CreateThread(function()
 	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
 
 	local isPlayerNear = isNear(GetPlayerPed(-1))
-	Citizen.Trace(tostring(isPlayerNear)
+	Citizen.Trace(tostring(isPlayerNear))
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
 		Citizen.Trace(tostring(isTrevor))
 
