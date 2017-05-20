@@ -65,6 +65,7 @@ AddEventHandler("item:sell", function(id, qty, price)
 
         local player = user.identifier
         MySQL:executeQuery("UPDATE user_inventory SET `quantity` = @qty WHERE `user_id` = '@username' AND `item_id` = @id", { ['@username'] = player, ['@qty'] = tonumber(qty), ['@id'] = tonumber(id) })
+        
         if not(ill) then
             user:addMoney(tonumber(price))
         else
@@ -79,6 +80,7 @@ function isIllegal(id)
         local result = MySQL:getResults(executed_query, {'id'}, "illegal")
       local ill = false
         for i=1, #result, 1 do
+            RconPrint(tostring(result[i].id))
             if id == result[i].id then
                 ill = true
             end
