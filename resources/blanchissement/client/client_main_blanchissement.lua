@@ -6,7 +6,7 @@
 ------
 zoneBlanchissement = {x = 3597.546, y = 3678.030  , z = 39.808}
 radius = 100.0
-isTrevor = false
+isTrevor = true
 
 
 
@@ -24,9 +24,11 @@ Citizen.CreateThread(function()
 		    	Citizen.Trace("PAS CHARGE")
 			end
 
-			Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
+		Blanchisseur = CreatePed(28, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
 	        SetEntityAsMissionEntity(Blanchisseur, true, true)
 	        SetEntityInvincible(Blanchisseur, true)
+		
+		isTrevor = false
     	end
 
 	end
