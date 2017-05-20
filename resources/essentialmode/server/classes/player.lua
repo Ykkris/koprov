@@ -24,7 +24,6 @@ setmetatable(Player, {
 		return setmetatable(pl, Player)
 	end
 })
-
 -- Getting permissions
 function Player:getPermissions()
 	return self.permission_level
@@ -117,6 +116,7 @@ function Player:addDirty_Money(m)
 	TriggerClientEvent('es:activateDirtyMoney', self.source , self.dirty_money)
 end
 
+-- Removes from player dirty money (required to call this from now)
 function Player:removeDirty_Money(m)
 	local newMoney : double = self.dirty_money - m
 
@@ -125,3 +125,4 @@ function Player:removeDirty_Money(m)
 	TriggerClientEvent("es:removedDirtyMoney", self.source, m)
 	TriggerClientEvent('es:activateDirtyMoney', self.source , self.dirty_money)
 end
+--=============End Dirty money stuff=====================
