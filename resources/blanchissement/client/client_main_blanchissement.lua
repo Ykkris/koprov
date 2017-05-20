@@ -31,6 +31,10 @@ Citizen.CreateThread(function()
 			Blanchisseur = CreatePed(5, hash, zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.y, 0.0 ,true)
 	        SetEntityAsMissionEntity(Blanchisseur, true, true)
 	        SetEntityInvincible(Blanchisseur, true)
+				
+			outped, t = GetClosestPed(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, radius, 0, 0, 0, 0, 5)
+		Citizen.Trace(tostring(outped))
+		Citizen.Trace(tostring(t))
 
 	        -- GetClosestPed(x, y, z, radius, p4, p5, outPed, p7, p8, pedType)
     	end
