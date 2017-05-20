@@ -46,11 +46,10 @@ Citizen.CreateThread(function()
 
 	if isPlayerNear then -- Donc s'il est bien à côté alors :
 		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ), radius)
-		Citizen.Trace(tostring(isPed))
+		Citizen.Trace("ISPED ?  "..tostring(isPed))
 		if not(isPed) then
 			local ped = GetClosestPed(coords, 20.0, 1, 0, 0, 0, -1)
 
-			Citizen.Trace("TU ME VOIS OU PAS YKKRISSSSSS ????")
 				
 			blanchisseuse = CreatePedWithHashAtCoordsAndReturn(GetHashKey("a_f_y_hippie_01"), zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
 
@@ -110,16 +109,17 @@ end
 function IsSpecificPedHashNearPed(player, modelhash, radius)
 	Citizen.Trace(tostring(modelhash))
 	local playerCoords = GetEntityCoords(player, true)
-	local ped, t = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, radius, 1, 0, 0, 0, -1)
-
-	Citizen.Trace(tostring(ped))
-	Citizen.Trace(tostring(t))
+ 	local Count , entity1 = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, 99.99,1,1,0)
+	Citizen.Trace("COUNT :  "..tostring(Count))
+	Citizen.Trace("ENTITY1:  "..tostring(entity1))
 
 	if ped == nil then
 		return false
 	end
 
 	local isSpecificPed = IsPedModel(ped, modelhash)
+
+	Citizen.Trace("ISSPECIFICPED :  "..tostring(isSpecificPed))
 
 	if isSpecificPed then
 		return true
@@ -143,7 +143,7 @@ function CreatePedWithHashAtCoordsAndReturn(modelhash, x, y, z)
     else
         local Ped = CreatePed(5, hash, x, y, z, 0.0 ,true)
     end
-
+    Citizen.Trace("PED :  "..tostring(Ped))
     return Ped
 end
 
