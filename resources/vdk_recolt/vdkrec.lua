@@ -100,6 +100,8 @@ end
 -- Display the message of recolting/treating/selling and trigger the associated event(s)
 function recolt(text, item, rl)
     if (text == 'Récolte') then
+	ShowNotification(tostring(item.raw_item))
+	ShowNotification(tostring(item.raw_id))
         TriggerEvent("mt:missiontext", text .. ' en cours de ~g~' .. tostring(item.raw_item) .. '~s~...', timeForRecolt - 800)
         Citizen.Wait(timeForRecolt - 800)
 	
@@ -154,7 +156,6 @@ Citizen.CreateThread(function()
         neari, itemi = IsNeari()
         if (exports.vdk_inventory:notFull() == true) then
             if (near == 'field' and exports.vdk_inventory:getQuantity(item.raw_id) < item.raw_lim ) then
-		ShowNotification(item)
                 recolt('Récolte', item, '+1')
             elseif (near == 'treatment' and exports.vdk_inventory:getQuantity(item.raw_id) > 0 and exports.vdk_inventory:getQuantity(item.treat_id) < item.treat_lim) then
                 recolt('Traitement', item, '+1')
