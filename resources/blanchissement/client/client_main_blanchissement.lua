@@ -30,7 +30,7 @@ Citizen.CreateThread(function()
 			Citizen.Trace("BLANCHISSEUR : ID : "..tostring(Blanchisseur))
 	        SetEntityAsMissionEntity(Blanchisseur, true, true)
 	        SetEntityInvincible(Blanchisseur, true)
-		Wait(10000)
+		Citizen.Wait(10000)
     	end
 
 	end
