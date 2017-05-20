@@ -84,6 +84,31 @@ AddEventHandler("es:removedMoney", function(m)
 	})
 end)
 
+RegisterNetEvent('es:activateDirtyMoney')
+AddEventHandler('es:activateDirtyMoney', function(e)
+	SendNUIMessage({
+		setDirty_money = true,
+		dirty_money = e
+	})
+end)
+
+RegisterNetEvent("es:addedDirtyMoney")
+AddEventHandler("es:addedDirtyMoney", function(m)
+	SendNUIMessage({
+		addDirty_cash = true,
+		dirty_money = m
+	})
+
+end)
+
+RegisterNetEvent("es:removedDirtyMoney")
+AddEventHandler("es:removedDirtyMoney", function(m)
+	SendNUIMessage({
+		removeDirty_cash = true,
+		dirty_money = m
+	})
+end)
+
 RegisterNetEvent("es:setMoneyDisplay")
 AddEventHandler("es:setMoneyDisplay", function(val)
 	SendNUIMessage({
@@ -109,28 +134,3 @@ AddEventHandler("es:enablePvp", function()
 	end)
 end)
 
-
-RegisterNetEvent('es:activatedirtyMoney')
-AddEventHandler('es:activatedirtyMoney', function(e)
-	SendNUIMessage({
-		setdirtymoney = true,
-		dirtymoney = e
-	})
-end)
-
-RegisterNetEvent("es:addeddirtyMoney")
-AddEventHandler("es:addeddirtyMoney", function(m)
-	SendNUIMessage({
-		adddirtycash = true,
-		dirtymoney = m
-	})
-
-end)
-
-RegisterNetEvent("es:removeddirtyMoney")
-AddEventHandler("es:removeddirtyMoney", function(m)
-	SendNUIMessage({
-		removedirtycash = true,
-		dirtymoney = m
-	})
-end)
