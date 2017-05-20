@@ -66,6 +66,7 @@ Citizen.CreateThread(function()
 	    		TriggerServerEvent("blanchissement:sendblanchissement")
 
 	    		while not(received) do
+	    			Citizen.Trace("T'es dans le WHILE OU PAS ?")
 	    			Wait(1000)
 	    		end
 
