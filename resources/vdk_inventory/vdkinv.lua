@@ -15,6 +15,8 @@ RegisterNetEvent("player:looseItem")
 RegisterNetEvent("player:receiveItem")
 RegisterNetEvent("player:sellItem")
 
+usableItems = {1,2,3} -- lister ici les id des items usable, c'est un exemple pour le 1,2,3, plus tard on pourra les récup direct dans le BDD
+
 -- handles when a player spawns either from joining or after death
 AddEventHandler("playerSpawned", function()
     TriggerServerEvent("item:getItems")
@@ -69,6 +71,15 @@ function delete(arg)
     InventoryMenu()
 end
 
+function use(arg)
+    local itemId = tonumber(arg[1])
+    local qty = arg[2]
+    local item = ITEMS[itemId]
+    item.quantity = item.quantity - qty
+    TriggerServerEvent("item:updateQuantity", item.quantity, itemId)
+    InventoryMenu()
+end
+
 function add(arg)
     local itemId = tonumber(arg[1])
     local qty = arg[2]
@@ -111,8 +122,18 @@ function InventoryMenu()
 end
 
 function ItemMenu(itemId)
+    found = false
     MenuTitle = "Details:"
     ClearMenu()
+    for i in usableItems do
+	if i == itemId then
+            Menu.addButton("Utiliser", "use", {itemId, 1})
+	    found = true
+	end
+        if found then
+	    break
+	end
+    end
     Menu.addButton("Supprimer 1", "delete", { itemId, 1 })
     Menu.addButton("Donner", "give", itemId)
 end
