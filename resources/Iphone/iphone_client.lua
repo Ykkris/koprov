@@ -593,8 +593,12 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 		PlayEmote("rcmnigel1bnmt_1b", "dance_loop_tyler", 32, 1 ,0 , 1)	
 	elseif id == 5 then    
 		PlayEmote("amb@world_human_cheering@male_a", "base", 32, 1, 0, 0) -- applause loud
-	elseif id == 6 then  
+	elseif id == 6 then    
 		TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_SMOKING", 0, true)
+		if IsControlJustPressed(1, 38) then
+			ClearPedTasksImmediately(GetPlayerPed(-1))
+			drawNotification("La voiture est maintenant ~g~ouverte~w~.")
+		end
 	elseif id == 7 then    
 		PlayEmote("amb@world_human_cheering@male_e", "base", 120, 1, 0, 0) -- applause calm
 	elseif id == 8 then    
