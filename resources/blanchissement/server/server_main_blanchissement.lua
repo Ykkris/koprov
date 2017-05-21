@@ -65,7 +65,7 @@ AddEventHandler("blanchissement:sendblanchissement", function()
 	    	local time = os.clock()
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 						{['@dirty_time'] = time , ['@dirty_wait_money'] = argent, ['@dirty_money'] = "0",['@identifier'] = identifier})
-	    	user:addDirty_Money(tonumber(0))
+	    	setDirty_Money(tonumber(0)) ---<<<< non je ne suis pas un troll, je met bel et bien 0 en nombre é_é
 
 	    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
 
