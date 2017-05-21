@@ -1,3 +1,17 @@
+local options = {
+    x = 0.1,
+    y = 0.2,
+    width = 0.2,
+    height = 0.04,
+    scale = 0.4,
+    font = 0,
+    menu_title = "Hangar",
+    menu_subtitle = "Camions",
+    color_r = 30,
+    color_g = 144,
+    color_b = 255,
+}
+
 function LocalPed()
 	return GetPlayerPed(-1)
 end
@@ -82,7 +96,7 @@ Citizen.CreateThread(function()
 		elseif (GetDistanceBetweenCoords(-14.61, -2658.18, 6.00, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
 				Menu.hidden = not Menu.hidden
 		end
-		Menu.renderGUI()
+		Menu.renderGUI(options)
 	end
 end)
 

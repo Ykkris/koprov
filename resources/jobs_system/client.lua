@@ -15,6 +15,20 @@ local jobs = {
 
 isopen = false
 
+local options = {
+    x = 0.1,
+    y = 0.2,
+    width = 0.2,
+    height = 0.04,
+    scale = 0.4,
+    font = 0,
+    menu_title = "Pole Emploi",
+    menu_subtitle = "Metiers",
+    color_r = 30,
+    color_g = 144,
+    color_b = 255,
+}
+
 ---------------------------------- FUNCTIONS ----------------------------------
 
 function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
@@ -102,6 +116,6 @@ Citizen.CreateThread(function()
           Menu.hidden = not Menu.hidden
           menuJobs()
     end
-    Menu.renderGUI()
+    Menu.renderGUI(options)
   end
 end)

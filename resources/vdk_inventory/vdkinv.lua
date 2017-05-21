@@ -3,6 +3,19 @@ ITEMS = {}
 -- multiple runs of player dead code
 local playerdead = false
 local maxCapacity = 60
+local options = {
+    x = 0.1,
+    y = 0.2,
+    width = 0.2,
+    height = 0.04,
+    scale = 0.4,
+    font = 0,
+    menu_title = "Inventaire",
+    menu_subtitle = "Categories",
+    color_r = 30,
+    color_g = 144,
+    color_b = 255,
+}
 
 -- register events, only needs to be done once
 RegisterNetEvent("item:reset")
@@ -167,7 +180,7 @@ Citizen.CreateThread(function()
             InventoryMenu() -- Menu to draw
             Menu.hidden = not Menu.hidden -- Hide/Show the menu
         end
-        Menu.renderGUI() -- Draw menu on each tick if Menu.hidden = false
+        Menu.renderGUI(options) -- Draw menu on each tick if Menu.hidden = false
         if IsEntityDead(PlayerPedId()) then
             PlayerIsDead()
             -- prevent the death check from overloading the server
