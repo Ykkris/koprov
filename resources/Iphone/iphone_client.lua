@@ -693,12 +693,13 @@ end
    		local quit1 = false
    		local quit2 = false
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Nom du contact : [ESC] pour quitter", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[PRENOM] [NOM]", "", "", "", 120)
 	while editing1 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing1 = false
 			quit1 = true
+			ShowNotification("Annulé!")
 			
 		end
 		if UpdateOnscreenKeyboard() == 1 then
@@ -709,12 +710,13 @@ end
 		end
 	end
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Numero du contact : [ESC] pour quitter", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[NUMERO]", "", "", "", 120)
 	while editing2 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing2 = false
 			quit2 = true
+			ShowNotification("Annulé!")
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing2 = false
@@ -731,7 +733,9 @@ end
 
 					})
 
-   		TriggerServerEvent("Iphone:addcontact", resultat1, resultat2)
+   		
+
+   		TriggerServerEvent("Iphone:addcontact", first_name, last_name, resultat2)
 
    		end
 
