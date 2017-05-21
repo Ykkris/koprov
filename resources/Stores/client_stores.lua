@@ -1,3 +1,8 @@
+local fooditems = {
+	{ ['name'] = "Bouteille d'eau", ['value'] = 20, ['type'] = 1, ['price'] = 5},
+	{ ['name'] = "Sandwich", ['value'] = 20, ['type'] = 2, ['price'] = 8},
+}
+
 local foodstore = {
 	opened = false,
 	title = "Superette",
@@ -317,9 +322,9 @@ function ButtonSelected(button)
 		end
 	elseif this == "Acheter" then
 		if btn == "Bouteille d'eau" then
-			buymenu('bouteilleEau')
+			buymenu(1)
 		elseif btn == "Sandwich" then
-			buymenu('sandwich')
+			buymenu(2)
 		end
 	-- else
 	-- 	TriggerServerEvent('CheckMoneyForFood',button.model,button.costs)
@@ -327,14 +332,15 @@ function ButtonSelected(button)
 end
 
 local vdkinventory = true
-function buymenu(fooditem)
+function buymenu(id)
 	if (vdkinventory == false) then
 		Texte("Vous avez mangé un(e) ~g~".. fooditem, 5000)
-		TriggerServerEvent('food:menu', fooditem, vdkinventory)
+		TriggerServerEvent('food:menu', fooditems[id], vdkinventory)
 	else
-		TriggerServerEvent('food:menu', fooditem, vdkinventory)
+		TriggerServerEvent('food:menu', fooditems[id], vdkinventory)
 	end
 end
+
 
 -- RegisterNetEvent('FinishMoneyCheckForFood')
 -- AddEventHandler('FinishMoneyCheckForFood', function()
