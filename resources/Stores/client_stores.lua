@@ -1,8 +1,3 @@
-local fooditems = {
-	{ ['name'] = "Bouteille d'eau", ['value'] = 20, ['type'] = 1, ['price'] = 5},
-	{ ['name'] = "Sandwich", ['value'] = 20, ['type'] = 2, ['price'] = 8},
-}
-
 local foodstore = {
 	opened = false,
 	title = "Superette",
@@ -320,33 +315,16 @@ function ButtonSelected(button)
 		elseif btn == "Vendre" then
 			OpenMenu('Vendre')
 		end
-	elseif this == "Acheter" then
-		if btn == "Bouteille d'eau" then
-			buymenu(1)
-		elseif btn == "Sandwich" then
-			buymenu(2)
-		end
-	-- else
-	-- 	TriggerServerEvent('CheckMoneyForFood',button.model,button.costs)
-	end
-end
-
-local vdkinventory = true
-function buymenu(id)
-	if (vdkinventory == false) then
-		Texte("Vous avez mangé un(e) ~g~".. fooditem, 5000)
-		TriggerServerEvent('food:menu', fooditems[id], vdkinventory)
 	else
-		TriggerServerEvent('food:menu', fooditems[id], vdkinventory)
+		TriggerServerEvent('CheckMoneyForFood',button.model,button.costs)
 	end
 end
 
-
--- RegisterNetEvent('FinishMoneyCheckForFood')
--- AddEventHandler('FinishMoneyCheckForFood', function()
--- 	boughtVivre = true
--- 	CloseCreator()
--- end)
+RegisterNetEvent('FinishMoneyCheckForFood')
+AddEventHandler('FinishMoneyCheckForFood', function()
+	boughtVivre = true
+	CloseCreator()
+end)
 
 function OpenMenu(menu)
 	foodstore.lastmenu = foodstore.currentmenu
@@ -390,4 +368,3 @@ AddEventHandler('giveFood', function(name, delay)
 		GiveFoodToPed(GetPlayerPed(-1), food, 1000, 0, false)
 	end)
 end)
-

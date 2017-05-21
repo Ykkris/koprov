@@ -59,6 +59,7 @@ AutoStartResources:
     - rent
     - blanchissement
     - Stores
+    - pNotify
 
 # do change
 RconPassword: koprobestv
