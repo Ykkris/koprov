@@ -114,9 +114,10 @@ function BlanchissementRandom()
 end 
 
 function IsInWait(player)
+	print(tostring(player))
 	local req = MySQL:executeQuery("SELECT dirty_wait_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player.identifier })
     local resultat = MySQL:getResults(req, {'dirty_wait_money'}, "identifier")
-    if result[1].dirty_wait_money == 0 then
+    if resultat[1].dirty_wait_money == 0 then
     	return 0
     else 
     	return tonumber(result[1].dirty_wait_money)
@@ -127,11 +128,11 @@ function IsWaitingForLong(player)
 	time = os.clock()
 	local req = MySQL:executeQuery("SELECT dirty_time FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player.identifier })
     local resultat = MySQL:getResults(req, {'dirty_time'}, "identifier")
-    if (resultat[1].dirty_time - time) >= tempsEntreLeDepotEtLaPaye then
+    --if (resultat[1].dirty_time - time) >= tempsEntreLeDepotEtLaPaye then
     	return true
-    else
-    	return false
-    end
+    --else
+    	--return false
+    --end
 end 
 
 function NombrePolicier()
@@ -150,3 +151,26 @@ function NombrePolicier()
 	end)
 	return policier
 end 
+
+RegisterServerEvent("mission:test")
+AddEventHandler("mission:test", function()
+
+	isWaitingForLong = false
+	found = false
+	TriggerEvent("es:getPlayers", function(Users)
+		for k,v in pairs(Users) do
+			sargent = IsInWait(Users[k])
+			if sargent == 0 then
+				print("ok delete le 0")
+				if IsWaitingForLong(Users[k]) then
+					print("on a passé le w8 for long")
+					found = true
+					TriggerClientEvent("blanchissement:mission", k, sargent)
+				end
+			end
+			if found then
+				break
+			end
+		end
+	end)
+end)
