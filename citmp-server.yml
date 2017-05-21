@@ -59,7 +59,7 @@ AutoStartResources:
     - blanchissement
     - gb_foodshops
     - pNotify
-
+    
 # do change
 RconPassword: koprobestv
 

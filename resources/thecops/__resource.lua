@@ -6,7 +6,9 @@ dependency 'essentialmode'
 
 -- General
 client_scripts {
-  'thecops_client.lua'
+  'thecops_client.lua',
+  'vestpolice.lua',
+  'menupolice.lua',
 }
 
 server_scripts {

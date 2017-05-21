@@ -6,10 +6,10 @@ local options = {
     scale = 0.4,
     font = 0,
     menu_title = "Superette",
-    menu_subtitle = "Categories",
-    color_r = 30,
-    color_g = 144,
-    color_b = 255,
+    menu_subtitle = "Articles",
+    color_r = 231,
+    color_g = 76,
+    color_b = 60,
 }
 
 local twentyfourseven_shops = {

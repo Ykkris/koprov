@@ -1,3 +1,16 @@
+local options = {
+    x = 0.1,
+    y = 0.2,
+    width = 0.2,
+    height = 0.04,
+    scale = 0.4,
+    font = 0,
+    menu_title = "Garage",
+    menu_subtitle = "Voitures",
+    color_r = 231,
+    color_g = 76,
+    color_b = 60,
+}
 
 function LocalPed()
 	return GetPlayerPed(-1)
@@ -95,26 +108,21 @@ Citizen.CreateThread(function()
 		DrawMarker(1, 436.516, - 1022.16, 27.662, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
 		DrawMarker(1, 449.359, - 980.727, 42.60, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
 		-- Affiche Marqueur pour faire spawn
-		if GetDistanceBetweenCoords(436.516, - 1022.16, 27.662, GetEntityCoords(LocalPed())) < 2 then
-			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre une ~b~voiture', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
+		if GetDistanceBetweenCoords(436.516, - 1022.16, 27.662, GetEntityCoords(LocalPed())) < 1 then
+			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaître une ~b~voiture', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
 				Menu.hidden = not Menu.hidden
 			end
-		elseif (GetDistanceBetweenCoords(436.516, -1022.16, 27.662, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
-				Menu.hidden = not Menu.hidden
 		end
-		if GetDistanceBetweenCoords(449.359, - 980.727, 42.60, GetEntityCoords(LocalPed())) < 2 then
-			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaitre un ~b~Helicopter', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
+		if GetDistanceBetweenCoords(449.359, - 980.727, 42.60, GetEntityCoords(LocalPed())) < 1 then
+			drawTxt('Appuyez sur ~g~H~s~ pour faire apparaître un ~b~Helicopter', 2, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuHelico()
 				Menu.hidden = not Menu.hidden
 			end
 		end
-		if (GetDistanceBetweenCoords(449.359, -980.727, 42.60, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
-				Menu.hidden = not Menu.hidden
-		end
-		Menu.renderGUI()
+		Menu.renderGUI(options)
 	end
 end)
 
@@ -151,7 +159,7 @@ AddEventHandler('policeg:c_moto', function()
 	end
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_car = CreateVehicle(vehicle, 436.718, - 1021.935, 28.672, true, false)
+	local spawned_car = CreateVehicle(vehicle, coords, 436.718, - 1021.935, 28.672, true, false)
 	SetVehicleHasBeenOwnedByPlayer(vehicle, myPed)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
@@ -171,7 +179,8 @@ AddEventHandler('policeg:c_fila', function()
 	end
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_car = CreateVehicle(vehicle, 436.718, - 1021.935, 28.672, true, false)
+	local spawned_car = CreateVehicle(vehicle, coords, 436.718, - 1021.935, 28.672, true, false)
+	SetEntityInvincible(vehicle, true)
 	SetVehicleHasBeenOwnedByPlayer(vehicle, myPed)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
@@ -191,7 +200,7 @@ AddEventHandler('policeg:c_truck', function()
 	end
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_car = CreateVehicle(vehicle, 436.718, - 1021.935, 28.672, true, false)
+	local spawned_car = CreateVehicle(vehicle, coords, 436.718, - 1021.935, 28.672, true, false)
 	SetVehicleHasBeenOwnedByPlayer(vehicle, myPed)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
@@ -254,8 +263,7 @@ AddEventHandler('policeg:c_buffalo', function()
 	local plate = math.random(100, 900)
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
 	local spawned_car = CreateVehicle(vehicle, coords, 436.516, - 1022.16, 28.662, true, false)
-	SetEntityAsMissionEntity(spawned_car, true, true)
-	SetVehicleHasBeenOwnedByPlayer(spawned_car, myPed)
+	SetVehicleHasBeenOwnedByPlayer(vehicle, myPed)
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)

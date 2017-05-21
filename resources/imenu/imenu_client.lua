@@ -191,7 +191,7 @@ local menu = vehshop.menu
 	SetTextColour(255, 255, 255, 255)
 	SetTextEntry("STRING")
 	AddTextComponentString(txt)
-	DrawRect(x,y,menu.width,menu.height,0,0,0,150)
+	DrawRect(x,y,menu.width,menu.height,231,76,60,150)
 	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)	
 end
 function tablelength(T)

@@ -4,10 +4,13 @@ local rank = "inconnu"
 local checkpoints = {}
 local existingVeh = nil
 local handCuffed = false
+local isAlreadyDead = false
+local allServiceCops = {}
+local blipsCops = {}
 
 -- Location to enable an officer service
 local takingService = {
-  {x=452.041, y=-980.194, z=29.689}
+   {x=457.956909179688, y=-992.72314453125, z=30.6895866394043}
 }
 
 AddEventHandler("playerSpawned", function()
@@ -38,13 +41,14 @@ AddEventHandler('police:noLongerCop', function()
 						
 	TriggerServerEvent("skin_customization:SpawnPlayer")
 	RemoveAllPedWeapons(playerPed)
-	GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_KNIFE"), true, true)
 	
 	if(existingVeh ~= nil) then
 		SetEntityAsMissionEntity(existingVeh, true, true)
 		Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(existingVeh))
 		existingVeh = nil
 	end
+
+	ServiceOff()
 end)
 
 RegisterNetEvent('police:checkInventory')
@@ -138,6 +142,78 @@ AddEventHandler('police:forcedEnteringVeh', function(veh)
 	end
 end)
 
+RegisterNetEvent('police:unseatme')
+AddEventHandler('police:unseatme', function(t)
+	local ped = GetPlayerPed(t)        
+	ClearPedTasksImmediately(ped)
+	plyPos = GetEntityCoords(GetPlayerPed(-1),  true)
+	local xnew = plyPos.x+2
+	local ynew = plyPos.y+2
+   
+	SetEntityCoords(GetPlayerPed(-1), xnew, ynew, plyPos.z)
+end)
+
+RegisterNetEvent('police:resultAllCopsInService')
+AddEventHandler('police:resultAllCopsInService', function(array)
+	allServiceCops = array
+	enableCopBlips()
+end)
+
+function enableCopBlips()
+
+	for k, existingBlip in pairs(blipsCops) do
+        RemoveBlip(existingBlip)
+    end
+	blipsCops = {}
+	
+	local localIdCops = {}
+	for id = 0, 64 do
+		if(NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= GetPlayerPed(-1)) then
+			for i,c in pairs(allServiceCops) do
+				if(i == GetPlayerServerId(id)) then
+					localIdCops[id] = c
+					break
+				end
+			end
+		end
+	end
+	
+	for id, c in pairs(localIdCops) do
+		local ped = GetPlayerPed(id)
+		local blip = GetBlipFromEntity(ped)
+		
+		if not DoesBlipExist( blip ) then
+
+			blip = AddBlipForEntity( ped )
+			SetBlipSprite( blip, 1 )
+			Citizen.InvokeNative( 0x5FBCA48327B914DF, blip, true )
+			HideNumberOnBlip( blip )
+			SetBlipNameToPlayerName( blip, id )
+			
+			SetBlipScale( blip,  0.85 )
+			SetBlipAlpha( blip, 255 )
+			
+			table.insert(blipsCops, blip)
+		else
+			
+			blipSprite = GetBlipSprite( blip )
+			
+			HideNumberOnBlip( blip )
+			if blipSprite ~= 1 then
+				SetBlipSprite( blip, 1 )
+				Citizen.InvokeNative( 0x5FBCA48327B914DF, blip, true )
+			end
+			
+			Citizen.Trace("Name : "..GetPlayerName(id))
+			SetBlipNameToPlayerName( blip, id )
+			SetBlipScale( blip,  0.85 )
+			SetBlipAlpha( blip, 255 )
+			
+			table.insert(blipsCops, blip)
+		end
+	end
+end
+
 function GetPlayers()
     local players = {}
 
@@ -205,40 +281,39 @@ function isNearTakeService()
 	end
 end
 
+function ServiceOn()
+	isInService = true
+	TriggerServerEvent("jobssystem:jobs", 2)
+	TriggerServerEvent("police:takeService")
+end
+
+function ServiceOff()
+	isInService = false
+	TriggerServerEvent("jobssystem:jobs", 1)
+	TriggerServerEvent("police:breakService")
+	
+	allServiceCops = {}
+	
+	for k, existingBlip in pairs(blipsCops) do
+        RemoveBlip(existingBlip)
+    end
+	blipsCops = {}
+end
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if(isCop) then
 			if(isNearTakeService()) then
-				if(isInService) then
-					drawTxt("Appuyez sur ~g~E~s~ pour prendre le service.",0,1,0.5,0.8,0.6,255,255,255,255)
-				else
-					drawTxt("Appuyez sur ~g~E~s~ arrêter le service.",0,1,0.5,0.8,0.6,255,255,255,255)
+			
+				DisplayHelpText('Press ~INPUT_CONTEXT~ to open the ~b~cops locker',0,1,0.5,0.8,0.6,255,255,255,255) -- ~g~E~s~
+				if IsControlJustPressed(1,51) then
+					OpenMenuVest()
 				end
-				if IsControlJustPressed(1, 38)  then
-					isInService = not isInService
-					
-					if(isInService) then
-						
-						--Thanks to Xtas3
-						-- SetPedPropIndex(GetPlayerPed(-1), 0, 46, 0, 2)            --Casquette Police
-						-- SetPedComponentVariation(GetPlayerPed(-1), 11, 55, 0, 2)  --Chemise Police
-						-- SetPedComponentVariation(GetPlayerPed(-1), 8, 58, 0, 2)   --Ceinture+matraque Police 
-						-- SetPedComponentVariation(GetPlayerPed(-1), 4, 35, 0, 2)   --Pantalon Police
-						-- SetPedComponentVariation(GetPlayerPed(-1), 6, 24, 0, 2)   -- Chaussure Police
-						-- SetPedComponentVariation(GetPlayerPed(-1), 10, 8, 0, 2) --grade 0
-						
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_NIGHTSTICK"), true, true)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL50"), 150, true, true)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_STUNGUN"), true, true)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PUMPSHOTGUN"), 150, true, true)
-					else
-						local playerPed = GetPlayerPed(-1)
-						
-						TriggerServerEvent("skin_customization:SpawnPlayer")
-						RemoveAllPedWeapons(playerPed)
-						GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_KNIFE"), true, true)
-					end
+			end
+			if(isInService) then
+				if IsControlJustPressed(1,166) then 
+					OpenPoliceMenu()
 				end
 			end
 		else
@@ -257,4 +332,25 @@ Citizen.CreateThread(function()
 			end
 		end
     end
+end)
+
+local alreadyDead = false
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if(isCop) then
+			if(isInService) then
+			
+				if(IsPlayerDead(PlayerId())) then
+					if(alreadyDead == false) then
+						ServiceOff()
+						alreadyDead = true
+					end
+				else
+					alreadyDead = false
+				end
+			end
+		end
+	end
 end)

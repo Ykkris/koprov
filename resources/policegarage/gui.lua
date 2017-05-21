@@ -50,14 +50,17 @@ function Menu.updateSelection()
 		else
 			Menu.selection = 0
 		end
+		PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 	elseif IsControlJustPressed(1, Keys["TOP"]) then
 		if(Menu.selection > 0)then
 			Menu.selection = Menu.selection -1
 		else
 			Menu.selection = Menu.buttonCount-1
 		end
+		PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 	elseif IsControlJustPressed(1, Keys["NENTER"])  then
 			MenuCallFunction(Menu.GUI[Menu.selection +1]["func"], Menu.GUI[Menu.selection +1]["args"])
+			PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 	end
 	local iterator = 0
 	for id, settings in ipairs(Menu.GUI) do
@@ -69,9 +72,9 @@ function Menu.updateSelection()
 	end
 end
 
-function Menu.renderGUI()
+function Menu.renderGUI(options)
 	if not Menu.hidden then
-		Menu.renderButtons()
+		Menu.renderButtons(options)
 		Menu.updateSelection()
 	end
 end
@@ -80,43 +83,74 @@ function Menu.renderBox(xMin,xMax,yMin,yMax,color1,color2,color3,color4)
 	DrawRect(xMin, yMin,xMax, yMax, color1, color2, color3, color4);
 end
 
-function Menu.renderButtons()
+function Menu:setTitle(options)
+	SetTextFont(1)
+	SetTextProportional(0)
+	SetTextScale(1.0, 1.0)
+	SetTextColour(255, 255, 255, 255)
+	SetTextDropShadow(0, 0, 0, 0,255)
+	SetTextEdge(1, 0, 0, 0, 255)
+	SetTextDropShadow()
+	SetTextOutline()
+	SetTextCentre(1)
+	SetTextEntry("STRING")
+	AddTextComponentString(options.menu_title)
+	DrawText(options.x, options.y)
+end
 
-local yoffset = 0.3
-local xoffset = 0
+function Menu:setSubTitle(options)
+	SetTextFont(2)
+	SetTextProportional(0)
+	SetTextScale(options.scale +0.1, options.scale +0.1)
+	SetTextColour(255, 255, 255, 255)
+	SetTextEntry("STRING")
+	AddTextComponentString(options.menu_subtitle)
+	DrawRect(options.x,(options.y +0.08),options.width,options.height,options.color_r,options.color_g,options.color_b,150)
+	DrawText(options.x - options.width/2 + 0.005, (options.y+ 0.08) - options.height/2 + 0.0028)
 
-		SetTextFont(0)
-		SetTextScale(0.0,0.35)
-		SetTextColour(255, 255, 255, 255)
-		SetTextCentre(true)
-		SetTextDropShadow(0, 0, 0, 0, 0)
-		SetTextEdge(0, 0, 0, 0, 0)
-		SetTextEntry("STRING")
-		AddTextComponentString(string.upper(MenuTitle))
-		DrawText((xoffset + 0.05), (yoffset - 0.05 - 0.0125 ))
-		Menu.renderBox(xoffset,0.2,(yoffset - 0.05),0.05,20,30,10,255)
+	SetTextFont(0)
+	SetTextProportional(0)
+	SetTextScale(options.scale, options.scale)
+	SetTextColour(255, 255, 255, 255)
+	SetTextDropShadow(0, 0, 0, 0,255)
+	SetTextEdge(1, 0, 0, 0, 255)
+	SetTextDropShadow()
+	SetTextOutline()
+	SetTextCentre(0)
+	SetTextEntry("STRING")
+	AddTextComponentString(options.rightText)
+	DrawText((options.x + options.width/2 - 0.0385) , options.y + 0.067)
+end
 
+function Menu:drawButtons(options)
+	local y = options.y + 0.12
 
 	for id, settings in pairs(Menu.GUI) do
-		local screen_w = 0
-		local screen_h = 0
-		screen_w, screen_h =  GetScreenResolution(0, 0)
-		boxColor = {42,63,17,255}
-
-		if(settings["active"]) then
-			boxColor = {107,158,44,255}
-		end
 		SetTextFont(0)
-		SetTextScale(0.0,0.35)
-		SetTextColour(255, 255, 255, 255)
-		SetTextCentre(true)
-		SetTextDropShadow(0, 0, 0, 0, 0)
-		SetTextEdge(0, 0, 0, 0, 0)
+		SetTextProportional(0)
+		SetTextScale(options.scale, options.scale)
+		if(settings["active"]) then
+			SetTextColour(0, 0, 0, 255)
+		else
+			SetTextColour(255, 255, 255, 255)
+		end
+		SetTextCentre(0)
 		SetTextEntry("STRING")
 		AddTextComponentString(settings["name"])
-		DrawText(settings["xmin"]+ 0.05, (settings["ymin"] - 0.0125 ))
-		Menu.renderBox(settings["xmin"] ,settings["xmax"], settings["ymin"], settings["ymax"],boxColor[1],boxColor[2],boxColor[3],boxColor[4])
-	 end
+		if(settings["active"]) then
+			DrawRect(options.x,y,options.width,options.height,255,255,255,255)
+		else
+			DrawRect(options.x,y,options.width,options.height,0,0,0,150)
+		end
+		DrawText(options.x - options.width/2 + 0.005, y - 0.04/2 + 0.0028)
+		y = y + 0.04
+	end
+end
+
+function Menu.renderButtons(options)
+	Menu:setTitle(options)
+	Menu:setSubTitle(options)
+	Menu:drawButtons(options)
 end
 
 
