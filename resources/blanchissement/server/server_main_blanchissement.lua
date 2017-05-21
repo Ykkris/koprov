@@ -31,7 +31,7 @@ AddEventHandler("mission:sendmoney", function()
 	TriggerEvent("es:getPlayerFromId", source, function(user)
 		if user ~= nil then
 			local req = MySQL:executeQuery("SELECT dirty_wait_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
-		    local resultat = MySQL:getResults(req, {'dirty_wait_money'}, "identifier")
+		    	local resultat = MySQL:getResults(req, {'dirty_wait_money'}, "identifier")
 			money = tonumber(resultat[1].dirty_wait_money)
 			print(tostring(money))
 			rargent = 0
@@ -57,12 +57,12 @@ AddEventHandler("blanchissement:sendblanchissement", function()
 	TriggerEvent('es:getPlayerFromId', source,function(user)
 		identifier = user.identifier
 		RconPrint(identifier)
-			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = identifier })
+		local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = identifier })
 	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 	    	argent = tonumber(resultat[1].dirty_money)
 	    	print(tostring(argent))
 	    	local receiveMoney = CalculMoney(argent)
-	    	local time = os.clock()
+	    	local time = os.time()
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 						{['@dirty_time'] = time , ['@dirty_wait_money'] = argent, ['@dirty_money'] = "0",['@identifier'] = identifier})
 	    	user:setDirty_Money(0) ---<<<< non je ne suis pas un troll, je met bel et bien 0 en nombre é_é
@@ -130,7 +130,7 @@ function IsInWait(player)
 end
 
 function IsWaitingForLong(player)
-	time = os.clock()
+	time = os.time()
 	local req = MySQL:executeQuery("SELECT dirty_time FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player.identifier })
     local resultat = MySQL:getResults(req, {'dirty_time'}, "identifier")
     if (resultat[1].dirty_time - time) >= tempsEntreLeDepotEtLaPaye then
