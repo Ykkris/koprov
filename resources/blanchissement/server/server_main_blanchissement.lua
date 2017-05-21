@@ -51,15 +51,15 @@ end)
 RegisterServerEvent("blanchissement:sendblanchissement")
 AddEventHandler("blanchissement:sendblanchissement", function()
 	TriggerEvent('es:getPlayerFromId', source,function(users)
-		Citizen.Trace("test")
+		RconPrint("test")
 		if users ~= nil then
-			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = Users.identifier })
+			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = users.identifier })
 	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 	    	local argent = tonumber(resultat[1].dirty_money)
 	    	local receiveMoney = CalculMoney(argent)
 	    	local time = os.clock()
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
-						{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = "0",['@identifier'] = Users.identifier})
+						{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = "0",['@identifier'] = users.identifier})
 
 	    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
 	    end
