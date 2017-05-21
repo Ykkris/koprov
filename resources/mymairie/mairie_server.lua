@@ -6,7 +6,9 @@ AddEventHandler("mymairie:identity",function(prenom, nom, age)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 	
 	user:removeMoney(100)
-
+	user:setSessionVar("name", {first_name = prenom,
+				    last_name = nom
+				    })
 	MySQL:executeQuery("UPDATE users SET last_name = '@last_name', first_name = '@first_name', age = '@age' WHERE identifier = '@identifier' ",
 					{['@last_name'] = nom , ['@first_name'] = prenom , ['@age'] = age, ['@identifier'] = user.identifier})
 				
