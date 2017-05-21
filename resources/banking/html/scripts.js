@@ -79,7 +79,7 @@ $(document).ready(function(){
     var item = event.data;
     // Update HUD Balance
     if(item.updateBalance == true) {
-      $('.balance').html('<p id="balance"><img id="icon" src="bank-icon.png" alt=""/>' +addGaps(event.data.balance)+'</p>');
+      $('.balance').html('<p id="balance">'+addGaps(event.data.balance)+'<img id="icon" src="bank-icon.png" alt=""/></p>');
       $('.currentBalance').html('$'+addCommas(event.data.balance));
       $('.username').html(event.data.player);
     }

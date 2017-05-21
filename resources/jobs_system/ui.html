@@ -8,7 +8,7 @@
 			var x2 = x.length > 1 ? '.' + x[1] : '';
 			var rgx = /(\d+)(\d{3})/;
 			while (rgx.test(x1)) {
-				x1 = x1.replace(rgx, '$1' + '<span style="margin-left: 3px; margin-right: 3px;"/>' + '$2');
+				x1 = x1.replace(rgx, '$1' + '<span style="margin-right: 3px; margin-right: 3px;"/>' + '$2');
 			}
 			return x1 + x2;
 		}
@@ -16,7 +16,7 @@
 		window.onload = function(e){
 			window.addEventListener('message', function(event){
 				if(event.data.updateJob == true) {
-					$('.job').html('<p id="job"><img id="icon" src="job-icon.png" alt=""/>' +addCommas(event.data.job)+'</p>')
+					$('.job').html('<p id="job">' +addCommas(event.data.job)+'<img id="icon" src="job-icon.png" alt=""/></p>')
 				}
 			})
 		}
@@ -34,7 +34,7 @@
 			padding: 0;
 			position: absolute;
 			top: 125;
-			right: 67;
+			right: 10;
 			width: 800px;
 			height: 200px;
 		}
@@ -53,7 +53,7 @@
 		#icon {
 			height: 21px;
 			width: auto;
-			margin-right: 10px;
+			margin-left: 10px;
 		}
 		#pre {
 			font-size: 0.8rem;

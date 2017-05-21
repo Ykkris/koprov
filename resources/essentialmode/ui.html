@@ -24,9 +24,9 @@
 				if(item.seticon == true)
 					moneyIcon = item.icon;
 				if(item.setmoney == true)
-					document.getElementById("cash").innerHTML = "<div><font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>" + moneyIcon + "</font>" + addCommas(item.money);
+					document.getElementById("cash").innerHTML = "<div>" + addCommas(item.money) + "<font style='color: rgb(0, 125, 0); font-weight: 700; margin-left: 20px;'>" + moneyIcon + "</font>" ;
 				if(item.setDirty_money == true)
-					document.getElementById("dirty_cash").innerHTML = "<div><font style='color: rgb(185, 42, 42); font-weight: 700; margin-right: 6px;'>" + moneyIcon + "</font>" + addCommas(item.dirty_money);
+					document.getElementById("dirty_cash").innerHTML = "<div>" + addCommas(item.dirty_money) + "<font style='color: rgb(185, 42, 42); font-weight: 700; margin-left: 20px;'>" + moneyIcon + "</font>" ;addCommas(item.dirty_money);
 				if(item.addcash == true){
 					$(".tiny").remove();
 
@@ -81,7 +81,7 @@
 
 		#container {
 			position: absolute;
-			top: 20; right: 40;
+			top: 20; right: 18;
 		}
 	</style>
 </head>
