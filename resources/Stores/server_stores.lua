@@ -71,3 +71,9 @@ AddEventHandler('food:menu', function(fooditem, vdkinventory)
 		end)
 	end
 end)
+
+function getPlayerID(source)
+    local identifiers = GetPlayerIdentifiers(source)
+    local player = getIdentifiant(identifiers)
+    return player
+end
