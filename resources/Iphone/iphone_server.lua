@@ -4,17 +4,6 @@
 require "resources/essentialmode/lib/MySQL"
 MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
-first = true
-saveTime = 900000 -- in ms
-
-
-AddEventHandler("es:playerLoaded", function(resource)
-	if first then
-		first = false
-		InitSave()
-	end
-end)
-
 local function GenerateUniquePhoneNumber()
 
 	local foundNumber = false
@@ -43,6 +32,8 @@ end
 
 AddEventHandler('es:playerLoaded', function(source)
 
+	local _source = source
+
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 
 		local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
@@ -54,8 +45,7 @@ AddEventHandler('es:playerLoaded', function(source)
 			MySQL:executeQuery("UPDATE users SET phone_number = '@phone_number' WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@phone_number'] = phoneNumber})
 		end
 
-		user:setSessionVar("phone_number", phoneNumber) 
-
+		Users[source].phone_number = phoneNumber
 
 		local contacts = {}
 
@@ -65,14 +55,13 @@ AddEventHandler('es:playerLoaded', function(source)
 		for i=1, #result2, 1 do
 			
 			table.insert(contacts, {
-				first_name   = result2[i].fist_name,
-				last_name   = result2[i].last_name,
-				number = result2[i].number
+				name   = result2[i].name,
+				number = result2[i].number,
 				})
 
 		end
 
-		user:setSessionVar("contacts", contacts)
+		Users[source].contacts = contacts
 
 		local sms = {}
 
@@ -82,117 +71,36 @@ AddEventHandler('es:playerLoaded', function(source)
 		for i=1, #result3, 1 do
 			
 			table.insert(sms, {
-				first_name   = result3[i].first_name,
-				last_name = result3.last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
+				name   = result3[i].name,
+				--number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
 				text   = result3[i].text
 				})
 
 		end
 
-		user:setSessionVar("sms", sms)
 
-		local executed_query4 = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result4         = MySQL:getResults(executed_query2, {'first_name', 'last_name'})
-
-		local name = {}
-
-		table.insert(name, {
-			first_name = result4[1].first_name,
-			last_name = result4[1].last_name
-			})
-
-		user:setSessionVar("name", name)
-
-
-		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms, name)
+		TriggerClientEvent('Iphone:loaded', _source, phoneNumber, contacts, sms)
 
 		end)
 	end)
 
 RegisterServerEvent("Iphone:addcontact")
-AddEventHandler("Iphone:addcontact",function(pfirst_name, plast_name, pnumber)
+AddEventHandler("Iphone:addcontact",function(pname, pnumber)
 
 
-		TriggerEvent("es:getPlayerFromId", source,function(user)
-			userContacts = user:getSessionVar("contacts")
+		TriggerEvent("es:getPlayers", function(Users)
+			
 
-			table.insert(userContacts, {
-				first_name   = pfirst_name,
-				last_name = plast_name,
-				number = pnumber
+
+			table.insert(Users[source].contacts, {
+				name   = pname,
+				number = pnumber,
 			})
 
-			user:setSessionVar("contacts", userContacts)
-
-			MySQL:executeQuery("UPDATE users SET contacts = '@contacts' WHERE identifier = '@identifier' ",
-					{['@contacts'] = userContacts , ['@identifier'] = user.identifier})
-
-			TriggerClientEvent("Iphone:updatecontacts") -- LE FAIRE DIRECTEMENT DANS LE CLIENT POUR L'AJOUT ------------------------ ICI ROMAIN ------------------------
+			MySQL:executeQuery("INSERT INTO users (contacts) VALUES ('@contacts') WHERE identifier = '@identifier' ", {['@contacts'] = Users[source].contacts, ['@identifier'] = Users[source].identifier})
 		end)
 
-end)
-
-RegisterServerEvent("Iphone:sendsmsfromone")
-AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
-
-	local executed_query = MySQL:executeQuery("SELECT identifier FROM users WHERE phone_number = '@phone_number'", {['@phone_number'] = rnumber})
-	local result         = MySQL:getResults(executed_query, {'identifier'})
-	targetIdentifier = result[1].identifier
-	founded = false
-
-	TriggerEvent("es:getPlayers", function(Users)
-		sname = Users[source]:getSessionVar("name")
-		for k,v in pairs(Users) do
-
-			if targetIdentifier == Users[k].identifier then
-				founded = true
-			end
-
-			if founded then
-				local senderIdentifier = Users[source].identifier	
-				local sms = Users[k]:getSessionVar("sms")
-				table.insert(sms, {
-					first_name = sname.first_name,
-					last_name = sname.last_name,
-					text = smessage
-					})
-				Users[k]:setSessionVar("sms", sms)
-				local targetServerId = Users[k].source
-
-				TriggerClientEvent("Iphone:sendsmstotarget", targetServerId, sms) ----------------------------------ICI ROMAIN --------------------------------------
-
-			else 
-				local executed_query = MySQL:executeQuery("SELECT sms FROM users WHERE phone_number = '@phone_number'", {['@phone_number'] = rnumber})
-				local result         = MySQL:getResults(executed_query, {'sms'})
-				local sms = result[1].sms
-				table.insert(sms, {
-					first_name = sname.first_name,
-					last_name = sname.last_name,
-					text = smessage
-					})
-				MySQL:executeQuery("UPDATE users SET sms = '@sms' WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@phone_number'] = phoneNumber})
-
-
-			end
-		end
-
-	end)
-
-	--result[1].identifier -- THIS IS THE TARGET PLAYER
-
-end)
-
-function InitSave()
-	TriggerEvent("es:getPlayers", function(Users)
-		for k,v in pairs(Users) do
-			local sms = Users[k]:getSessionVar("sms")
-			MySQL:executeQuery("UPDATE users SET sms = '@sms' WHERE identifier = '@identifier' ",
-					{['@sms'] = sms , ['@identifier'] = Users[k].identifier})
-		end
-	end)
-	SetTimeout(saveTime, InitSave)
-end
-
+end)	
 
 
 

@@ -99,7 +99,7 @@ buttons = {
 	{name = "Damn", description = ''},
 	{name = "Dance", description = ''},
 	{name = "Salute", description = ''},
-	{name = "Rock", description = ''},
+	{name = "AFK/Fumer", description = ''},
 	{name = "Why", description = ''},
 	{name = "Noter Test", description = ''},
 	{name = "A changer 1", description = ''},
@@ -456,7 +456,7 @@ function ButtonSelected(button)
 			Emote(4)
 		elseif btn == "Salute" then
 			Emote(5)
-		elseif btn == "Rock" then
+		elseif btn == "AFK/Fumer" then
 			Emote(6)
 		elseif btn == "Why" then
 			Emote(7)
@@ -593,8 +593,16 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en gén�
 		PlayEmote("rcmnigel1bnmt_1b", "dance_loop_tyler", 32, 1 ,0 , 1)	
 	elseif id == 5 then    
 		PlayEmote("amb@world_human_cheering@male_a", "base", 32, 1, 0, 0) -- applause loud
-	elseif id == 6 then  
+	elseif id == 6 then    
+		local smoke = true
 		TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_SMOKING", 0, true)
+		while smoke do
+			Wait(0)
+			if IsControlJustPressed(1, 32) then
+				PlayEmote("amb@world_human_smoking@male@male_a@exit", "exit", 32, 1, 0, 0)
+				smoke = false
+			end
+		end
 	elseif id == 7 then    
 		PlayEmote("amb@world_human_cheering@male_e", "base", 120, 1, 0, 0) -- applause calm
 	elseif id == 8 then    
@@ -691,13 +699,12 @@ end
    		local quit1 = false
    		local quit2 = false
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[PRENOM] [NOM]", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Nom du contact : [ESC] pour quitter", "", "", "", 120)
 	while editing1 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing1 = false
 			quit1 = true
-			ShowNotification("Annulé!")
 			
 		end
 		if UpdateOnscreenKeyboard() == 1 then
@@ -708,13 +715,12 @@ end
 		end
 	end
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[NUMERO]", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Numero du contact : [ESC] pour quitter", "", "", "", 120)
 	while editing2 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing2 = false
 			quit2 = true
-			ShowNotification("Annulé!")
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing2 = false
@@ -731,9 +737,7 @@ end
 
 					})
 
-   		
-
-   		TriggerServerEvent("Iphone:addcontact", first_name, last_name, resultat2)
+   		TriggerServerEvent("Iphone:addcontact", resultat1, resultat2)
 
    		end
 

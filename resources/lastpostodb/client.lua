@@ -73,7 +73,12 @@ end)
 AddEventHandler("projectEZ:spawnlaspos", function(PosX, PosY, PosZ)
 	SetEntityCoords(GetPlayerPed(-1), PosX, PosY, PosZ, 1, 0, 0, 1)
 	if not origin then
-		Notify("Vous voici à votre dernière position")
+		TriggerEvent("pNotify:SendNotification", {
+			text = "Vous êtes de retour en ville !",
+			type = "info",
+			timeout = 10000,
+			layout = "centerRight"
+			})
     end
 	Saver()
 end)
