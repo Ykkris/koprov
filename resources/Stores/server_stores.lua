@@ -34,9 +34,9 @@ AddEventHandler('food:menu', function(fooditem, vdkinventory)
 		end)
 	else
 		TriggerEvent('es:getPlayerFromId', source, function(user)
-			local player = user.identifier
-			local executed_query = MySQL:executeQuery("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = '@username'", { ['@username'] = player })
-			local result = MySQL:getResults(executed_query, { 'total' })
+			local player = getPlayerID(source)
+   			local executed_query = MySQL:executeQuery("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = '@username'", { ['@username'] = player })
+    			local result = MySQL:getResults(executed_query, { 'total' })
 			local total = result[1].total
 			if (total + fooditem[2] <= 64) then
 				if (user.money >= fooditem[3]) then
