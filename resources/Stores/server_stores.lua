@@ -34,8 +34,7 @@ AddEventHandler('food:menu', function(fooditem, vdkinventory)
 		end)
 	else
 		TriggerEvent('es:getPlayerFromId', source, function(user)
-			local identifiers = GetPlayerIdentifiers(source)
-   			local player = getIdentifiant(identifiers)
+			local player = getPlayerID(source)
    			local executed_query = MySQL:executeQuery("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = '@username'", { ['@username'] = player })
     			local result = MySQL:getResults(executed_query, { 'total' })
 			local total = result[1].total
@@ -73,3 +72,16 @@ AddEventHandler('food:menu', function(fooditem, vdkinventory)
 	end
 end)
 
+function getPlayerID(source)
+    local identifiers = GetPlayerIdentifiers(source)
+    local player = getIdentifiant(identifiers)
+    return player
+end
+
+-- gets the actual player id unique to the player,
+-- independent of whether the player changes their screen name
+function getIdentifiant(id)
+    for _, v in ipairs(id) do
+        return v
+    end
+end
