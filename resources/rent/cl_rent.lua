@@ -1,3 +1,17 @@
+local options = {
+    x = 0.1,
+    y = 0.2,
+    width = 0.2,
+    height = 0.04,
+    scale = 0.4,
+    font = 0,
+    menu_title = "Location",
+    menu_subtitle = "VLoc",
+    color_r = 30,
+    color_g = 144,
+    color_b = 255,
+}
+
 function LocalPed()
 	return GetPlayerPed(-1)
 end
@@ -60,7 +74,7 @@ Citizen.CreateThread(function()
 		elseif (GetDistanceBetweenCoords(-1011.81, -2687.27, 12.97, GetEntityCoords(LocalPed())) > 2 and not Menu.hidden) then
 				Menu.hidden = not Menu.hidden
 		end
-		Menu.renderGUI()
+		Menu.renderGUI(options)
 	end
 end)
 

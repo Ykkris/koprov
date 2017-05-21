@@ -7,9 +7,9 @@ local options = {
     font = 0,
     menu_title = "Hangar",
     menu_subtitle = "Camions",
-    color_r = 30,
-    color_g = 144,
-    color_b = 255,
+    color_r = 231,
+    color_g = 76,
+    color_b = 60,
 }
 
 function LocalPed()
