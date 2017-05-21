@@ -31,7 +31,7 @@ AddEventHandler("mission:sendmoney", function()
 	TriggerEvent("es:getPlayerFromId", source, function(user)
 		if user ~= nil then
 			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
-		    local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
+			local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 			money = tonumber(resultat[1].dirty_money)
 			local rargent
 		  	policier = NombrePolicier()
@@ -53,14 +53,13 @@ AddEventHandler("blanchissement:sendblanchissement", function()
 	TriggerEvent('es:getPlayerFromId', function(Users)
 		Citizen.Trace("test")
 		if Users ~= nil then
-			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = Users.identifier })
+		local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = Users.identifier })
 	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 	    	local argent = tonumber(resultat[1].dirty_money)
 	    	local receiveMoney = CalculMoney(argent)
 	    	local time = os.clock()
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 						{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = "0",['@identifier'] = Users.identifier})
-
 	    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
 	    end
 
@@ -141,12 +140,12 @@ function NombrePolicier()
 		else --2
 			for k,v in pairs(Users) do-- Cela peut être optimisée en récupérant tous les identifier dont le job est 2 puis de faire une boucle qui va vérifier en interne (une seule requete au lieu de 1 jusqu'a 24) mais elle ne va se faire qu'une fois toutes les 20 minutes alors balek
 				local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = Users[k].identifier })
-	    		local resultat = MySQL:getResults(req, {'job'}, "identifier")
-	    		if resultat[1].job == 2 then
-	    			policier = policier + 1
+	    			local resultat = MySQL:getResults(req, {'job'}, "identifier")
+	    			if resultat[1].job == 2 then
+	    				policier = policier + 1
+				end
 	    		end
 	    	end
-		end
 	end)
 	return policier
 end 
