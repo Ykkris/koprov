@@ -29,22 +29,24 @@ end)
 RegisterServerEvent("mission:sendmoney")
 AddEventHandler("mission:sendmoney", function()
 	TriggerEvent("es:getPlayerFromId", source, function(user)
-		local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
+		if user ~= nil then
+			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
 
-	    local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
-		money = tonumber(resultat[1].dirty_money)
-		local rargent
-	  	policier = NombrePolicier()
-	  	local Policier = {0.65, 0.7, 0.85, 0.90, 1}
+		    local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
+			money = tonumber(resultat[1].dirty_money)
+			local rargent
+		  	policier = NombrePolicier()
+		  	local Policier = {0.65, 0.7, 0.85, 0.90, 1}
 
-	 	if policier > 5 then 
-	 		rargent = money
-	 	else
-	 		rargent = money * Policier[policier]
-	 	end
+		 	if policier > 5 then 
+		 		rargent = money
+		 	else
+		 		rargent = money * Policier[policier]
+		 	end
 
-	 	user:addMoney(rargent)
-	 	TriggerClientEvent("blanchissement:notification", source, "Tiens, allez casse toi p'tite merde !")
+		 	user:addMoney(rargent)
+		 	TriggerClientEvent("blanchissement:notification", source, "Tiens, allez casse toi p'tite merde !")
+		 end
 	 end)
 
 end) 
@@ -53,21 +55,24 @@ end)
 RegisterServerEvent("blanchissement:sendblanchissement")
 AddEventHandler("blanchissement:sendblanchissement", function()
 
-	TriggerEvent("es:getPlayerFromId", source,function(user)
+	TriggerEvent('es:getPlayerFromId', function(Users)
+		Citizen.Trace("test")
+		if Users ~= nil then
 
-		local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
-    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
+			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = Users.identifier })
+	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 
-    	local argent = tonumber(resultat[1].dirty_money)
+	    	local argent = tonumber(resultat[1].dirty_money)
 
-    	local receiveMoney = CalculMoney(argent)
+	    	local receiveMoney = CalculMoney(argent)
 
-    	local time = os.time()
+	    	local time = os.clock()
 
-    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
-					{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = 0,['@identifier'] = user.identifier})
+	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
+						{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = "0",['@identifier'] = Users.identifier})
 
-    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
+	    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
+	    end
 
 	end)
 
@@ -104,7 +109,6 @@ function CalculMoney(bargent)
 end --]]
 
 function BlanchissementRandom()
-	isInWait = false
 	isWaitingForLong = false
 	found = false
 
@@ -112,7 +116,6 @@ function BlanchissementRandom()
 	TriggerEvent("es:getPlayers", function(Users)
 
 		for k,v in pairs(Users) do
-
 			sargent = IsInWait(Users[k])
 			if sargent ~= 0 then
 				if IsWaitingForLong(Users[k]) then

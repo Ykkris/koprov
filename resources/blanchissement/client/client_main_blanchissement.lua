@@ -40,59 +40,63 @@ soulMessage = {"Laisse moi fumer ma beuh man...", "J'suis trop hype, j'peux plus
 
 Citizen.CreateThread(function()
 
-	Citizen.Wait(1000) -- Pour éviter de faire surcharger les données
+	Citizen.Wait(50) -- Pour éviter de faire surcharger les données
+	while true do
 
-	local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, radius)
+		local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, radius)
 
-	if isPlayerNear then -- Donc s'il est bien à côté alors :
-		isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), GetHashKey( "a_f_y_hippie_01" ), radius)
-		if not(isPed) then
+		if isPlayerNear then -- Donc s'il est bien à côté alors :
+			leaveZone = false
+			isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), "a_f_y_hippie_01", radius)
+			if not(isPed) then
 
-				
-			blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
+					
+				blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
 
-		    SetEntityAsMissionEntity(blanchisseuse, true, true)
-		    SetEntityInvincible(blanchisseuse, true)
-		    SetEntityProofs(blanchisseuse, 1, 1, 1, 1, 1, 1, 1, 1)
+			    SetEntityInvincible(blanchisseuse, true)
+			    SetEntityProofs(blanchisseuse, 1, 1, 1, 1, 1, 1, 1, 1)
 
-		        -- GetClosestPed(x, y, z, radius, p4, p5, outPed, p7, p8, pedType)
-    	end
-
-    	if isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 15.0) then
-    		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 1000)
-	    	if IsControlJustReleased(1 , Keys['E']) then 
-	    		DrawMissionText("TESTESTSETSETALALALALALALALALALALALALALAALALALLALALALALALALALLALALALAL", 5000)
-
-	    		TriggerServerEvent("blanchissement:sendblanchissement")
-
-	    		while not(received) do
-	    			Citizen.Trace("T'es dans le WHILE OU PAS ?")
-	    			Wait(1000)
-	    		end
-
-	    		AddEventHandler("blanchissement:receiveblanchissement", function(argent)
-	    			received = true
-	    			if argent >= sommeMini then
-		    			DrawMissionText("Envois ton numéro gringos, le chef te tiens au courant. Ne rate pas le rendez vous sinon on garde tout.", 5000)
-		    			Citizen.Wait(5000)
-		    			DrawMissionText("Allez, tires toi maintenant, j'ai d'autres choses à faire.", 4000)
-		    			alreadySend = true
-		    		else
-		    			DrawMissionText("Tu veux que je fasse quoi avec ça ? *rifougne*", 4000)
-		    		end
-
-	    		end)
-
-	    	elseif IsControlJustPressed(1, Keys['E']) and isNearArea(zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z, 3.0) and alreadySend then
-	    		local message = math.random(1, #soulMessage)
-	    		DrawMissionText(soulMessage[message], 5000)
-	    		Citizen.Wait(5000)
+			        -- GetClosestPed(x, y, z, radius, p4, p5, outPed, p7, p8, pedType)
 	    	end
 
-	    end
+
+
+	    		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 5000)
+	    		while IsNear(GetPlayerPed(-1), zoneBlanchissement , 15.0) do
+	    			Wait(0)
+			    	if (IsControlJustReleased(1, Keys["E"])) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 5.0) then
+
+			    		TriggerServerEvent("blanchissement:sendblanchissement")
+
+			    		while not(received) do
+			    			Wait(1000)
+			    		end
+
+			    		AddEventHandler("blanchissement:receiveblanchissement", function(argent)
+			    			received = true
+			    			if argent >= sommeMini then
+				    			DrawMissionText("Envois ton numéro gringos, le chef te tiens au courant. Ne rate pas le rendez vous sinon on garde tout.", 5000)
+				    			Citizen.Wait(5000)
+				    			DrawMissionText("Allez, tires toi maintenant, j'ai d'autres choses à faire.", 4000)
+				    			alreadySend = true
+				    		else
+				    			DrawMissionText("Tu veux que je fasse quoi avec ça ? *rifougne*", 4000)
+				    		end
+
+			    		end)
+
+			    	elseif IsControlJustPressed(1, Keys["E"]) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 5.0) and alreadySend then
+			    		local message = math.random(1, #soulMessage)
+			    		DrawMissionText(soulMessage[message], 5000)
+			    		Citizen.Wait(5000) 
+			    	end
+
+		    	end
+		end
+		alreadySend = false
 	end
 
-end)
+end) 
 
 function IsNear(player, point, radius) -- on créer une fonction auxilliaire qu'on pourra ré-utiliser
 
@@ -106,18 +110,20 @@ function IsNear(player, point, radius) -- on créer une fonction auxilliaire qu'
 	end
 end 
 
-function IsSpecificPedHashNearPed(player, modelhash, radius)
-	Citizen.Trace(tostring(modelhash))
+function IsSpecificPedHashNearPed(player, model, radius)
+	Citizen.Trace(tostring(model))
 	local playerCoords = GetEntityCoords(GetPlayerPed(-1), true)
- 	local Count , entity1 = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, 99.99,1,1,-1)
+ 	Count , nearPed = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, 99.99,1,1,5)
 	Citizen.Trace("COUNT :  "..tostring(Count)) -- false
 	Citizen.Trace("ENTITY1:  "..tostring(entity1)) -- 0
 
-	if entity1 == nil then
+	if nearPed == nil then
 		return false
 	end
 
-	local isSpecificPed = IsPedModel(entity, modelhash)
+	hash = GetHashKey(model)
+
+	local isSpecificPed = IsPedInModel(nearPed, hash)
 
 	Citizen.Trace("ISSPECIFICPED :  "..tostring(isSpecificPed))
 
@@ -141,7 +147,7 @@ function CreatePedWithHashAtCoordsAndReturn(model, x, y, z)
     if i == 5 then
         return "Error : Hash not loaded"
     else
-        local Ped = CreatePed(5, hash, x, y, z, 0.0 ,true)
+        Ped = CreatePed(5, hash, x, y, z, 0.0 ,true)
     end
     Citizen.Trace("PED :  "..tostring(Ped)) -- nil
     return Ped
