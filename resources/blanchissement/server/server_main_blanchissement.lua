@@ -59,13 +59,13 @@ AddEventHandler("blanchissement:sendblanchissement", function()
 		RconPrint(identifier)
 			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = identifier })
 	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
-	    	local argent = tonumber(resultat[1].dirty_money)
+	    	argent = tonumber(resultat[1].dirty_money)
 	    	print(tostring(argent))
 	    	local receiveMoney = CalculMoney(argent)
 	    	local time = os.clock()
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 						{['@dirty_time'] = time , ['@dirty_wait_money'] = argent, ['@dirty_money'] = "0",['@identifier'] = identifier})
-	    	setDirty_Money(tonumber(0)) ---<<<< non je ne suis pas un troll, je met bel et bien 0 en nombre é_é
+	    	user:setDirty_Money(0) ---<<<< non je ne suis pas un troll, je met bel et bien 0 en nombre é_é
 
 	    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
 
