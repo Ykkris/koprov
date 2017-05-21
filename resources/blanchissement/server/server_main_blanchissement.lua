@@ -50,27 +50,26 @@ end)
 
 RegisterServerEvent("blanchissement:sendblanchissement")
 AddEventHandler("blanchissement:sendblanchissement", function()
-	TriggerEvent('es:getPlayerFromId', source,function(users)
-		RconPrint("test")
-		if users ~= nil then
-			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = users.identifier })
+	TriggerEvent('es:getPlayerFromId', source,function(user)
+		identifier = user.identifier
+		RconPrint(identifier)
+			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = identifier })
 	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 	    	local argent = tonumber(resultat[1].dirty_money)
+	    	print(tostring(argent))
 	    	local receiveMoney = CalculMoney(argent)
 	    	local time = os.clock()
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
-						{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = "0",['@identifier'] = users.identifier})
+						{['@dirty_time'] = time , ['@dirty_wait_money'] = argent, ['@dirty_money'] = "0",['@identifier'] = identifier})
 
 	    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
-	    end
 
 	end)
-
-
 end)
 
 function CalculMoney(bargent)
-	local Pallier = {50, 60, 65, 70, 80}
+	RconPrint("Calcul Money")
+	Pallier = {50, 60, 65, 70, 80}
 	local pallier = 0
 	--local Policier = {0.65, 0.7, 0.85, 0.90, 1}
 	--local nombrePolicier = NombrePolicier()
@@ -85,7 +84,8 @@ function CalculMoney(bargent)
 	else
 		pallier = 5
 	end
-	local multiplicateur = maths.random(Pallier[pallier], Pallier[pallier+1])
+
+	local multiplicateur = math.random(Pallier[pallier], Pallier[pallier+1])
 	--if nombrePolicier == 0 then
 	return ((bargent * multiplicateur)/100) --* 0.5
 	--else
