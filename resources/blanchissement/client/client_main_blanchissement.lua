@@ -39,39 +39,26 @@ soulMessage = {"Laisse moi fumer ma beuh man...", "J'suis trop hype, j'peux plus
 "On m'a dit que je mettai des H au mot Wait... Foutaise !", "Je rigole bien quand je vois ta sale tronche quand même"}
 
 Citizen.CreateThread(function()
-
 	Citizen.Wait(50) -- Pour éviter de faire surcharger les données
 	while true do
-
 		local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, radius)
-
 		if isPlayerNear then -- Donc s'il est bien à côté alors :
 			leaveZone = false
 			isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), "a_f_y_hippie_01", radius)
 			if not(isPed) then
-
-					
 				blanchisseuse = CreatePedWithHashAtCoordsAndReturn("a_f_y_hippie_01", zoneBlanchissement.x, zoneBlanchissement.y, zoneBlanchissement.z)
-
 			    SetEntityInvincible(blanchisseuse, true)
 			    SetEntityProofs(blanchisseuse, 1, 1, 1, 1, 1, 1, 1, 1)
-
 			        -- GetClosestPed(x, y, z, radius, p4, p5, outPed, p7, p8, pedType)
 	    	end
-
-
-
 	    		DrawMissionText("Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 5000)
 	    		while IsNear(GetPlayerPed(-1), zoneBlanchissement , 15.0) do
 	    			Wait(0)
 			    	if (IsControlJustReleased(1, Keys["E"])) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 5.0) then
-
 			    		TriggerServerEvent("blanchissement:sendblanchissement")
-
 			    		while not(received) do
 			    			Wait(1000)
 			    		end
-
 			    		AddEventHandler("blanchissement:receiveblanchissement", function(argent)
 			    			received = true
 			    			if argent >= sommeMini then
@@ -82,27 +69,21 @@ Citizen.CreateThread(function()
 				    		else
 				    			DrawMissionText("Tu veux que je fasse quoi avec ça ? *rifougne*", 4000)
 				    		end
-
 			    		end)
-
 			    	elseif IsControlJustPressed(1, Keys["E"]) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 5.0) and alreadySend then
 			    		local message = math.random(1, #soulMessage)
 			    		DrawMissionText(soulMessage[message], 5000)
 			    		Citizen.Wait(5000) 
 			    	end
-
 		    	end
 		end
 		alreadySend = false
 	end
-
 end) 
 
 function IsNear(player, point, radius) -- on créer une fonction auxilliaire qu'on pourra ré-utiliser
-
 	local playerCoords =  GetEntityCoords(player, true) -- true pour alive, sinon false qui renvois un Vecteur3 : c'est un array
 	local distance = GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, point.x, point.y, point.z , true) -- onrécupère la distance entre le joueur et le point de blanchissement
-
 	if distance < radius then -- Si la distance est plus petite que le rayon alors true ou false
 		return true
 	else
@@ -116,23 +97,17 @@ function IsSpecificPedHashNearPed(player, model, radius)
  	Count , nearPed = GetClosestPed(playerCoords.x, playerCoords.y, playerCoords.z, 99.99,1,1,5)
 	Citizen.Trace("COUNT :  "..tostring(Count)) -- false
 	Citizen.Trace("ENTITY1:  "..tostring(entity1)) -- 0
-
 	if nearPed == nil then
 		return false
 	end
-
 	hash = GetHashKey(model)
-
 	local isSpecificPed = IsPedInModel(nearPed, hash)
-
 	Citizen.Trace("ISSPECIFICPED :  "..tostring(isSpecificPed))
-
 	if isSpecificPed then
 		return true
 	else
 		return false
 	end
-
 end
 
 function CreatePedWithHashAtCoordsAndReturn(model, x, y, z)
@@ -163,7 +138,6 @@ end
 
 AddEventHandler("blanchissement:notification", function(text)
 	DrawMissionText(text, 4000)
-
 end)
 
 AddEventHandler("blanchissement:mission", function()  -- le joueur à été séléctionné par le serveur
@@ -171,37 +145,28 @@ AddEventHandler("blanchissement:mission", function()  -- le joueur à été sél
 		DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Dépêche toi de venir, je t'envois les données GPS. Dans 15 minutes j'me casse avec le sac.", 20000)
 		local random = maths.random(1 , 3)
 		local zoneRecupRandom = zoneRecuperation[random]
-
 		Blipvariable = AddBlipForCoord(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z)
 		N_0x80ead8e2e1d5d52e(Blipvariable)
 		SetBlipRoute(Blipvariable, 1)
 		SetBlipRouteColour(Blipvariable, 59)
-
 		Citizen.CreateThread(function()
-
-
 			if isNearArea(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z) then
 				sac = CreateObject(modelHash, zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, true, 1, 1)
 				PlaceObjectOnGroundProperly(sac)
-
 				RequestModel(GetHashKey("prop_money_bag_01"))
 				while HasModelLoaded(GetHashKey("prop_money_bag_01")) do
 					Wait(10)
 				end
-
 				sac = CreateAmbientPickup(GetHashKey("PICKUP_MONEY_MED_BAG"), zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, 0, 0, GetHashKey("prop_money_bag_01"), 0, 1)
-				
 				--CreatePickup(GetHashKey('prop_money_bag_01'), location.x, location.y, location.z)
 				while not(HasPickupBeenCollected(sac)) or ((os.clock() - time) > 900) do
 					Wait(10)
 				end
-
 				if ((os.clock() - time) > 900) then
 					DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Trop tard, j'me tire avec le sac.", 10000)
 				else
 					TriggerServerEvent("mission:sendmoney")
 				end
-
 				if Blipvariable ~= nil and DoesBlipExist(Blipvariable) then
 					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
 					Blipvariable = nil
@@ -217,8 +182,6 @@ function isNearArea(x,y,z,radius) -- Je ne vais pas utiliser le z finalement, à
 	local y2 = coords_player.y
 	local z2 = coords_player.z
 	local dist = GetDistanceBetweenCoords(x, y, z, x2, y2, z2, false)
-	
-
 	if dist > radius then
 		return false
 	else
