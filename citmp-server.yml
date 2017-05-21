@@ -58,7 +58,7 @@ AutoStartResources:
     - mymairie
     - rent
     - blanchissement
-    - Stores
+    - gb_foodshops
     - pNotify
 
 # do change

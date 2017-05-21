@@ -15,7 +15,7 @@ RegisterNetEvent("player:looseItem")
 RegisterNetEvent("player:receiveItem")
 RegisterNetEvent("player:sellItem")
 
-usableItems = {1,2,3} -- lister ici les id des items usable, c'est un exemple pour le 1,2,3, plus tard on pourra les récup direct dans le BDD
+usableItems = {20,21} -- lister ici les id des items usable, c'est un exemple pour le 1,2,3, plus tard on pourra les récup direct dans le BDD
 
 -- handles when a player spawns either from joining or after death
 AddEventHandler("playerSpawned", function()
@@ -71,13 +71,18 @@ function delete(arg)
     InventoryMenu()
 end
 
-function use(arg)
-    local itemId = tonumber(arg[1])
-    local qty = arg[2]
-    local item = ITEMS[itemId]
-    item.quantity = item.quantity - qty
-    TriggerServerEvent("item:updateQuantity", item.quantity, itemId)
-    InventoryMenu()
+function use(item)
+    if (ITEMS[item].quantity - 1 >= 0) then
+        TriggerEvent("player:looseItem", item, 1)
+        TriggerServerEvent("item:updateQuantity", 1, item)
+
+        if ITEMS[item].type == 2 then
+            TriggerEvent("food:eat", ITEMS[item])
+        elseif ITEMS[item].type == 1 then
+            TriggerEvent("food:drink", ITEMS[item])
+        else
+        end
+    end
 end
 
 function add(arg)
@@ -122,18 +127,18 @@ function InventoryMenu()
 end
 
 function ItemMenu(itemId)
-    found = false
-    MenuTitle = "Details:"
+    -- found = false
     ClearMenu()
-    for i in usableItems do
-	if i == itemId then
-            Menu.addButton("Utiliser", "use", {itemId, 1})
-	    found = true
-	end
-        if found then
-	    break
-	end
-    end
+    MenuTitle = "Details:"
+    -- for i in usableItems do
+	-- if i == itemId then
+            Menu.addButton("Utiliser", "use", itemId)
+	    -- found = true
+	-- end
+ --        if found then
+	--     break
+	-- end
+ --    end
     Menu.addButton("Supprimer 1", "delete", { itemId, 1 })
     Menu.addButton("Donner", "give", itemId)
 end
