@@ -31,43 +31,33 @@ AddEventHandler("mission:sendmoney", function()
 	TriggerEvent("es:getPlayerFromId", source, function(user)
 		if user ~= nil then
 			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = user.identifier })
-
 		    local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 			money = tonumber(resultat[1].dirty_money)
 			local rargent
 		  	policier = NombrePolicier()
 		  	local Policier = {0.65, 0.7, 0.85, 0.90, 1}
-
 		 	if policier > 5 then 
 		 		rargent = money
 		 	else
 		 		rargent = money * Policier[policier]
 		 	end
-
 		 	user:addMoney(rargent)
 		 	TriggerClientEvent("blanchissement:notification", source, "Tiens, allez casse toi p'tite merde !")
 		 end
 	 end)
-
 end) 
 
 
 RegisterServerEvent("blanchissement:sendblanchissement")
 AddEventHandler("blanchissement:sendblanchissement", function()
-
 	TriggerEvent('es:getPlayerFromId', function(Users)
 		Citizen.Trace("test")
 		if Users ~= nil then
-
 			local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = Users.identifier })
 	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
-
 	    	local argent = tonumber(resultat[1].dirty_money)
-
 	    	local receiveMoney = CalculMoney(argent)
-
 	    	local time = os.clock()
-
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 						{['@dirty_time'] = time , ['@dirty_wait_money'] = receiveMoney, ['@dirty_money'] = "0",['@identifier'] = Users.identifier})
 
@@ -83,10 +73,7 @@ function CalculMoney(bargent)
 	local Pallier = {50, 60, 65, 70, 80}
 	local pallier = 0
 	--local Policier = {0.65, 0.7, 0.85, 0.90, 1}
-
-
 	--local nombrePolicier = NombrePolicier()
-
 	if bargent < 950 then
 		pallier = 1
 	elseif bargent < 950 * 3 then
@@ -98,9 +85,7 @@ function CalculMoney(bargent)
 	else
 		pallier = 5
 	end
-
 	local multiplicateur = maths.random(Pallier[pallier], Pallier[pallier+1])
-
 	--if nombrePolicier == 0 then
 	return ((bargent * multiplicateur)/100) --* 0.5
 	--else
@@ -111,10 +96,7 @@ end --]]
 function BlanchissementRandom()
 	isWaitingForLong = false
 	found = false
-
-
 	TriggerEvent("es:getPlayers", function(Users)
-
 		for k,v in pairs(Users) do
 			sargent = IsInWait(Users[k])
 			if sargent ~= 0 then
@@ -126,37 +108,30 @@ function BlanchissementRandom()
 			if found then
 				break
 			end
-
 		end
 	end)
 	SetTimeout(tempsEntreChaqueMission, BlanchissementRandom)
 end 
 
 function IsInWait(player)
-
 	local req = MySQL:executeQuery("SELECT dirty_wait_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player.identifier })
     local resultat = MySQL:getResults(req, {'dirty_wait_money'}, "identifier")
-
     if result[1].dirty_wait_money == 0 then
     	return 0
     else 
     	return tonumber(result[1].dirty_wait_money)
     end
-
 end
 
 function IsWaitingForLong(player)
 	time = os.clock()
-
 	local req = MySQL:executeQuery("SELECT dirty_time FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player.identifier })
     local resultat = MySQL:getResults(req, {'dirty_time'}, "identifier")
-
     if (resultat[1].dirty_time - time) >= tempsEntreLeDepotEtLaPaye then
     	return true
     else
     	return false
     end
-
 end 
 
 function NombrePolicier()
@@ -171,10 +146,7 @@ function NombrePolicier()
 	    			policier = policier + 1
 	    		end
 	    	end
-
-
 		end
-
 	end)
 	return policier
 end 
