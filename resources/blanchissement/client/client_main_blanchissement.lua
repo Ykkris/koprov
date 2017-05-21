@@ -25,9 +25,9 @@ Keys = {
 
 zoneBlanchissement = {x = 3597.546, y = 3678.030  , z = 39.808}
 zoneRecuperation = {
-	{x = 10.0, y = 20.0, z = 30.0},
-	{x = 10.0, y = 20.0, z = 30.0},
-	{x = 10.0, y = 20.0, z = 30.0}
+	{x = -31, y = 7.68, z = 71.16},
+	{x = 549, y = -191.679, z = 54.48},
+	{x = 983.275, y = 99.97, z = 80.991}
 }
 radius = 10.0
 isPed = false
@@ -40,8 +40,8 @@ soulMessage = {"Laisse moi fumer ma beuh man...", "J'suis trop hype, j'peux plus
 
 Citizen.CreateThread(function()
 	Citizen.Wait(50) -- Pour éviter de faire surcharger les données
-	while true do
 	AddTextEntry('FE_THDR_GTAO', 'KoproV.fr')
+	while true do
 		Wait(1)
 		if IsNear(GetPlayerPed(-1), zoneBlanchissement, radius) then -- Donc s'il est bien à côté alors :
 			leaveZone = false
@@ -61,9 +61,6 @@ Citizen.CreateThread(function()
 			    		local message = math.random(1, #soulMessage)
 			    		DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~"..soulMessage[message], 5000)
 			    		Citizen.Wait(5000) 
-			    	elseif (IsControlJustReleased(1, Keys["L"])) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 10.0) then
-			    		Citizen.Trace("On a bien trigger l'event du client")
-						TriggerServerEvent("mission:test")
 			    	end
 		    	end
 		end
@@ -146,7 +143,7 @@ AddEventHandler("blanchissement:notification", function(text)
 end)
 
 AddEventHandler("blanchissement:mission", function(sargent)  -- le joueur à été séléctionné par le serveur
-		time = os.clock()
+		time = GetGameTimer()
 		DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Dépêche toi de venir, je t'envois les données GPS. Dans 15 minutes j'me casse avec le sac.", 20000)
 		local random = math.random(1 , 3)
 		local zoneRecupRandom = zoneRecuperation[random]
@@ -161,23 +158,27 @@ AddEventHandler("blanchissement:mission", function(sargent)  -- le joueur à ét
 				if isNearArea(zoneRecupRandom.x , zoneRecupRandom.y , zoneRecupRandom.z, 100.0) then
 					sac = CreateObject(modelHash, zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, true, 1, 1)
 					PlaceObjectOnGroundProperly(sac)
-					RequestModel(GetHashKey("prop_money_bag_01"))
-					while HasModelLoaded(GetHashKey("prop_money_bag_01")) do
+					RequestModel("prop_money_bag_01")
+					while not(HasModelLoaded("prop_money_bag_01")) do
 						Wait(10)
 					end
-					sac = CreateAmbientPickup(GetHashKey("PICKUP_MONEY_MED_BAG"), zoneRecupRandom.x, zoneRecupRandom.y, zoneRecupRandom.z, 0, 0, GetHashKey("prop_money_bag_01"), 0, 1)
-					--CreatePickup(GetHashKey('prop_money_bag_01'), location.x, location.y, location.z)
-					while not(HasPickupBeenCollected(sac)) or ((os.clock() - time) > 900) do
-						Wait(10)
+
+					sacc = CreatePickupRotate(GetHashKey("PICKUP_MONEY_MED_BAG"), -71.37, -31.90, 64.3, 1, 1, 0, 0, 1, 1, 1, GetHashKey("prop_money_bag_01"))
+					-- Cette fonction est la seule qui fonctionne, avec ces parametres, j'ai fais tous les test --> DoesPickupExist.. :/
+
+					while DoesPickupObjectExist(sacc) == 1 or (GetGameTimer() - time >= 900000) do
+						Wait(1000)
 					end
-					if ((os.clock() - time) > 900) then
+					if ((GetGameTimer() - time) > 900000) then
 						DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Trop tard, j'me tire avec le sac.", 10000)
+						TriggerServerEvent("mission:removemoney")
 					else
 						TriggerServerEvent("mission:sendmoney")
 					end
 					if Blipvariable ~= nil and DoesBlipExist(Blipvariable) then
 						Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
 						Blipvariable = nil
+						SetModelAsNoLongerNeeded("prop_money_bag_01")
 					end
 					break
 				end
