@@ -272,6 +272,19 @@ AddEventHandler("Iphone:amande", function(amount, cp, cd)
 	end)
 end)
 
+RegisterServerEvent('Iphone:checkplate')
+AddEventHandler('Iphone:checkplate', function()
+	local executed_query = MySQL:executeQuery("SELECT Nom FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '@plate'", { ['@plate'] = plate })
+	local result = MySQL:getResults(executed_query, { 'Nom' }, "identifier")
+	if (result[1]) then
+		for _, v in ipairs(result) do
+			TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "The vehicle #"..plate.." is the property of " .. v.Nom)
+		end
+	else
+		TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "The vehicle #"..plate.." isn't register !")
+	end
+end)
+
 --RegisterServerEvent("Iphone:getPlayers") -- TriggerServerEvent("Iphone:getPlayers")
 --AddEventHandler("Iphone:getPlayers", function()
 --	players = GetPlayers()

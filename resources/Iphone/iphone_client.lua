@@ -141,6 +141,7 @@ buttons = {
 		{name = "Fouiller", description = ""},
 		{name = "Amande", description = ""},
 		{name = "Controler l'identite", description = ""},
+		{name = "Controler le vehicule", description = ""},
 		{name = "Faire rentrer dans le vehicule", description = ""},
 		{name = "Faire sortir du vehicule [WIP]", description = ""} --------------- Repertoire Boite de reception
 	}
@@ -506,6 +507,8 @@ function ButtonSelected(button)
 			Amande()
 		elseif btn == "Controler l'identite" then
 			IdControl()
+		elseif btn == "Controler le vehicule" then
+			PlateControl()
 		elseif btn == "Faire rentrer dans le vehicule" then
 			EnterVehicle()
 		elseif btn == "Faire sortir du vehicule" then
@@ -917,6 +920,19 @@ function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClose
 	local target, distance = GetClosestPlayer()
 	
 	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(target), 1)
+end
+
+function PlateControl()
+	local pos = GetEntityCoords(GetPlayerPed(-1))
+	local entityWorld = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, 0.0)
+
+	local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, GetPlayerPed(-1), 0)
+	local a, b, c, d, vehicleHandle = GetRaycastResult(rayHandle)
+	if(DoesEntityExist(vehicleHandle)) then
+		TriggerServerEvent("Iphone:checkplate", GetVehicleNumberPlateText(vehicleHandle))
+	else
+		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Aucun vehicule a proximite !")
+	end
 end
 
 
