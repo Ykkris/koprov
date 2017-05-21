@@ -41,8 +41,8 @@ soulMessage = {"Laisse moi fumer ma beuh man...", "J'suis trop hype, j'peux plus
 Citizen.CreateThread(function()
 	Citizen.Wait(50) -- Pour éviter de faire surcharger les données
 	while true do
-		local isPlayerNear = IsNear(GetPlayerPed(-1), zoneBlanchissement, radius)
-		if isPlayerNear then -- Donc s'il est bien à côté alors :
+		Wait(1)
+		if IsNear(GetPlayerPed(-1), zoneBlanchissement, radius) then -- Donc s'il est bien à côté alors :
 			leaveZone = false
 			isPed = IsSpecificPedHashNearPed(GetPlayerPed(-1), "a_f_y_hippie_01", radius)
 			if not(isPed) then
