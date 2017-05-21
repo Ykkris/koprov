@@ -29,7 +29,7 @@ zoneRecuperation = {
 	{x = 10.0, y = 20.0, z = 30.0},
 	{x = 10.0, y = 20.0, z = 30.0}
 }
-radius = 100.0
+radius = 10.0
 isPed = false
 sommeMini = 50
 alreadySend = false
@@ -55,13 +55,13 @@ Citizen.CreateThread(function()
 	    		DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~ Vous entendez : 'Wouah ! Comment elle est bonne cette beuh !'", 5000)
 	    		while IsNear(GetPlayerPed(-1), zoneBlanchissement , 15.0) do
 	    			Wait(0)
-			    	if (IsControlJustReleased(1, Keys["E"])) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 5.0) then
+			    	if (IsControlJustReleased(1, Keys["E"])) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 10.0) then
 			    		TriggerServerEvent("blanchissement:sendblanchissement")
-			    	elseif IsControlJustPressed(1, Keys["E"]) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 5.0) and alreadySend then
+			    	elseif IsControlJustPressed(1, Keys["E"]) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 10.0) and alreadySend then
 			    		local message = math.random(1, #soulMessage)
 			    		DrawMissionText("~HUD_COLOUR_VIDEO_EDITOR_SCORE~"..soulMessage[message], 5000)
 			    		Citizen.Wait(5000) 
-			    	elseif (IsControlJustReleased(1, Keys["L"])) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 5.0) then
+			    	elseif (IsControlJustReleased(1, Keys["L"])) and IsNear(GetPlayerPed(-1), zoneBlanchissement , 10.0) then
 			    		Citizen.Trace("On a bien trigger l'event du client")
 						TriggerServerEvent("mission:test")
 			    	end
