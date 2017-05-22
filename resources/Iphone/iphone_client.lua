@@ -143,7 +143,7 @@ buttons = {
 		{name = "Controler l'identite", description = ""},
 		{name = "Controler le vehicule", description = ""},
 		{name = "Faire rentrer dans le vehicule", description = ""},
-		{name = "Faire sortir du vehicule [WIP]", description = ""} --------------- Repertoire Boite de reception
+		{name = "Faire sortir du vehicule", description = ""} --------------- Repertoire Boite de reception
 	}
 	},
 	["Repertoire"] = {

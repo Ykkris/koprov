@@ -61,7 +61,12 @@ AddEventHandler('police:checkInventory', function()
 			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you !")
 		end
 	else
-		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
+		TriggerEvent("pNotify:SendNotification", {
+			text = "Merci de prendre votre service !",
+			type = "warning",
+			timeout = 2500,
+			layout = "centerLeft",
+			})
 	end
 end)
 
@@ -70,7 +75,12 @@ AddEventHandler('police:fines', function(t, amount)
 	if(isInService) then
 		TriggerServerEvent("police:finesGranted", t, amount)
 	else
-		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
+		TriggerEvent("pNotify:SendNotification", {
+			text = "Merci de prendre votre service !",
+			type = "warning",
+			timeout = 2500,
+			layout = "centerLeft",
+			})
 	end
 end)
 
@@ -84,7 +94,12 @@ AddEventHandler('police:cuff', function(t)
 			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you (maybe get closer) !")
 		end
 	else
-		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
+		TriggerEvent("pNotify:SendNotification", {
+			text = "Merci de prendre votre service !",
+			type = "warning",
+			timeout = 2500,
+			layout = "centerLeft",
+			})
 	end
 end)
 
@@ -123,7 +138,12 @@ AddEventHandler('police:forceEnter', function(id)
 			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you (maybe get closer) !")
 		end
 	else
-		TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Please take your service first !")
+		TriggerEvent("pNotify:SendNotification", {
+			text = "Merci de prendre votre service !",
+			type = "warning",
+			timeout = 2500,
+			layout = "centerLeft",
+			})
 	end
 end)
 

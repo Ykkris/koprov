@@ -64,7 +64,7 @@ AutoStartResources:
 RconPassword: koprobestv
 
 # configure this, please
-Hostname: Kopro V [DEV]
+Hostname: Kopro V [YKKRISDEV]
 
 ScriptDebug: true
 
