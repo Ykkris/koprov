@@ -449,18 +449,18 @@ function OpenCloseDoor(dumbledoor)
 
 	local isdoordamaged = IsVehicleDoorDamaged(playerVeh, dumbledoor)
 	
-	if isdoordamaged then TriggerEvent("pNotify:SendNotification", -1, { text = "La porte est <b style='color:red'>cassée</b>", type = "warning", timeout = 10000, layout = "centerLeft",}) --ShowNotification("La porte est cassé.") 
+	if isdoordamaged then TriggerEvent("pNotify:SendNotification", { text = "La porte est <b style='color:red'>cassée</b>", type = "warning", timeout = 10000, layout = "centerLeft",}) --ShowNotification("La porte est cassé.") 
 	end
 	
 	local angle = GetVehicleDoorAngleRatio(playerVeh, dumbledoor)
 	
 	if angle == 0 then
 		--ShowNotification("La porte est ouverte.")
-		TriggerEvent("pNotify:SendNotification", -1, { text = "La porte est <b style='color:green'>ouverte</b>", type = "warning", timeout = 10000, layout = "centerLeft",})
+		TriggerEvent("pNotify:SendNotification", { text = "La porte est <b style='color:green'>ouverte</b>", type = "warning", timeout = 10000, layout = "centerLeft",})
 		SetVehicleDoorOpen(playerVeh, dumbledoor, false, false)
 	else
 		--ShowNotification("La porte est fermé.")
-		TriggerEvent("pNotify:SendNotification", -1, { text = "La portes est <b style='color:red'>fermée</b>", type = "warning", timeout = 10000, layout = "centerLeft",})
+		TriggerEvent("pNotify:SendNotification", { text = "La portes est <b style='color:red'>fermée</b>", type = "warning", timeout = 10000, layout = "centerLeft",})
 		SetVehicleDoorShut(playerVeh, dumbledoor, false)
 	
 	--GET_VEHICLE_DOOR_ANGLE_RATIO
@@ -500,7 +500,7 @@ function StopLimitator()
 	local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
 	SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
 	--ShowNotification("Limitateur enlevé")
-	TriggerEvent("pNotify:SendNotification", -1, { text = "Limitateur enlevé", type = "warning", timeout = 10000, layout = "centerLeft",})
+	TriggerEvent("pNotify:SendNotification", { text = "Limitateur enlevé", type = "warning", timeout = 10000, layout = "centerLeft",})
 end
 
 --AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh, running)

@@ -34,18 +34,18 @@ AddEventHandler('veh:rcheckveh', function(veh, playerGotThisVeh)
       --SetNotificationTextEntry("STRING")
       --AddTextComponentString("Véhicule ~r~fermé~w~")
       --DrawNotification(false, false)
-      TriggerEvent("pNotify:SendNotification", -1, { text = "Tu as <b style='color:red'>fermé</b> ton véhicule", type = "info", timeout = 2500, layout = "centerLeft",})  
+      TriggerEvent("pNotify:SendNotification", { text = "Tu as <b style='color:red'>fermé</b> ton véhicule", type = "info", timeout = 2500, layout = "centerLeft",})  
     else
-      --SetVehicleDoorsLocked(veh, 1)
+      SetVehicleDoorsLocked(veh, 1)
       --SetNotificationTextEntry("STRING")
       --AddTextComponentString("Véhicule ~g~ouvert~w~")
-      TriggerEvent("pNotify:SendNotification", -1, { text = "Tu as <b style='color:green'>ouvert</b> ton véhicule", type = "info", timeout = 2500, layout = "centerLeft",})  
-      DrawNotification(false, false)
+      TriggerEvent("pNotify:SendNotification", { text = "Tu as <b style='color:green'>ouvert</b> ton véhicule", type = "info", timeout = 2500, layout = "centerLeft",})  
+     -- DrawNotification(false, false)
     end
   else
     --SetNotificationTextEntry("STRING")
     --AddTextComponentString("Tu n'as pas les clefs!")
     --DrawNotification(false, false)
-    TriggerEvent("pNotify:SendNotification", -1, { text = "Tu n'as pas les clefs du véhicule", type = "warning", timeout = 2500, layout = "centerLeft",})  
+    TriggerEvent("pNotify:SendNotification", { text = "Tu n'as pas les clefs du véhicule", type = "warning", timeout = 2500, layout = "centerLeft",})  
   end
 end)

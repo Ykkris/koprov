@@ -36,7 +36,7 @@ function RequestToSave()
 	if not origin then
 		--Affichage d'un message confirmant la sauvegarde de la position du joueurs.
 		--Notify("Position sauvegardée sur le GPS.")
-		TriggerEvent("pNotify:SendNotification", -1, { text = "Ta position a été sauvegardée par ton GPS", type = "info", timeout = 10000, layout = "centerLeft",})
+		TriggerEvent("pNotify:SendNotification", { text = "Ta position a été sauvegardée par ton GPS", type = "info", timeout = 10000, layout = "centerLeft",})
 	end
 end
 

@@ -37,7 +37,7 @@ AddEventHandler("essence:payer", function(litres) -- source, litres en float
 				
 	if retour then
 		--TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Facture prise en charge par l'etat !")
-    TriggerClientEvent("pNotify:SendNotification", -1, { text = "Facture de <b style='color:green'>".. prix.."$</b> prise en charge pas l'état !", type = "info", timeout = 10000, layout = "centerLeft",})
+    TriggerClientEvent("pNotify:SendNotification", source, { text = "Facture de <b style='color:green'>".. prix.."$</b> prise en charge pas l'état !", type = "info", timeout = 10000, layout = "centerLeft",})
 	else
 		user:removeMoney(prix)
     end  

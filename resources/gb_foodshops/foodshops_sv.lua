@@ -36,10 +36,10 @@ AddEventHandler('gabs:menuvdk', function(fooditem)
 					TriggerClientEvent("player:receiveItem", source, fooditem[1], fooditem[2])
 				else
 					--TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "Vous n'avez pas assez d'argent.")
-					TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu n'as pas <b style='color:red'>".. fooditem[3] .."$</b> sur toi", type = "warning", timeout = 10000, layout = "centerLeft",})
+					TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu n'as pas <b style='color:red'>".. fooditem[3] .."$</b> sur toi", type = "warning", timeout = 10000, layout = "centerLeft",})
 				end
 			else
-				TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu n'as plus de place sur toi", type = "warning", timeout = 10000, layout = "centerLeft",})
+				TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu n'as plus de place sur toi", type = "warning", timeout = 10000, layout = "centerLeft",})
 			end
 		end)
 end)

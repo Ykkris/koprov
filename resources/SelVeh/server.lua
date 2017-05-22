@@ -36,7 +36,7 @@ AddEventHandler('test:SelVeh', function(plate)
     local executed_query = MySQL:executeQuery("DELETE from user_vehicle WHERE identifier = '@username' AND vehicle_plate = '@plate'",
       {['@username'] = player, ['@plate'] = plate})
     --TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Véhicule vendu!\n")
-    TriggerEvent("pNotify:SendNotification", -1, { text = "Ton véhicule a été <b style='color:green'>vendu</b>", type = "info", timeout = 5000, layout = "centerLeft",})  
+    TriggerEvent("pNotify:SendNotification", source, { text = "Ton véhicule a été <b style='color:green'>vendu</b>", type = "info", timeout = 5000, layout = "centerLeft",})  
   end)
 end)
 
