@@ -139,15 +139,15 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
         --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Transféré: ~r~-$".. amount .." ~n~~s~Nouveau Solde: ~g~$" .. new_balance)
         TriggerEvent('es:getPlayerFromId', toPlayer, function(user2)
           local recipient = user2.identifier
-        for _, v in ipairs(result) do
         TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu as transféré(e) <b style='color:green'>" .. amount .. "$</b> à ".. recipient, type = "info", timeout = 10000, layout = "centerLeft",})
-        end
         TriggerClientEvent("banking:updateBalance", source, new_balance)
         TriggerClientEvent("banking:removeBalance", source, amount)            
             deposit(recipient, amount)
             new_balance2 = bankBalance(recipient)
             --TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Reçu: ~g~$".. amount .." ~n~~s~Nouveau Solde: ~g~$" .. new_balance2)
+            for _, v in ipairs(result) do
             TriggerClientEvent("pNotify:SendNotification", toPlayer, { text = "Tu as reçu <b style='color:green'>" .. amount .. "$</b> de "..v.first_name.." "..v.last_name.., type = "info", timeout = 10000, layout = "centerLeft",})
+          end
             TriggerClientEvent("banking:updateBalance", toPlayer, new_balance2)
             TriggerClientEvent("banking:addBalance", source, amount)
             CancelEvent()
