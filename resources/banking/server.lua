@@ -129,9 +129,9 @@ end)
 RegisterServerEvent('bank:transfer')
 AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
   TriggerEvent('es:getPlayerFromId', fromPlayer, function(user)
+      local player = user.identifier
       local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@name'", {['@name'] = player})
       local result = MySQL:getResults(executed_query, {'first_name', 'last_name'}, "identifier")
-      local player = user.identifier
       local bankbalance = bankBalance(player)
       if(tonumber(amount) <= tonumber(bankbalance)) then
         withdraw(player, amount)
