@@ -123,6 +123,7 @@ RegisterServerEvent('police:checkingPlate')
 AddEventHandler('police:checkingPlate', function(plate)
 	local executed_query = MySQL:executeQuery("SELECT last_name FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '@plate'", { ['@plate'] = plate })
 	local result = MySQL:getResults(executed_query, { 'last_name' }, "identifier")
+	RconPrint(tostring(plate))
 	if (result[1]) then
 		for _, v in ipairs(result) do
 			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "The vehicle #"..plate.." is the property of " .. v.last_name)
@@ -225,7 +226,12 @@ AddEventHandler("Iphone:check", function()
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:checkInventory', source)
 		else
-			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
+			TriggerClientEvent("pNotify:SendNotification", -1, {
+				text = "Vous n'avez pas la permission de faire ça !",
+				type = "warning",
+				timeout = 2500,
+				layout = "centerLeft",
+			})
 		end
 	end)
 end)
@@ -237,7 +243,12 @@ AddEventHandler("Iphone:forceenter", function()
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:forceEnter', source)
 		else
-			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
+			TriggerClientEvent("pNotify:SendNotification", -1, {
+				text = "Vous n'avez pas la permission de faire ça !",
+				type = "warning",
+				timeout = 2500,
+				layout = "centerLeft",
+			})
 		end
 	end)
 end)
@@ -249,7 +260,12 @@ AddEventHandler("Iphone:cuff", function()
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:cuff', source)
 		else
-			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
+			TriggerClientEvent("pNotify:SendNotification", -1, {
+				text = "Vous n'avez pas la permission de faire ça !",
+				type = "warning",
+				timeout = 2500,
+				layout = "centerLeft",
+			})
 		end
 	end)
 end)
@@ -264,24 +280,44 @@ AddEventHandler("Iphone:amande", function(amount, cp, cd)
 				if(GetPlayerName(cp) ~= nil and cd <= 5 )then
 					TriggerClientEvent('police:fines', source, cp, amount)
 				else
-					TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Pas de joueur à porté!")
+					TriggerClientEvent("pNotify:SendNotification", -1, {
+				text = "Pas de joueur à porté.",
+				type = "warning",
+				timeout = 2500,
+				layout = "centerLeft",
+			})
 				end
 		else
-			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "T'es pas flic!")
+			TriggerClientEvent("pNotify:SendNotification", -1, {
+				text = "T'es pas flic !",
+				type = "alert",
+				timeout = 2500,
+				layout = "centerLeft",
+			})
 		end
 	end)
 end)
 
 RegisterServerEvent('Iphone:checkplate')
-AddEventHandler('Iphone:checkplate', function()
-	local executed_query = MySQL:executeQuery("SELECT Nom FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '@plate'", { ['@plate'] = plate })
-	local result = MySQL:getResults(executed_query, { 'Nom' }, "identifier")
+AddEventHandler('Iphone:checkplate', function(plate)
+	local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '@plate'", { ['@plate'] = plate })
+	local result = MySQL:getResults(executed_query, { 'last_name', 'first_name' }, "identifier")
 	if (result[1]) then
 		for _, v in ipairs(result) do
-			TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "The vehicle #"..plate.." is the property of " .. v.Nom)
+			TriggerClientEvent("pNotify:SendNotification", -1, {
+				text = "Le véhicule #<b style='color:red'>"..plate.."</b> est la propriété de <b style='color:green'> "..v.first_name.." "..v.last_name.."</b>",
+				type = "info",
+				timeout = 2500,
+				layout = "centerLeft",
+			})
 		end
 	else
-		TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "The vehicle #"..plate.." isn't register !")
+		TriggerClientEvent("pNotify:SendNotification", -1, {
+				text = "Le véhicule #<b style='color:red'>"..plate.."</b> n'est pas enregistré !",
+				type = "warning",
+				timeout = 2500,
+				layout = "centerLeft",
+			})
 	end
 end)
 

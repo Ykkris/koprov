@@ -131,7 +131,12 @@ AddEventHandler("player:giveItem", function(item, name, qty, target)
     if (total + qty <= 64) then
         TriggerClientEvent("player:looseItem", source, item, qty)
         TriggerClientEvent("player:receiveItem", target, item, qty)
-        TriggerClientEvent("es_freeroam:notify", target, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Vous venez de recevoir " .. qty .. " " .. name)
+        TriggerClientEvent("pNotify:SendNotification", -1, {
+                text = "Vous venez de recevoir <b style='color:green'>" .. qty .. "</b> <b style='color:green'>".. name.."</b",
+                type = "info",
+                timeout = 2500,
+                layout = "centerLeft",
+            })
     end
 end)
 
