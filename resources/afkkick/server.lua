@@ -1,7 +1,11 @@
 -- White-list AFKKICK
-whitelist = {"example1-steamid",
-	"example2-steamid",
-	"example3-steamid"
+whitelist = {
+	"steam:110000101f91cd2",
+	"steam:110000104bd6595",
+	"steam:110000102f38cb7",
+	"steam:110000101889e5e",
+	"steam:110000107102B2C",
+	"steam:11000010599af76"
 	}
 
 RegisterServerEvent("kickForBeingAnAFKDouchebag")
