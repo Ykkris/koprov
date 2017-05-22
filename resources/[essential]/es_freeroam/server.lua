@@ -21,13 +21,10 @@ AddEventHandler('mission:completed', function(total)
 TriggerEvent('es:getPlayerFromId', source, function(user)
   -- update player money amount
   user:addMoney((total))
-  TriggerEvent("pNotify:SendNotification", -1, { text = "Tu as reçu <b style='color:green'>".. tonumber(total).."$</b> !", type = "info", timeout = 10000, layout = "centerLeft",})
- --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "You received ~g~$".. tonumber(total))
- es_freeroam:pay
+ TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "You received ~g~$".. tonumber(total))
  end)
 end)
 
---cette event est quasi useless
 RegisterServerEvent('es_freeroam:pay')
 AddEventHandler('es_freeroam:pay', function(amount)
 	-- Get the players money amount

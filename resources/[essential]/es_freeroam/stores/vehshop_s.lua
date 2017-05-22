@@ -41,28 +41,23 @@ AddEventHandler('CheckMoneyForVeh', function(name, vehicle, price)
         count = count + 1
       end
       if count == 15 then
-          --TriggerClientEvent("veh_s:notif", source, "Ton garage est ~r~Plein!~w~")
-          TriggerClientEvent("pNotify:SendNotification", -1, { text = "Ton garage est <b style='color:red'>plein</b>", type = "info", timeout = 10000, layout = "centerLeft",})
+          TriggerClientEvent("veh_s:notif", source, "Ton garage est ~r~Plein!~w~")
       else
         if (tonumber(user.money) >= tonumber(price)) then
           user:removeMoney((price))
           TriggerClientEvent('FinishMoneyCheckForVeh', source, name, vehicle, price)
-          --TriggerClientEvent("veh_s:notif", source, "Vehicule ~r~Livré!~w~")
-          TriggerClientEvent("pNotify:SendNotification", -1, { text = "Véhicule <b style='color:green'>livré</b> !", type = "info", timeout = 10000, layout = "centerLeft",})
+          TriggerClientEvent("veh_s:notif", source, "Vehicule ~r~Livré!~w~")
         else
-          --TriggerClientEvent("veh_s:notif", source, "Tu n'as pas assez d'argent")
-          TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu n'as pas <b style='color:red'>" ..price.."$</b>sur toi", type = "info", timeout = 10000, layout = "centerLeft",})
+          TriggerClientEvent("veh_s:notif", source, "Tu n'as pas assez d'argent")
        end
       end
    else
       if (tonumber(user.money) >= tonumber(price)) then
         user:removeMoney((price))
         TriggerClientEvent('FinishMoneyCheckForVeh', source, name, vehicle, price)
-        --TriggerClientEvent("veh_s:notif", source, "Vehicule ~r~Livré!~w~")
-        TriggerClientEvent("pNotify:SendNotification", -1, { text = "Véhicule <b style='color:green'>livré</b> !", type = "info", timeout = 10000, layout = "centerLeft",})
+        TriggerClientEvent("veh_s:notif", source, "Vehicule ~r~Livré!~w~")
       else
-        --TriggerClientEvent("veh_s:notif", source, "Tu n'as pas assez d'argent")
-        TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu n'as pas <b style='color:red'>" ..price.."$</b>sur toi", type = "info", timeout = 10000, layout = "centerLeft",})
+        TriggerClientEvent("veh_s:notif", source, "Tu n'as pas assez d'argent")
       end 
     end
   end)

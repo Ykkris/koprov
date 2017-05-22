@@ -19,11 +19,11 @@ end)
     Citizen.CreateThread(function()
     while true do
       Wait(0)
-      TriggerEvent("pNotify:SendNotification", -1, { text = "Bienvenue sur <b style='color:green'>Kopro V</b> !", type = "info", timeout = 10000, layout = "centerLeft",})
-      --SetNotificationTextEntry("STRING");
-      --AddTextComponentString("Bienvenue sur ~g~Kopro V !.\n ~y~Pour afficher les commandes tapper /help dans le chat !");
-      --SetNotificationMessage("CHAR_ALL_PLAYERS_CONF", "CHAR_ALL_PLAYERS_CONF", true, 1, "Kopro V Team", "v0.1");
-      --DrawNotification(false, true);
+
+      SetNotificationTextEntry("STRING");
+      AddTextComponentString("Bienvenue sur ~g~Kopro V !.\n ~y~Pour afficher les commandes tapper /help dans le chat !");
+      SetNotificationMessage("CHAR_ALL_PLAYERS_CONF", "CHAR_ALL_PLAYERS_CONF", true, 1, "Kopro V Team", "v0.1");
+      DrawNotification(false, true);
       Wait(10000000)
     end
  end)
