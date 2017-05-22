@@ -186,7 +186,12 @@ Citizen.CreateThread(function()
 end)
 
 function Chat(debugg)
-    TriggerEvent("chatMessage", '', { 0, 0x99, 255 }, tostring(debugg))
+     TriggerEvent("pNotify:SendNotification", {
++                           type = "info",
++                           timeout = 1000,
++                           layout = "centerLeft",
++                           text = tostring(debugg)
++                           })
 end
 
 function ShowNotification(message)

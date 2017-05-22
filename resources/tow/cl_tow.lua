@@ -32,25 +32,46 @@ AddEventHandler('pv:tow', function()
 								
 							AttachEntityToEntity(targetVehicle, vehicle, 20, -0.5, -5.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
 							currentlyTowedVehicle = targetVehicle
-							TriggerEvent("chatMessage", "[TOWFuckers]", {255, 255, 0}, "Vehicle successfully attached to towtruck!")
+							TriggerEvent("pNotify:SendNotification", {
++							type = "sucess",
++							timeout = 1000,
++							layout = "centerLeft",
++							text = "Vehicule accroché à la dépanneuse!"
++							})
 							SetVehicleDerformationFixed(currentlyTowedVehicle)
 								
 						else
 							ShowNotification("Vous n'êtes pas a coté d'un véhicule.")
 						end
 					else
-						TriggerEvent("chatMessage", "[TOWFuckers]", {255, 255, 0}, "Are you retarded? You cant tow your own towtruck with your own towtruck?")
+						TriggerEvent("pNotify:SendNotification", {
++							type = "error",
++							timeout = 1000,
++							layout = "centerLeft",
++							text = "Vous ne pouvez pas accrocher votre depanneuse à votre depanneuse"
++							})
 					end
 				end
 			else
 				TriggerEvent("chatMessage", "[TOWFuckers]", {255, 255, 0}, "Theres no vehicle to tow?")
+				TriggerEvent("pNotify:SendNotification", {
++							type = "error",
++							timeout = 1000,
++							layout = "centerLeft",
++							text = "il n'y a pas de vehicule a accrocher"
++							})
 			end
 		else
 			AttachEntityToEntity(currentlyTowedVehicle, vehicle, 20, -0.5, -12.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
 			DetachEntity(currentlyTowedVehicle, true, true)
 			SetVehicleOnGroundProperly(vehicle)
 			currentlyTowedVehicle = nil
-			TriggerEvent("chatMessage", "[TOWFuckers]", {255, 255, 0}, "The vehicle has been successfully detached!")
+			TriggerEvent("pNotify:SendNotification", {
++							type = "sucess",
++							timeout = 1000,
++							layout = "centerLeft",
++							text = "Vehicule décrocher de la dépanneuse!"
++							})
 		end
 	end
 end)
