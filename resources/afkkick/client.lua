@@ -19,7 +19,12 @@ Citizen.CreateThread(function()
 			if currentPos == prevPos then
 				if time > 0 then
 					if kickWarning and time == math.ceil(secondsUntilKick / 4) then
-						TriggerEvent("chatMessage", "WARNING", {255, 0, 0}, "^1Vous allez être expulsé dans  " .. time .. " secondes pour AFK!")
+						TriggerEvent("pNotify:SendNotification", {
+							type = "info",
+							timeout = 1000,
+							layout = "centerLeft",
+							text = "^1Vous allez être expulsé dans " .. time .." secondes pour AFK !"
+							})
 					end
 
 					time = time - 1
