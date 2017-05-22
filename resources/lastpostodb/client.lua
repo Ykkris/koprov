@@ -36,7 +36,7 @@ function RequestToSave()
 	if not origin then
 		--Affichage d'un message confirmant la sauvegarde de la position du joueurs.
 		--Notify("Position sauvegardée sur le GPS.")
-		TriggerEvent("pNotify:SendNotification", { text = "Ta position a été sauvegardée par ton GPS", type = "info", timeout = 2000, layout = "centerLeft",})
+		TriggerEvent("pNotify:SendNotification", { text = "Ta position a été sauvegardée sur ton GPS.", type = "info", timeout = 1000, layout = "centerLeft",})
 	end
 end
 
@@ -77,7 +77,7 @@ AddEventHandler("projectEZ:spawnlaspos", function(PosX, PosY, PosZ)
 		TriggerEvent("pNotify:SendNotification", {
 			text = "Vous êtes de retour en ville !",
 			type = "info",
-			timeout = 10000,
+			timeout = 1000,
 			layout = "centerRight"
 			})
     end
