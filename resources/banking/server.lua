@@ -135,7 +135,7 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
         withdraw(player, amount)
         local new_balance = bankBalance(player)
         --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Transféré: ~r~-$".. amount .." ~n~~s~Nouveau Solde: ~g~$" .. new_balance)
-        TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu as transféré(e) <b style='color:green'>" .. amount .. "$</b> à" ..toPlayer.., type = "info", timeout = 10000, layout = "centerLeft",})
+        TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu as transféré(e) <b style='color:green'>" .. amount .. "$</b> à" ..toPlayer, type = "info", timeout = 10000, layout = "centerLeft",})
         TriggerClientEvent("banking:updateBalance", source, new_balance)
         TriggerClientEvent("banking:removeBalance", source, amount)
         TriggerEvent('es:getPlayerFromId', toPlayer, function(user2)
@@ -150,7 +150,8 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
         end)
         CancelEvent()
       else
-        TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Pas assez d'argent sur le compte!^0")
+        --TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Pas assez d'argent sur le compte!^0")
+        TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu n'as pas <b style='color:red'>".. amount .."$</b> sur ton compte !", type = "warning", timeout = 10000, layout = "centerLeft",})
         CancelEvent()
       end
   end)
@@ -167,7 +168,7 @@ TriggerEvent('es:addCommand', 'givecash', function(source, args, user)
     amount = tonumber(args[3])
     TriggerClientEvent('bank:givecash', source, toPlayer, amount)
 	else
-    --TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Utilise la commande /givecash [id] [montant]^0")
+    TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Utilise la commande /givecash [id] [montant]^0")
     return false
   end
 end)
