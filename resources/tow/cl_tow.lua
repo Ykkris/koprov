@@ -53,7 +53,6 @@ AddEventHandler('pv:tow', function()
 					end
 				end
 			else
-				TriggerEvent("chatMessage", "[TOWFuckers]", {255, 255, 0}, "Theres no vehicle to tow?")
 				TriggerEvent("pNotify:SendNotification", {
 +							type = "error",
 +							timeout = 1000,

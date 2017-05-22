@@ -15,9 +15,10 @@ AddEventHandler('paycheck:salary', function()
 
     if (job == 2 or job == 3 or job == 4 or job == 9) then
       user:addMoney(salary_job)
-      TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Salaire metier reçu : + "..salary_job.." ~g~$")
+      --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Salaire metier reçu : + "..salary_job.." ~g~$")
+      TriggerClientEvent("pNotify:SendNotification", -1, { text = "Tu as reçu ta paye de <b style='color:green'>".. salary_job .."$</b>", type = "info", timeout = 5000, layout = "centerLeft",})
 	  else
-      TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "~r~Vous n'avez pas de salaire fixe.")
+      --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "~r~Vous n'avez pas de salaire fixe.")
     end
   end)
 end)

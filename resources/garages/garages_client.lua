@@ -492,10 +492,12 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primaryc
 		Citizen.Wait(3000)
 		local caisseo = GetClosestVehicle(garage_locations.outside[1], garage_locations.outside[2], garage_locations.outside[3], 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
-			drawNotification("La zone est encombrée") 
+			--drawNotification("La zone est encombrée")
+			TriggerEvent("pNotify:SendNotification", -1, { text = "La zone est encombrée", type = "warning", timeout = 10000, layout = "centerLeft",}) 
 		else
 			if state == "out" then
-				drawNotification("Ce véhicule n'est pas dans le garage")
+				--drawNotification("Ce véhicule n'est pas dans le garage")
+				TriggerEvent("pNotify:SendNotification", -1, { text = "Ce véhicule n'est pas dans ton garage", type = "warning", timeout = 10000, layout = "centerLeft",})
 			else			
 				RequestModel(car)
 				while not HasModelLoaded(car) do
@@ -510,7 +512,8 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primaryc
 				if IsPlayerInRangeOfFourier() then 
 					TriggerServerEvent('garages:ToPay') 
 				end 
-				drawNotification("Véhicule sorti, bonne route")				
+				--drawNotification("Véhicule sorti, bonne route")
+				TriggerEvent("pNotify:SendNotification", -1, { text = "Ton véhicule a été <b style='color:green'>sorti</b> du garage", type = "info", timeout = 2500, layout = "centerLeft",})				
 				TriggerServerEvent('garages:SetVehOut', plate)
 			end   
 			CloseCreator()
@@ -527,7 +530,8 @@ AddEventHandler('garages:StoreVehicle', function(ListVeh)
 	
 	Citizen.CreateThread(function()
 		if next(VEHS) == nil then
-			drawNotification("Vous n'avez pas de véhicule sorti")
+			--drawNotification("Vous n'avez pas de véhicule sorti")
+			TriggerEvent("pNotify:SendNotification", -1, { text = "Tu n'as pas de vehicule sorti", type = "warning", timeout = 10000, layout = "centerLeft",})
 		else
 			Citizen.Wait(3000)
 			local caissei = GetClosestVehicle(garage_locations.outside[1], garage_locations.outside[2], garage_locations.outside[3], 3.000, 0, 70)
@@ -541,14 +545,17 @@ AddEventHandler('garages:StoreVehicle', function(ListVeh)
 					end
 				end
 				if own == false then
-					drawNotification("Ce n'est pas ton véhicule")
+					--drawNotification("Ce n'est pas ton véhicule")
+					TriggerEvent("pNotify:SendNotification", -1, { text = "Ce n'est pas ton véhicule", type = "warning", timeout = 10000, layout = "centerLeft",})
 				else
 					Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
-					drawNotification("Véhicule rentré")
+					--drawNotification("Véhicule rentré")
+					TriggerEvent("pNotify:SendNotification", -1, { text = "Ton véhicule a été <b style='color:green'>rentré</b> au garage", type = "info", timeout = 2500, layout = "centerLeft",})
 					TriggerServerEvent('garages:SetVehIn', plate)
 				end
 			else
-				drawNotification("Aucun véhicule n'est sur la zone.")
+				--drawNotification("Aucun véhicule n'est sur la zone.")
+				TriggerEvent("pNotify:SendNotification", -1, { text = "Aucun véhicule n'est sur la zone", type = "warning", timeout = 10000, layout = "centerLeft",})
 			end
 		end
 		CloseCreator()
