@@ -3,6 +3,8 @@
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
 
+--------------------HARDCODING HARD HARD, BE PREPARED-------------------------
+
 local Keys = {
 ["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
 ["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177,
@@ -15,14 +17,20 @@ local Keys = {
 ["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
-
-sms =  {}
-contacts = {name = "romain", number = "555-1542"}
+------------------------------------------------------------------------------
 isCop = false --------------- A ENLEVER
 guiEnabled = false
 ActualJob = 0
 notificationInProgress = false
-local PhoneData = {phoneNumber = 0, contacts = {}, sms = {}}
+taillemaxsms = 30
+
+PhoneData = {
+	phone_number = 0,
+	contacts = {},
+	sms = {},
+	name = {}
+	}
+
 reloadphone = false
 
 AddEventHandler("playerSpawned", function()
@@ -99,7 +107,7 @@ buttons = {
 	{name = "Damn", description = ''},
 	{name = "Dance", description = ''},
 	{name = "Salute", description = ''},
-	{name = "AFK/Fumer", description = ''},
+	{name = "Rock", description = ''},
 	{name = "Why", description = ''},
 	{name = "Noter Test", description = ''},
 	{name = "A changer 1", description = ''},
@@ -141,7 +149,6 @@ buttons = {
 		{name = "Fouiller", description = ""},
 		{name = "Amande", description = ""},
 		{name = "Controler l'identite", description = ""},
-		{name = "Controler le vehicule", description = ""},
 		{name = "Faire rentrer dans le vehicule", description = ""},
 		{name = "Faire sortir du vehicule", description = ""} --------------- Repertoire Boite de reception
 	}
@@ -156,21 +163,21 @@ buttons = {
 	["Boite de reception"] = {
 		title = "Boite de reception",
 		name = "Boite de reception",
+		buttons = {   --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
+	}
+	},
+	["Contact"] = {
+		title = "Contact",
+		name = "Contact",
 		buttons = {
-		{name = "", description = ""} --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
+		{name = "Envoyer un Sms", description = ""}, --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
+		{name = "Envoyer la position", description = ""},
+		{name = "Supprimer le Contact", description = ""}
 	}
 	},
 
 		}
 	}
-
-
-
-
-
-	local function LocalPed()
-		return GetPlayerPed(-1)
-	end
 
 	function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
 		SetTextFont(font)
@@ -312,16 +319,23 @@ end
 
 	local backlock = false
 	Citizen.CreateThread(function()
+		local last_time = GetGameTimer()
 		while true do
 		Citizen.Wait(0)                                                                     --------
 
-		if (IsControlJustPressed(1,213)) then 
+		if (IsControlJustPressed(1,213)) then --------------------------- On ouvre le menu si on appui sur la touche
 			if vehshop.opened then
 				CloseCreator()
 			else
 				OpenCreator()
 			end
-		end
+		end ----------------------------------------------------------------------------------------------------
+
+		actual_time = GetGameTimer() ------------------------- Partie SAVE SMS ------------ 
+		if (actual_time - last_time) >= 600000 then
+			last_time = GetGameTimer()
+			TriggerServerEvent("Iphone:savesms", PhoneData.sms)
+		end --------------------------------------------------------------------------------
 
 		if vehshop.opened then
 			local ped = LocalPed()
@@ -353,10 +367,10 @@ end
 							if button.name ~= "Police" then
 								drawMenuButton(button,vehshop.menu.x,y,selected)
 								y = y + 0.04
-								elseif button.name == "Police" and isCop  then 
+								elseif button.name == "Police" and isCop  then  ------------------ On affiche le boutton que si on est flic 
 									drawMenuButton(button,vehshop.menu.x,y,selected)
 									y = y + 0.04
-								end
+								end ------------------------------------------------------------------------------------------------------
 
 					--y = y + 0.04
 					
@@ -457,7 +471,7 @@ function ButtonSelected(button)
 			Emote(4)
 		elseif btn == "Salute" then
 			Emote(5)
-		elseif btn == "AFK/Fumer" then
+		elseif btn == "Rock" then
 			Emote(6)
 		elseif btn == "Why" then
 			Emote(7)
@@ -507,8 +521,6 @@ function ButtonSelected(button)
 			Amande()
 		elseif btn == "Controler l'identite" then
 			IdControl()
-		elseif btn == "Controler le vehicule" then
-			PlateControl()
 		elseif btn == "Faire rentrer dans le vehicule" then
 			EnterVehicle()
 		elseif btn == "Faire sortir du vehicule" then
@@ -526,14 +538,124 @@ function ButtonSelected(button)
 			Services(btn)
 		end
 	elseif this == "Repertoire" then 
-		if btn == "Ajouter un contact" then 
-			drawMenuInfo("Ceci est un énorme test, sans but commun pour la vie, mais bon on fait avec non ? isn't it ?") 
+		if btn == "Ajouter un contact" then
 			AddContact()
-			--TriggerEvent("Iphone:loadcs", sms, contacts)
+		else -- c'est que c'est forcément un contact de la table PhoneData.contacts
+			toNumber = button.description
+			vehshop.lastmenu = "Repertoire"
+			vehshop.menu.from = 1
+			vehshop.menu.to = 10
+			vehshop.selectedbutton = 0
+			vehshop.currentmenu = "Contact"
+	elseif this = "Contact" then
+		if btn = "Envoyer un Sms" then
+			local editing = true
+			DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+			while editing do
+				Wait(0)
+				if UpdateOnscreenKeyboard() == 2 then 
+					editing = false
+					ShowNotification("Sms annulé")
+					
+				end
+				if UpdateOnscreenKeyboard() == 1 then
+					editing = false
+					resultat = GetOnscreenKeyboardResult()
+					ShowNotification("Sms envoyé")
+					
+				end
+			end
+			local sendSms = tostring(resultat)
+			TriggerServerEvent("Iphone:sendsmsfromone", toNumber,sendSms)
+		elseif btn = "Envoyer la position" then
+			local name = PhoneData.name.first_name.. " " ..PhoneData.name.last_name
+			local spos = GetEntityCoords(GetPlayerPed(-1), true)
+			TriggerServerEvent("Iphone:sendposto", toNumber, sname, spos.x, spos.y, spos.z)
+		elseif btn = "Supprimer le Contact" then
+			TriggerServerEvent("Iphone:removecontact", toNumber)
+			for i , #PhoneData.contacts, 1 do
+				if PhoneData.contact[i].number == toNumber then
+					table.remove(PhoneData.contact, i)
+				end
+			end
+
+			--PhoneData = {
+	--phone_number = "numberHERE",
+	--contacts = {
+	--{first_name = "contact1", last_name = "contact1", number = "numberHERE"},
+	--{etc...},
+	--},
+	--sms = {
+	--{first_name = "test", last_name = "test", text = "test"},
+	--{ etc ...}
+	--},
+	--name = {
+	--{first_name = "Romain", last_name = "Billot"}
+	--}
+--}
+			--table.insert(vehshop.menu["Repertoire"].buttons, {
+					--first_name = tostring(result[1]),
+					--last_name = tostring(result[2]),
+					--number = tostring(resultat2)
+					--})
 
 		end
 	end
 end
+--UI::BEGIN_TEXT_COMMAND_SET_BLIP_NAME("STRING");
+--UI::_ADD_TEXT_COMPONENT_STRING("Name");
+--UI::END_TEXT_COMMAND_SET_BLIP_NAME(blip);
+
+RegisterNetEvent("Iphone:receivepos")
+AddEventHandler("Iphone:receivepos" function(x, y, z, sendername)
+	ShowNotification("Vous venez de recevoir la position de "..sendername)
+	timer_pos = GetGameTimer()
+	Blipvariable = AddBlipForCoord(x, y, z)
+	N_0x80ead8e2e1d5d52e(Blipvariable)
+	BeginTextCommandSetBlipName("STRING")
+	AddTextComponentString(sendername)
+	EndTextCommandSetBlipName(Blipvariable)
+	SetBlipRoute(Blipvariable, 1)
+	SetBlipRouteColor(Blipvariable, 48)
+	finish = false
+	while not(finish) do
+		Wait(10)
+		local playerCoords = GetEntityCoords(GetPlayerPed(-1), true)
+		x1, y1, z1 = table.unpack(playersCoords)
+		if GetDistanceBetweenCoords(x, y, z, x1, y1, z1, false) < 20 or (GetGameTimer() - timer_pos) > 600000 then
+			if Blipvariable ~= nil and DoesBlipExist(Blipvariable) then
+				Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
+				Blipvariable = nil
+			end
+			finish = true
+		end
+	end
+end)
+
+RegisterNetEvent("Iphone:receivesms")
+AddEventHandler("Iphone:receivesms", function(ssms)
+	snameplusdate = ssms.first_name .. " " .. ssms.last_name .. " : ".. ssms.date.jour .. "/".. ssms.date.mois .. " à " .. ssms.date.heure .. "h" .. ssms.date.minute
+	sname = ssms.first_name .. " " .. ssms.last_name
+	if #PhoneData.sms >= taillemaxsms then
+		ShowNotification("Vous venez de recevoir un sms mais la taille est dépassé. Veuillez faire le tri")
+		table.remove(PhoneData.sms, 1)
+	else
+		ShowNotification("Vous venez de recevoir un message de : " ..sname)
+	end
+	table.insert(vehshop.menu["Boite de reception"].buttons, {
+						name = snameplusdate,
+						description = smessage
+					})
+	local receiveSms = {
+		first_name = ssms.first_name,
+		last_name = ssms.last_name,
+		text = ssms.text
+		date = ssms.date
+	}
+
+	table.insert(PhoneData.sms, receivesms)
+
+end)
 
 function OpenMenu(menu)
 	vehshop.lastmenu = vehshop.currentmenu
@@ -552,7 +674,7 @@ function OpenMenu(menu)
 	vehshop.menu.from = 1
 	vehshop.menu.to = 10
 	vehshop.selectedbutton = 0
-	vehshop.currentmenu = menu	
+	vehshop.currentmenu = "menu"	
 end
 
 function Back()
@@ -671,8 +793,6 @@ function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 
 
 		 	Wait(0)
 
-		 	Citizen.Trace(tostring(GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name)))
-		 	Citizen.Trace(tostring(IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3)))
 		 	if loop ~= 1 then
 			 	while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
 					Citizen.Wait(0)
@@ -695,19 +815,20 @@ function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 
 
 end
 
-   	function AddContact()
+function AddContact()
 
    		local editing1 = true
    		local editing2 = true
    		local quit1 = false
    		local quit2 = false
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Nom du contact : [ESC] pour quitter", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[PRENOM] [NOM]", "", "", "", 120)
 	while editing1 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing1 = false
 			quit1 = true
+			ShowNotification("Annulé!")
 			
 		end
 		if UpdateOnscreenKeyboard() == 1 then
@@ -718,12 +839,13 @@ end
 		end
 	end
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Numero du contact : [ESC] pour quitter", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[NUMERO]", "", "", "", 120)
 	while editing2 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing2 = false
 			quit2 = true
+			ShowNotification("Annulé!")
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing2 = false
@@ -734,17 +856,45 @@ end
 	end
 
 		if not(quit1) and not(quit2) then
-   		table.insert(vehshop.menu["Repertoire"].buttons, {
-					name = tostring(resultat1),
+			result = {}
+		
+			for token in string.gmatch(resultat1, "[^%s]+") do
+  				table.insert(result, token)
+			end
+   			table.insert(vehshop.menu["Repertoire"].buttons, {
+					first_name = tostring(result[1]),
+					last_name = tostring(result[2]),
 					number = tostring(resultat2)
-
+					})
+   			-----------------------
+   			table.insert(PhoneData.contacts, {
+					first_name = tostring(result[1]),
+					last_name = tostring(result[2]),
+					number = tostring(resultat2)
 					})
 
-   		TriggerServerEvent("Iphone:addcontact", resultat1, resultat2)
+
+--PhoneData = {
+	--phone_number = "numberHERE",
+	--contacts = {
+	--{first_name = "contact1", last_name = "contact1", number = "numberHERE"},
+	--{etc...},
+	--},
+	--sms = {
+	--{first_name = "test", last_name = "test", text = test},
+	--{ etc ...}
+	--},
+	--name = {
+	--{first_name = "Romain", last_name = "Billot"}
+	--}
+--}
+
+
+   		TriggerServerEvent("Iphone:addcontact", result[1], result[2], resultat2)
 
    		end
 
-   	end
+end
 
     function SendSMS()
 
@@ -922,19 +1072,6 @@ function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClose
 	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(target), 1)
 end
 
-function PlateControl()
-	local pos = GetEntityCoords(GetPlayerPed(-1))
-	local entityWorld = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, 0.0)
-
-	local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, GetPlayerPed(-1), 0)
-	local a, b, c, d, vehicleHandle = GetRaycastResult(rayHandle)
-	if(DoesEntityExist(vehicleHandle)) then
-		TriggerServerEvent("Iphone:checkplate", GetVehicleNumberPlateText(vehicleHandle))
-	else
-		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Aucun vehicule a proximite !")
-	end
-end
-
 
 function SortirVehicle()
 	t, distance = GetClosestPlayer()
@@ -1005,7 +1142,7 @@ AddEventHandler("Iphone:rcheckid", function(first_name, last_name, matricule, ph
 	end)
 
 RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
-AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, phone, gender)
+AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, phone_number, gender)
 	
 	----------PARTIE UI -----------
 	guiEnabled = not guiEnabled
@@ -1016,7 +1153,7 @@ AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, pho
 			tlastname = lastename,
 			tfirstname = firstname,
 			tid = matricule,
-			tphone = phone,
+			tphone = phone_number,
 			tgender = gender
 			})
 
@@ -1154,18 +1291,53 @@ end
 
 
 RegisterNetEvent('Iphone:loaded')
-AddEventHandler('Iphone:loaded', function(phoneNumber, contacts, sms)
+AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
 	
-	PhoneData.phoneNumber = phoneNumber
+	phoneNumber = lphoneNumber
+	contact = lcontacts
+	sms = lsms
+	name = lname
 
-	for i=1, #contacts, 1 do
-		table.insert(PhoneData.contacts, contacts[i])
+	table.insert(PhoneData.contacts, contacts)
+
+	table.insert(PhoneData.sms, sms)
+
+	table.insert(PhoneData.name, name)
+
+	PhoneData.phone_number = phoneNumber
+
+	for i=1, #PhoneData.contacts do
+		table.insert(vehshop.menu["Repertoire"].buttons, {
+						name = PhoneData.contacts[i].first_name.. " " .. PhoneDate.contacts[i].last_name,
+						description = PhoneData.contacts[i].number
+					})
 	end
 
-	for i=1, #sms, 1 do
-		table.insert(PhoneData.sms, sms[i])
+	for i=1, #PhoneData.sms do
+		table.insert(vehshop.menu["Boite de reception"].buttons, {
+						name = PhoneData.sms[i].first_name.. " " .. PhoneDate.sms[i].last_name .. " : " .. PhoneDate.sms[i].date.jour .. "/" .. PhoneData.sms[i].date.mois .. " à " .. PhoneData.sms[i].date.heure .."h"..PhoneData.sms[i].date.minute,
+						description = PhoneData.contacts[i].text
+					})
 	end
 
+	PhoneData.name.first_name = name.first_name
+	PhoneData.name.last_name = name.last_name
+
+
+	--PhoneData = {
+	--phone_number = "numberHERE",
+	--contacts = {
+	--{first_name = "contact1", last_name = "contact1", number = "numberHERE"},
+	--{etc...},
+	--},
+	--sms = {
+	--{first_name = "test", last_name = "test", text = test},
+	--{ etc ...}
+	--},
+	--name = {
+	--{first_name = "Romain", last_name = "Billot"}
+	--}
+--}
 
 	reloadphone = true
 
@@ -1174,20 +1346,20 @@ AddEventHandler('Iphone:loaded', function(phoneNumber, contacts, sms)
 end)
 
 
-RegisterNetEvent('Iphone:loadcs')
-AddEventHandler('Iphone:loadcs', function(sms, contacts)
+---RegisterNetEvent('Iphone:loadcs')
+--AddEventHandler('Iphone:loadcs', function(sms, contacts)
 
-contacts = { {nom = "IZIO-BG", number = "555-1542"}, {nom = "test", number = "1485"} }
+--contacts = { {nom = "IZIO-BG", number = "555-1542"}, {nom = "test", number = "1485"} }
 
 
-	for i=1, #contacts, 1 do
+	--for i=1, #contacts, 1 do
 
-		table.insert(vehshop.menu["Repertoire"].buttons, {
-					name = contacts[i].nom,
-					number = contact[i].number
+		--table.insert(vehshop.menu["Repertoire"].buttons, {
+					--name = contacts[i].nom,
+					--number = contact[i].number
 
-					})
-	end
+					--})
+	--end
 
 -- chargement des contacts
 --for k,v in pairs(contacts[1]) do
