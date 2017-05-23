@@ -1312,7 +1312,7 @@ AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
 	PhoneData.name.last_name = name.last_name
 	reloadphone = true
 
-	for i=1, #contacts do
+	for i=1, #contact do
 		Citizen.Trace(tostring(contacts[i].first_name))
 	end
 	for i=1, #sms do
