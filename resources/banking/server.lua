@@ -57,7 +57,7 @@ AddEventHandler('bank:deposit', function(amount)
         CancelEvent()
       else
         --TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Pas assez de cash!^0")
-        TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu n'as pas <b style='color:red'>".. amount .."$</b> sur toi", type = "warning", timeout = 10000, layout = "centerLeft",})
+        TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu n'as pas <b style='color:red'>".. amount .."$</b> sur toi.", type = "warning", timeout = 2500, layout = "centerLeft",})
         CancelEvent()
       end
   end)
