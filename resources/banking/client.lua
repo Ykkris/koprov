@@ -254,7 +254,7 @@ function IsNearATM()
   local plyCoords = GetEntityCoords(ply, 0)
   for _, item in pairs(atms) do
     local distance = GetDistanceBetweenCoords(item.x, item.y, item.z,  plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
-    if(distance <= 8) then
+    if(distance <= 2) then
       return true
     end
   end
