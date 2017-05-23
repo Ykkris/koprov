@@ -1290,13 +1290,6 @@ AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
 
 	PhoneData.phone_number = phoneNumber
 
-	PhoneData = {
-	phone_number = 0,
-	contacts = {},
-	sms = {},
-	name = {}
-	}
-
 	if contact ~= {} then
 		for i=1, #PhoneData.contacts do
 			table.insert(vehshop.menu["Repertoire"].buttons, {
