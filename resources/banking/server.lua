@@ -148,7 +148,7 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
 
             if (result[1]) then
               for _, v in ipairs(result) do
-                TriggerClientEvent("pNotify:SendNotification", source, {
+                TriggerClientEvent("pNotify:SendNotification", toPlayer, {
                 text = "Tu as reçu <b style='color:green'>" .. amount .. "$</b> de la part de "..v.first_name.." "..v.last_name,
                 type = "info",
                 timeout = 2500,
