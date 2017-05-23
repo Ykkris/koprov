@@ -83,7 +83,7 @@ AddEventHandler('rent:spawn', function()
 Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
-	local vehicle = GetHashKey('faggio2')
+	local vehicle = GetHashKey('cruiser')
 
 	RequestModel(vehicle)
 
