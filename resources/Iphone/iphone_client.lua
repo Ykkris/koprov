@@ -181,6 +181,16 @@ buttons = {
 	}
 
 	function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
+	Citizen.Trace(tostring(text))
+	Citizen.Trace(tostring(font))
+	Citizen.Trace(tostring(centre))
+	Citizen.Trace(tostring(x))
+	Citizen.Trace(tostring(y))
+	Citizen.Trace(tostring(scale))
+	Citizen.Trace(tostring(r))
+	Citizen.Trace(tostring(g))
+	Citizen.Trace(tostring(b))
+	Citizen.Trace(tostring(a))
 		SetTextFont(font)
 		SetTextProportional(0)
 		SetTextScale(scale, scale)
@@ -413,7 +423,7 @@ end
 		end
 		
 	end
-	end)
+end)
 
 
 	function round(num, idp)
