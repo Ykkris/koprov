@@ -25,7 +25,7 @@
     width: 100%;
     background-color: white;
     opacity: 0.8;
-    filter: alpha(opacity=80);
+    filter: alpha(opacity=65);
 }
 
 .noty_theme__gta.noty_type__alert,
@@ -53,7 +53,7 @@
 .noty_theme__gta.noty_type__info,
 .noty_theme__gta.noty_type__information {
     background-color: rgb(40, 40, 40);
-    border-bottom: 2px solid #7473E8;
+    border-bottom: 2px solid #4872ED;
     color: #fff;
     border-radius: 5px;
 }
@@ -75,8 +75,8 @@
     -webkit-transform: translate(50%);
     -ms-transform: translate(50%);
     transform: translate(50%);
-    -webkit-animation: flash 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation: flash 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-animation: noty_anim_in 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation: noty_anim_in 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
 }
