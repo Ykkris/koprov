@@ -23,9 +23,9 @@
     bottom: 0;
     height: 1px;
     width: 100%;
-    background-color: white;
-    opacity: 0.8;
-    filter: alpha(opacity=65);
+    background-color: black;
+    opacity: 0.9;
+    filter: alpha(opacity=80);
 }
 
 .noty_theme__gta.noty_type__alert,
@@ -52,9 +52,9 @@
 
 .noty_theme__gta.noty_type__info,
 .noty_theme__gta.noty_type__information {
-    background-color: rgb(40, 40, 40);
-    border-bottom: 2px solid #4872ED;
-    color: #fff;
+    background-color: rgb(226, 226, 226);
+    border-bottom: 2px solid #d63b3b;
+    color: #000;
     border-radius: 5px;
 }
 
