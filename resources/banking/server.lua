@@ -131,7 +131,7 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
   TriggerEvent('es:getPlayerFromId', fromPlayer, function(user)
 
       local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-      local resulty = MySQL:getResults(executed_query, { 'last_name', 'first_name' })
+      local result = MySQL:getResults(executed_query, { 'last_name', 'first_name' })
 
       local player = user.identifier
       local bankbalance = bankBalance(player)
@@ -160,7 +160,7 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
             new_balance2 = bankBalance(recipient)
 
 
-            if (resulty[1]) then
+            if (result[1]) then
               for _, v in ipairs(result) do
                 TriggerClientEvent("pNotify:SendNotification", toPlayer, { text = "Tu as reçu <b style='color:green'>" .. amount .. "$</b> de la part de "..v.first_name.." "..v.last_name, type = "info", timeout = 5000, layout = "centerLeft",})
               end
