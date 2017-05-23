@@ -102,6 +102,14 @@ AddEventHandler('police:takeService', function()
 	end
 end)
 
+RegisterServerEvent('police:checkService')
+AddEventHandler('police:checkService', function()
+	local CanHaveFreeFuel = false
+	if(inService[source]) then
+		CanHaveFreeFuel = true
+	end
+end) 
+
 RegisterServerEvent('police:breakService')
 AddEventHandler('police:breakService', function()
 

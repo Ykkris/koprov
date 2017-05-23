@@ -23,13 +23,15 @@ MySQL:open(database.host, database.name, database.username, database.password)
 RegisterServerEvent("essence:payer") -- IL FAUDRAIT AUSSI VERIFIER S'IL/ELLE EST EN SERVICE
 AddEventHandler("essence:payer", function(litres) -- source, litres en float
   local prix = math.ceil(litres)
+  TriggerEvent('police:checkService', source, function(inserv)
   TriggerEvent('es:getPlayerFromId', source, function(user)
 	local id_medecin = 3
 	local id_policier = 2
 	local player = user.identifier
+  local copinservice = inserv
     	local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
     	local resultat = MySQL:getResults(req, {'job'}, "identifier")
-    	if (3 == resultat[1].job) or (2 == resultat[1].job)  then
+    	if (3 == resultat[1].job) or (2 == resultat[1].job) and (copinservice)  then
       		retour = true
     	else 
       		retour = false
