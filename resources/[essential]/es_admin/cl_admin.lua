@@ -104,14 +104,10 @@ AddEventHandler("es_admin:noclip", function(t)
 	noclip = not noclip
 
 	if(noclip)then
-		msg = "activé"
+		msg = "enabled"
 	end
-	TriggerEvent("pNotify:SendNotification", {
-+							type = "info",
-+							timeout = 1000,
-+							layout = "centerLeft",
-+							text = "Noclip ^2^*" .. msg
-+							})
+
+	TriggerEvent("chatMessage", "SYSTEM", {255, 0, 0}, "Noclip has been ^2^*" .. msg)
 end)
 
 Citizen.CreateThread(function()

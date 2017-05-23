@@ -17,7 +17,7 @@
     padding: 0px; 
 }
 
-.noty_theme__gta.noty_bar .noty_progressbar {
+/*.noty_theme__gta.noty_bar .noty_progressbar {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -26,25 +26,37 @@
     background-color: white;
     opacity: 0.8;
     filter: alpha(opacity=80);
-}
+}*/
 
 .noty_theme__gta.noty_type__alert,
 .noty_theme__gta.noty_type__notification {
     background-color: rgb(40, 40, 40);
     border-bottom: 2px solid #D1D1D1;
     color: white;
+    border-radius: 5px;
 }
 
+/*@keyframes flash {
+    0% {transform: translate(50%);animation: noty_anim_in 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);animation-fill-mode: forwards;}
+    30%, 50% {opacity: 1;}
+    40%, 60% {opacity: 0;}
+    100% {opacity: 1;}
+}*/
+
 .noty_theme__gta.noty_type__warning {
-    background-color: rgb(40, 40, 40);
+    background-color: rgb(142, 47, 69);
     border-bottom: 2px solid #E89F3C;
-    color: white;
+    color: #fff;
+    border-radius: 5px;
+    animation-name: flash;
+    animation-duration: 6s;
 }
 
 .noty_theme__gta.noty_type__error {
     background-color: rgb(40, 40, 40);
     border-bottom: 2px solid #CA5A65;
     color: #fff;
+    border-radius: 5px;
 }
 
 .noty_theme__gta.noty_type__info,
@@ -52,12 +64,14 @@
     background-color: rgb(40, 40, 40);
     border-bottom: 2px solid #7473E8;
     color: #fff;
+    border-radius: 5px;
 }
 
 .noty_theme__gta.noty_type__success {
     background-color: rgb(40, 40, 40);
     border-bottom: 2px solid #A0B55C;
     color: #fff;
+    border-radius: 5px;
 }
 
 .gta_effects_open {
@@ -76,4 +90,11 @@
     animation: noty_anim_out 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards; 
+}
+
+@keyframes flash {
+    0% {transform: translate(50%);animation: noty_anim_in 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);animation-fill-mode: forwards;}
+    30%, 50% {opacity: 1;}
+    40%, 60% {opacity: 0;}
+    100% {opacity: 1;}
 }
