@@ -129,10 +129,8 @@ end)
 RegisterServerEvent('bank:transfer')
 AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
   TriggerEvent('es:getPlayerFromId', fromPlayer, function(user)
-
       local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
       local result = MySQL:getResults(executed_query, { 'last_name', 'first_name' })
-
       local player = user.identifier
       local bankbalance = bankBalance(player)
       if(tonumber(amount) <= tonumber(bankbalance)) then
@@ -140,20 +138,8 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
         local new_balance = bankBalance(player)
         --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Transféré: ~r~-$".. amount .." ~n~~s~Nouveau Solde: ~g~$" .. new_balance)
         TriggerEvent('es:getPlayerFromId', toPlayer, function(user2)
-          
-
-          local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user2.identifier})
-      local result = MySQL:getResults(executed_query, { 'last_name', 'first_name' })
-      local recipient = user2.identifier
-
-        if (result[1]) then
-              for _, o in ipairs(result) do
-            TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu as transféré(e) <b style='color:green'>" .. amount .. "$</b> à "..v.first_name.." "..v.last_name, type = "info", timeout = 5000, layout = "centerLeft",})
-        end
-                else
-            end
-
-
+          local recipient = user2.identifier
+        TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu as transféré(e) <b style='color:green'>" .. amount .. "$</b> à ", type = "info", timeout = 10000, layout = "centerLeft",})
         TriggerClientEvent("banking:updateBalance", source, new_balance)
         TriggerClientEvent("banking:removeBalance", source, amount)            
             deposit(recipient, amount)
@@ -162,7 +148,12 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
 
             if (result[1]) then
               for _, v in ipairs(result) do
-                TriggerClientEvent("pNotify:SendNotification", toPlayer, { text = "Tu as reçu <b style='color:green'>" .. amount .. "$</b> de la part de "..v.first_name.." "..v.last_name, type = "info", timeout = 5000, layout = "centerLeft",})
+                TriggerClientEvent("pNotify:SendNotification", toPlayer, {
+                text = "Tu as reçu <b style='color:green'>" .. amount .. "$</b> de la part de "..v.first_name.." "..v.last_name,
+                type = "info",
+                timeout = 2500,
+                layout = "centerLeft",
+                })
               end
                 else
             end
