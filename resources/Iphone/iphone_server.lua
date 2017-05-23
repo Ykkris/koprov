@@ -40,26 +40,6 @@ local function GenerateUniquePhoneNumber()
 
 end 
 
---[[
-to play rugby = faire du ruby ~= practise 
-to do an internship = faire un stage; stagière : intern
-programmnig = programmation
-roommate = coloc; flatmate
-
-
-
-
-]]
-
---RegisterServerEvent("Iphone:savesms")
---AddEventHandler("Iphone:savesms",function(actualSms)
-	--TriggerEvent("es:getPlayerFromId", source, function(user)
-		--user:setSessionVar("sms", actualSms) -- IL FAUT FAIRE SAUVERGARDER LES SMS ICI
-
-
-	--end)
---end)
-
 AddEventHandler('es:playerLoaded', function(source)
 
 	TriggerEvent('es:getPlayerFromId', source, function(user)
@@ -105,17 +85,18 @@ AddEventHandler('es:playerLoaded', function(source)
 		end
 
 		print("testt3")
-		if result3[1].sms ~= 
-		for i=1, #result3, 1 do
-			
-			table.insert(sms, {
-				first_name   = result3[i].first_name,
-				last_name = result3.last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
-				text   = result3[i].text,
-				date = result3[i].date
-				})
-			print("On a print un sms")
+		if result3[1].sms ~= nil and result3[1].sms ~= {} then
+			for i=1, #result3, 1 do
+				
+				table.insert(sms, {
+					first_name   = result3[i].first_name,
+					last_name = result3.last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
+					text   = result3[i].text,
+					date = result3[i].date
+					})
+				print("On a print un sms")
 
+			end
 		end
 
 		user:setSessionVar("sms", sms)
