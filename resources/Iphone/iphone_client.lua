@@ -348,7 +348,12 @@ end
 				buttoncount = tablelength(menu.buttons) - 1
 			else buttoncount = tablelength(menu.buttons)
 			end
-
+			Citizen.Trace(tostring(buttoncount))
+			Citizen.Trace(tostring(vehshop.selectedbutton))
+			Citizen.Trace(tostring(vehshop.menu.x))
+			Citizen.Trace(tostring(vehshop.menu.width))
+			Citizen.Trace(tostring(vehshop.menu.y))
+			Citizen.Trace(tostring(vehshop.title))	
 			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
 			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
 			drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
