@@ -23,12 +23,12 @@ local vestpolice = {
 			title = "CATEGORIES",
 			name = "main",
 			buttons = {
-				{name = "Take your service", description = ""},
-				{name = "Break your service", description = ""},
-				{name = "Bulletproof jacket", description = ""},
-				{name = "Take offbulletproof jacket", description = ""},
-				{name = "High-visibility clothing", description = ""},
-				{name = "Take off High-visibility clothing", description = ""},
+				{name = "Prise de service", description = ""},
+				{name = "Fin de service", description = ""},
+				{name = "Gilet pare balle", description = ""},
+				{name = "Enlever gilet par balle", description = ""},
+				{name = "Gilet jaune", description = ""},
+				{name = "Enlever gilet jaune", description = ""},
 			}
 		},
 	}
@@ -43,16 +43,18 @@ function ButtonSelectedVest(button)
 	local this = vestpolice.currentmenu
 	local btn = button.name
 	if this == "main" then
-		if btn == "Take your service" then
+		if btn == "Prise de service" then
 			ServiceOn()                                                 -- En Service + Uniforme
 			giveUniforme()
-			drawNotification("You're now in ~g~service")
-			drawNotification("Press ~g~F5~w~ to open the ~b~cop menu")
-		elseif btn == "Break your service" then
+			--drawNotification("You're now in ~g~service")
+			--drawNotification("Press ~g~F5~w~ to open the ~b~cop menu")
+			TriggerEvent("pNotify:SendNotification", { text = "Tu es désormais en <b style='color:green'>service</b>", type = "info", timeout = 2500, layout = "centerLeft",})
+			TriggerEvent("pNotify:SendNotification", { text = "Appuie sur <b style='color:green'>F5</b> pour ouvrir le <b style='color:blue'>menu de police</b>", type = "info", timeout = 2500, layout = "centerLeft",})
+		elseif btn == "Fin de service" then
 			ServiceOff()
 			removeUniforme()                                            --Finir Service + Enleve Uniforme
-			drawNotification("You've ~r~done your service")
-		elseif btn == "Bulletproof jacket" then
+			TriggerEvent("pNotify:SendNotification", { text = "Tu <b style='color:red'>n'es plus </b> en <b style='color:red'>service</b>", type = "info", timeout = 2500, layout = "centerLeft",})	
+			elseif btn == "Gilet pare balle" then
 			Citizen.CreateThread(function()
 				if(GetEntityModel(GetPlayerPed(-1)) == hashSkin) then
 					SetPedComponentVariation(GetPlayerPed(-1), 9, 4, 1, 2)  --Bulletproof jacket
@@ -60,11 +62,11 @@ function ButtonSelectedVest(button)
 					SetPedComponentVariation(GetPlayerPed(-1), 9, 6, 1, 2)
 				end
 			end)
-		elseif btn == "Take offbulletproof jacket" then
+		elseif btn == "Enlever gilet par balle" then
 			Citizen.CreateThread(function()
 				SetPedComponentVariation(GetPlayerPed(-1), 9, 0, 1, 2)  --Remove Bulletproof jacket
 			end)
-		elseif btn == "High-visibility clothing" then
+		elseif btn == "Gilet jaune" then
 			Citizen.CreateThread(function()
 				if(GetEntityModel(GetPlayerPed(-1)) == hashSkin) then
 					SetPedComponentVariation(GetPlayerPed(-1), 8, 59, 0, 2) --High-visibility clothing
@@ -72,7 +74,7 @@ function ButtonSelectedVest(button)
 					SetPedComponentVariation(GetPlayerPed(-1), 8, 36, 0, 2)
 				end
 			end)
-		elseif btn == "Take off High-visibility clothing" then
+		elseif btn == "Enlever gilet jaune" then
 			Citizen.CreateThread(function()
 				if(GetEntityModel(GetPlayerPed(-1)) == hashSkin) then
 					SetPedComponentVariation(GetPlayerPed(-1), 8, 58, 0, 2) --Remove High-visibility clothing + Remet la ceinture

@@ -65,6 +65,16 @@ function checkInventory(target)
 	return strResult
 end
 
+AddEventHandler('es:playerLoaded', function(source)
+TriggerEvent('es:getPlayerFromId', source, function(user)
+        local player = user.identifier
+        local exec = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player})
+        local result = MySQL:getResults(exec, {'job'}, "identifier")
+        local jobName = nameJob(result[1].job)
+TriggerClientEvent("jobssystem:updateJob", source, jobName)
+end)
+end)
+
 AddEventHandler('playerDropped', function()
 	if(inServiceCops[source]) then
 		inServiceCops[source] = nil
