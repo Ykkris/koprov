@@ -64,6 +64,8 @@ AddEventHandler('es:playerLoaded', function(source)
 
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 
+		print("test1")
+
 		local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
 		local result         = MySQL:getResults(executed_query, {'phone_number'})
 		local phoneNumber    = result[1].phone_number
@@ -74,7 +76,7 @@ AddEventHandler('es:playerLoaded', function(source)
 		end
 
 		user:setSessionVar("phone_number", phoneNumber) 
-
+		print("test2")
 
 		local contacts = {}
 
@@ -92,27 +94,35 @@ AddEventHandler('es:playerLoaded', function(source)
 		end
 
 		user:setSessionVar("contacts", contacts)
+		print("test3")
 
 		local sms = {}
 
 		local executed_query3 = MySQL:executeQuery("SELECT sms FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result3         = MySQL:getResults(executed_query2, {'sms'})
+		local result3         = MySQL:getResults(executed_query3, {'sms'})
+		if result3[1].sms == "@sms" then
+			result3[1].sms = {}
+		end
 
+		print("testt3")
+		if result3[1].sms ~= 
 		for i=1, #result3, 1 do
 			
 			table.insert(sms, {
 				first_name   = result3[i].first_name,
 				last_name = result3.last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
-				text   = result3[i].text
+				text   = result3[i].text,
 				date = result3[i].date
 				})
+			print("On a print un sms")
 
 		end
 
 		user:setSessionVar("sms", sms)
+		print("test4")
 
 		local executed_query4 = MySQL:executeQuery("SELECT first_name, last_name FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result4         = MySQL:getResults(executed_query2, {'first_name', 'last_name'})
+		local result4         = MySQL:getResults(executed_query4, {'first_name', 'last_name'})
 
 		local name = {}
 
@@ -122,12 +132,12 @@ AddEventHandler('es:playerLoaded', function(source)
 			})
 
 		user:setSessionVar("name", name)
-
+		print("test5")
 
 		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms, name)
 
 		end)
-	end)
+	end) 
 
 RegisterServerEvent("Iphone:addcontact")
 AddEventHandler("Iphone:addcontact",function(pfirst_name, plast_name, pnumber)
@@ -157,8 +167,8 @@ AddEventHandler("Iphone:removecontact", function(toNumber)
 	TriggerEvent("es:getPlayerFormId", source, function(user)
 		foundedContacts = false
 		localContacts = user:getSessionVar("contacts")
-		for i, #contacts, 1 do
-			if contacts[i].number == toNumber then
+		for i=1, #localContacts, 1 do
+			if localContacts[i].number == toNumber then
 				table.remove(localContacts, i)
 				foundedContacts = true
 			end
@@ -171,7 +181,7 @@ AddEventHandler("Iphone:removecontact", function(toNumber)
 					{['@contacts'] = localContacts , ['@identifier'] = user.identifier})
 
 	end)
-end
+end)
 
 
 RegisterServerEvent("Iphone:sendsmsfromone")
@@ -249,9 +259,12 @@ end)
 function InitSave()
 	TriggerEvent("es:getPlayers", function(Users)
 		for k,v in pairs(Users) do
-			local sms = Users[k]:getSessionVar("sms")
-			MySQL:executeQuery("UPDATE users SET sms = '@sms' WHERE identifier = '@identifier' ",
-					{['@sms'] = sms , ['@identifier'] = Users[k].identifier})
+			sms = Users[k]:getSessionVar("sms")
+			if sms == "@sms" or sms == {} then
+				sms = {}
+				MySQL:executeQuery("UPDATE users SET sms = '@sms' WHERE identifier = '@identifier' ",
+						{['@sms'] = sms , ['@identifier'] = Users[k].identifier})
+			end
 		end
 	end)
 	SetTimeout(saveTime, InitSave)
@@ -268,34 +281,34 @@ AddEventHandler('service:connectedbyid',
 			local table = {}
 			local isConnected = false
 
-      if id_service == 2 or id_service == 3 then -- On check si c'est un flic/medic ou si c'est un autre pour le enservice ;)
-      	inService = 1
-      else 
-      	inService = 0
-      end
+		    if id_service == 2 or id_service == 3 then -- On check si c'est un flic/medic ou si c'est un autre pour le enservice ;)
+		    	inService = 1
+		    else 
+		    	inService = 0
+		    end
 
-      for i,v in pairs(players) do
-      	identifier = GetPlayerIdentifiers(i)
-      	if (identifier ~= nil) then
-      		local executed_query = MySQL:executeQuery("SELECT identifier, job_id, job_name FROM users LEFT JOIN jobs ON jobs.job_id = users.job WHERE users.identifier = '@identifier' AND job_id = '@service_id' AND enService = '@enService'", {['@identifier'] = identifier[1], ['@service_id'] = id_service, ['@enService'] = inService })
-      		local result = MySQL:getResults(executed_query, {'job_id'}, "identifier")
+		    for i,v in pairs(players) do
+		     	identifier = GetPlayerIdentifiers(i)
+			    if (identifier ~= nil) then
+			      	local executed_query = MySQL:executeQuery("SELECT identifier, job_id, job_name FROM users LEFT JOIN jobs ON jobs.job_id = users.job WHERE users.identifier = '@identifier' AND job_id = '@service_id' AND enService = '@enService'", {['@identifier'] = identifier[1], ['@service_id'] = id_service, ['@enService'] = inService })
+			      	local result = MySQL:getResults(executed_query, {'job_id'}, "identifier")
 
-      		if (result[1] ~= nil) then
-      			isConnected = true
-      		end
-      	end
-      end
-      if id_service == 2 then
-      	TriggerClientEvent("services:cbcopconnected", source,  isConnected)
-      	elseif id_service == 3 then
-      		TriggerClientEvent("services:cbmedconnected", source ,isConnected)
-      		elseif id_service == 9 then
-      			TriggerClientEvent("services:cbtaxconnected", source, isConnected)
-      			elseif id_service == 4 then
-      				TriggerClientEvent("services:cbdepconnected", source, isConnected)
-      			end
-      			end)
-		end)
+				    if (result[1] ~= nil) then
+				    	isConnected = true
+				    end
+			    end
+		    end
+		    if id_service == 2 then
+		     TriggerClientEvent("services:cbcopconnected", source,  isConnected)
+		    elseif id_service == 3 then
+		      TriggerClientEvent("services:cbmedconnected", source ,isConnected)
+		    elseif id_service == 9 then
+		      TriggerClientEvent("services:cbtaxconnected", source, isConnected)
+		    elseif id_service == 4 then
+		      TriggerClientEvent("services:cbdepconnected", source, isConnected)
+		    end
+      	end)
+end)
 
 RegisterServerEvent('service:sendservice')
 AddEventHandler('service:sendservice',
@@ -340,4 +353,3 @@ end
 		number = sms[2][i]
 		text = sms[3][i]
 		end]]
-
