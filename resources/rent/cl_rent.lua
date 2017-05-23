@@ -51,7 +51,7 @@ local cmd = {
 function InitMenuVehicules()
 	MenuTitle = "SpawnJobs"
 	ClearMenu()
-	Menu.addButton("Scooter", "callSE", cmd["faggio"].event)
+	Menu.addButton("Vélo", "callSE", cmd["faggio"].event)
 end
 
 function callSE(evt)
@@ -66,7 +66,7 @@ Citizen.CreateThread(function()
 		DrawMarker(1, -1011.81, -2687.27, 12.97,0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 
 		if GetDistanceBetweenCoords(-1011.81, -2687.27, 12.97, GetEntityCoords(LocalPed())) < 2 then
-			drawTxt('Appuie sur ~g~H~s~ pour louer un scooter',0,1,0.5,0.8,0.6,255,255,255,255)
+			drawTxt('Appuie sur ~g~H~s~ pour louer un vélo',0,1,0.5,0.8,0.6,255,255,255,255)
 			if IsControlJustPressed(1, Keys["H"]) then
 				InitMenuVehicules()
 				Menu.hidden = not Menu.hidden
