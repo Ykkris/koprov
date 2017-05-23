@@ -343,43 +343,42 @@ end
 
 			if isCop and vehshop.currentmenu == "main" then
 				buttoncount = tablelength(menu.buttons)
-				elseif vehshop.currentmenu == "main" then
-					buttoncount = tablelength(menu.buttons) - 1
-					else buttoncount = tablelength(menu.buttons)
-					end
+			elseif vehshop.currentmenu == "main" then
+				buttoncount = tablelength(menu.buttons) - 1
+			else buttoncount = tablelength(menu.buttons)
+			end
 
-					drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
-					drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
-					drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
-					local y = vehshop.menu.y + 0.12
+			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
+			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
+			drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
+			local y = vehshop.menu.y + 0.12
 
-					local selected = false
+			local selected = false
 
-					for i,button in pairs(menu.buttons) do
-						if i >= vehshop.menu.from and i <= vehshop.menu.to then
+			for i,button in pairs(menu.buttons) do
+				if i >= vehshop.menu.from and i <= vehshop.menu.to then
 
-							if i == vehshop.selectedbutton then
-								selected = true
-							else
-								selected = false
-							end
+				if i == vehshop.selectedbutton then
+					selected = true
+				else
+					selected = false
+				end
 
-							if button.name ~= "Police" then
-								drawMenuButton(button,vehshop.menu.x,y,selected)
-								y = y + 0.04
-								elseif button.name == "Police" and isCop  then  ------------------ On affiche le boutton que si on est flic 
-									drawMenuButton(button,vehshop.menu.x,y,selected)
-									y = y + 0.04
-								end ------------------------------------------------------------------------------------------------------
+				if button.name ~= "Police" then
+					drawMenuButton(button,vehshop.menu.x,y,selected)
+					y = y + 0.04
+				elseif button.name == "Police" and isCop  then  ------------------ On affiche le boutton que si on est flic 
+					drawMenuButton(button,vehshop.menu.x,y,selected)
+					y = y + 0.04
+				end ------------------------------------------------------------------------------------------------------
 
 					--y = y + 0.04
 					
-					if selected and IsControlJustPressed(1,201) then
-						ButtonSelected(button)
-					end
+				if selected and IsControlJustPressed(1,201) then
+					ButtonSelected(button)
 				end
-			end	
-		end
+			end
+		end	
 		if vehshop.opened then
 			if IsControlJustPressed(1,202) then
 				Back()
