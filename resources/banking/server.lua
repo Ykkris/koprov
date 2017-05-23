@@ -129,6 +129,8 @@ end)
 RegisterServerEvent('bank:transfer')
 AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
   TriggerEvent('es:getPlayerFromId', fromPlayer, function(user)
+      local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
+      local result = MySQL:getResults(executed_query, { 'last_name', 'first_name' })
       local player = user.identifier
       local bankbalance = bankBalance(player)
       if(tonumber(amount) <= tonumber(bankbalance)) then
@@ -142,8 +144,21 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
         TriggerClientEvent("banking:removeBalance", source, amount)            
             deposit(recipient, amount)
             new_balance2 = bankBalance(recipient)
+
+
+            if (result[1]) then
+              for _, v in ipairs(result) do
+                TriggerClientEvent("pNotify:SendNotification", source, {
+                text = "Tu as reçu <b style='color:green'>" .. amount .. "$</b> de la part de "..v.first_name.." "..v.last_name,
+                type = "info",
+                timeout = 2500,
+                layout = "centerLeft",
+                })
+              end
+                else
+            end
+
             --TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Reçu: ~g~$".. amount .." ~n~~s~Nouveau Solde: ~g~$" .. new_balance2)
-            TriggerClientEvent("pNotify:SendNotification", toPlayer, { text = "Tu as reçu <b style='color:green'>" .. amount .. "$</b> de ", type = "info", timeout = 10000, layout = "centerLeft",})
             TriggerClientEvent("banking:updateBalance", toPlayer, new_balance2)
             TriggerClientEvent("banking:addBalance", source, amount)
             CancelEvent()
