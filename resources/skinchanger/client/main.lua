@@ -492,12 +492,12 @@ Citizen.CreateThread(function()
 	  	GUI.Time = GetGameTimer()
     end
 
-        if IsControlPressed(0, Keys["F10"]) and not GUI.MenuIsShowed and (GetGameTimer() - GUI.Time) > 150 then
+    --     if IsControlPressed(0, Keys["F10"]) and not GUI.MenuIsShowed and (GetGameTimer() - GUI.Time) > 150 then
 
-    	TriggerEvent('skinchanger:openMenu')
+    -- 	TriggerEvent('skinchanger:openMenu')
 
-	  	GUI.Time = GetGameTimer()
-    end
+	  	-- GUI.Time = GetGameTimer()
+    -- end
 
   end
 end)
