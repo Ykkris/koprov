@@ -91,7 +91,7 @@ AddEventHandler('es_em:sv_removeMoney',
           user:setMoney(0)
           user:setDirty_Money(0)
           -- This part requires the mod vdk_inventory
-          TriggerServerEvent("item:resetoncoma", source)
+          TriggerEvent("item:resetoncoma", source)
         end
       end
     )
