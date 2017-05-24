@@ -89,7 +89,7 @@ AddEventHandler('es_em:sv_removeMoney',
       function(user)
         if(user)then
           user:setMoney(0)
-          user:setDirtyMoney(0)
+          user:setDirty_Money(0)
           -- This part requires the mod vdk_inventory
           TriggerServerEvent("item:resetoncoma", source)
         end
