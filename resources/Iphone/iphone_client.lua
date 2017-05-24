@@ -3,6 +3,8 @@
 -- Contact us for more informations at koprov.fr --
 -- RegisterNetEvent('veh:rcheckveh')
 
+--------------------HARDCODING HARD HARD, BE PREPARED-------------------------
+
 local Keys = {
 ["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
 ["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177,
@@ -15,19 +17,25 @@ local Keys = {
 ["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
-
-sms =  {}
-contacts = {name = "romain", number = "555-1542"}
+------------------------------------------------------------------------------
 isCop = false --------------- A ENLEVER
 guiEnabled = false
 ActualJob = 0
 notificationInProgress = false
-local PhoneData = {phoneNumber = 0, contacts = {}, sms = {}}
+taillemaxsms = 30
+
+PhoneData = {
+	phone_number = 0,
+	contacts = {},
+	sms = {},
+	name = {}
+}
+
 reloadphone = false
 
 AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("police:checkIsCop")
-	end)
+end)
 
 RegisterNetEvent('police:receiveIsCop')
 AddEventHandler('police:receiveIsCop', function(result)
@@ -37,243 +45,239 @@ AddEventHandler('police:receiveIsCop', function(result)
 		isCop = true
 		rank = result
 	end
-	end)
+end)
 
 RegisterNetEvent("service:updateJobs")
 AddEventHandler("service:updateJobs", function(jobid)
 	ActualJob = jobid
-	end)
+end)
 
 RegisterNetEvent("service:onloaded")
 AddEventHandler("service:onloaded", function(jobid)
 	ActualJob = jobid
-	
-	end)
+end)
 
 
 local vehshop = {
-opened = false,
-title = "Poche et Actions",
-currentmenu = "main",
-lastmenu = nil,
-currentpos = nil,
-selectedbutton = 0,
-marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
-menu = {
-x = 0.1,
-y = 0.15,
-width = 0.2,
-height = 0.04,
-buttons = 10,
-from = 1,
-to = 7,
-scale = 0.4,
-font = 0,
-["main"] = {
-title = "Telephone", 
-name = "main",
-buttons = { 
-{name = "Telephone", description = ""},
-{name = "Emotes", description = ""},
-{name = "Carte d'identite", description = ""},
-{name = "Services", description = ""},
-{name = "Police", description = ""}
-}
-},
+	opened = false,
+	title = "Poche et Actions",
+	currentmenu = "main",
+	lastmenu = nil,
+	currentpos = nil,
+	selectedbutton = 0,
+	marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
+	menu = {
+		x = 0.1,
+		y = 0.15,
+		width = 0.2,
+		height = 0.04,
+		buttons = 10,
+		from = 1,
+		to = 7,
+		scale = 0.4,
+		font = 0,
+		["main"] = {
+			title = "Telephone", 
+			name = "main",
+			buttons = { 
+				{name = "Telephone", description = ""},
+				{name = "Emotes", description = ""},
+				{name = "Carte d'identite", description = ""},
+				{name = "Services", description = ""},
+				{name = "Police", description = ""}
+			}
+		},
 		["Telephone"] = {  -- avant vehicles
-		title = "Telephone", 
-		name = "Telephone",
-		buttons = { 
-		{name = "Repertoire", description = ''},
-		{name = "Boite de reception", description = ''},
-		--{name = "Envoyer un SMS", description = ''},
-	}
-	},
-	["Emotes"] = {
-	title = "Emotes", 
-	name = "Emotes",
-	buttons = { 
-	{name = "Arreter l'emote", description = ''},
-	{name = "Surrender", description = ''},
-	{name = "No", description = ''},
-	{name = "Damn", description = ''},
-	{name = "Dance", description = ''},
-	{name = "Salute", description = ''},
-	{name = "AFK/Fumer", description = ''},
-	{name = "Why", description = ''},
-	{name = "Noter Test", description = ''},
-	{name = "A changer 1", description = ''},
-	{name = "A changer 2", description = ''},
-	{name = "A changer 3", description = ''},
-	{name = "A changer 4", description = ''},
-	{name = "A changer 5", description = ''},
-	{name = "A changer 6", description = ''},
-	{name = "A changer 7", description = ''},
-	{name = "A changer 8", description = ''},
-	{name = "A changer 9", description = ''},
-	{name = "A changer 10", description = ''},
-	{name = "A changer 11", description = ''},
-	{name = "A changer 12", description = ''}
+			title = "Telephone", 
+			name = "Telephone",
+			buttons = { 
+				{name = "Repertoire", description = ''},
+				{name = "Boite de reception", description = ''},
+				--{name = "Envoyer un SMS", description = ''},
+			}
+		},
+		["Emotes"] = {
+			title = "Emotes", 
+			name = "Emotes",
+			buttons = { 
+				{name = "Arreter l'emote", description = ''},
+				{name = "Surrender", description = ''},
+				{name = "No", description = ''},
+				{name = "Damn", description = ''},
+				{name = "Dance", description = ''},
+				{name = "Salute", description = ''},
+				{name = "Rock", description = ''},
+				{name = "Why", description = ''},
+				{name = "Noter Test", description = ''},
+				{name = "A changer 1", description = ''},
+				{name = "A changer 2", description = ''},
+				{name = "A changer 3", description = ''},
+				{name = "A changer 4", description = ''},
+				{name = "A changer 5", description = ''},
+				{name = "A changer 6", description = ''},
+				{name = "A changer 7", description = ''},
+				{name = "A changer 8", description = ''},
+				{name = "A changer 9", description = ''},
+				{name = "A changer 10", description = ''},
+				{name = "A changer 11", description = ''},
+				{name = "A changer 12", description = ''}
 				--{name = "110", description = ''},  AJOUTER UNE LIGNE POUR CHAQUE EMOTE PLUS VOIR LIGNE ~340 
 			}
-			},
-			["Carte d'identite"] = {
+		},
+		["Carte d'identite"] = {
 			title = "Carte d'identite", 
 			name = "Carte d'identite",
 			buttons = { 
-		}
+			}
 		},
 		["Services"] = {
-		title = "Services", 
-		name = "Services",
-		buttons = {
-		{name = "Police ", description = ""},
-		{name = "Médecin", description = ""},
-		{name = "Dépanneur", description = ""},
-		{name = "Taxi", description = ""}
+			title = "Services", 
+			name = "Services",
+			buttons = {
+				{name = "Police ", description = ""},
+				{name = "Médecin", description = ""},
+				{name = "Dépanneur", description = ""},
+				{name = "Taxi", description = ""}
+			}
+		},
+		["Police"] = {
+			title = "Police",
+			name = "Police",
+			buttons = {
+				{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identite, oblige a rentrer dans le vehicle
+				{name = "Fouiller", description = ""},
+				{name = "Amande", description = ""},
+				{name = "Controler l'identite", description = ""},
+				{name = "Faire rentrer dans le vehicule", description = ""},
+				{name = "Faire sortir du vehicule", description = ""}, --------------- Repertoire Boite de reception
+				{name = "Controler le vehicule", description = ""}
+			}
+		},
+		["Repertoire"] = {
+			title = "Repertoire", 
+			name = "Repertoire",
+			buttons = {
+				{name = "Ajouter un contact", description = "TestTest ça supporte combien de carracter exactemncarracter exactemncarracter exactemncarracter exactemncarracter exactemn"}
+			}
+		},
+		["Boite de reception"] = {
+			title = "Boite de reception",
+			name = "Boite de reception",
+			buttons = {   --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
+			}
+		},
+		["Contact"] = {
+			title = "Contact",
+			name = "Contact",
+			buttons = {
+				{name = "Envoyer un Sms", description = ""}, --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
+				{name = "Envoyer la position", description = ""},
+				{name = "Supprimer le Contact", description = ""}
+			}
+		},
 	}
-	},
-	["Police"] = {
-	title = "Police",
-	name = "Police",
-	buttons = {
-		{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identite, oblige a rentrer dans le vehicle
-		{name = "Fouiller", description = ""},
-		{name = "Amande", description = ""},
-		{name = "Controler l'identite", description = ""},
-		{name = "Controler le vehicule", description = ""},
-		{name = "Faire rentrer dans le vehicule", description = ""},
-		{name = "Faire sortir du vehicule", description = ""} --------------- Repertoire Boite de reception
-	}
-	},
-	["Repertoire"] = {
-		title = "Repertoire", 
-		name = "Repertoire",
-		buttons = {
-		{name = "Ajouter un contact", description = "TestTest ça supporte combien de carracter exactemncarracter exactemncarracter exactemncarracter exactemncarracter exactemn"}
-	}
-	},
-	["Boite de reception"] = {
-		title = "Boite de reception",
-		name = "Boite de reception",
-		buttons = {
-		{name = "", description = ""} --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
-	}
-	},
+}
 
-		}
-	}
+function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
+	SetTextFont(font)
+	SetTextProportional(0)
+	SetTextScale(scale, scale)
+	SetTextColour(r, g, b, a)
+	SetTextDropShadow(0, 0, 0, 0,255)
+	SetTextEdge(1, 0, 0, 0, 255)
+	SetTextDropShadow()
+	SetTextOutline()
+	SetTextCentre(centre)
+	SetTextEntry("STRING")
+	AddTextComponentString(text)
+	DrawText(x , y)
+end
 
 
+function f(n)
+	return n + 0.0001
+end
 
+function LocalPed()
+	return GetPlayerPed(-1)
+end
 
-
-	local function LocalPed()
-		return GetPlayerPed(-1)
+function try(f, catch_f)
+	local status, exception = pcall(f)
+	if not status then
+		catch_f(exception)
 	end
+end
 
-	function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
-		SetTextFont(font)
-		SetTextProportional(0)
-		SetTextScale(scale, scale)
-		SetTextColour(r, g, b, a)
-		SetTextDropShadow(0, 0, 0, 0,255)
-		SetTextEdge(1, 0, 0, 0, 255)
-		SetTextDropShadow()
-		SetTextOutline()
-		SetTextCentre(centre)
-		SetTextEntry("STRING")
-		AddTextComponentString(text)
-		DrawText(x , y)	
-	end
+function firstToUpper(str)
+	return (str:gsub("^%l", string.upper))
+end
 
+function OpenCreator()		
+	vehshop.currentmenu = "main"
+	vehshop.opened = true
+	vehshop.selectedbutton = 0
+end
 
-	function f(n)
-		return n + 0.0001
-	end
+function CloseCreator()
+	Citizen.CreateThread(function()
+		local ped = LocalPed()
+		vehshop.opened = false
+		vehshop.menu.from = 1
+		vehshop.menu.to = 10
+	end)
+end
 
-	function LocalPed()
-		return GetPlayerPed(-1)
-	end
-
-	function try(f, catch_f)
-		local status, exception = pcall(f)
-		if not status then
-			catch_f(exception)
-		end
-	end
-
-	function firstToUpper(str)
-		return (str:gsub("^%l", string.upper))
-	end
-
-	function OpenCreator()		
-
-		vehshop.currentmenu = "main"
-		vehshop.opened = true
-		vehshop.selectedbutton = 0
-
-	end
-	function CloseCreator()
-		Citizen.CreateThread(function()
-			local ped = LocalPed()
-			vehshop.opened = false
-			vehshop.menu.from = 1
-			vehshop.menu.to = 10
-			end)
-	end
-
-	function drawMenuButton(button,x,y,selected)
-		local menu = vehshop.menu
-		SetTextFont(menu.font)
-		SetTextProportional(0)
-		SetTextScale(menu.scale, menu.scale)
-		if selected then
-			SetTextColour(0, 0, 0, 255)
-		else
-			SetTextColour(255, 255, 255, 255)
-		end
-		SetTextCentre(0)
-		SetTextEntry("STRING")
-		AddTextComponentString(button.name)
-		if selected then
-			DrawRect(x,y,menu.width,menu.height,255,255,255,255)
-		else
-			DrawRect(x,y,menu.width,menu.height,0,0,0,150)
-		end
-		DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)	
-	end
-
-	function drawMenuInfo(text)
-		local menu = vehshop.menu
-		SetTextFont(menu.font)
-		SetTextProportional(0)
-		SetTextScale(0.45, 0.45)
+function drawMenuButton(button,x,y,selected)
+	local menu = vehshop.menu
+	SetTextFont(menu.font)
+	SetTextProportional(0)
+	SetTextScale(menu.scale, menu.scale)
+	if selected then
+		SetTextColour(0, 0, 0, 255)
+	else
 		SetTextColour(255, 255, 255, 255)
-		SetTextCentre(0)
-		SetTextEntry("STRING")
-		AddTextComponentString(text)
-		DrawRect(0.675, 0.95,0.65,0.050,0,0,0,150)
-		DrawText(0.365, 0.934)	
-
 	end
-
-	function drawMenuRight(txt,x,y,selected)
-		local menu = vehshop.menu
-		SetTextFont(menu.font)
-		SetTextProportional(0)
-		SetTextScale(menu.scale, menu.scale)
-		SetTextRightJustify(1)
-		if selected then
-			SetTextColour(0, 0, 0, 255)
-		else
-			SetTextColour(255, 255, 255, 255)
-		end
-		SetTextCentre(0)
-		SetTextEntry("STRING")
-		AddTextComponentString(txt)
-		DrawText(x + menu.width/2 - 0.03, y - menu.height/2 + 0.0028)	
+	SetTextCentre(0)
+	SetTextEntry("STRING")
+	AddTextComponentString(button.name)
+	if selected then
+		DrawRect(x,y,menu.width,menu.height,255,255,255,255)
+	else
+		DrawRect(x,y,menu.width,menu.height,0,0,0,150)
 	end
+	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)	
+end
+
+function drawMenuInfo(text)
+	local menu = vehshop.menu
+	SetTextFont(menu.font)
+	SetTextProportional(0)
+	SetTextScale(0.45, 0.45)
+	SetTextColour(255, 255, 255, 255)
+	SetTextCentre(0)
+	SetTextEntry("STRING")
+	AddTextComponentString(text)
+	DrawRect(0.675, 0.95,0.65,0.050,0,0,0,150)
+	DrawText(0.365, 0.934)	
+end
+
+function drawMenuRight(txt,x,y,selected)
+	local menu = vehshop.menu
+	SetTextFont(menu.font)
+	SetTextProportional(0)
+	SetTextScale(menu.scale, menu.scale)
+	SetTextRightJustify(1)
+	if selected then
+		SetTextColour(0, 0, 0, 255)
+	else
+		SetTextColour(255, 255, 255, 255)
+	end
+	SetTextCentre(0)
+	SetTextEntry("STRING")
+	AddTextComponentString(txt)
+	DrawText(x + menu.width/2 - 0.03, y - menu.height/2 + 0.0028)	
+end
 
 function drawMenuHelp(x, y, txt)
 	local menu = vehshop.menu
@@ -285,43 +289,50 @@ function drawMenuHelp(x, y, txt)
 	SetTextEntry("STRING")
 	AddTextComponentString(txt)
 	DrawText(x + menu.width/2 , y - menu.height/2 )
-
 end
 
-	function drawMenuTitle(txt,x,y)
-		local menu = vehshop.menu
-		SetTextFont(2)
-		SetTextProportional(0)
-		SetTextScale(0.5, 0.5)
-		SetTextColour(255, 255, 255, 255)
-		SetTextEntry("STRING")
-		AddTextComponentString(txt)
-		DrawRect(x,y,menu.width,menu.height,0,0,0,150)
-		DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)	
-	end
-	function tablelength(T)
-		local count = 0
-		for _ in pairs(T) do count = count + 1 end
-		return count
-	end
-	function Notify(text)
-		SetNotificationTextEntry('STRING')
-		AddTextComponentString(text)
-		DrawNotification(false, false)
-	end
+function drawMenuTitle(txt,x,y)
+	local menu = vehshop.menu
+	SetTextFont(2)
+	SetTextProportional(0)
+	SetTextScale(0.5, 0.5)
+	SetTextColour(255, 255, 255, 255)
+	SetTextEntry("STRING")
+	AddTextComponentString(txt)
+	DrawRect(x,y,menu.width,menu.height,0,0,0,150)
+	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)	
+end
 
-	local backlock = false
-	Citizen.CreateThread(function()
-		while true do
+function tablelength(T)
+	local count = 0
+	for _ in pairs(T) do count = count + 1 end
+	return count
+end
+
+function Notify(text)
+	SetNotificationTextEntry('STRING')
+	AddTextComponentString(text)
+	DrawNotification(false, false)
+end
+
+local backlock = false
+local last_time = GetGameTimer()
+Citizen.CreateThread(function()
+	while true do
 		Citizen.Wait(0)                                                                     --------
-
-		if (IsControlJustPressed(1,213)) then 
+		if (IsControlJustPressed(1,213)) then --------------------------- On ouvre le menu si on appui sur la touche
 			if vehshop.opened then
 				CloseCreator()
 			else
 				OpenCreator()
 			end
-		end
+		end ----------------------------------------------------------------------------------------------------
+
+		actual_time = GetGameTimer() ------------------------- Partie SAVE SMS ------------ 
+		if (actual_time - last_time) >= 600000 then
+			last_time = GetGameTimer()
+			TriggerServerEvent("Iphone:savesms", PhoneData.sms)
+		end --------------------------------------------------------------------------------
 
 		if vehshop.opened then
 			local ped = LocalPed()
@@ -329,34 +340,40 @@ end
 
 			if isCop and vehshop.currentmenu == "main" then
 				buttoncount = tablelength(menu.buttons)
-				elseif vehshop.currentmenu == "main" then
-					buttoncount = tablelength(menu.buttons) - 1
-					else buttoncount = tablelength(menu.buttons)
+			elseif vehshop.currentmenu == "main" then
+				buttoncount = tablelength(menu.buttons) - 1
+			else
+				buttoncount = tablelength(menu.buttons)
+			end
+			Citizen.Trace(tostring(buttoncount))
+			Citizen.Trace(tostring(vehshop.selectedbutton))
+			Citizen.Trace(tostring(vehshop.menu.x))
+			Citizen.Trace(tostring(vehshop.menu.width))
+			Citizen.Trace(tostring(vehshop.menu.y))
+			Citizen.Trace(tostring(vehshop.title))	
+			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
+			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
+			drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
+			local y = vehshop.menu.y + 0.12
+
+			local selected = false
+
+			for i,button in pairs(menu.buttons) do
+				if i >= vehshop.menu.from and i <= vehshop.menu.to then
+					if i == vehshop.selectedbutton then
+						selected = true
+					else
+						selected = false
 					end
 
-					drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
-					drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
-					drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
-					local y = vehshop.menu.y + 0.12
 
-					local selected = false
-
-					for i,button in pairs(menu.buttons) do
-						if i >= vehshop.menu.from and i <= vehshop.menu.to then
-
-							if i == vehshop.selectedbutton then
-								selected = true
-							else
-								selected = false
-							end
-
-							if button.name ~= "Police" then
-								drawMenuButton(button,vehshop.menu.x,y,selected)
-								y = y + 0.04
-								elseif button.name == "Police" and isCop  then 
-									drawMenuButton(button,vehshop.menu.x,y,selected)
-									y = y + 0.04
-								end
+					if button.name ~= "Police" then
+						drawMenuButton(button,vehshop.menu.x,y,selected)
+						y = y + 0.04
+					elseif button.name == "Police" and isCop then  ------------------ On affiche le boutton que si on est flic 
+						drawMenuButton(button,vehshop.menu.x,y,selected)
+						y = y + 0.04
+					end ------------------------------------------------------------------------------------------------------
 
 					--y = y + 0.04
 					
@@ -364,8 +381,9 @@ end
 						ButtonSelected(button)
 					end
 				end
-			end	
+			end
 		end
+
 		if vehshop.opened then
 			if IsControlJustPressed(1,202) then
 				Back()
@@ -392,18 +410,16 @@ end
 				end	
 			end
 		end
-		
 	end
-	end)
+end)
 
-
-	function round(num, idp)
-		if idp and idp>0 then
-			local mult = 10^idp
-			return math.floor(num * mult + 0.5) / mult
-		end
-		return math.floor(num + 0.5)
+function round(num, idp)
+	if idp and idp>0 then
+		local mult = 10^idp
+		return math.floor(num * mult + 0.5) / mult
 	end
+	return math.floor(num + 0.5)
+end
 
 
 -- main : portes / limitateur 
@@ -413,25 +429,6 @@ function ButtonSelected(button)
 	local ped = GetPlayerPed(-1)
 	local this = vehshop.currentmenu -- menu
 	local btn = button.name --Gerer les portes
-
-	
-	-- Gros ajout très très desordonne ------------ Contactez Izio au 06....
-	--if 
-	  --  btn == "Coffre" then dtd(btn)
---elseif  btn == "Capot" then dtd(btn)
---elseif  btn == "Avant gauche" then dtd(btn)
---elseif  btn == "Avant droite" then dtd(btn)
---elseif  btn == "Arrière gauche" then dtd(btn)
---elseif  btn == "Arrière droite" then dtd(btn)
---elseif btn == "10"  then OpenLimitator(tonumber(btn))
---elseif btn == "30"  then OpenLimitator(tonumber(btn))
---elseif btn == "50"  then OpenLimitator(tonumber(btn))
---elseif btn == "90"  then OpenLimitator(tonumber(btn))
---elseif btn == "110"  then OpenLimitator(tonumber(btn))
---elseif btn == "Enlever la limite"  then OpenLimitator(500) -- trop hacky
---elseif btn == "Eteindre le moteur" then ToggleEngineOff()
---end	---------------------------------------------------------------------------
-
 	if this == "main" then
 		if btn == "Telephone" then
 			OpenMenu('Telephone')
@@ -457,7 +454,7 @@ function ButtonSelected(button)
 			Emote(4)
 		elseif btn == "Salute" then
 			Emote(5)
-		elseif btn == "AFK/Fumer" then
+		elseif btn == "Rock" then
 			Emote(6)
 		elseif btn == "Why" then
 			Emote(7)
@@ -507,8 +504,6 @@ function ButtonSelected(button)
 			Amande()
 		elseif btn == "Controler l'identite" then
 			IdControl()
-		elseif btn == "Controler le vehicule" then
-			PlateControl()
 		elseif btn == "Faire rentrer dans le vehicule" then
 			EnterVehicle()
 		elseif btn == "Faire sortir du vehicule" then
@@ -525,15 +520,128 @@ function ButtonSelected(button)
 		elseif btn == "Taxi" then 
 			Services(btn)
 		end
-	elseif this == "Repertoire" then 
-		if btn == "Ajouter un contact" then 
-			drawMenuInfo("Ceci est un énorme test, sans but commun pour la vie, mais bon on fait avec non ? isn't it ?") 
-			AddContact()
-			--TriggerEvent("Iphone:loadcs", sms, contacts)
 
+	elseif this == "Repertoire" then 
+		if btn == "Ajouter un contact" then
+			AddContact()
+		else -- c'est que c'est forcément un contact de la table PhoneData.contacts
+			toNumber = button.description
+			vehshop.lastmenu = "Repertoire"
+			vehshop.menu.from = 1
+			vehshop.menu.to = 10
+			vehshop.selectedbutton = 0
+			vehshop.currentmenu = "Contact"
+		end
+
+	elseif this == "Contact" then
+		if btn == "Envoyer un Sms" then
+			local editing = true
+			DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+			while editing do
+				Wait(0)
+				if UpdateOnscreenKeyboard() == 2 then 
+					editing = false
+					ShowNotification("Sms annulé")
+				end
+				if UpdateOnscreenKeyboard() == 1 then
+					editing = false
+					resultat = GetOnscreenKeyboardResult()
+					ShowNotification("Sms envoyé")
+				end
+			end
+			local sendSms = tostring(resultat)
+			TriggerServerEvent("Iphone:sendsmsfromone", toNumber,sendSms)
+		elseif btn == "Envoyer la position" then
+			local name = PhoneData.name.first_name.. " " ..PhoneData.name.last_name
+			local spos = GetEntityCoords(GetPlayerPed(-1), true)
+			TriggerServerEvent("Iphone:sendposto", toNumber, sname, spos.x, spos.y, spos.z)
+		elseif btn == "Supprimer le Contact" then
+			TriggerServerEvent("Iphone:removecontact", toNumber)
+			for i=1 , #PhoneData.contacts, 1 do
+				if PhoneData.contact[i].number == toNumber then
+					table.remove(PhoneData.contact, i)
+				end
+			end
 		end
 	end
 end
+
+
+	--PhoneData = {
+	--phone_number = "numberHERE",
+	--contacts = {
+	--{first_name = "contact1", last_name = "contact1", number = "numberHERE"},
+	--{etc...},
+	--},
+	--sms = {
+	--{first_name = "test", last_name = "test", text = "test"},
+	--{ etc ...}
+	--},
+	--name = {
+	--{first_name = "Romain", last_name = "Billot"}
+	--}
+--}
+			--table.insert(vehshop.menu["Repertoire"].buttons, {
+					--first_name = tostring(result[1]),
+					--last_name = tostring(result[2]),
+					--number = tostring(resultat2)
+					--})
+
+
+--UI::BEGIN_TEXT_COMMAND_SET_BLIP_NAME("STRING");
+--UI::_ADD_TEXT_COMPONENT_STRING("Name");
+--UI::END_TEXT_COMMAND_SET_BLIP_NAME(blip);
+
+RegisterNetEvent("Iphone:receivepos")
+AddEventHandler("Iphone:receivepos", function(x, y, z, sendername)
+	ShowNotification("Vous venez de recevoir la position de "..sendername)
+	timer_pos = GetGameTimer()
+	Blipvariable = AddBlipForCoord(x, y, z)
+	N_0x80ead8e2e1d5d52e(Blipvariable)
+	BeginTextCommandSetBlipName("STRING")
+	AddTextComponentString(sendername)
+	EndTextCommandSetBlipName(Blipvariable)
+	SetBlipRoute(Blipvariable, 1)
+	SetBlipRouteColor(Blipvariable, 48)
+	finish = false
+	while not(finish) do
+		Wait(10)
+		local playerCoords = GetEntityCoords(GetPlayerPed(-1), true)
+		x1, y1, z1 = table.unpack(playersCoords)
+		if GetDistanceBetweenCoords(x, y, z, x1, y1, z1, false) < 20 or (GetGameTimer() - timer_pos) > 600000 then
+			if Blipvariable ~= nil and DoesBlipExist(Blipvariable) then
+				Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
+				Blipvariable = nil
+			end
+			finish = true
+		end
+	end
+end)
+
+RegisterNetEvent("Iphone:receivesms")
+AddEventHandler("Iphone:receivesms", function(ssms)
+	snameplusdate = ssms.first_name .. " " .. ssms.last_name .. " : ".. ssms.date.jour .. "/".. ssms.date.mois .. " à " .. ssms.date.heure .. "h" .. ssms.date.minute
+	sname = ssms.first_name .. " " .. ssms.last_name
+	if #PhoneData.sms >= taillemaxsms then
+		ShowNotification("Vous venez de recevoir un sms mais la taille est dépassé. Veuillez faire le tri")
+		table.remove(PhoneData.sms, 1)
+	else
+		ShowNotification("Vous venez de recevoir un message de : " ..sname)
+	end
+	table.insert(vehshop.menu["Boite de reception"].buttons, {
+						name = snameplusdate,
+						description = smessage
+					})
+	local receiveSms = {
+		first_name = ssms.first_name,
+		last_name = ssms.last_name,
+		text = ssms.text,
+		date = ssms.date
+	}
+
+	table.insert(PhoneData.sms, receivesms)
+
+end)
 
 function OpenMenu(menu)
 	vehshop.lastmenu = vehshop.currentmenu
@@ -567,7 +675,6 @@ function Back()
 	else
 		OpenMenu(vehshop.lastmenu)
 	end
-
 end
 
 function stringstarts(String,Start)
@@ -654,237 +761,227 @@ function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 
 													  -- Stop 0 pour jouer une annimation et 1 pour arreter (donc 0 dans notre cas)
 
 	if stop ~= 1 then
-    ClearPedSecondaryTask(GetPlayerPed(-1))
-    ClearPedTasks(GetPlayerPed(-1))
+		ClearPedSecondaryTask(GetPlayerPed(-1))
+    	ClearPedTasks(GetPlayerPed(-1))
 
-          local i = 0
-          	RequestAnimDict(dict)
-        	while not HasAnimDictLoaded(dict) and i < 500 do -- max time, 10 seconds
-            	Citizen.Wait(10)
-            	RequestAnimDict(dict)
-            	i = i+1
-        	end
+        local i = 0
+        RequestAnimDict(dict)
+        while not HasAnimDictLoaded(dict) and i < 500 do -- max time, 10 seconds
+        	Citizen.Wait(10)
+            RequestAnimDict(dict)
+            i = i+1
+        end
 
-			if HasAnimDictLoaded(dict) then
-				TaskPlayAnim(GetPlayerPed(-1),dict,name,8.0001,1,-1,flags,0,0,0,0)
-		 	end
+		if HasAnimDictLoaded(dict) then
+			TaskPlayAnim(GetPlayerPed(-1),dict,name,8.0001,1,-1,flags,0,0,0,0)
+		end
 
-		 	Wait(0)
+		Wait(0)
 
-		 	Citizen.Trace(tostring(GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name)))
-		 	Citizen.Trace(tostring(IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3)))
-		 	if loop ~= 1 then
-			 	while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
-					Citizen.Wait(0)
-				end
-				ClearPedTasksImmediately(GetPlayerPed(-1))
-			else
-				while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
-					Citizen.Wait(0)
-					if IsControlJustPressed(1, Keys['E']) then
-						ClearPedTasksImmediately(GetPlayerPed(-1))
-						break
-					end
+		if loop ~= 1 then
+			while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
+				Citizen.Wait(0)
+			end
+			ClearPedTasksImmediately(GetPlayerPed(-1))
+		else
+			while GetEntityAnimCurrentTime(GetPlayerPed(-1), dict, name) <= duration and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) do
+				Citizen.Wait(0)
+				if IsControlJustPressed(1, Keys['E']) then
+					ClearPedTasksImmediately(GetPlayerPed(-1))
+					break
 				end
 			end
-
-
+		end
 	else
     	ClearPedTasksImmediately(GetPlayerPed(-1))
     end
-
 end
 
-   	function AddContact()
+function AddContact()
+	local editing1 = true
+   	local editing2 = true
+   	local quit1 = false
+   	local quit2 = false
 
-   		local editing1 = true
-   		local editing2 = true
-   		local quit1 = false
-   		local quit2 = false
-
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Nom du contact : [ESC] pour quitter", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[PRENOM] [NOM]", "", "", "", 120)
 	while editing1 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing1 = false
 			quit1 = true
-			
+			ShowNotification("Annulé!")
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing1 = false
 			resultat1 = GetOnscreenKeyboardResult()
 			ShowNotification("Entre maintenant le numero")
-			
 		end
 	end
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "Numero du contact : [ESC] pour quitter", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[NUMERO]", "", "", "", 120)
 	while editing2 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing2 = false
 			quit2 = true
+			ShowNotification("Annulé!")
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing2 = false
 			resultat2 = GetOnscreenKeyboardResult()
 			ShowNotification("Contact ajouté !")
-			
 		end
 	end
 
-		if not(quit1) and not(quit2) then
+	if not(quit1) and not(quit2) then
+		result = {}
+		for token in string.gmatch(resultat1, "[^%s]+") do
+  			table.insert(result, token)
+		end
    		table.insert(vehshop.menu["Repertoire"].buttons, {
-					name = tostring(resultat1),
-					number = tostring(resultat2)
+   			first_name = tostring(result[1]),
+			last_name = tostring(result[2]),
+			number = tostring(resultat2)
+		})
+   			-----------------------
+   		table.insert(PhoneData.contacts, {
+   			first_name = tostring(result[1]),
+			last_name = tostring(result[2]),
+			number = tostring(resultat2)
+		})
 
-					})
 
-   		TriggerServerEvent("Iphone:addcontact", resultat1, resultat2)
+--PhoneData = {
+	--phone_number = "numberHERE",
+	--contacts = {
+	--{first_name = "contact1", last_name = "contact1", number = "numberHERE"},
+	--{etc...},
+	--},
+	--sms = {
+	--{first_name = "test", last_name = "test", text = test},
+	--{ etc ...}
+	--},
+	--name = {
+	--{first_name = "Romain", last_name = "Billot"}
+	--}
+--}
 
-   		end
+
+   		TriggerServerEvent("Iphone:addcontact", result[1], result[2], resultat2)
 
    	end
+end
 
-    function SendSMS()
+function SendSMS()
 
-    end
+end
 
-    function Repertoire()
+function Repertoire()
 
-    end
+end
 
-    function BoiteReception()
+function BoiteReception()
 
-    end
+end
 
-    function Services(nom_service)
-    	if nom_service == "Police " then
-
-    		TriggerServerEvent('service:connectedbyid', 2)	
-
-    		Citizen.CreateThread(
-    			function()
-    				while isCopConnected == nil do
-    					Citizen.Wait(1)
-
-    					RegisterNetEvent('services:cbcopconnected')
-    					AddEventHandler('services:cbcopconnected',
-    						function(cb)
-    							isCopConnected = cb
-    							if not(isCopConnected) then
-    								ShowNotification("Pas de policiers en ville")
-    							else
-    								local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    								local x = p_coords.x
-    								local y = p_coords.y
-    								local z = p_coords.z
-    								TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
-    							end
-    						end
-    						)
+function Services(nom_service)
+	if nom_service == "Police " then
+		TriggerServerEvent('service:connectedbyid', 2)	
+		Citizen.CreateThread(function()
+			while isCopConnected == nil do
+    			Citizen.Wait(1)
+    			RegisterNetEvent('services:cbcopconnected')
+    			AddEventHandler('services:cbcopconnected', function(cb)
+    				isCopConnected = cb
+    				if not(isCopConnected) then
+    					ShowNotification("Pas de policiers en ville")
+    				else
+    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+    					local x = p_coords.x
+    					local y = p_coords.y
+    					local z = p_coords.z
+    					TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
     				end
-    				end)
+    			end)
+    		end
+    	end)
 
-    		elseif nom_service == "Médecin" then
-
-    			TriggerServerEvent('service:connectedbyid', 3)
-
-    			Citizen.CreateThread(
-    				function()
-    					while isMedicConnected == nil do
-    						Citizen.Wait(1)
-
-    						RegisterNetEvent('services:cbmedconnected')
-    						AddEventHandler('services:cbmedconnected',
-    							function(cb)
-    								isMedicConnected = cb
-    								if not(isMedicConnected) then
-    									ShowNotification("Pas de médecins en ville")
-    								else
-    									local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    									local x = p_coords.x
-    									local y = p_coords.y
-    									local z = p_coords.z
-    									TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
-    								end
-    							end
-    							)
-    					end
-    					end)
-
-    			elseif nom_service == "Taxi" then
-
-    				TriggerServerEvent('service:connectedbyid', 9)	
-
-    				Citizen.CreateThread(
-    					function()
-    						while isTaxiConnected == nil do
-    							Citizen.Wait(1)
-
-    							RegisterNetEvent('services:cbtaxconnected')
-    							AddEventHandler('services:cbtaxconnected',
-    								function(cb)
-    									isTaxiConnected = cb
-    									if not(isTaxiConnected) then
-    										ShowNotification("Pas de taxis en ville")
-    									else
-    										local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    										local x = p_coords.x
-    										local y = p_coords.y
-    										local z = p_coords.z
-    										TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
-    									end
-    								end
-    								)
-    						end
-    						end)
-
-    				elseif nom_service == "Dépanneur" then
-
-    					TriggerServerEvent('service:connectedbyid', 4)
-
-    					Citizen.CreateThread(
-    						function()
-    							while isDepanConnected == nil do
-    								Citizen.Wait(1)
-
-    								RegisterNetEvent('services:cbdepconnected')
-    								AddEventHandler('services:cbdepconnected',
-    									function(cb)
-    										isDepanConnected = cb
-
-    										if not(isDepanConnected) then
-    											ShowNotification("Pas de dépanneurs en ville")
-    										else 
-    											local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    											local x = p_coords.x
-    											local y = p_coords.y
-    											local z = p_coords.z
-    											TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
-    										end
-    									end
-    									)
-    							end
-    							end)
-
-
-
+    elseif nom_service == "Médecin" then
+    	TriggerServerEvent('service:connectedbyid', 3)
+    	Citizen.CreateThread(function()
+    		while isMedicConnected == nil do
+    			Citizen.Wait(1)
+    			RegisterNetEvent('services:cbmedconnected')
+    			AddEventHandler('services:cbmedconnected', function(cb)
+    				isMedicConnected = cb
+    				if not(isMedicConnected) then
+    					ShowNotification("Pas de médecins en ville")
+    				else
+    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+    					local x = p_coords.x
+    					local y = p_coords.y
+    					local z = p_coords.z
+    					TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
     				end
-    			end
+    			end)
+    		end
+   		end)
 
+    elseif nom_service == "Taxi" then
+    	TriggerServerEvent('service:connectedbyid', 9)	
+    	Citizen.CreateThread(function()
+    		while isTaxiConnected == nil do
+    			Citizen.Wait(1)
+    			RegisterNetEvent('services:cbtaxconnected')
+    			AddEventHandler('services:cbtaxconnected', function(cb)
+    				isTaxiConnected = cb
+    				if not(isTaxiConnected) then
+    					ShowNotification("Pas de taxis en ville")
+    				else
+    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+    					local x = p_coords.x
+    					local y = p_coords.y
+    					local z = p_coords.z
+    					TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
+    				end
+    			end)
+    		end
+    	end)
 
-    			function IdCard()
-    				TriggerServerEvent("Iphone:checkid", GetPlayerServerId(PlayerId()), 0)
-    			end
+    elseif nom_service == "Dépanneur" then
+    	TriggerServerEvent('service:connectedbyid', 4)
+    	Citizen.CreateThread(function()
+    		while isDepanConnected == nil do
+    			Citizen.Wait(1)
+    			RegisterNetEvent('services:cbdepconnected')
+    			AddEventHandler('services:cbdepconnected', function(cb)
+    				isDepanConnected = cb
+    				if not(isDepanConnected) then
+    					ShowNotification("Pas de dépanneurs en ville")
+    				else 
+    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+    					local x = p_coords.x
+    					local y = p_coords.y
+    					local z = p_coords.z
+    					TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
+    				end
+    			end)
+    		end
+    	end)
+	end
+end
 
-    			function Menotter()
-    				TriggerServerEvent("Iphone:cuff")
-    			end
+function IdCard()
+	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(PlayerId()), 0)
+end
 
-    			function Fouiller()
-    				TriggerServerEvent("Iphone:check")
-    			end
+function Menotter()
+	TriggerServerEvent("Iphone:cuff")
+end
+
+function Fouiller()
+    TriggerServerEvent("Iphone:check")
+end
 
 function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 	local editing = true
@@ -894,45 +991,22 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 		if UpdateOnscreenKeyboard() == 2 then
 			editing = false
 			ShowNotification("Amande annulée")
-			
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing = false
 			resultat = GetOnscreenKeyboardResult()
 			ShowNotification("Amande envoyé")
-			
 		end
 	end
-
-
-
 	resultat_n = tonumber(resultat)
-
 	Fines(resultat_n)
-		--TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
-
-		CloseCreator()
-
-	end
-
-function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClosestPlayer
-	
-	local target, distance = GetClosestPlayer()
-	
-	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(target), 1)
+	-- TriggerServerEvent("Iphone:amande", resultat_n, target_player,distance)
+	CloseCreator()
 end
 
-function PlateControl()
-	local pos = GetEntityCoords(GetPlayerPed(-1))
-	local entityWorld = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, 0.0)
-
-	local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, GetPlayerPed(-1), 0)
-	local a, b, c, d, vehicleHandle = GetRaycastResult(rayHandle)
-	if(DoesEntityExist(vehicleHandle)) then
-		TriggerServerEvent("Iphone:checkplate", GetVehicleNumberPlateText(vehicleHandle))
-	else
-		TriggerEvent('chatMessage', 'SYSTEM', {255, 0, 0}, "Aucun vehicule a proximite !")
-	end
+function IdControl() -- IL FAUT METTRE LA TARGET DANS TARGET : Utiliser GetClosestPlayer
+	local target, distance = GetClosestPlayer()
+	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(target), 1)
 end
 
 
@@ -966,13 +1040,11 @@ end
 
 function GetPlayers()
 	local players = {}
-
 	for i = 0, 31 do
 		if NetworkIsPlayerActive(i) then
 			table.insert(players, i)
 		end
 	end
-
 	return players
 end
 
@@ -994,18 +1066,16 @@ function GetClosestPlayer()
 			end
 		end
 	end
-	
 	return closestPlayer, closestDistance
 end
 
 RegisterNetEvent("Iphone:rcheckid")
 AddEventHandler("Iphone:rcheckid", function(first_name, last_name, matricule, phone, gender)
 	ShowNotification("L'identité de la personne est : ".. first_name .. " " .. last_name .. " | " .. " Matricule : " .. matricule .. " Téléphone : " .. phone .. "Genre : " ..gender  )		
-
-	end)
+end)
 
 RegisterNetEvent("Iphone:rgetidui")  -- IL FAUT PRENDRE LE LAST ET LE FIRST NAME
-AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, phone, gender)
+AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, phone_number, gender)
 	
 	----------PARTIE UI -----------
 	guiEnabled = not guiEnabled
@@ -1016,17 +1086,15 @@ AddEventHandler("Iphone:rgetidui", function(firstname, lastename, matricule, pho
 			tlastname = lastename,
 			tfirstname = firstname,
 			tid = matricule,
-			tphone = phone,
+			tphone = phone_number,
 			tgender = gender
-			})
-
+		})
 	else
 		SendNUIMessage({
 			type = "disableui"
-			})
-		
+		})
 	end
-	end)
+end)
 
 RegisterNetEvent('service:sendserviceto')
 AddEventHandler('service:sendserviceto',
@@ -1035,59 +1103,43 @@ AddEventHandler('service:sendserviceto',
 	local playerServerId = GetPlayerServerId(PlayerId())
 
 	if playersender == playerServerId then playersenderisreceiver = true else playersenderisreceiver = false end
-
-	Citizen.CreateThread(
-		function()
-				if ActualJob == service_id and not playersenderisreceiver then  --  C'EST ICI QU'IL FAUDRAIT CHECKER S'IL EST EN SERVICE SI LE SERVICEID = POLICIER/MEDIC MAIS BON FLEMME POUR LE MOMENT
-				local controlPressed = false
-
-				while notificationInProgress do
-					Citizen.Wait(0)
+	Citizen.CreateThread(function()
+		if ActualJob == service_id and not playersenderisreceiver then  --  C'EST ICI QU'IL FAUDRAIT CHECKER S'IL EST EN SERVICE SI LE SERVICEID = POLICIER/MEDIC MAIS BON FLEMME POUR LE MOMENT
+			local controlPressed = false
+			while notificationInProgress do
+				Citizen.Wait(0)
+			end
+			local notifReceivedAt = GetGameTimer()
+			if not callAlreadyTaken then
+				ShowNotification('<b>~r~Appel : ~s~ <br><br>~b~quelqu\'un a besoin de votre service~s~: </b>')
+				ShowNotification('<b>Appuyez sur ~g~Y~s~ pour prendre l\'appel</b>')
+			end
+			while not controlPressed and not callAlreadyTaken do
+				Citizen.Wait(0)
+				notificationInProgress = true
+				if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 10000) then -- APPEL REDUIT à 10 SECONDES POUR LES SERVICES
+					callAlreadyTaken = true
+					ShowNotification('L\'appel a été pris par ~b~')
 				end
-
-				local notifReceivedAt = GetGameTimer()
-
-				if not callAlreadyTaken then
-					ShowNotification('<b>~r~Appel : ~s~ <br><br>~b~quelqu\'un a besoin de votre service~s~: </b>')
-					ShowNotification('<b>Appuyez sur ~g~Y~s~ pour prendre l\'appel</b>')
+				if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
+					callAlreadyTaken = true
+					controlPressed = true
+					TriggerServerEvent('service:takecall', service_id ,GetPlayerName(PlayerId()), playerServerId, x, y, z, sourceplayersender)
 				end
-
-				while not controlPressed and not callAlreadyTaken do
-					Citizen.Wait(0)
-					notificationInProgress = true
-
-						if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 10000) then -- APPEL REDUIT à 10 SECONDES POUR LES SERVICES
-							callAlreadyTaken = true
-							ShowNotification('L\'appel a été pris par ~b~')
-						end
-
-						if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
-
-							callAlreadyTaken = true
-							controlPressed = true
-
-							
-							TriggerServerEvent('service:takecall', service_id ,GetPlayerName(PlayerId()), playerServerId, x, y, z, sourceplayersender)
-						end
-
-						if callAlreadyTaken or controlPressed then
-							notificationInProgress = false
-						end
-					end
+				if callAlreadyTaken or controlPressed then
+					notificationInProgress = false
 				end
 			end
-			)
-end
-)
+		end
+	end)
+end)
 
 RegisterNetEvent("service:calltaken")
 AddEventHandler("service:calltaken", function(service_id, playerName, playerID, x, y, z, sourceplayersender)
-	
 	local playerServerId = GetPlayerServerId(PlayerId())
 	callAlreadyTaken = true
-		if playerServerID == sourceplayersender then playersenderisreceiver = true else playersenderisreceiver=false end -- a changer le true
-		
-		if ActualJob == service_id and not playersenderisreceiver then  --ActualJob == service_id
+	if playerServerID == sourceplayersender then playersenderisreceiver = true else playersenderisreceiver=false end -- a changer le true
+	if ActualJob == service_id and not playersenderisreceiver then  --ActualJob == service_id
 		ShowNotification('L\'appel a été pris par ~b~')
 	end
 
@@ -1095,31 +1147,24 @@ AddEventHandler("service:calltaken", function(service_id, playerName, playerID, 
 		TriggerServerEvent('service:ssendnotifservicesencer', sourceplayersender, service_id)
 		StartService(x, y, z, sourceplayersender, service_id)
 	end
-
-	end)
+end)
 
 RegisterNetEvent('service:csendnotifservicesencer')
-AddEventHandler('service:csendnotifservicesencer',
-	function(service_id)
-		if service_id == 2 then servicetxt = "policer"
-			elseif service_id == 3 then servicetxt = "médecin"
-				elseif service_id == 9 then servicetxt = "taxi"
-					elseif service_id == 4 then servicetxt = "dépanneur"
-					end
-					ShowNotification("<b> Un </b>".. servicetxt .." est en train de venir")
-end
-)
+AddEventHandler('service:csendnotifservicesencer', function(service_id)
+	if service_id == 2 then servicetxt = "policer"
+		elseif service_id == 3 then servicetxt = "médecin"
+			elseif service_id == 9 then servicetxt = "taxi"
+				elseif service_id == 4 then servicetxt = "dépanneur"
+	end
+	ShowNotification("<b> Un </b>".. servicetxt .." est en train de venir")
+end)
 
 function StartService(x, y, z, sourceplayersender, service_id)
-
-Blipvariable = AddBlipForCoord(x, y, z)
-N_0x80ead8e2e1d5d52e(Blipvariable)
-SetBlipRoute(Blipvariable, 1)
-
-ShowNotification('L\'appelant vous à transmis ses données GPS')
-
-Citizen.CreateThread(
-	function()
+	Blipvariable = AddBlipForCoord(x, y, z)
+	N_0x80ead8e2e1d5d52e(Blipvariable)
+	SetBlipRoute(Blipvariable, 1)
+	ShowNotification('L\'appelant vous à transmis ses données GPS')
+	Citizen.CreateThread(function()
 		local isNear = false
 		local ped = GetPlayerPed(-1);
 		while not isNear do
@@ -1133,8 +1178,7 @@ Citizen.CreateThread(
 				end
 			end
 		end
-		end)
-
+	end)
 end
 
 function isNearArea(x,y,z) -- Je ne vais pas utiliser le z finalement, à voir
@@ -1154,62 +1198,54 @@ end
 
 
 RegisterNetEvent('Iphone:loaded')
-AddEventHandler('Iphone:loaded', function(phoneNumber, contacts, sms)
+AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
 	
-	PhoneData.phoneNumber = phoneNumber
+	phoneNumber = lphoneNumber
+	contact = lcontacts
+	sms = lsms
+	name = lname
 
-	for i=1, #contacts, 1 do
-		table.insert(PhoneData.contacts, contacts[i])
+	table.insert(PhoneData.contacts, contacts)
+
+	table.insert(PhoneData.sms, sms)
+
+	table.insert(PhoneData.name, name)
+
+	PhoneData.phone_number = phoneNumber
+
+	if contact ~= {} then
+		for i=1, #PhoneData.contacts do
+			table.insert(vehshop.menu["Repertoire"].buttons, {
+							name = PhoneData.contacts[i].first_name.. " " .. PhoneDate.contacts[i].last_name,
+							description = PhoneData.contacts[i].number
+			})
+		end
 	end
 
-	for i=1, #sms, 1 do
-		table.insert(PhoneData.sms, sms[i])
+	if sms ~= {} and sms ~= nil then
+		for i=1, #PhoneData.sms do
+			table.insert(vehshop.menu["Boite de reception"].buttons, {
+							name = PhoneData.sms[i].first_name.. " " .. PhoneDate.sms[i].last_name .. " : " .. PhoneDate.sms[i].date.jour .. "/" .. PhoneData.sms[i].date.mois .. " à " .. PhoneData.sms[i].date.heure .."h"..PhoneData.sms[i].date.minute,
+							description = PhoneData.sms[i].text
+			})
+		end
 	end
 
-
+	PhoneData.name.first_name = name.first_name
+	PhoneData.name.last_name = name.last_name
 	reloadphone = true
 
-	--TriggerEvent("Iphone:loadcs", sms, contacts)
-
-end)
-
-
-RegisterNetEvent('Iphone:loadcs')
-AddEventHandler('Iphone:loadcs', function(sms, contacts)
-
-contacts = { {nom = "IZIO-BG", number = "555-1542"}, {nom = "test", number = "1485"} }
-
-
-	for i=1, #contacts, 1 do
-
-		table.insert(vehshop.menu["Repertoire"].buttons, {
-					name = contacts[i].nom,
-					number = contact[i].number
-
-					})
+	for i=1, #contact do
+		Citizen.Trace(tostring(contacts[i].first_name))
+	end
+	for i=1, #sms do
+		Citizen.Trace(tostring(sms[i].first_name))
 	end
 
--- chargement des contacts
---for k,v in pairs(contacts[1]) do
-	--Citizen.Trace("test")
---end
---for i=2, #contacts+1, 1 do
-	--local table = {name =  contacts[1].name, description = ""}
-	--|table.insert(contacts, {
-				--name   = result2[i].name,
-				--number = result2[i].number,
-				--})|
-
-												  
-
---end
-
+	Citizen.Trace(tostring(lphoneNumber))
 end)
 
 RegisterNetEvent("Iphone:notif")
 AddEventHandler("Iphone:notif", function(text)
-
-ShowNotification(txt)
-
+	ShowNotification(txt)
 end)
-
