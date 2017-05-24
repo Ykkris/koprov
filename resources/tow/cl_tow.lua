@@ -32,45 +32,25 @@ AddEventHandler('pv:tow', function()
 								
 							AttachEntityToEntity(targetVehicle, vehicle, 20, -0.5, -5.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
 							currentlyTowedVehicle = targetVehicle
-							TriggerEvent("pNotify:SendNotification", {
-+							type = "sucess",
-+							timeout = 1000,
-+							layout = "centerLeft",
-+							text = "Vehicule accroché à la dépanneuse!"
-+							})
+							--TriggerEvent("pNotify:SendNotification", {type = "sucess",timeout = 1000,layout = "centerLeft",text = "Vehicule accroché à la dépanneuse!"})
 							SetVehicleDerformationFixed(currentlyTowedVehicle)
 								
 						else
 							ShowNotification("Vous n'êtes pas a coté d'un véhicule.")
 						end
 					else
-						TriggerEvent("pNotify:SendNotification", {
-+							type = "error",
-+							timeout = 1000,
-+							layout = "centerLeft",
-+							text = "Vous ne pouvez pas accrocher votre depanneuse à votre depanneuse"
-+							})
+						--TriggerEvent("pNotify:SendNotification", {type = "error",timeout = 1000,layout = "centerLeft",text = "Vous ne pouvez pas accrocher votre depanneuse à votre depanneuse"})
 					end
 				end
 			else
-				TriggerEvent("pNotify:SendNotification", {
-+							type = "error",
-+							timeout = 1000,
-+							layout = "centerLeft",
-+							text = "il n'y a pas de vehicule a accrocher"
-+							})
+				--TriggerEvent("pNotify:SendNotification", {type = "error",timeout = 1000,layout = "centerLeft",text = "il n'y a pas de vehicule a accrocher"})
 			end
 		else
 			AttachEntityToEntity(currentlyTowedVehicle, vehicle, 20, -0.5, -12.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
 			DetachEntity(currentlyTowedVehicle, true, true)
 			SetVehicleOnGroundProperly(vehicle)
 			currentlyTowedVehicle = nil
-			TriggerEvent("pNotify:SendNotification", {
-+							type = "sucess",
-+							timeout = 1000,
-+							layout = "centerLeft",
-+							text = "Vehicule décrocher de la dépanneuse!"
-+							})
+			--TriggerEvent("pNotify:SendNotification", {type = "sucess",timeout = 1000,layout = "centerLeft",text = "Vehicule décrocher de la dépanneuse!"})
 		end
 	end
 end)
