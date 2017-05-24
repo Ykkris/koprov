@@ -77,7 +77,7 @@ local vehshop = {
 		scale = 0.4,
 		font = 0,
 		["main"] = {
-			title = "Telephone", 
+			title = "Menus", 
 			name = "main",
 			buttons = { 
 				{name = "Telephone", description = ""},
@@ -120,7 +120,21 @@ local vehshop = {
 				{name = "A changer 9", description = ''},
 				{name = "A changer 10", description = ''},
 				{name = "A changer 11", description = ''},
-				{name = "A changer 12", description = ''}
+				{name = "A changer 12", description = ''},
+				{name = "Prout", description = ''},
+				{name = "Prout 1", description = ''},
+				{name = "Prout 2", description = ''},
+				{name = "Prout 3", description = ''},
+				{name = "Prout 4", description =''},
+				{name = "Prout 5", description =''},
+				{name = "Prout 6", description =''},
+				{name = "Prout 7", description =''},
+				{name = "Prout 8", description =''},
+				{name = "Prout 9", description =''},
+				{name = "Prout 10", description =''},
+				{name = "Prout 11", description =''},
+				{name = "Prout 12", description =''},
+				{name = "Prout 13", description =''}
 				--{name = "110", description = ''},  AJOUTER UNE LIGNE POUR CHAQUE EMOTE PLUS VOIR LIGNE ~340 
 			}
 		},
@@ -299,7 +313,7 @@ function drawMenuTitle(txt,x,y)
 	SetTextColour(255, 255, 255, 255)
 	SetTextEntry("STRING")
 	AddTextComponentString(txt)
-	DrawRect(x,y,menu.width,menu.height,0,0,0,150)
+	DrawRect(x,y,menu.width,menu.height,231, 76, 60,150)
 	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)	
 end
 
@@ -484,6 +498,32 @@ function ButtonSelected(button)
 			Emote(19)
 		elseif btn == "A changer 12" then
 			Emote(20)
+		elseif btn == "Prout" then
+			Emote(21)
+		elseif btn == "Prout 2" then
+			Emote(22)
+		elseif btn == "Prout 3" then
+			Emote(23)
+		elseif btn == "Prout 4" then
+			Emote(24)
+		elseif btn == "Prout 5" then
+			Emote(25)
+		elseif btn == "Prout 6" then
+			Emote(26)
+		elseif btn == "Prout 7" then
+			Emote(27)
+		elseif btn == "Prout 8" then
+			Emote(28)
+		elseif btn == "Prout 9" then
+			Emote(29)
+		elseif btn == "Prout 10" then
+			Emote(30)
+		elseif btn == "Prout 11" then
+			Emote(31)
+		elseif btn == "Prout 12" then
+			Emote(32)
+		elseif btn == "Prout 13" then
+			Emote(33)
 		end
 
 	elseif this == "Telephone" then
@@ -702,7 +742,7 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 		PlayEmote("rcmnigel1bnmt_1b", "dance_intro_tyler", 32, 1 ,0, 0)	
 		PlayEmote("rcmnigel1bnmt_1b", "dance_loop_tyler", 32, 1 ,0 , 1)	
 	elseif id == 5 then    
-		PlayEmote("amb@world_human_cheering@male_a", "base", 32, 1, 0, 0) -- applause loud
+		animsAction({ lib = "amb@code_human_cower_stand@female@idle_a", anim = "idle_c" }) -- applause loud
 	elseif id == 6 then    
 		local smoke = true
 		TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_SMOKING", 0, true)
@@ -716,13 +756,11 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 	elseif id == 7 then    
 		PlayEmote("amb@world_human_cheering@male_e", "base", 120, 1, 0, 0) -- applause calm
 	elseif id == 8 then    
-		PlayEmote("amb@world_human_drinking@beer@male@enter", "enter", 32, 1, 0, 0)
-		PlayEmote("amb@world_human_drinking@beer@male@idle_a", "idle_c", 1, 1, 0, 1) -- beer / af
-		PlayEmote("amb@world_human_drinking@beer@male@exit", "exit", 32, 1, 0, 0)
+		animsAction({ lib = "mp_ped_interaction", anim = "kisses_guy_a" })
 	elseif id == 9 then    
 		PlayEmote("amb@world_human_muscle_flex@arms_in_front@base", "base", 32, 1, 0, 0)
 	elseif id == 10 then    
-		PlayEmote("amb@world_human_musician@guitar@male@idle_a", "idle_a", 153, 1, 0, 0)
+		animsActionScenario({ anim = "world_human_cheering" })
 	elseif id == 11 then    
 		PlayEmote("amb@world_human_push_ups@male@enter", "enter", 32, 1, 0, 0)
 		PlayEmote("amb@world_human_push_ups@male@base", "base", 1, 1, 0, 1)
@@ -730,9 +768,7 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 	elseif id == 12 then    
 		PlayEmote("missbigscore1", "idle_base", 153, 1, 0, 0)
 	elseif id == 13 then    
-		PlayEmote("amb@world_human_sunbathe@male@front@enter", "enter", 32, 1, 0, 0)
-		PlayEmote("amb@world_human_sunbathe@male@front@idle_a", "idle_a", 1, 1, 0, 1)
-		PlayEmote("amb@world_human_sunbathe@male@front@exit", "exit", 32, 1, 0, 0)
+		animsAction({ lib = "mp_player_int_upperfinger", anim = "mp_player_int_finger_01_enter" })
 	elseif id == 14 then    
 		PlayEmote("amb@world_human_stand_mobile@male@text@enter", "enter", 32, 1, 0, 0)
 		PlayEmote("amb@world_human_stand_mobile@male@text@base", "base", 1, 1, 0, 1)
@@ -753,8 +789,75 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 	elseif id == 19 then
 		PlayEmote("amb@world_human_yoga@male@base", "base_a", 0, 1, 0, 0)
 	elseif id == 20 then
-		PlayEmote("amb@world_human_bum_standing@depressed@idle_a", "idle_b", 153, 1, 0, 0)
+		animsAction({ lib = "mp_player_int_upperwank", anim = "mp_player_int_wank_01" })
+	elseif id == 21 then
+		animsActionScenario({ anim = "world_human_tourist_mobile" }) -- selfie
+	elseif id == 22 then
+		animsAction({ lib = "amb@world_humanpartying@female@partying_beer@base", anim = "base" }) -- dancer
+	elseif id == 23 then
+		animsActionScenario({ anim = "world_human_musician" })
+	elseif id == 24 then
+		animsAction({ lib = "mp_ped_interaction", anim = "highfive_guy_a" })
+	elseif id == 25 then
+		animsAction({ lib = "gestures@m@standing@casual", anim = "gesture_easy_now"})
+	elseif id == 26 then
+		animsActionScenario({ anim = "WORLD_HUMAN_CLIPBOARD" })
+	elseif id == 27 then
+		animsActionScenario({ anim = "world_human_stand_fishing" })
+	elseif id == 28 then
+		animsAction({ lib = "mp_suicide", anim = "pistol" })
+	elseif id == 29 then
+		animsAction({ lib = "anim@heists@prison_heistunfinished_biztarget_idle", anim = "target_idle" })
+	elseif id == 30 then
+		animsActionScenario({ anim = "WORLD_HUMAN_PICNIC"})
+	elseif id == 31 then
+		animsAction({ lib = "mini@prostitutes@sexlow_veh", anim = "low_car_bj_to_prop_female" })
+	elseif id == 32 then
+		animsAction({ lib = "mp_player_int_uppergrab_crotch", anim = "mp_player_int_grab_crotch" })
+	elseif id == 33 then
+		animsAction({ lib = "mp_arresting", anim = "a_arrest_on_floor"})
 	end
+end
+
+function animsAction(animObj)
+    RequestAnimDict( animObj.lib )
+    while not HasAnimDictLoaded( animObj.lib ) do
+        Citizen.Wait(0)
+    end
+    if HasAnimDictLoaded( animObj.lib ) then
+        TaskPlayAnim( GetPlayerPed(-1), animObj.lib , animObj.anim ,8.0, -8.0, -1, 0, 0, false, false, false )
+    end
+end
+
+function animsActionScenario(animObj)
+    local ped = GetPlayerPed(-1);
+
+    if ped then
+        local pos = GetEntityCoords(ped);
+        local head = GetEntityHeading(ped);
+        --TaskStartScenarioAtPosition(ped, animObj.anim, pos['x'], pos['y'], pos['z'] - 1, head, -1, false, false);
+        TaskStartScenarioInPlace(ped, animObj.anim, 0, false)
+        if IsControlJustPressed(1,188) then
+        end
+
+    end
+end
+
+function animsWithModelsSpawn(object)
+
+    local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
+
+    RequestModel(object.object)
+    while not HasModelLoaded(object.object) do
+        Wait(1)
+    end
+
+    local object = CreateObject(object.object, x, y+2, z, true, true, true)
+    -- local vX, vY, vZ = table.unpack(GetEntityCoords(object,  true))
+
+    -- AttachEntityToEntity(object, PlayerId(), GetPedBoneIndex(PlayerId()), vX,  vY,  vZ, -90.0, 0, -90.0, true, true, true, false, 0, true)
+    PlaceObjectOnGroundProperly(object)
+
 end
 
 function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 et 1, c'est le multipliyer de l'action (0.5 tres rapide et 0.95 quasiment l'annimation normale)
