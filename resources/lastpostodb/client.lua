@@ -78,7 +78,7 @@ AddEventHandler("projectEZ:spawnlaspos", function(PosX, PosY, PosZ)
 			text = "Vous êtes de retour en ville !",
 			type = "info",
 			timeout = 1000,
-			layout = "centerRight"
+			layout = "centerLeft"
 			})
     end
 	Saver()

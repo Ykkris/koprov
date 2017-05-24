@@ -7,9 +7,9 @@ local options = {
     font = 0,
     menu_title = "Location",
     menu_subtitle = "VLoc",
-    color_r = 30,
-    color_g = 144,
-    color_b = 255,
+    color_r = 231,
+    color_g = 70,
+    color_b = 60,
 }
 
 function LocalPed()

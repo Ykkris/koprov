@@ -24,9 +24,9 @@ local options = {
     font = 0,
     menu_title = "Pole Emploi",
     menu_subtitle = "Metiers",
-    color_r = 30,
-    color_g = 144,
-    color_b = 255,
+    color_r = 231,
+    color_g = 76,
+    color_b = 60,
 }
 
 ---------------------------------- FUNCTIONS ----------------------------------
