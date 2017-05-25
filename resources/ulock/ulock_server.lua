@@ -5,12 +5,13 @@ require "resources/essentialmode/lib/MySQL"
 -- MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 
-function IsPlayerGotThisVeh(player, vehPlate) -- vehplate string
+function IsPlayerGotThisVeh(player, vehPlate, user) -- vehplate string
   local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@name' AND vehicle_plate = '@plate'",
                                            {['@name'] = player, ['@plate'] = vehPlate})
   local result = MySQL:getResults(executed_query, {'identifier'})
   local match = false
-  if result[1] then
+  local veh_job_plate = getSessionVar("veh_job")
+  if result[1] or veh_job_plate == vehPlate then
     match = true
   end
   --for i,j in iparis(result) do
@@ -28,6 +29,6 @@ RegisterServerEvent('veh:checkveh')
 AddEventHandler('veh:checkveh', function(veh, plate)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
-  	TriggerClientEvent('veh:rcheckveh', source, veh, IsPlayerGotThisVeh(player, plate) )
+  	TriggerClientEvent('veh:rcheckveh', source, veh, IsPlayerGotThisVeh(player, plate, user) )
   end)
 end)
