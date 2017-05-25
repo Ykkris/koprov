@@ -1,6 +1,6 @@
 server_scripts {
 	'config.lua',
-	'server.lua'
+	'vdk_inventory_server.lua'
 }
 client_script {
 	'vdkinv.lua',

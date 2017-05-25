@@ -10,4 +10,4 @@ files {
 
 client_script "client.lua"
 client_script "gui.lua"
-server_script "server.lua"
+server_script "jobssystem_server.lua"
