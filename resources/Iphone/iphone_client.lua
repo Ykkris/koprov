@@ -592,10 +592,18 @@ function ButtonSelected(button)
 			end
 			local sendSms = tostring(resultat)
 			TriggerServerEvent("Iphone:sendsmsfromone", toNumber,sendSms)
+			vehshop.menu.from = 1
+			vehshop.menu.to = 10
+			vehshop.selectedbutton = 0
+			vehshop.currentmenu = "Repertoire"
 		elseif btn == "Envoyer la position" then
 			local name = PhoneData.name.first_name.. " " ..PhoneData.name.last_name
 			local spos = GetEntityCoords(GetPlayerPed(-1), true)
 			TriggerServerEvent("Iphone:sendposto", toNumber, sname, spos.x, spos.y, spos.z)
+			vehshop.menu.from = 1
+			vehshop.menu.to = 10
+			vehshop.selectedbutton = 0
+			vehshop.currentmenu = "Repertoire"
 		elseif btn == "Supprimer le Contact" then
 			TriggerServerEvent("Iphone:removecontact", toNumber)
 			for i=1 , #PhoneData.contacts, 1 do
@@ -603,6 +611,10 @@ function ButtonSelected(button)
 					table.remove(PhoneData.contacts, i)
 				end
 			end
+			vehshop.menu.from = 1
+			vehshop.menu.to = 10
+			vehshop.selectedbutton = 0
+			vehshop.currentmenu = "Repertoire"
 		end
 	end
 end
