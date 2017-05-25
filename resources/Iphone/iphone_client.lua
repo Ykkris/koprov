@@ -1323,14 +1323,6 @@ AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
 	end
 
 	if sms ~= {} then
-		Citizen.Trace(tostring(vehshop.menu["Boite de reception"].buttons))
-		Citizen.Trace(tostring(PhoneData.sms[1].first_name))
-		Citizen.Trace(tostring(PhoneData.sms[1].last_name))
-		Citizen.Trace(tostring(PhoneData.sms[1].jour))
-		Citizen.Trace(tostring(PhoneData.sms[1].mois))
-		Citizen.Trace(tostring(PhoneData.sms[1].heure))
-		Citizen.Trace(tostring(PhoneData.sms[1].minute))
-		Citizen.Trace(tostring(PhoneData.sms[1].text))
 		for i=1, #PhoneData.sms do
 			table.insert(vehshop.menu["Boite de reception"].buttons, {
 							name = PhoneData.sms[i].first_name.. " " .. PhoneData.sms[i].last_name .. " : " .. PhoneData.sms[i].jour .. "/" .. PhoneData.sms[i].mois .. " à " .. PhoneData.sms[i].heure .."h"..PhoneData.sms[i].minute,
