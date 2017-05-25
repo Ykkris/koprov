@@ -221,8 +221,17 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						mois = actualDate.month
 						})
 					targetUser:setSessionVar("updateSms", updateSms)
+					updateOneSms = {
+						first_name = sname.first_name,
+						last_name = sname.last_name,
+						text = smessage,
+						jour = actualDate.day,
+						heure = actualDate.hour,
+						minute = actualDate.min,
+						mois = actualDate.month
+						})
 					local targetServerId = targetUser.source
-					TriggerClientEvent("Iphone:receivesms", targetServerId, updateSms) ----------------------------------ICI ROMAIN --------------------------------------
+					TriggerClientEvent("Iphone:receivesms", targetServerId, updateOneSms) ----------------------------------ICI ROMAIN --------------------------------------
 
 				else 
 				
