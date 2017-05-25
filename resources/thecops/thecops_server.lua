@@ -346,6 +346,22 @@ AddEventHandler('Iphone:checkplate', function(plate)
 	end
 end)
 
+RegisterServerEvent("police:unregisterservice")
+AddEventHandler("police:unregisterservice", function()
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+		user:setSessionVar("service", 0)						
+	end)
+		
+end)
+
+RegisterServerEvent("police:registerservice")
+AddEventHandler("police:registerservice", function()
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+		user:setSessionVar("service", 1)						
+	end)
+		
+end)
+
 --RegisterServerEvent("Iphone:getPlayers") -- TriggerServerEvent("Iphone:getPlayers")
 --AddEventHandler("Iphone:getPlayers", function()
 --	players = GetPlayers()
