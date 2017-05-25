@@ -88,7 +88,27 @@ function getmodels(identifier)
 	local executed_query = MySQL:executeQuery("SELECT model FROM modelmenu WHERE identifier = '@name'", {['@name'] = identifier})
 	local result = MySQL:getResults(executed_query, {'model'})
     local model = result[1].model
+	ChangeIdGender(model, identifier)
 	return model
+end
+
+function doesItMatch(str)
+  for word in string.gmatch(str, '([^_]+)') do
+      if word == "m" then
+        value = "M"
+        break
+      elseif word == "f" then
+        value = "F"
+        break
+      end
+    
+  end
+  return value
+end
+
+function ChangeIdGenre(model, identifier)
+	local gender = doesItMatch(model)
+	local gender_query = MySQL:executeQuery("UPDATE users SET gender = '@gender' WHERE identifier='@user'",{['@gender']= gender ,['@user']= identifier})
 end
 
 RegisterServerEvent("mm:savempmodel")
