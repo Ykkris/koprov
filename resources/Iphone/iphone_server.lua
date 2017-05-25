@@ -199,19 +199,19 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 			for k,v in pairs(Users) do
 
 				if targetIdentifier == Users[k].identifier then
-					founded = v
-					test = k
-					print(tostring(v))
-					print(tostring(k))
-					print(tostring(k.identifier))
-					print(tostring(v.identifier))
+					founded = k
+					targetUser = Users[k]
+					--print(tostring(v)) -- table -- table
+					--print(tostring(k))  -- 2 -- 6
+					--print(tostring(k.identifier)) -- nil -- nil
+					--print(tostring(v.identifier)) -- steamid -- steamid
 				end
 			end
 		
 				if founded~=0 then
 					local senderIdentifier = Users[source].identifier	
-					local sms = founded:getSessionVar("sms")
-					table.insert(sms, {
+					updateSms = targetUser:getSessionVar("sms")
+					table.insert(updateSms, {
 						first_name = sname.first_name,
 						last_name = sname.last_name,
 						text = smessage,
@@ -220,12 +220,9 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						minute = actualDate.min,
 						mois = actualDate.month
 						})
-					Users[k]:setSessionVar("sms", sms)
-					print(tostring(founded.identifier))
-					print(tostring(founded.source))
-					local targetServerId = founded.source
-					local sender_name = Users[source]:getSessionVar("name")
-					TriggerClientEvent("Iphone:receivesms", targetServerId, sms) ----------------------------------ICI ROMAIN --------------------------------------
+					targetUser:setSessionVar("updateSms", updateSms)
+					local targetServerId = targetUser.source
+					TriggerClientEvent("Iphone:receivesms", targetServerId, updateSms) ----------------------------------ICI ROMAIN --------------------------------------
 
 				else 
 				
@@ -396,7 +393,6 @@ AddEventHandler("Iphone:testload", function()
 
 		local executed_query2 = MySQL:executeQuery("SELECT contacts FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
 		local result2         = MySQL:getResults(executed_query2, {'contacts'})
-		print("test2plus")
 		local decodedResult2 = json.decode(result2[1].contacts)
 
 		for i=1, #decodedResult2, 1 do
@@ -408,9 +404,7 @@ AddEventHandler("Iphone:testload", function()
 				})
 
 		end
-		print("test2plusplus")
 		user:setSessionVar("contacts", contacts)
-		print("test3")
 
 		local sms = {}
 
@@ -419,9 +413,7 @@ AddEventHandler("Iphone:testload", function()
 
 		local decodedResult3 = json.decode(result3[1].sms)
 
-		print("testt3")
 			for i=1, #decodedResult3, 1 do
-				print("On a print un sms")
 				table.insert(sms, {
 					first_name   = decodedResult3[i].first_name,
 					last_name =    decodedResult3[i].last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
@@ -433,9 +425,7 @@ AddEventHandler("Iphone:testload", function()
 					})
 
 			end
-print("testt3plus")
 		user:setSessionVar("sms", sms)
-		print("test4")
 
 		local executed_query4 = MySQL:executeQuery("SELECT first_name, last_name FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
 		local result4         = MySQL:getResults(executed_query4, {'first_name', 'last_name'})
@@ -447,7 +437,6 @@ print("testt3plus")
 			}
 
 		user:setSessionVar("name", name)
-		print("test5")
 
 		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms, name)
 
