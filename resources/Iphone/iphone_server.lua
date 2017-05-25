@@ -179,33 +179,33 @@ end)
 RegisterServerEvent("Iphone:sendsmsfromone")
 AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 
-	print("ok")
+
 	local executed_query = MySQL:executeQuery("SELECT identifier FROM users WHERE phone_number = '@phone_number'", {['@phone_number'] = rnumber})
-	print("okok")
+
 	local result         = MySQL:getResults(executed_query, {'identifier'})
-	print("okokok")
+
 	if result[1]~=nil then
 		targetIdentifier = result[1].identifier
-		print("okokokok")
+
 		founded = 0
-		print("test")
+	
 		local actualTime = os.clock()
 		local actualDate = os.date("*t", actualTime)
 	    actualModifiedDate = {}
-	    print("test1")
+	
 
 		TriggerEvent("es:getPlayers", function(Users)
 			sname = Users[source]:getSessionVar("name")
 			for k,v in pairs(Users) do
 
 				if targetIdentifier == Users[k].identifier then
-					founded = k
+					founded = v
 				end
 			end
-			print("test2")
+		
 				if founded~=0 then
 					local senderIdentifier = Users[source].identifier	
-					local sms = Users[founded]:getSessionVar("sms")
+					local sms = founded:getSessionVar("sms")
 					table.insert(sms, {
 						first_name = sname.first_name,
 						last_name = sname.last_name,
@@ -216,19 +216,19 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						mois = actualDate.month
 						})
 					Users[k]:setSessionVar("sms", sms)
-					local targetServerId = Users[founded].source
+					local targetServerId = founded.source
 					local sender_name = Users[source]:getSessionVar("name")
 					TriggerClientEvent("Iphone:receivesms", targetServerId, sms) ----------------------------------ICI ROMAIN --------------------------------------
 
 				else 
-					print("test3")
+				
 					local executed_query = MySQL:executeQuery("SELECT sms FROM users WHERE phone_number = '@phone_number'", {['@phone_number'] = rnumber})
 					local result         = MySQL:getResults(executed_query, {'sms'})
 					sms = json.decode(result[1].sms)
 					if sms == nil then
 						sms = {}
 					end
-					print("test4")
+					
 					table.insert(sms, {
 						first_name = sname.first_name,
 						last_name = sname.last_name,
@@ -238,20 +238,17 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						minute = actualDate.min,
 						mois = actualDate.month
 						})
-					print("test4")
-					print(tostring(sms[1].first_name))
-					print(tostring(sms[1].last_name))
-					print(tostring(sms[1].text))
-					print(tostring(sms[1].date))
+
+
 					local encodedSms = json.encode(sms)
 					MySQL:executeQuery("UPDATE users SET sms = '@sms' WHERE phone_number = '@phone_number'", {['@sms'] = encodedSms, ['@phone_number'] = rnumber})
-					print("test5")
+
 
 
 				end
 			end)
 		else
-			print("Pas de numero associé")
+			TriggerClientEvent("Iphone:notif", source, "Son téléphone est cassé")
 		end
 
 	--result[1].identifier -- THIS IS THE TARGET PLAYER
