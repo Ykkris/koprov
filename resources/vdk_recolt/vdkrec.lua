@@ -25,7 +25,7 @@ end)
 -- Get the list of all jobs in the database and create the blip associated
 AddEventHandler("cli:getJobs", function(listJobs)
     JOBS = listJobs
-	
+    Citizen.Trace("On est bien dans l'event cli:getJobs")
 	for k, existingBlip in ipairs(BLIPS) do
         RemoveBlip(existingBlip)
     end
@@ -34,6 +34,7 @@ AddEventHandler("cli:getJobs", function(listJobs)
         for _, item in pairs(JOBS) do
 			if(item.job_id == jobId) then
 				if(jobId ~= 6) then
+				Citizen.Trace(tostring(item.fx.. " " ..item.fy .. " " .. item.fz))
 				setBlip(item.fx, item.fy, item.fz, 17)
 				setBlip(item.tx, item.ty, item.tz, 18)
 				setBlip(item.sx, item.sy, item.sz, 19)
