@@ -56,6 +56,9 @@ function ButtonSelectedVest(button)
 			TriggerEvent("pNotify:SendNotification", { text = "Tu <b style='color:red'>n'es plus </b> en <b style='color:red'>service</b>", type = "info", timeout = 2500, layout = "centerLeft",})	
 			elseif btn == "Gilet pare balle" then
 			Citizen.CreateThread(function()
+				if (GetPedDrawableVariation(GetPlayerPed(-1), 9)) == 4 or 6 then
+				ShowNotification("Test:")
+				end
 				if(GetEntityModel(GetPlayerPed(-1)) == hashSkin) then
 					SetPedComponentVariation(GetPlayerPed(-1), 9, 4, 1, 2)  --Bulletproof jacket
 				else
