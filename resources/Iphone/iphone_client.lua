@@ -661,7 +661,7 @@ end)
 
 RegisterNetEvent("Iphone:receivesms")
 AddEventHandler("Iphone:receivesms", function(ssms)
-	snameplusdate = ssms.first_name .. " " .. ssms.last_name .. " : ".. ssms.date.jour .. "/".. ssms.date.mois .. " à " .. ssms.date.heure .. "h" .. ssms.date.minute
+	snameplusdate = ssms.first_name .. " " .. ssms.last_name .. " : ".. ssms.jour .. "/".. ssms.mois .. " à " .. ssms.heure .. "h" .. ssms.minute
 	sname = ssms.first_name .. " " .. ssms.last_name
 	if #PhoneData.sms >= taillemaxsms then
 		ShowNotification("Vous venez de recevoir un sms mais la taille est dépassé. Veuillez faire le tri")
