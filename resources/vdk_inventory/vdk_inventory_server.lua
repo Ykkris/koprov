@@ -131,7 +131,7 @@ AddEventHandler("player:giveItem", function(item, name, qty, target)
     if (total + qty <= 64) then
         TriggerClientEvent("player:looseItem", source, item, qty)
         TriggerClientEvent("player:receiveItem", target, item, qty)
-        TriggerClientEvent("pNotify:SendNotification", -1, {
+        TriggerClientEvent("pNotify:SendNotification", target, {
                 text = "Vous venez de recevoir <b style='color:green'>" .. qty .. "</b> <b style='color:green'>".. name.."</b",
                 type = "info",
                 timeout = 2500,
