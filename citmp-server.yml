@@ -7,14 +7,15 @@ AutoStartResources:
     - essentialmode
     - es_admin
     - es_freeroam
-    - esx_skin
+    - amazingskin
+    # - esx_skin
     - chat
     - spawnmanager
     - fivem-map-skater
     - baseevents
     - rconlog
     - hardcap # prevents the game from breaking
-    - skinchanger
+    # - skinchanger
     - kmh
     - emergency
     - loadingscreen
@@ -51,8 +52,7 @@ AutoStartResources:
     - Iphone
     - afkkick
     - compass
-    - SelCloth
-    - pizzajob
+    # - SelCloth
     - interiors
     - mymairie
     - rent
@@ -60,7 +60,8 @@ AutoStartResources:
     - gb_foodshops
     - pNotify
     - foodhud
-    
+    - commands
+
 # do change
 RconPassword: koprobestv
 

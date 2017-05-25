@@ -260,6 +260,13 @@
   .noty_theme__relax.noty_type__success .noty_buttons {
     border-color: #50C24E; }
 
+.noty_theme__relax.noty_type__me {
+  background-color: #BCF5BC;
+  border: 1px solid #7cdd77;
+  color: darkgreen; }
+  .noty_theme__relax.noty_type__me .noty_buttons {
+    border-color: #50C24E; }
+
 .noty_theme__metroui.noty_bar {
   margin: 4px 0;
   overflow: hidden;
