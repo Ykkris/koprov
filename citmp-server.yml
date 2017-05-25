@@ -7,7 +7,6 @@ AutoStartResources:
     - essentialmode
     - es_admin
     - es_freeroam
-    - amazingskin
     # - esx_skin
     - chat
     - spawnmanager
@@ -22,6 +21,7 @@ AutoStartResources:
     - assets
     - garages
     - banking
+    - amazingskin
     - vdk_inventory
     - vdk_recolt
     - paycheck
