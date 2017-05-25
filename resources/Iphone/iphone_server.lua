@@ -229,7 +229,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						heure = actualDate.hour,
 						minute = actualDate.min,
 						mois = actualDate.month
-						})
+						}
 					local targetServerId = targetUser.source
 					TriggerClientEvent("Iphone:receivesms", targetServerId, updateOneSms) ----------------------------------ICI ROMAIN --------------------------------------
 
