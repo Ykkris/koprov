@@ -21,3 +21,10 @@ AddEventHandler('pecheur:s_bateaup', function()
     end
   end)
 end)
+
+RegisterServerEvent("garage:registerjobplate")
+AddEventHandler("garage:registerjobplate", function(plate)
+    TriggerEvent("es:getPlayerFromId", source, function(user)
+        user:setSessionVar("veh_job", plate)
+    end)
+end)
