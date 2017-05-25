@@ -121,7 +121,9 @@ end)
 RegisterServerEvent('police:checkService')
 AddEventHandler('police:checkService', function()
 	local CanHaveFreeFuel = false
-	if(inService[source]) then
+	if(not inServiceCops[source]) then
+		CanHaveFreeFuel = false
+	else
 		CanHaveFreeFuel = true
 	end
 end) 
