@@ -263,10 +263,12 @@ function GetService()
 	end
 
 	if isInService then
+		TriggerServerEvent("police:unregisterservice")
 		SendNotification(txt[lang]['stopService'])
 		TriggerServerEvent("mm:spawn")
 		TriggerServerEvent('es_em:sv_setService', 0)
 	else
+		TriggerServerEvent("police:registerservice")
 		SendNotification(txt[lang]['startService'])
 		TriggerServerEvent('es_em:sv_setService', 1)
 	end
