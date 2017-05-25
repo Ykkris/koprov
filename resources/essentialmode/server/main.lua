@@ -62,20 +62,25 @@ local justJoined = {}
 
 RegisterServerEvent('es:firstJoinProper')
 AddEventHandler('es:firstJoinProper', function()
+	print("test1")
 	local identifiers = GetPlayerIdentifiers(source)
 	for i = 1, #identifiers do
+		print("test2")
 		if(Users[source] == nil)then
 			debugMsg("Essential | Loading user: " .. GetPlayerName(source))
-
+			print("test3")
 			local identifier = identifiers[i]
 			registerUser(identifier, source)
+				print("test4")
 
 			TriggerEvent('es:initialized', source)
 			justJoined[source] = true
+				print("test5")
 
 			if(settings.defaultSettings.pvpEnabled)then
 				TriggerClientEvent("es:enablePvp", source)
 			end
+				print("test6")
 		end
 	end
 end)
