@@ -10,7 +10,7 @@ function IsPlayerGotThisVeh(player, vehPlate, veh_job_plate) -- vehplate string
                                            {['@name'] = player, ['@plate'] = vehPlate})
   local result = MySQL:getResults(executed_query, {'identifier'})
   local match = false
-  if result[1] or veh_job_plate_with_space == vehPlate then
+  if result[1] or veh_job_plate == vehPlate then
     match = true
   end
   --for i,j in iparis(result) do
