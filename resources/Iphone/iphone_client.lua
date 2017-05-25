@@ -681,7 +681,8 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 		ShowNotification("Vous venez de recevoir un sms mais la taille est dépassé. Veuillez faire le tri")
 		table.remove(PhoneData.sms, 1)
 	else
-		ShowNotification("Vous venez de recevoir un message de : " ..sname)
+		-- ShowNotification("Vous venez de recevoir un message de : " ..sname)
+		TriggerEvent("pNotify:SendNotification", { text = "Nouveau message de : <b style='color:green'>"..sname.."</b>.", type = "sms", timeout = 5000, layout = "bottomCenter",})
 	end
 	table.insert(vehshop.menu["Boite de reception"].buttons, {
 						name = snameplusdate,

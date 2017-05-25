@@ -72,6 +72,13 @@
     border-radius: 5px;
 }
 
+.noty_theme__gta.noty_type__sms {
+    background-color: rgb(40, 40, 40);
+    border-bottom: 2px solid #A0B55C;
+    color: #fff;
+    border-radius: 5px;
+}
+
 .gta_effects_open {
     opacity: 0;
     -webkit-transform: translate(50%);
