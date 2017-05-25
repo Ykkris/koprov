@@ -342,11 +342,11 @@ Citizen.CreateThread(function()
 			end
 		end ----------------------------------------------------------------------------------------------------
 
-		actual_time = GetGameTimer() ------------------------- Partie SAVE SMS ------------ 
-		if (actual_time - last_time) >= 600000 then
-			last_time = GetGameTimer()
-			TriggerServerEvent("Iphone:savesms", PhoneData.sms)
-		end --------------------------------------------------------------------------------
+		if IsControlPressed(1, Keys["E"]) then
+			loading = true 
+			TriggerServerEvent("Iphone:testload")
+				Citizen.Wait(100)
+		end
 
 		if vehshop.opened then
 			local ped = LocalPed()
@@ -359,12 +359,6 @@ Citizen.CreateThread(function()
 			else
 				buttoncount = tablelength(menu.buttons)
 			end
-			Citizen.Trace(tostring(buttoncount))
-			Citizen.Trace(tostring(vehshop.selectedbutton))
-			Citizen.Trace(tostring(vehshop.menu.x))
-			Citizen.Trace(tostring(vehshop.menu.width))
-			Citizen.Trace(tostring(vehshop.menu.y))
-			Citizen.Trace(tostring(vehshop.title))	
 			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
 			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
 			drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
@@ -535,6 +529,13 @@ function ButtonSelected(button)
 			--OpenMenu("Services")
 		end
 
+	elseif this == "Boite de reception" then
+			text = button.description
+			vehshop.menu.from = 1
+			vehshop.menu.to = 10
+			vehshop.selectedbutton = 0
+			ShowNotification(text)
+
 	elseif this == "Police" then
 		if btn == "Menotter" then
 			Menotter()
@@ -598,8 +599,8 @@ function ButtonSelected(button)
 		elseif btn == "Supprimer le Contact" then
 			TriggerServerEvent("Iphone:removecontact", toNumber)
 			for i=1 , #PhoneData.contacts, 1 do
-				if PhoneData.contact[i].number == toNumber then
-					table.remove(PhoneData.contact, i)
+				if PhoneData.contacts[i].number == toNumber then
+					table.remove(PhoneData.contacts, i)
 				end
 			end
 		end
@@ -942,9 +943,8 @@ function AddContact()
   			table.insert(result, token)
 		end
    		table.insert(vehshop.menu["Repertoire"].buttons, {
-   			first_name = tostring(result[1]),
-			last_name = tostring(result[2]),
-			number = tostring(resultat2)
+   			name = tostring(result[1]).. " " .. tostring(result[2]),
+			description = tostring(resultat2)
 		})
    			-----------------------
    		table.insert(PhoneData.contacts, {
@@ -1302,50 +1302,45 @@ end
 
 RegisterNetEvent('Iphone:loaded')
 AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
-	
-	phoneNumber = lphoneNumber
-	contact = lcontacts
-	sms = lsms
-	name = lname
 
-	table.insert(PhoneData.contacts, contacts)
+	PhoneData.contacts = lcontacts
 
-	table.insert(PhoneData.sms, sms)
+	PhoneData.sms = lsms
 
-	table.insert(PhoneData.name, name)
+	PhoneData.name.first_name = lname.first_name
+	PhoneData.name.last_name = lname.last_name
 
-	PhoneData.phone_number = phoneNumber
+	PhoneData.phone_number = lphoneNumber
 
 	if contact ~= {} then
 		for i=1, #PhoneData.contacts do
 			table.insert(vehshop.menu["Repertoire"].buttons, {
-							name = PhoneData.contacts[i].first_name.. " " .. PhoneDate.contacts[i].last_name,
+							name = PhoneData.contacts[i].first_name.. " " .. PhoneData.contacts[i].last_name,
 							description = PhoneData.contacts[i].number
 			})
 		end
+
 	end
 
-	if sms ~= {} and sms ~= nil then
+	if sms ~= {} then
+		Citizen.Trace(tostring(vehshop.menu["Boite de reception"].buttons))
+		Citizen.Trace(tostring(PhoneData.sms[1].first_name))
+		Citizen.Trace(tostring(PhoneData.sms[1].last_name))
+		Citizen.Trace(tostring(PhoneData.sms[1].jour))
+		Citizen.Trace(tostring(PhoneData.sms[1].mois))
+		Citizen.Trace(tostring(PhoneData.sms[1].heure))
+		Citizen.Trace(tostring(PhoneData.sms[1].minute))
+		Citizen.Trace(tostring(PhoneData.sms[1].text))
 		for i=1, #PhoneData.sms do
 			table.insert(vehshop.menu["Boite de reception"].buttons, {
-							name = PhoneData.sms[i].first_name.. " " .. PhoneDate.sms[i].last_name .. " : " .. PhoneDate.sms[i].date.jour .. "/" .. PhoneData.sms[i].date.mois .. " à " .. PhoneData.sms[i].date.heure .."h"..PhoneData.sms[i].date.minute,
+							name = PhoneData.sms[i].first_name.. " " .. PhoneData.sms[i].last_name .. " : " .. PhoneData.sms[i].jour .. "/" .. PhoneData.sms[i].mois .. " à " .. PhoneData.sms[i].heure .."h"..PhoneData.sms[i].minute,
 							description = PhoneData.sms[i].text
 			})
 		end
 	end
 
-	PhoneData.name.first_name = name.first_name
-	PhoneData.name.last_name = name.last_name
 	reloadphone = true
 
-	for i=1, #contact do
-		Citizen.Trace(tostring(contacts[i].first_name))
-	end
-	for i=1, #sms do
-		Citizen.Trace(tostring(sms[i].first_name))
-	end
-
-	Citizen.Trace(tostring(lphoneNumber))
 end)
 
 RegisterNetEvent("Iphone:notif")
