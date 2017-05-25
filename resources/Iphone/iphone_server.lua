@@ -44,8 +44,6 @@ AddEventHandler('es:playerLoaded', function(source)
 
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 
-		print("test1")
-
 		local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
 		local result         = MySQL:getResults(executed_query, {'phone_number'})
 		local phoneNumber    = result[1].phone_number
@@ -56,13 +54,10 @@ AddEventHandler('es:playerLoaded', function(source)
 		end
 
 		user:setSessionVar("phone_number", phoneNumber) 
-		print("test2")
-
 		local contacts = {}
 
 		local executed_query2 = MySQL:executeQuery("SELECT contacts FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
 		local result2         = MySQL:getResults(executed_query2, {'contacts'})
-		print("test2plus")
 		local decodedResult2 = json.decode(result2[1].contacts)
 
 		for i=1, #decodedResult2, 1 do
@@ -74,10 +69,7 @@ AddEventHandler('es:playerLoaded', function(source)
 				})
 
 		end
-		print("test2plusplus")
 		user:setSessionVar("contacts", contacts)
-		print("test3")
-
 		local sms = {}
 
 		local executed_query3 = MySQL:executeQuery("SELECT sms FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
@@ -85,9 +77,7 @@ AddEventHandler('es:playerLoaded', function(source)
 
 		local decodedResult3 = json.decode(result3[1].sms)
 
-		print("testt3")
-			for i=1, #decodedResult3, 1 do
-				print("On a print un sms")
+		for i=1, #decodedResult3, 1 do
 				table.insert(sms, {
 					first_name   = decodedResult3[i].first_name,
 					last_name =    decodedResult3[i].last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
@@ -99,9 +89,7 @@ AddEventHandler('es:playerLoaded', function(source)
 					})
 
 			end
-print("testt3plus")
 		user:setSessionVar("sms", sms)
-		print("test4")
 
 		local executed_query4 = MySQL:executeQuery("SELECT first_name, last_name FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
 		local result4         = MySQL:getResults(executed_query4, {'first_name', 'last_name'})
@@ -113,8 +101,6 @@ print("testt3plus")
 			}
 
 		user:setSessionVar("name", name)
-		print("test5")
-
 		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms, name)
 
 		end)
@@ -123,7 +109,6 @@ print("testt3plus")
 RegisterServerEvent("Iphone:addcontact")
 AddEventHandler("Iphone:addcontact",function(pfirst_name, plast_name, pnumber)
 
-	print(tostring(pfirst_name).. " " .. tostring(plast_name) .. " " .. tostring(pnumber))
 		TriggerEvent("es:getPlayerFromId", source, function(user)
 			userContacts = user:getSessionVar("contacts")
 			table.insert(userContacts, {
@@ -351,7 +336,6 @@ AddEventHandler('service:takecall', function(service_id , playerName , playerID,
 
 	TriggerEvent("es:getPlayers", function(players)
 		for i,v in pairs(players) do
-			RconPrint("test")
 			TriggerClientEvent('service:calltaken', i, service_id, playerName, playerID, x, y, z, sourcePlayerInComa)
 		end
 		end)
@@ -378,76 +362,4 @@ end
 		number = sms[2][i]
 		text = sms[3][i]
 		end]]
--- TEST IZIO
 
-RegisterServerEvent("Iphone:testload")
-AddEventHandler("Iphone:testload", function()
-	TriggerEvent('es:getPlayerFromId', source, function(user)
-
-		print("test1")
-
-		local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result         = MySQL:getResults(executed_query, {'phone_number'})
-		local phoneNumber    = result[1].phone_number
-
-		if phoneNumber == nil then
-			phoneNumber = GenerateUniquePhoneNumber()
-			MySQL:executeQuery("UPDATE users SET phone_number = '@phone_number' WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@phone_number'] = phoneNumber})
-		end
-
-		user:setSessionVar("phone_number", phoneNumber) 
-		print("test2")
-
-		local contacts = {}
-
-		local executed_query2 = MySQL:executeQuery("SELECT contacts FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result2         = MySQL:getResults(executed_query2, {'contacts'})
-		local decodedResult2 = json.decode(result2[1].contacts)
-
-		for i=1, #decodedResult2, 1 do
-			
-			table.insert(contacts, {
-				first_name   = decodedResult2[i].first_name,
-				last_name   = decodedResult2[i].last_name,
-				number = decodedResult2[i].number
-				})
-
-		end
-		user:setSessionVar("contacts", contacts)
-
-		local sms = {}
-
-		local executed_query3 = MySQL:executeQuery("SELECT sms FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result3         = MySQL:getResults(executed_query3, {'sms'})
-
-		local decodedResult3 = json.decode(result3[1].sms)
-
-			for i=1, #decodedResult3, 1 do
-				table.insert(sms, {
-					first_name   = decodedResult3[i].first_name,
-					last_name =    decodedResult3[i].last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
-					text   =       decodedResult3[i].text,
-					jour = decodedResult3[i].jour,
-					heure = decodedResult3[i].heure,
-					minute = decodedResult3[i].minute,
-					mois = decodedResult3[i].mois
-					})
-
-			end
-		user:setSessionVar("sms", sms)
-
-		local executed_query4 = MySQL:executeQuery("SELECT first_name, last_name FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result4         = MySQL:getResults(executed_query4, {'first_name', 'last_name'})
-
-
-		local name = {
-			first_name = result4[1].first_name,
-			last_name = result4[1].last_name
-			}
-
-		user:setSessionVar("name", name)
-
-		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms, name)
-
-		end)
-	end) 
