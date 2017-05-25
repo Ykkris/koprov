@@ -671,13 +671,16 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 	end
 	table.insert(vehshop.menu["Boite de reception"].buttons, {
 						name = snameplusdate,
-						description = smessage
+						description = ssms.text
 					})
 	local receiveSms = {
 		first_name = ssms.first_name,
 		last_name = ssms.last_name,
 		text = ssms.text,
-		date = ssms.date
+		jour = ssms.jour,
+		heure = ssms.heure,
+		minute = ssms.minute,
+		mois = ssms.mois
 	}
 
 	table.insert(PhoneData.sms, receivesms)
