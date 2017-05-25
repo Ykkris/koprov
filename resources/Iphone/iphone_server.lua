@@ -189,7 +189,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 
 		found = 0
 	
-		local actualTime = os.clock()
+		local actualTime = os.time()
 		local actualDate = os.date("*t", actualTime)
 	    actualModifiedDate = {}
 	
