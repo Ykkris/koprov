@@ -186,7 +186,7 @@ local vehshop = {
 			buttons = {
 				{name = "Envoyer un Sms", description = ""}, --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
 				{name = "Envoyer la position", description = ""},
-				{name = "Supprimer le Contact", description = ""}
+				-- waiting for izio :) {name = "Supprimer le Contact", description = ""}
 			}
 		},
 	}
@@ -608,10 +608,14 @@ function ButtonSelected(button)
 			vehshop.selectedbutton = 0
 			vehshop.currentmenu = "Repertoire"
 		elseif btn == "Supprimer le Contact" then
+			Citizen.Trace('delete')
 			TriggerServerEvent("Iphone:removecontact", toNumber)
 			for i=1 , #PhoneData.contacts, 1 do
 				if PhoneData.contacts[i].number == toNumber then
+					Citizen.Trace(#PhoneData.contacts)
+					Citizen.Trace(i)
 					table.remove(PhoneData.contacts, i)
+					Citizen.Trace(#PhoneData.contacts)
 				end
 			end
 			vehshop.menu.from = 1
@@ -730,10 +734,13 @@ function Back()
 	backlock = true
 	if vehshop.currentmenu == "main" then
 		CloseCreator()
-	elseif vehshop.currentmenu ~= "main" then
-		OpenMenu(vehshop.lastmenu)
+	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" then
+		vehshop.currentmenu = "main"
+	elseif vehshop.currentmenu == "Repertoire" then
+		vehshop.currentmenu = "Telephone"
 	else
-		OpenMenu(vehshop.lastmenu)
+		--OpenMenu(vehshop.lastmenu)
+		vehshop.currentmenu = vehshop.lastmenu
 	end
 end
 

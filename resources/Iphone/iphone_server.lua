@@ -154,15 +154,15 @@ end)
 
 RegisterServerEvent("Iphone:removecontact")
 AddEventHandler("Iphone:removecontact", function(toNumber)
-	TriggerEvent("es:getPlayerFormId", source, function(user)
-		foundedContacts = false
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+		foundContacts = false
 		localContacts = user:getSessionVar("contacts")
 		for i=1, #localContacts, 1 do
 			if localContacts[i].number == toNumber then
 				table.remove(localContacts, i)
-				foundedContacts = true
+				foundContacts = true
 			end
-			if foundedContacts then
+			if foundContacts then
 				break
 			end
 		end
@@ -187,7 +187,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 	if result[1]~=nil then
 		targetIdentifier = result[1].identifier
 
-		founded = 0
+		found = 0
 	
 		local actualTime = os.clock()
 		local actualDate = os.date("*t", actualTime)
@@ -199,7 +199,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 			for k,v in pairs(Users) do
 
 				if targetIdentifier == Users[k].identifier then
-					founded = k
+					found = k
 					targetUser = Users[k]
 					--print(tostring(v)) -- table -- table
 					--print(tostring(k))  -- 2 -- 6
@@ -208,7 +208,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 				end
 			end
 		
-				if founded~=0 then
+				if found~=0 then
 					local senderIdentifier = Users[source].identifier	
 					updateSms = targetUser:getSessionVar("sms")
 					table.insert(updateSms, {
