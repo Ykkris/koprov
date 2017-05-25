@@ -10,8 +10,8 @@ function IsPlayerGotThisVeh(player, vehPlate, veh_job_plate) -- vehplate string
                                            {['@name'] = player, ['@plate'] = vehPlate})
   local result = MySQL:getResults(executed_query, {'identifier'})
   local match = false
-	print(tostring(veh_job_plate))
-	print(tostring(vehPlate))
+	print(tostring("|"..veh_job_plate.."|"))
+	print(tostring("|"..vehPlate.."|"))
   if result[1] or veh_job_plate == vehPlate then
     match = true
   end
