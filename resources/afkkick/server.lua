@@ -5,7 +5,10 @@ whitelist = {
 	"steam:110000102f38cb7",
 	"steam:110000101889e5e",
 	"steam:110000107102B2C",
-	"steam:11000010599af76"
+	"steam:11000010599af76",
+	"steam:110000107102b2c",
+	"steam:110000103377b34",
+	"steam:1100001034ab108",
 	}
 
 RegisterServerEvent("kickForBeingAnAFKDouchebag")

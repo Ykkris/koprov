@@ -168,9 +168,13 @@ function ShopMenu()
 		-- IF YOU DON'T HAVE VDK_INVENTORY
 		Menu.addButton("Bouteille d'eau","buymenu","Bouteille d'eau")
 		Menu.addButton("Sandwich","buymenu","Sandwich")
+		Menu.addButton("Tacos", "buymenu","Tacos")
+		Menu.addButton("Poutine", "buymenu","Poutine")
 	else
-		Menu.addButton("Bouteille d'eau","buymenu",{20, 1, 200})
-		Menu.addButton("Sandwich","buymenu",{21, 1, 123})
+		Menu.addButton("Bouteille d'eau","buymenu",{20, 1, 10})
+		Menu.addButton("Sandwich","buymenu",{21, 1, 15})
+		Menu.addButton("Tacos","buymenu",{22, 1, 20})
+		Menu.addButton("Poutine","buymenu",{23, 1, 25})
 --		Menu.addButton("FoodName","buymenu",{ itemId, qty, price}) -- itemId = id de l'item vdk (Table : items), qty = quantité et price = prix
 	end
 end
