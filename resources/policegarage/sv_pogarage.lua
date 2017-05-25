@@ -25,9 +25,9 @@ AddEventHandler('policeg:s_classic', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_classic', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedpol', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedpol', source)
     end
   end)
 end)
@@ -39,9 +39,9 @@ AddEventHandler('policeg:s_truck', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_truck', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedpol', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedpol', source)
     end
   end)
 end)
@@ -53,9 +53,9 @@ AddEventHandler('policeg:s_moto', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_moto', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedpol', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedpol', source)
     end
   end)
 end)
@@ -67,9 +67,9 @@ AddEventHandler('policeg:s_fila', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_fila', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedpol', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedpol', source)
     end
   end)
 end)
@@ -81,9 +81,9 @@ AddEventHandler('policeg:s_helico', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_helico', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedpol', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedpol', source)
     end
   end)
 end)
@@ -95,9 +95,9 @@ AddEventHandler('policeg:s_stanier', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_stanier', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedpol', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedpol', source)
     end
   end)
 end)
@@ -109,9 +109,9 @@ AddEventHandler('policeg:s_buffalo', function()
     -- NAME OF YOUR JOB
     if namejob == "Police" then
       TriggerClientEvent('policeg:c_buffalo', source)
-      TriggerClientEvent('worked', source)
+      TriggerClientEvent('workedpol', source)
     else
-      TriggerClientEvent('notworked', source)
+      TriggerClientEvent('notworkedpol', source)
     end
   end)
 end)

@@ -31,18 +31,18 @@ function drawTxt(text, font, centre, x, y, scale, r, g, b, a)
 	DrawText(x, y)
 end
 
-RegisterNetEvent("notworked")
-AddEventHandler("notworked", function()
+RegisterNetEvent("notworkedpol")
+AddEventHandler("notworkedpol", function()
 
 
 	--SetNotificationTextEntry("STRING");
 	--DrawNotification(false, true);
-	TriggerEvent("pNotify:SendNotification", { text = "Ce véhicule n'est pas dans ton garage", type = "warning", timeout = 10000, layout = "centerLeft",})
+	TriggerEvent("pNotify:SendNotification", { text = "Vous n'êtes pas policier.", type = "warning", timeout = 10000, layout = "centerLeft",})
 
 end)
 
-RegisterNetEvent("worked")
-AddEventHandler("worked", function()
+RegisterNetEvent("workedpol")
+AddEventHandler("workedpol", function()
 
 
 	--SetNotificationTextEntry("STRING");
