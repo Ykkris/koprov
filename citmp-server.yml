@@ -42,7 +42,6 @@ AutoStartResources:
     - SelVeh
     - thecops
     - cotcot
-    - hitime
     - frfuel
     - bucherongarage
     - taxicar
