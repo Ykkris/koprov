@@ -123,7 +123,7 @@ end
 
 function removeUniforme()
 	Citizen.CreateThread(function()
-		TriggerServerEvent("skin_customization:SpawnPlayer")
+		TriggerServerEvent("mm:spawn")
 		RemoveAllPedWeapons(GetPlayerPed(-1))
 	end)
 end
