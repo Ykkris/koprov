@@ -168,8 +168,8 @@ end
 
 local backlock = false
 Citizen.CreateThread(function()
-	local x = -1037.934
-	local y = -2737.966
+	local x = -1041.089
+	local y = -2735.911
 	local z = 20.169
 
 	while true do

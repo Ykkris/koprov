@@ -39,7 +39,7 @@ AddEventHandler('police:noLongerCop', function()
 	
 	local playerPed = GetPlayerPed(-1)
 						
-	TriggerServerEvent("skin_customization:SpawnPlayer")
+	TriggerServerEvent("mm:spawn")
 	RemoveAllPedWeapons(playerPed)
 	
 	if(existingVeh ~= nil) then

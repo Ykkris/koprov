@@ -36,7 +36,6 @@ AddEventHandler("notworked", function()
 
 
 	--SetNotificationTextEntry("STRING");
-	--AddTextComponentString("~r~Impossible de faire spawn !" );
 	--DrawNotification(false, true);
 	TriggerEvent("pNotify:SendNotification", { text = "Ce véhicule n'est pas dans ton garage", type = "warning", timeout = 10000, layout = "centerLeft",})
 

@@ -70,7 +70,7 @@ end)
 
 RegisterNetEvent("mm:firstspawn")
 AddEventHandler("mm:firstspawn",function()
-    Notify("~g~Change your character at any clothing store!")
+    TriggerEvent("pNotify:SendNotification", {text = "<b syle='color:red'>Vous pouvez modifier votre personnage à côté de la mairie !</b>", type = "warning", timeout = 10000, layout = "bottomCenter",})
 end)
 
 RegisterNetEvent("mm:changeeverything_spawn") --Sets mask and texture when spawned
@@ -2991,22 +2991,24 @@ end
 --Press E to open/close menu in the red marker
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local emplacement = {
-    {name="Clothing", id=73, x=88.291, y=-1391.929, z=29.200},
-    {name="Clothing", id=73, x=-718.985, y=-158.059, z=36.996},
-    {name="Clothing", id=73, x=-151.204, y=-306.837, z=38.724},
-    {name="Clothing", id=73, x=414.646, y=-807.452, z=29.338},
-    {name="Clothing", id=73, x=-815.193, y=-1083.333, z=11.022},
-    {name="Clothing", id=73, x=-1208.098, y=-782.020, z=17.163},
-    {name="Clothing", id=73, x=-1457.954, y=-229.426, z=49.185},
-    {name="Clothing", id=73, x=-2.777, y=6518.491, z=31.533},
-    {name="Clothing", id=73, x=1681.586, y=4820.133, z=42.046},
-    {name="Clothing", id=73, x=130.216, y=-202.940, z=54.505},
-    {name="Clothing", id=73, x=618.701, y=2740.564, z=41.905},
-    {name="Clothing", id=73, x=1199.169, y=2694.895, z=37.866},
-    {name="Clothing", id=73, x=-3164.172, y=1063.927, z=20.674},
-    {name="Clothing", id=73, x=-1091.373, y=2702.356, z=19.422},
+    {name="Clothing", id=73, x=74.291, y=-1396.929, z=29.200},
+    {name="Clothing", id=73, x=-709.985, y=-153.059, z=36.996},
+    {name="Clothing", id=73, x=-163.204, y=-303.837, z=38.724},
+    {name="Clothing", id=73, x=426.646, y=-803.452, z=29.338},
+    {name="Clothing", id=73, x=-824.193, y=-1074.333, z=11.022},
+    {name="Clothing", id=73, x=-1192.098, y=-767.020, z=17.163},
+    {name="Clothing", id=73, x=-1450.63, y=-237.126, z=49.185},
+    {name="Clothing", id=73, x=-7.777, y=6514.491, z=31.533},
+    {name="Clothing", id=73, x=1694.586, y=4825.133, z=42.046},
+    {name="Clothing", id=73, x=125.335, y=-225.199, z=54.505},
+    {name="Clothing", id=73, x=1196.169, y=2710.895, z=37.866},
+    {name="Clothing", id=73, x=-3170.172, y=1043.927, z=20.674},
+    {name="Clothing", id=73, x=-1103.373, y=2708.356, z=19.422},
+    {name="Clothing", id=73, x=-1034.118, y=-2739.378, z=20.169},
 }
+
 incircle = false
+
 Citizen.CreateThread(function()
     for _, item in pairs(emplacement) do
       item.blip = AddBlipForCoord(item.x, item.y, item.z)
@@ -3022,10 +3024,10 @@ Citizen.CreateThread(function()
         local pos = GetEntityCoords(GetPlayerPed(-1), true)
         for k,v in ipairs(emplacement) do
             if(Vdist(pos.x, pos.y, pos.z, v.x, v.y, v.z) < 15.0)then
-                DrawMarker(1, v.x, v.y, v.z - 1, 0, 0, 0, 0, 0, 0, 1.0001, 1.0001, 1.5001, 1555, 0, 0,165, 0, 0, 0,0)
+                DrawMarker(1, v.x, v.y, v.z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 15, 167, 29, 200, 0, 0, 0,0)
                 if(Vdist(pos.x, pos.y, pos.z, v.x, v.y, v.z) < 1.0)then
                     if (incircle == false) then
-                        DisplayHelpText("Press ~INPUT_CONTEXT~ to customise your character.")
+                        DisplayHelpText("Appuyez sur ~INPUT_CONTEXT~ pour personnaliser votre avatar.")
                     end
                     incircle = true
                     if IsControlJustReleased(1, 51) then -- INPUT_CELLPHONE_DOWN
@@ -3056,7 +3058,7 @@ Citizen.CreateThread(function()
                                 armour = c_options.armour,
                                 armour_txt = c_options.armour_txt
                             }
-                            Notify("~g~You saved your outfit.") 
+                            Notify("~g~Vous avez enregistré votre tenue.") 
                             TriggerServerEvent("mm:saveeverything", user)
                         else
                             secondsRemaining2 = 10
@@ -3082,11 +3084,11 @@ end)
 Citizen.CreateThread(function()
     while true do
         if shirt_help then
-            drawTxt(0.66, 1.45, 1.0,1.0,0.4, "~r~NOTICE~w~: If your characters hands or arms are invisible then go to the ~r~Hands ~w~menu.", 255, 255, 255, 255)
-            drawTxt(0.66, 1.42, 1.0,1.0,0.4, "~r~NOTICE~w~: If your characters chest is invisible then go to the ~r~Under Shirt ~w~menu.", 255, 255, 255, 255)
-            drawTxt(0.66, 1.37, 1.0,1.0,0.4, "~r~NOTICE~w~: If your characters body or arms are going through clothing then go to the ~r~Hands", 255, 255, 255, 255)
-            drawTxt(0.66, 1.39, 1.0,1.0,0.4, "              ~w~menu.", 255, 255, 255, 255)
-            drawTxt(0.66, 1.34, 1.0,1.0,0.4, "~r~NOTICE~w~: (~g~Number~w~) = the number of ~g~Textures ~w~available.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.45, 1.0,1.0,0.4, "~r~NOTICE~w~: Si les mains ou les bras de votre avatar sont invisibles allez dans le ~w~menu ~r~Hands.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.42, 1.0,1.0,0.4, "~r~NOTICE~w~: Si le torse de votre avatar est invisible allez dans le ~w~menu ~r~Under Shirt.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.37, 1.0,1.0,0.4, "~r~NOTICE~w~: Si le corps ou les bras de votre avatar traversent les vêtements allez dans le ~w~menu", 255, 255, 255, 255)
+            drawTxt(0.66, 1.39, 1.0,1.0,0.4, "               ~r~Hands.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.34, 1.0,1.0,0.4, "~r~NOTICE~w~: (~g~Number~w~) = le nombre de ~g~Textures ~w~disponible.", 255, 255, 255, 255)
             drawTxt(0.66, 1.31, 1.0,1.0,0.4, "~r~NOTICE~w~: ~g~T~w~ = ~g~Textures ~w~and the numbers are textures that work with the clothing.", 255, 255, 255, 255)
         end
         Citizen.Wait(0)

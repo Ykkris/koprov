@@ -264,7 +264,7 @@ function GetService()
 
 	if isInService then
 		SendNotification(txt[lang]['stopService'])
-		TriggerServerEvent("skin_customization:SpawnPlayer")
+		TriggerServerEvent("mm:spawn")
 		TriggerServerEvent('es_em:sv_setService', 0)
 	else
 		SendNotification(txt[lang]['startService'])
