@@ -106,7 +106,7 @@ function doesItMatch(str)
   return value
 end
 
-function ChangeIdGenre(model, identifier)
+function ChangeIdGender(model, identifier)
 	local gender = doesItMatch(model)
 	local gender_query = MySQL:executeQuery("UPDATE users SET gender = '@gender' WHERE identifier='@user'",{['@gender']= gender ,['@user']= identifier})
 end
