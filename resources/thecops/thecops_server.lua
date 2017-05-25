@@ -227,12 +227,11 @@ RegisterServerEvent("Iphone:checkid") -- RETURN THE RP PLAYER NAME
 AddEventHandler("Iphone:checkid", function(target, puiorpcops) -- 0 pour ui et 1 pour cops
 	TriggerEvent("es:getPlayerFromId", target, function(user)
 		local query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@identifier'", { ['@identifier'] = user.identifier})
-		local result = MySQL:getResults(query, {'first_name', 'last_name', 'matricule', 'phone', 'gender'}, "identifier")
+		local result = MySQL:getResults(query, {'first_name', 'last_name', 'matricule', 'phone_number', 'gender'}, "identifier")
 		if puiorpcops == 1 then
-			TriggerClientEvent("Iphone:rcheckid", source, result[1].first_name, result[1].last_name, result[1].matricule, result[1].phone, result[1].gender)
+			TriggerClientEvent("Iphone:rcheckid", source, result[1].first_name, result[1].last_name, result[1].matricule, result[1].phone_number, result[1].gender)
 		elseif puiorpcops == 0 then
-			RconPrint("ON EST BIEN DANS LE CAS OU C'EST 0")
-			TriggerClientEvent("Iphone:rgetidui", source, result[1].first_name, result[1].last_name, result[1].matricule, result[1].phone, result[1].gender)
+			TriggerClientEvent("Iphone:rgetidui", source, result[1].first_name, result[1].last_name, result[1].matricule, result[1].phone_number, result[1].gender)
 		end
 	end)	
 end)
