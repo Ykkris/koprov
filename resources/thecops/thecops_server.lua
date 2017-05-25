@@ -3,6 +3,12 @@ require "resources/essentialmode/lib/MySQL"
 
 local inServiceCops = {}
 
+function nameJob(id)
+  local executed_query = MySQL:executeQuery("SELECT * FROM jobs WHERE job_id = '@namejob'", {['@namejob'] = id})
+  local result = MySQL:getResults(executed_query, {'job_name'}, "job_id")
+  return result[1].job_name
+end
+
 function addCop(identifier)
 	MySQL:executeQuery("INSERT INTO police (`identifier`) VALUES ('@identifier')", { ['@identifier'] = identifier})
 end
