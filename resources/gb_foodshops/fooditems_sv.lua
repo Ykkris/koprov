@@ -1,6 +1,7 @@
 fooditems = {
-	{ ['name'] = "Sandwich", ['value'] = 50, ['type'] = 2, ['price'] = 15 },
-	{ ['name'] = "Bouteille d'eau", ['value'] = 50, ['type'] = 1, ['price'] = 10 },
-	{ ['name'] = "Tacos", ['value'] = 50, ['type'] = 2, ['price'] = 20},
-	{ ['name'] = "Poutine", ['value'] = 50, ['type'] = 2, ['price'] = 25},
+	{ ['name'] = "Sandwich", ['value'] = 1, ['type'] = 2, ['price'] = 50 },
+	{ ['name'] = "Bouteille d'eau", ['value'] = 1, ['type'] = 1, ['price'] = 50 },
+	{ ['name'] = "Tacos", ['value'] = 0, ['type'] = 2, ['price'] = 50},
+	{ ['name'] = "Poutine", ['value'] = 0, ['type'] = 2, ['price'] = 25},
 }
+-- sert a rien ca inutile de l'update

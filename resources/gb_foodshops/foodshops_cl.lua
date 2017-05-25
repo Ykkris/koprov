@@ -1,5 +1,5 @@
 local options = {
-    x = 0.1,
+    x = 0.9,
     y = 0.2,
     width = 0.2,
     height = 0.04,

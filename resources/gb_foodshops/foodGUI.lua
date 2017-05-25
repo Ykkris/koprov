@@ -54,8 +54,8 @@ function Menu.updateSelection()
 		end
 		PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 	elseif IsControlJustPressed(1, Keys["NENTER"])  then
-			MenuCallFunction(Menu.GUI[Menu.selection +1]["func"], Menu.GUI[Menu.selection +1]["args"])
-			PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+		MenuCallFunction(Menu.GUI[Menu.selection +1]["func"], Menu.GUI[Menu.selection +1]["args"])
+		PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 	end
 	local iterator = 0
 	for id, settings in ipairs(Menu.GUI) do
@@ -121,6 +121,7 @@ function Menu:drawButtons(options)
 	local y = options.y + 0.12
 
 	for id, settings in pairs(Menu.GUI) do
+		-- Description
 		SetTextFont(0)
 		SetTextProportional(0)
 		SetTextScale(options.scale, options.scale)
@@ -137,7 +138,26 @@ function Menu:drawButtons(options)
 		else
 			DrawRect(options.x,y,options.width,options.height,0,0,0,150)
 		end
+		Citizen.Trace('then')	
+		Citizen.Trace(options.x - options.width/2 + 0.005)	
 		DrawText(options.x - options.width/2 + 0.005, y - 0.04/2 + 0.0028)
+		---
+		-- Price
+		SetTextFont(0)
+		SetTextProportional(0)
+		SetTextScale(options.scale, options.scale)
+		SetTextRightJustify(1)
+		SetTextCentre(0)
+		SetTextEntry("STRING")
+		AddTextComponentString(settings.args[3].."$")
+		if(settings["active"]) then
+			SetTextColour(0, 0, 0, 255)
+		else
+			SetTextColour(255, 255, 255, 255)
+		end	
+		DrawText(options.x + options.width/2 + 0.03, y - options.height/2 + 0.0028)
+		---
+
 		y = y + 0.04
 	end
 end
