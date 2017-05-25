@@ -200,6 +200,11 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 
 				if targetIdentifier == Users[k].identifier then
 					founded = v
+					test = k
+					print(tostring(v))
+					print(tostring(k))
+					print(tostring(k.identifier))
+					print(tostring(v.identifier))
 				end
 			end
 		
