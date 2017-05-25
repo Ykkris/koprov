@@ -118,7 +118,7 @@ Citizen.Wait(0)
 	local spawned_car = CreateVehicle(vehicle, coords, 908.9624, -177.1851, 74.2001, true, false)
 	
 	SetVehicleOnGroundProperly(spawned_car)
-	SetVehicleNumberPlateText(spawned_car, "..plate.." ")
+	SetVehicleNumberPlateText(spawned_car, plate)
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	SetModelAsNoLongerNeeded(vehicle)
 	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(vehicle))
