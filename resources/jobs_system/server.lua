@@ -37,7 +37,6 @@ local player = user.identifier
 local nameJob = nameJob(id)
 updatejob(player, id)
 --TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Votre métier est maintenant : ".. nameJob)
-TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu es désormais " .. nameJob, type = "info", timeout = 10000, layout = "centerLeft",})
 TriggerClientEvent("jobssystem:updateJob", source, nameJob)
 end)
 end)
@@ -87,7 +86,6 @@ TriggerEvent('es:addAdminCommand', 'jobadd', 100000, function(source, args, user
       local nameJob = nameJob(id)
       updatejob(player, id)
       --TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Votre métier est maintenant : ".. nameJob)
-      TriggerClientEvent("pNotify:SendNotification", player, { text = "Tu es désormais " .. nameJob, type = "info", timeout = 10000, layout = "centerLeft",})
       TriggerClientEvent("jobssystem:updateJob", player, nameJob)
     else
       TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Aucun joueur avec cet id")
