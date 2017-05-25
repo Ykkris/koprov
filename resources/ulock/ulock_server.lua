@@ -12,7 +12,9 @@ function IsPlayerGotThisVeh(player, vehPlate, veh_job_plate) -- vehplate string
   local match = false
 	print(tostring("|"..veh_job_plate.."|"))
 	print(tostring("|"..vehPlate.."|"))
-  if result[1] or veh_job_plate == vehPlate then
+	veh_job_plate_with_space = " "..veh_job_plat.." "
+	print(tostring("|"..veh_job_plate_with_space.."|"))
+  if result[1] or veh_job_plate_with_space == vehPlate then
     match = true
   end
   --for i,j in iparis(result) do
