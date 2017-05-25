@@ -24,14 +24,15 @@ RegisterServerEvent("frfuel:fuelAdded")
 RegisterServerEvent("essence:payer") -- IL FAUDRAIT AUSSI VERIFIER S'IL/ELLE EST EN SERVICE
 AddEventHandler("essence:payer", function(litres) -- source, litres en float
   local prix = math.ceil(litres)
-  --TriggerEvent('police:checkService', source, function(inserv)
+  TriggerEvent('police:checkService', source, function(inserv)
     TriggerEvent('es:getPlayerFromId', source, function(user)
 
       local player = user.identifier
-      --local copinservice = inserv
+      local copinservice = inserv
       local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
       local resultat = MySQL:getResults(req, {'job'}, "identifier")
-      if (3 == resultat[1].job) or (2 == resultat[1].job) then --and (copinservice)  
+      print(tostring(resultat[1].job))
+      if (3 == resultat[1].job) or (2 == resultat[1].job) and (copinservice)  then
         retour = true
       else 
         retour = false
@@ -43,5 +44,5 @@ AddEventHandler("essence:payer", function(litres) -- source, litres en float
         user:removeMoney(prix)
       end 
   end)
---end)
+end)
 end)
