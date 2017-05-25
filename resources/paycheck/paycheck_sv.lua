@@ -1,6 +1,6 @@
 -- Loading MySQL Class
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+-- MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 RegisterServerEvent('paycheck:salary')
 AddEventHandler('paycheck:salary', function()

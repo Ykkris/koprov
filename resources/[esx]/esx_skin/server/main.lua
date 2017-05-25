@@ -1,5 +1,5 @@
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+-- MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 RegisterServerEvent('esx_skin:requestPlayerSkinInfos')
 AddEventHandler('esx_skin:requestPlayerSkinInfos', function()

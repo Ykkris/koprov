@@ -1,5 +1,5 @@
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+-- MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 -- HELPER FUNCTIONS
 function bankBalance(player)

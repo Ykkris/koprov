@@ -1,7 +1,7 @@
 --Version 1.4
 require "resources/essentialmode/lib/MySQL"
 --Configuration de la connexion vers la DB MySQL
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+-- MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 --Déclaration des EventHandler
 RegisterServerEvent("projectEZ:savelastpos")

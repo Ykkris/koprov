@@ -11,6 +11,17 @@ function MySQL.open(self, server, database, userid, password)
 end
 
 function MySQL.executeQuery(self, command, params)
+	local server = "127.0.0.1"
+	local database = "gta5_gamemode_essential"
+	local userid = "root"
+	local password = "5M32bNCpFdgG"
+
+	local reflection = clr.System.Reflection
+	local assembly = reflection.Assembly.LoadFrom('resources/essentialmode/lib/MySql.Data.dll')
+	self.mysql = clr.MySql.Data.MySqlClient
+	self.connection = self.mysql.MySqlConnection("server="..server..";database="..database..";userid="..userid..";password="..password.."")
+	self.connection.Open()
+
 	local c = self.connection.CreateCommand()
 	c.CommandText = command
 
@@ -22,6 +33,11 @@ function MySQL.executeQuery(self, command, params)
 
 	local res = c.ExecuteNonQuery()
 	print("Query Executed("..res.."): " .. c.CommandText)
+	
+	-- closes SQL connection if request is not a select
+	if res ~= -1 then
+		self.connection.Close()
+	end
 
 	return {mySqlCommand = c, result = res}
 end
@@ -47,6 +63,9 @@ function MySQL.getResults(self, mySqlCommand, fields, byField)
 		end
 	end
 	reader:Close()
+	
+	self.connection.Close() -- try to close the connection each time
+
 	return result
 end
 

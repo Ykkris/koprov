@@ -13,7 +13,7 @@ database = {
 }
 
 require "resources/essentialmode/lib/MySQL"
-MySQL:open(database.host, database.name, database.username, database.password)
+-- MySQL:open(database.host, database.name, database.username, database.password)
 
 tempsEntreChaqueMission = 2400000 -- 40 minutes (en ms)
 tempsEntreLeDepotEtLaPaye = 10800 -- 3 h (en secondes)

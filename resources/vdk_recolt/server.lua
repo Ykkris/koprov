@@ -1,5 +1,5 @@
 require "resources/essentialmode/lib/MySQL"
-MySQL:open(database.host, database.name, database.username, database.password)
+-- MySQL:open(database.host, database.name, database.username, database.password)
 
 RegisterServerEvent("jobs:getJobs")
 --RegisterServerEvent("getIllJob")

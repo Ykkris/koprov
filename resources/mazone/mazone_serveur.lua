@@ -2,7 +2,7 @@
 -- Free to share, to edit, do the same :)  (For GTA:N users :rofl:)
 -- Credits to Maths, Physic and Programming
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+-- MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 RegisterServerEvent('mazone:pointclient')
 RegisterServerEvent('bugevent')

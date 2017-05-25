@@ -1,7 +1,7 @@
 RegisterServerEvent("getInteriors")
 
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+-- MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 function mysql_load_interiors()
 	local executed_query = MySQL:executeQuery("SELECT * FROM interiors WHERE 1 = @where", {['@where'] = "1"})

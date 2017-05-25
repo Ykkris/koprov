@@ -6,8 +6,8 @@ local permission = {
 -- Loading MySQL Class
 require "resources/essentialmode/lib/MySQL"
 
--- MySQL:open("IP", "databasname", "user", "password")
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+-- -- MySQL:open("IP", "databasname", "user", "password")
+-- MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 -- Adding custom groups called owner, inhereting from superadmin. (It's higher then superadmin). And moderator, higher then user but lower then admin
 TriggerEvent("es:addGroup", "owner", "superadmin", function(group) end)
