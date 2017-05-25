@@ -76,4 +76,24 @@ AddEventHandler("jobs:wichone", function(job_id) -- return le job au client
    
    end)
 end)
+
+TriggerEvent('es:addAdminCommand', 'jobadd', 100000, function(source, args, user) 
+     if(not args[2]) then
+    TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "Usage : /jobadd [ID] [IDJOB]")  
+    else
+    if(GetPlayerName(tonumber(args[2])) ~= nil)then
+      local player = tonumber(args[2])
+      local id = tonumber(args[3])
+      local nameJob = nameJob(id)
+      updatejob(player, id)
+      --TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Votre métier est maintenant : ".. nameJob)
+      TriggerClientEvent("pNotify:SendNotification", player, { text = "Tu es désormais " .. nameJob, type = "info", timeout = 10000, layout = "centerLeft",})
+      TriggerClientEvent("jobssystem:updateJob", player, nameJob)
+    else
+      TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Aucun joueur avec cet id")
+    end
+  end
+end, function(source, args, user) 
+  TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Tu n'as pas la permission !")
+end)
  

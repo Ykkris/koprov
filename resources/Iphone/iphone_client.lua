@@ -534,7 +534,8 @@ function ButtonSelected(button)
 			vehshop.menu.from = 1
 			vehshop.menu.to = 10
 			vehshop.selectedbutton = 0
-			ShowNotification(text)
+			--ShowNotification(text)
+			TriggerEvent("pNotify:SendNotification", { text = ""..text.."", type = "sms", timeout = 10000, layout = "bottomCenter",})
 
 	elseif this == "Police" then
 		if btn == "Menotter" then
