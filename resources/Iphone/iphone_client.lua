@@ -185,7 +185,7 @@ local vehshop = {
 			name = "Contact",
 			buttons = {
 				{name = "Envoyer un Sms", description = ""}, --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
-				{name = "Envoyer la position", description = ""},
+				{name = "Envoyer la position[WIP]", description = ""},
 				-- waiting for izio :) {name = "Supprimer le Contact", description = ""}
 			}
 		},
@@ -341,12 +341,6 @@ Citizen.CreateThread(function()
 				OpenCreator()
 			end
 		end ----------------------------------------------------------------------------------------------------
-
-		if IsControlPressed(1, Keys["E"]) then
-			loading = true 
-			TriggerServerEvent("Iphone:testload")
-				Citizen.Wait(100)
-		end
 
 		if vehshop.opened then
 			local ped = LocalPed()
@@ -608,14 +602,10 @@ function ButtonSelected(button)
 			vehshop.selectedbutton = 0
 			vehshop.currentmenu = "Repertoire"
 		elseif btn == "Supprimer le Contact" then
-			Citizen.Trace('delete')
 			TriggerServerEvent("Iphone:removecontact", toNumber)
 			for i=1 , #PhoneData.contacts, 1 do
 				if PhoneData.contacts[i].number == toNumber then
-					Citizen.Trace(#PhoneData.contacts)
-					Citizen.Trace(i)
 					table.remove(PhoneData.contacts, i)
-					Citizen.Trace(#PhoneData.contacts)
 				end
 			end
 			vehshop.menu.from = 1
