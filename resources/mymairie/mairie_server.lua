@@ -32,7 +32,7 @@ AddEventHandler('es:playerLoaded', function(source)
 
 		if matriculeNumber == nil then
 			matriculeNumber = GenerateUniqueMatriculeNumber()
-			MySQL:executeQuery("UPDATE users SET matricule = '@matricule' WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@matricule'] = matricule})
+			MySQL:executeQuery("UPDATE users SET matricule = '@matricule' WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@matricule'] = matriculeNumber})
 		end
 
 		user:setSessionVar("matricule", matriculeNumber)

@@ -101,40 +101,40 @@ local vehshop = {
 			name = "Emotes",
 			buttons = { 
 				{name = "Arreter l'emote", description = ''},
-				{name = "Surrender", description = ''},
-				{name = "No", description = ''},
-				{name = "Damn", description = ''},
+				{name = "Se rendre", description = ''},
+				{name = "Calme (long)", description = ''},
+				{name = "Zut", description = ''},
 				{name = "Dance", description = ''},
-				{name = "Salute", description = ''},
-				{name = "Rock", description = ''},
-				{name = "Why", description = ''},
-				{name = "Noter Test", description = ''},
-				{name = "A changer 1", description = ''},
-				{name = "A changer 2", description = ''},
-				{name = "A changer 3", description = ''},
-				{name = "A changer 4", description = ''},
-				{name = "A changer 5", description = ''},
-				{name = "A changer 6", description = ''},
-				{name = "A changer 7", description = ''},
-				{name = "A changer 8", description = ''},
-				{name = "A changer 9", description = ''},
-				{name = "A changer 10", description = ''},
-				{name = "A changer 11", description = ''},
-				{name = "A changer 12", description = ''},
-				{name = "Prout", description = ''},
+				{name = "Applaudir", description = ''},
+				{name = "Fumer / AFK", description = ''},
+				{name = "Applaudir (calme)", description = ''},
+				{name = "Enlacer", description = ''},
+				{name = "Pompe", description = ''},
+				{name = "Applaudir 2", description = ''},
+				{name = "Pompes 2", description = ''},
+				{name = "Attendre", description = ''},
+				{name = "Fuck", description = ''},
+				{name = "Fumer 2", description = ''},
+				{name = "Telephoner", description = ''},
+				{name = "Allonger", description = ''},
+				{name = "Pisser", description = ''},
+				{name = "Siffler taxi", description = ''},
+				{name = "Yoga", description = ''},
+				{name = "Branler", description = ''},
+				{name = "Selfie", description = ''},
 				{name = "Prout 1", description = ''},
-				{name = "Prout 2", description = ''},
-				{name = "Prout 3", description = ''},
-				{name = "Prout 4", description =''},
-				{name = "Prout 5", description =''},
-				{name = "Prout 6", description =''},
-				{name = "Prout 7", description =''},
-				{name = "Prout 8", description =''},
-				{name = "Prout 9", description =''},
-				{name = "Prout 10", description =''},
-				{name = "Prout 11", description =''},
-				{name = "Prout 12", description =''},
-				{name = "Prout 13", description =''}
+				{name = "Dancer", description = ''},
+				{name = "Guitare", description = ''},
+				{name = "High 5", description =''},
+				{name = "Calme", description =''},
+				{name = "Noter", description =''},
+				{name = "Pêcher", description =''},
+				{name = "Suicide", description =''},
+				{name = "Assis", description =''},
+				{name = "A terre", description =''},
+				{name = "Wip", description =''},
+				{name = "Gratter couilles", description =''},
+				{name = "Arreter", description =''}
 				--{name = "110", description = ''},  AJOUTER UNE LIGNE POUR CHAQUE EMOTE PLUS VOIR LIGNE ~340 
 			}
 		},
@@ -160,7 +160,7 @@ local vehshop = {
 			buttons = {
 				{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identite, oblige a rentrer dans le vehicle
 				{name = "Fouiller", description = ""},
-				{name = "Amande", description = ""},
+				{name = "Amende", description = ""},
 				{name = "Controler l'identite", description = ""},
 				{name = "Controler le vehicule", description = ""},
 				{name = "Faire rentrer dans le vehicule", description = ""},
@@ -446,71 +446,71 @@ function ButtonSelected(button)
 	elseif this == "Emotes" then
 		if btn == "Arreter l'emote" then
 			Emote(0)
-		elseif btn == "Surrender" then
+		elseif btn == "Se rendre" then
 			Emote(1)
-		elseif btn == "No" then
+		elseif btn == "Calme (long)" then
 			Emote(2)
-		elseif btn == "Damn" then
+		elseif btn == "Zut" then
 			Emote(3)
-		elseif btn == "Dance" then
+		elseif btn == "Dancerr" then
 			Emote(4)
-		elseif btn == "Salute" then
+		elseif btn == "Applaudir" then
 			Emote(5)
-		elseif btn == "Rock" then
+		elseif btn == "Fumer / AFK" then
 			Emote(6)
-		elseif btn == "Why" then
+		elseif btn == "Applaudir (calme)" then
 			Emote(7)
-		elseif btn == "Noter Test" then
+		elseif btn == "Enlacer" then
 			Emote(8)
-		elseif btn == "A changer 1" then
+		elseif btn == "Pompe" then
 			Emote(9)
-		elseif btn == "A changer 2" then
+		elseif btn == "Applaudir 2" then
 			Emote(10)
-		elseif btn == "A changer 3" then
+		elseif btn == "Pompes 2" then
 			Emote(11)
-		elseif btn == "A changer 4" then
+		elseif btn == "Attendre" then
 			Emote(12)
-		elseif btn == "A changer 5" then
+		elseif btn == "Fuck" then
 			Emote(13)
-		elseif btn == "A changer 6" then
+		elseif btn == "Fumer 2" then
 			Emote(14)
-		elseif btn == "A changer 7" then
+		elseif btn == "Telephoner" then
 			Emote(15)
-		elseif btn == "A changer 8" then
+		elseif btn == "Allonger" then
 			Emote(16)
-		elseif btn == "A changer 9" then
+		elseif btn == "Pisser" then
 			Emote(17)
-		elseif btn == "A changer 10" then
+		elseif btn == "Siffler taxi" then
 			Emote(18)
-		elseif btn == "A changer 11" then
+		elseif btn == "Yoga" then
 			Emote(19)
-		elseif btn == "A changer 12" then
+		elseif btn == "Branler" then
 			Emote(20)
-		elseif btn == "Prout" then
+		elseif btn == "Selfie" then
 			Emote(21)
-		elseif btn == "Prout 2" then
+		elseif btn == "Dancer" then
 			Emote(22)
-		elseif btn == "Prout 3" then
+		elseif btn == "Guitare" then
 			Emote(23)
-		elseif btn == "Prout 4" then
+		elseif btn == "High 5" then
 			Emote(24)
-		elseif btn == "Prout 5" then
+		elseif btn == "Calme" then
 			Emote(25)
-		elseif btn == "Prout 6" then
+		elseif btn == "Noter" then
 			Emote(26)
-		elseif btn == "Prout 7" then
+		elseif btn == "Pêcher" then
 			Emote(27)
-		elseif btn == "Prout 8" then
+		elseif btn == "Suicide" then
 			Emote(28)
-		elseif btn == "Prout 9" then
+		elseif btn == "Assis" then
 			Emote(29)
-		elseif btn == "Prout 10" then
+		elseif btn == "A terre" then
 			Emote(30)
-		elseif btn == "Prout 11" then
+		elseif btn == "Wip" then
 			Emote(31)
-		elseif btn == "Prout 12" then
+		elseif btn == "Gratter couilles" then
 			Emote(32)
-		elseif btn == "Prout 13" then
+		elseif btn == "Arreter" then
 			Emote(33)
 		end
 
@@ -536,7 +536,7 @@ function ButtonSelected(button)
 			Menotter()
 		elseif btn == "Fouiller" then
 			Fouiller()
-		elseif btn == "Amande" then
+		elseif btn == "Amende" then
 			Amande()
 		elseif btn == "Controler l'identite" then
 			IdControl()
@@ -1109,12 +1109,12 @@ function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
 			editing = false
-			ShowNotification("Amande annulée")
+			ShowNotification("Amende annulée")
 		end
 		if UpdateOnscreenKeyboard() == 1 then
 			editing = false
 			resultat = GetOnscreenKeyboardResult()
-			ShowNotification("Amande envoyé")
+			ShowNotification("Amende envoyé")
 		end
 	end
 	resultat_n = tonumber(resultat)
