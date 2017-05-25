@@ -22,11 +22,11 @@ local weashop = {
 			buttons = {
 				{title = "Melee weapons", name = "Melee", description = ""},
 				{title = "Pistolets", name = "Pistolets", description = ""},
-				{title = "Machine guns", name = "MachineGuns", description = ""},
+				--{title = "Machine guns", name = "MachineGuns", description = ""},
 				{title = "Shotgun", name = "Shotguns", description = ""},
-				{title = "Assault rifle", name = "AssaultRifles", description = ""},
-				{title = "Sniper rifle", name = "SniperRifles", description = ""},
-				{title = "Heavy Weapons", name = "HeavyWeapons", description = ""},
+				--{title = "Assault rifle", name = "AssaultRifles", description = ""},
+				--{title = "Sniper rifle", name = "SniperRifles", description = ""},
+				--{title = "Heavy Weapons", name = "HeavyWeapons", description = ""},
 				{title = "Thrown weapons", name = "ThrownWeapons", description = ""},
 			}
 		},
