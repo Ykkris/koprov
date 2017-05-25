@@ -217,6 +217,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						})
 					Users[k]:setSessionVar("sms", sms)
 					print(tostring(founded.identifier))
+					print(tostring(founded.source))
 					local targetServerId = founded.source
 					local sender_name = Users[source]:getSessionVar("name")
 					TriggerClientEvent("Iphone:receivesms", targetServerId, sms) ----------------------------------ICI ROMAIN --------------------------------------
