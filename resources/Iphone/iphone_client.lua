@@ -452,7 +452,7 @@ function ButtonSelected(button)
 			Emote(2)
 		elseif btn == "Zut" then
 			Emote(3)
-		elseif btn == "Dancerr" then
+		elseif btn == "Dance" then
 			Emote(4)
 		elseif btn == "Applaudir" then
 			Emote(5)
@@ -810,7 +810,8 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 	elseif id == 21 then
 		animsActionScenario({ anim = "world_human_tourist_mobile" }) -- selfie
 	elseif id == 22 then
-		animsAction({ lib = "amb@world_humanpartying@female@partying_beer@base", anim = "base" }) -- dancer
+		PlayEmote("rcmnigel1bnmt_1b", "dance_intro_tyler", 32, 1 ,0, 0)	
+		PlayEmote("rcmnigel1bnmt_1b", "dance_loop_tyler", 32, 1 ,0 , 1)	
 	elseif id == 23 then
 		animsActionScenario({ anim = "world_human_musician" })
 	elseif id == 24 then

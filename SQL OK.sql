@@ -279,8 +279,8 @@ CREATE TABLE `users` (
   `intervention` int(11) NOT NULL DEFAULT '0',
   `enService` tinyint(1) NOT NULL DEFAULT '0',
   `phone_number` text,
-  `contacts` text NOT NULL,
-  `sms` text NOT NULL,
+  `contacts` text,
+  `sms` text,
   `batterie` varchar(50) NOT NULL DEFAULT '100'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
