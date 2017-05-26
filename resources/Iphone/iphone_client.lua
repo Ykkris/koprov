@@ -1016,7 +1016,7 @@ end
 
 function Services(nom_service)
 	if nom_service == "Police " then
-		TriggerServerEvent('service:connectedbyid', 2)	
+		TriggerServerEvent('police:checkService', 2)	
 		Citizen.CreateThread(function()
 			while isCopConnected == nil do
     			Citizen.Wait(1)
