@@ -146,7 +146,7 @@ AddEventHandler('policeg:c_classic', function()
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end)
 
 RegisterNetEvent('policeg:c_moto')
@@ -166,7 +166,7 @@ AddEventHandler('policeg:c_moto', function()
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end)
 
 RegisterNetEvent('policeg:c_fila')
@@ -187,7 +187,7 @@ AddEventHandler('policeg:c_fila', function()
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end)
 
 RegisterNetEvent('policeg:c_truck')
@@ -207,7 +207,7 @@ AddEventHandler('policeg:c_truck', function()
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end)
 
 RegisterNetEvent('policeg:c_helico')
@@ -227,7 +227,7 @@ AddEventHandler('policeg:c_helico', function()
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end)
 
 RegisterNetEvent('policeg:c_stanier')
@@ -248,7 +248,7 @@ AddEventHandler('policeg:c_stanier', function()
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end)
 
 RegisterNetEvent('policeg:c_buffalo')
@@ -269,5 +269,5 @@ AddEventHandler('policeg:c_buffalo', function()
 	SetVehicleNumberPlateText(spawned_car, "LSPD "..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	-- SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end)

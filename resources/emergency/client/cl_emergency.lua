@@ -221,7 +221,7 @@ function SpawnAmbulance()
 	SetVehicleNumberPlateText(spawned_car, "MEDIC")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end
 
 function StartEmergency(x, y, z, sourcePlayerInComa)

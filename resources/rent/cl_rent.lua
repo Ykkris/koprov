@@ -84,7 +84,7 @@ Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
 	local vehicle = GetHashKey('cruiser')
-
+	
 	RequestModel(vehicle)
 
 	while not HasModelLoaded(vehicle) do
@@ -99,6 +99,6 @@ Citizen.Wait(0)
 	SetVehicleNumberPlateText(spawned_car, ""..plate.." ")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_camion))
 	TriggerServerEvent('rent:ToPay')
 end)
