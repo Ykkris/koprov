@@ -302,12 +302,14 @@ function isNearTakeService()
 end
 
 function ServiceOn()
+	TriggerServerEvent("police:registerservice")
 	isInService = true
 	TriggerServerEvent("jobssystem:jobs", 2)
 	TriggerServerEvent("police:takeService")
 end
 
 function ServiceOff()
+	TriggerServerEvent("police:unregisterservice")
 	isInService = false
 	TriggerServerEvent("jobssystem:jobs", 1)
 	TriggerServerEvent("police:breakService")
