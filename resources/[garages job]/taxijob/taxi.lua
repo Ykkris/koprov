@@ -3,9 +3,8 @@ onJob = 0
 jobs = {peds = {}, flag = {}, blip = {}, cars = {}, coords = {cx={}, cy={}, cz={}}}
 
 function StartJob(jobid)
-	Citizen.Trace("test")
 	if jobid == 1 then -- taxi
-		showLoadingPromt("Loading work: Taxi Driver", 2000, 3)
+		showLoadingPromt("Connexion à la centrale Taxi", 2000, 3)
 		jobs.coords.cx[1],jobs.coords.cy[1],jobs.coords.cz[1] = 293.476,-590.163,42.7371
 		jobs.coords.cx[2],jobs.coords.cy[2],jobs.coords.cz[2] = 253.404,-375.86,44.0819
 		jobs.coords.cx[3],jobs.coords.cy[3],jobs.coords.cz[3] = 120.808,-300.416,45.1399
@@ -72,7 +71,7 @@ function StartJob(jobid)
 		jobs.flag[1] = 0
 		jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 		Wait(2000)
-		DrawMissionText("Drive around and look for ~h~~y~passengers~w~.", 10000)
+		DrawMissionText("Conduis un peu et attend un ~h~~y~client~w~.", 10000)
 		onJob = jobid
 	end
 end
