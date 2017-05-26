@@ -306,6 +306,7 @@ function ServiceOn()
 	isInService = true
 	TriggerServerEvent("jobssystem:jobs", 2)
 	TriggerServerEvent("police:takeService")
+	TriggerServerEvent('police:setService', 1) -- set enService in DB so they can respond to calls
 end
 
 function ServiceOff()
@@ -313,6 +314,7 @@ function ServiceOff()
 	isInService = false
 	TriggerServerEvent("jobssystem:jobs", 1)
 	TriggerServerEvent("police:breakService")
+	TriggerServerEvent('police:setService', 0) -- set enService in DB
 	
 	allServiceCops = {}
 	

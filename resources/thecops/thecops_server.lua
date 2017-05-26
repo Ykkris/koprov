@@ -98,6 +98,17 @@ AddEventHandler('es:playerDropped', function(player)
 		end
 end)
 
+RegisterServerEvent('police:setService')
+AddEventHandler('police:setService',
+  function(service)
+    TriggerEvent('es:getPlayerFromId', source,
+      function(user)
+        local executed_query = MySQL:executeQuery("UPDATE users SET enService = @service WHERE users.identifier = '@identifier'", {['@identifier'] = user.identifier, ['@service'] = service})
+      end
+    )
+  end
+)
+
 RegisterServerEvent('police:checkIsCop')
 AddEventHandler('police:checkIsCop', function()
 	TriggerEvent("es:getPlayerFromId", source, function(user)
