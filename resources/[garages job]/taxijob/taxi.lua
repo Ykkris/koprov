@@ -362,7 +362,7 @@ function CalculMoney(stime, sdistance)
 			break
 		end
 	end
-	for i=1, #distanceCommand, do
+	for i=1, #distanceCommand do
 		if distance < distanceCommand[i] or i == #distanceCommand do
 			pallierDistance = i
 			break
