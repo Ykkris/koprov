@@ -300,7 +300,7 @@ AddEventHandler('service:connectedbyid',
 		    for i,v in pairs(players) do
 		     	identifier = GetPlayerIdentifiers(i)
 			    if (identifier ~= nil) then
-			      	local executed_query = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier'", {['@identifier'] = players[i].identifer})
+			      	local executed_query = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier'", {['@identifier'] = identifer})
 			      	local result = MySQL:getResults(executed_query, {'job'}, "identifier")
 
 				    if (result[1].job == service_id) then
