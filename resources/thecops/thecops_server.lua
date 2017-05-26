@@ -129,6 +129,15 @@ AddEventHandler('police:takeService', function()
 	end
 end)
 
+RegisterServerEvent('police:enService')
+AddEventHandler('police:enService', function()
+	local servingCops = false
+	if next(inServiceCops) then
+		servingCops = true
+	end
+	TriggerClientEvent("services:cbcopconnected", servingCops)
+end)
+
 RegisterServerEvent('police:checkService')
 AddEventHandler('police:checkService', function()
 	local CanHaveFreeFuel = false

@@ -1275,7 +1275,7 @@ AddEventHandler('service:sendserviceto',
 				notificationInProgress = true
 				if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 10000) then -- APPEL REDUIT à 10 SECONDES POUR LES SERVICES
 					callAlreadyTaken = true
-					ShowNotification('L\'appel a été pris par ~b~')
+					ShowNotification('L\'appel a été pris')
 				end
 				if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
 					callAlreadyTaken = true
