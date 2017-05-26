@@ -349,10 +349,10 @@ function CalculMoney(stime, sdistance)
 	Citizen.Trace(tostring(sdistance))
 	time = tonumber(stime)
 	distance = tonumber(sdistance)
-	local timeCommand =        [2,   5,   8,   11,   15] -- 
-	local moneyTimeCommand =  [0.4, 0.55, 0.66, 0.85, 1.1, 1.3]
-	local distanceCommand = [200, 500, 800, 1100, 1600, 2000, 3000]
-	local moneyCommand =    [20 , 35 , 50 , 75  , 90  , 120 , 180 , 250]
+	local timeCommand =        {2,   5,   8,   11,   15} -- 
+	local moneyTimeCommand =  {0.4, 0.55, 0.66, 0.85, 1.1, 1.3}
+	local distanceCommand = {200, 500, 800, 1100, 1600, 2000, 3000}
+	local moneyCommand =    {20 , 35 , 50 , 75  , 90  , 120 , 180 , 250}
 	time = ((time / 1000) / 60)
 	local pallierTime = 0
 	local pallierDistance = 0
