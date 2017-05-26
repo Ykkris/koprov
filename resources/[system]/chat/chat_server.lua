@@ -2,17 +2,23 @@ RegisterServerEvent('chatCommandEntered')
 RegisterServerEvent('chatMessageEntered')
 
 AddEventHandler('chatMessageEntered', function(name, color, message)
-    if not name or not color or not message or #color ~= 3 then
-        return
-    end
+    TriggerEvent("es:getPlayerFromId", source, function(user)
+        if user.group ~= "owner" then
+            return
+        end
 
-    TriggerEvent('chatMessage', source, name, message)
+        if not name or not color or not message or #color ~= 3 then
+            return
+        end
 
-    if not WasEventCanceled() then
-        TriggerClientEvent('chatMessage', -1, name, color, message)
-    end
+        TriggerEvent('chatMessage', source, name, message)
 
-    print(name .. ': ' .. message)
+        if not WasEventCanceled() then
+            TriggerClientEvent('chatMessage', -1, name, color, message)
+        end
+
+        print(name .. ': ' .. message)
+    end)
 end)
 
 -- player join messages
