@@ -1014,95 +1014,71 @@ function BoiteReception()
 
 end
 
+RegisterNetEvent('services:cbcopconnected')
+AddEventHandler('services:cbcopconnected', function(cb)
+	isCopConnected = cb
+	if not(isCopConnected) then
+		ShowNotification("Pas de policiers en ville")
+	else
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
+	end
+end)
+
+RegisterNetEvent('services:cbmedconnected')
+AddEventHandler('services:cbmedconnected', function(cb)
+	isMedicConnected = cb
+	if not(isMedicConnected) then
+		ShowNotification("Pas de médecins en ville")
+	else
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
+	end
+end)
+
+RegisterNetEvent('services:cbdepconnected')
+AddEventHandler('services:cbdepconnected', function(cb)
+	isDepanConnected = cb
+	if not(isDepanConnected) then
+		ShowNotification("Pas de dépanneurs en ville")
+	else 
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
+	end
+end)
+
+RegisterNetEvent('services:cbtaxconnected')
+AddEventHandler('services:cbtaxconnected', function(cb)
+	isTaxiConnected = cb
+	if not(isTaxiConnected) then
+		ShowNotification("Pas de taxis en ville")
+	else
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
+	end
+end)
+
 function Services(nom_service)
 	if nom_service == "Police " then
-		Citizen.Trace(1)
 		TriggerServerEvent('police:enService')
-		Citizen.Trace(2)	
-		Citizen.CreateThread(function()
-			Citizen.Trace(isCopConnected == nil)
-			while isCopConnected == nil do
-				Citizen.Trace(isCopConnected == nil)
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbcopconnected')
-    			AddEventHandler('services:cbcopconnected', function(cb)
-    				Citizen.Trace(cb)
-    				isCopConnected = cb
-    				if not(isCopConnected) then
-    					ShowNotification("Pas de policiers en ville")
-    				else
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-    	end)
-
     elseif nom_service == "Médecin" then
     	TriggerServerEvent('service:connectedbyid', 3)
-    	Citizen.CreateThread(function()
-    		while isMedicConnected == nil do
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbmedconnected')
-    			AddEventHandler('services:cbmedconnected', function(cb)
-    				isMedicConnected = cb
-    				if not(isMedicConnected) then
-    					ShowNotification("Pas de médecins en ville")
-    				else
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-   		end)
-
     elseif nom_service == "Taxi" then
-    	TriggerServerEvent('service:connectedbyid', 9)	
-    	Citizen.CreateThread(function()
-    		while isTaxiConnected == nil do
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbtaxconnected')
-    			AddEventHandler('services:cbtaxconnected', function(cb)
-    				isTaxiConnected = cb
-    				if not(isTaxiConnected) then
-    					ShowNotification("Pas de taxis en ville")
-    				else
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-    	end)
-
+    	TriggerServerEvent('service:connectedbyid', 9)
     elseif nom_service == "Dépanneur" then
     	TriggerServerEvent('service:connectedbyid', 4)
-    	Citizen.CreateThread(function()
-    		while isDepanConnected == nil do
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbdepconnected')
-    			AddEventHandler('services:cbdepconnected', function(cb)
-    				isDepanConnected = cb
-    				if not(isDepanConnected) then
-    					ShowNotification("Pas de dépanneurs en ville")
-    				else 
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-    	end)
 	end
 end
 
