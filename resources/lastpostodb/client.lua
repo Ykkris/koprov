@@ -15,7 +15,7 @@ Keys = {
 }
 
 local AutoSaveEnabled = true -- Active sauvegarde automatique // true = sauvegarde automatique // false = sauvegarde manuelle
-local TimerAutoSave = 300000 -- Durée entre chaque sauvegarde de la position en mode automatique // 60000 = 60 secondes
+local TimerAutoSave = 60000 -- Durée entre chaque sauvegarde de la position en mode automatique // 60000 = 60 secondes
 local TimerManualSave = 60000 -- Durée d'attente avant de pouvoir à nouveau sauvegarder la position du joueur en mode Manuel // 60000 = 60 secondes
 local firstspawn = 0 -- Ne pas toucher
 
