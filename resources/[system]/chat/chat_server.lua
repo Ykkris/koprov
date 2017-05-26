@@ -3,7 +3,7 @@ RegisterServerEvent('chatMessageEntered')
 
 AddEventHandler('chatMessageEntered', function(name, color, message)
     TriggerEvent("es:getPlayerFromId", source, function(user)
-        if user.group ~= "owner" then
+        if user.permission_level < 2 then
             return
         end
 
