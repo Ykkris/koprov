@@ -272,6 +272,7 @@ Citizen.CreateThread(function()
 									-- local x = os.clock() éventuellement pour mettre un tomer mission
 									-----------------------------------------------------------------
 									local random_wait = GetRandomIntInRange(35, 60)*1000 -- de 35 à 60 secondes
+									showLoadingPromt("Appel vers la centrale taxi", random_wait, 3)
 									Wait(random_wait)
 									DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
 									jobs.flag[1] = 0
