@@ -1016,12 +1016,17 @@ end
 
 function Services(nom_service)
 	if nom_service == "Police " then
-		TriggerServerEvent('police:checkService', 2)	
+		Citizen.Trace(1)
+		TriggerServerEvent('police:enService')
+		Citizen.Trace(2)	
 		Citizen.CreateThread(function()
+			Citizen.Trace(isCopConnected == nil)
 			while isCopConnected == nil do
+				Citizen.Trace(isCopConnected == nil)
     			Citizen.Wait(1)
     			RegisterNetEvent('services:cbcopconnected')
     			AddEventHandler('services:cbcopconnected', function(cb)
+    				Citizen.Trace(cb)
     				isCopConnected = cb
     				if not(isCopConnected) then
     					ShowNotification("Pas de policiers en ville")
