@@ -4,7 +4,7 @@ jobs = {peds = {}, flag = {}, blip = {}, cars = {}, coords = {cx={}, cy={}, cz={
 
 function StartJob(jobid)
 	if jobid == 1 then -- taxi
-		showLoadingPromt("Connexion à la centrale Taxi", 2000, 3)
+		showLoadingPromt("Connexion à la centrale taxi", 2000, 3)
 		jobs.coords.cx[1],jobs.coords.cy[1],jobs.coords.cz[1] = 293.476,-590.163,42.7371
 		jobs.coords.cx[2],jobs.coords.cy[2],jobs.coords.cz[2] = 253.404,-375.86,44.0819
 		jobs.coords.cx[3],jobs.coords.cy[3],jobs.coords.cz[3] = 120.808,-300.416,45.1399
@@ -219,7 +219,7 @@ Citizen.CreateThread(function()
 									ClearPedTasksImmediately(jobs.peds[1])
 									Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
 									jobs.peds[1] = nil
-									DrawMissionText("~r~Le client ne vient pas avec vous~w~. Trouve-en un autre.", 5000)
+									DrawMissionText("~r~Le client ne vient pas avec toi~w~. Trouve-en un autre.", 5000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 								else
@@ -239,6 +239,11 @@ Citizen.CreateThread(function()
 											local streetname = string.format("~c~Amène moi à %s", GetStreetNameFromHashKey(street[1]))
 											DrawMissionText(streetname, 5000)
 										end
+										------------ Le Client vient d'être prit ici -----------------
+										startTime = GetGameTimer()
+										local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
+										travelDistance = CalculateTravelDistanceBetweenPoints(plyCoords.x, plyCoords.y, plyCoords.z, jobs.coords.cx[jobs.flag[2]], jobs.coords.cy[jobs.flag[2]], jobs.coords.cz[jobs.flag[2]])
+										--------------------------------------------------------------
 										jobs.blip[1] = AddBlipForCoord(jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]])
 										AddTextComponentString(GetStreetNameFromHashKey(street[1]))
 										N_0x80ead8e2e1d5d52e(jobs.blip[1])
@@ -260,9 +265,13 @@ Citizen.CreateThread(function()
 									jobs.peds[1] = nil
 									Wait(6000)
 									DrawMissionText("~g~Vous avez déposé le client!", 5000)
-									TriggerServerEvent("taxi:getpaid")
+									--------------Le Client à été déposé----------------------------
+									timeBetween = GetGameTimer() - startTime
+									giveMoney = CalculMoney(timeBetween, travelDistance)
+									TriggerServerEvent("taxi:getpaid", giveMoney)
 									-- local x = os.clock() éventuellement pour mettre un tomer mission
-									local random_wait = GetRandomIntInRange(35, 60)*100 -- de 35 à 60 secondes
+									-----------------------------------------------------------------
+									local random_wait = GetRandomIntInRange(35, 60)*1000 -- de 35 à 60 secondes
 									Wait(random_wait)
 									DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
 									jobs.flag[1] = 0
@@ -332,5 +341,31 @@ AddEventHandler("jobs:yesornot", function(yesornot)
 		DrawMissionText("La centrale ne reconnait pas votre identité!", 1000)		
 	end
 end)
+
+function CalculMoney(time, distance)
+	local timeCommand =        [2,   5,   8,   11,   15] -- 
+	local moneyTimeCommand =  [0.4, 0.55, 0.66, 0.85, 1.1, 1.3]
+	local distanceCommand = [200, 500, 800, 1100, 1600, 2000, 3000]
+	local moneyCommand =    [20 , 35 , 50 , 75  , 90  , 120 , 180 , 250]
+	time = ((time / 1000) / 60)
+	local pallierTime = 0
+	local pallierDistance = 0
+	for i=1, #timeCommand do
+		if time < timeCommand[i] or i == #timeCommand then
+			pallierTime = i
+			break
+		end
+	end
+	for i=1, #distanceCommand, do
+		if distance < distanceCommand[i] or i == #distanceCommand do
+			pallierDistance = i
+			break
+		end
+
+	end
+	receiveMoney = math.random(moneyCommand[pallierDistance], moneyCommand[pallierDistance+1])
+	multiplicator = math.random(moneyTimeCommand[pallierTime], moneyTimeCommand[pallierTime+1])
+	return (receiveMoney * multiplicator)
+end
 	
 
