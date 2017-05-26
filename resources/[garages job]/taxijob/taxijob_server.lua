@@ -1,8 +1,9 @@
 RegisterServerEvent("taxi:getpaid")
-AddEventHandler("taxi:getpaid", function()
+AddEventHandler("taxi:getpaid", function(paid)
     -- prendre la source -> user -> user:addMoney()
   TriggerEvent('es:getPlayerFromId', source, function(user)
-        user:addMoney(50)
+        local finalpaid = math.ceil(paid)
+        user:addMoney(finalpaid)
     
   end)
   
