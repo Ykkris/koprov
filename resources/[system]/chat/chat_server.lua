@@ -1,9 +1,22 @@
 RegisterServerEvent('chatCommandEntered')
 RegisterServerEvent('chatMessageEntered')
 
+-- Test if message is one of there commands 
+allowed_commands = {'/givecash', '/transfert', '/tow'}
+function isAllowedCommand(message)
+    allowed = false
+    for i,c in pairs(allowed_commands) do
+        if string.sub(message,1,string.len(c)) == c then
+            allowed = true
+        end
+    end
+    return allowed
+end
+------
+
 AddEventHandler('chatMessageEntered', function(name, color, message)
     TriggerEvent("es:getPlayerFromId", source, function(user)
-        if user.permission_level < 2 then
+        if not(user.permission_level > 2 or isAllowedCommand(message)) then
             return
         end
 
