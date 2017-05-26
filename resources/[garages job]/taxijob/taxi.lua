@@ -268,6 +268,7 @@ Citizen.CreateThread(function()
 									--------------Le Client à été déposé----------------------------
 									timeBetween = GetGameTimer() - startTime
 									giveMoney = CalculMoney(timeBetween, travelDistance)
+									Citizen.Trace(tostring(giveMoney))
 									TriggerServerEvent("taxi:getpaid", giveMoney)
 									-- local x = os.clock() éventuellement pour mettre un tomer mission
 									-----------------------------------------------------------------
