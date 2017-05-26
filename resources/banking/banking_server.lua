@@ -188,8 +188,8 @@ AddEventHandler('bank:givecash', function(toPlayer, amount)
 			user:removeMoney(amount)
 			TriggerEvent('es:getPlayerFromId', toPlayer, function(recipient)
 				recipient:addMoney(amount)
-				TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donnée: ~r~-$".. amount .." ~n~~s~Cash: ~g~$" .. user.money)
-				TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donnée: ~g~$".. amount .." ~n~~s~Cash: ~g~$" .. recipient.money)
+				TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donné: ~r~-$".. amount .." ~n~~s~Cash: ~g~$" .. user.money)
+				TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donné: ~g~$".. amount .." ~n~~s~Cash: ~g~$" .. recipient.money)
 			end)
 		else
 			if (tonumber(user.money) < tonumber(amount)) then

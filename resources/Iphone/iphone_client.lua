@@ -84,6 +84,7 @@ local vehshop = {
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
 				{name = "Services", description = ""},
+				{name = "Donner de l'argent", description = ""},
 				{name = "Police", description = ""}
 			}
 		},
@@ -152,6 +153,13 @@ local vehshop = {
 				{name = "Médecin", description = ""},
 				{name = "Dépanneur", description = ""},
 				{name = "Taxi", description = ""}
+			}
+		},
+		["Donner de l'argent"] = {
+			title = "Donner de l'argent",
+			name = "Donner de l'argent",
+			buttons = {
+
 			}
 		},
 		["Police"] = {
@@ -438,6 +446,8 @@ function ButtonSelected(button)
 			OpenMenu('Emotes')
 		elseif btn == "Carte d'identite" then
 			IdCard()
+		elseif btn == "Donner de l'argent" then
+			GiveCash()
 		elseif btn == "Police" and isCop then
 			OpenMenu("Police")
 		elseif btn == "Services" then
@@ -1093,6 +1103,20 @@ end
 
 function IdCard()
 	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(PlayerId()), 0)
+end
+
+function GiveCash()
+	local target, distance = GetClosestPlayer()
+    if target ~= nil and distance < 1 then
+        DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+        while (UpdateOnscreenKeyboard() == 0) do
+            DisableAllControlActions(0)
+            Wait(0)
+        end
+        if (GetOnscreenKeyboardResult()) then
+            TriggerServerEvent("bank:givecash", GetPlayerServerId(target), GetOnscreenKeyboardResult())
+        end
+    end
 end
 
 function Menotter()

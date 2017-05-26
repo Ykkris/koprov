@@ -2,7 +2,7 @@ RegisterServerEvent('chatCommandEntered')
 RegisterServerEvent('chatMessageEntered')
 
 -- Test if message is one of there commands 
-allowed_commands = {'/givecash', '/transfert', '/tow'}
+allowed_commands = {'/transfert', '/tow'}
 function isAllowedCommand(message)
     allowed = false
     for i,c in pairs(allowed_commands) do
