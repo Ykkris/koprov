@@ -13,7 +13,7 @@ AddEventHandler('bucheron:s_camionb', function()
     local player = user.identifier
     local namejob = nameJob(player)
     -- NAME OF YOUR JOB
-    if (namejob == "Bûcheron" or namejob=="Mineur") then
+    if (namejob == "Bûcheron" or namejob=="Mineur" or namejob=="Fermier") then
       TriggerClientEvent('bucheron:c_camionb', source)
       TriggerClientEvent('worked', source)
     else
@@ -28,7 +28,7 @@ AddEventHandler('bucheron:s_camionc', function()
     local player = user.identifier
     local namejob = nameJob(player)
     -- NAME OF YOUR JOB
-    if (namejob == "Bûcheron" or namejob=="Mineur") then
+    if (namejob == "Bûcheron" or namejob=="Mineur" or namejob=="Fermier") then
       TriggerClientEvent('bucheron:c_camionc', source)
       TriggerClientEvent('worked', source)
     else
