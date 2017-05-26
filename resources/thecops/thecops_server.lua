@@ -135,7 +135,7 @@ AddEventHandler('police:enService', function()
 	if next(inServiceCops) then
 		servingCops = true
 	end
-	TriggerClientEvent("services:cbcopconnected", servingCops)
+	TriggerClientEvent("services:cbcopconnected", source, servingCops)
 end)
 
 RegisterServerEvent('police:checkService')
