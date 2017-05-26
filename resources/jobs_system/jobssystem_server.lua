@@ -84,7 +84,9 @@ TriggerEvent('es:addAdminCommand', 'jobadd', 100000, function(source, args, user
       local player = tonumber(args[2])
       local id = tonumber(args[3])
       local nameJob = nameJob(id)
-      updatejob(player, id)
+      MySQL:executeQuery("UPDATE users SET `job`='@value' WHERE identifier = '@identifier'", {['@value'] = id, ['@identifier'] = player})
+      TriggerClientEvent("recolt:updateJobs", player, job)
+      TriggerClientEvent("service:updateJobs", player, job)
       --TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Votre métier est maintenant : ".. nameJob)
       TriggerClientEvent("jobssystem:updateJob", player, nameJob)
     else

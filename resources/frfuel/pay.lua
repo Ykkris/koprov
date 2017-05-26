@@ -24,25 +24,18 @@ RegisterServerEvent("frfuel:fuelAdded")
 RegisterServerEvent("essence:payer") -- IL FAUDRAIT AUSSI VERIFIER S'IL/ELLE EST EN SERVICE
 AddEventHandler("essence:payer", function(litres) -- source, litres en float
   local prix = math.ceil(litres)
-  TriggerEvent('police:checkService', source, function(inserv)
-    TriggerEvent('es:getPlayerFromId', source, function(user)
+  TriggerEvent('es:getPlayerFromId', source, function(user)
 
-      local player = user.identifier
-      local copinservice = inserv
-      local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
-      local resultat = MySQL:getResults(req, {'job'}, "identifier")
-      print(tostring(resultat[1].job))
-      if (3 == resultat[1].job) or (2 == resultat[1].job) and (copinservice)  then
-        retour = true
-      else 
-        retour = false
-      end        
-      if retour then
-        --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Facture prise en charge par l'etat !")
-        TriggerClientEvent("pNotify:SendNotification", source, { text = "Facture de <b style='color:green'>".. prix.."$</b> prise en charge pas l'état !", type = "info", timeout = 10000, layout = "centerLeft",})
-      else
-        user:removeMoney(prix)
-      end 
+    local player = user.identifier
+    service = user:getSessionVar("service")
+    local req = MySQL:executeQuery("SELECT job FROM users WHERE identifier = '@identifier' ", {['@identifier'] = player })
+    local resultat = MySQL:getResults(req, {'job'}, "identifier")
+    print(tostring(resultat[1].job))
+    if  (1 == service)  then
+      TriggerClientEvent("pNotify:SendNotification", source, { text = "Facture de <b style='color:green'>".. prix.."$</b> prise en charge pas l'état !", type = "info", timeout = 10000, layout = "centerLeft",})
+    else 
+      user:removeMoney(prix)
+    end        
   end)
 end)
-end)
+

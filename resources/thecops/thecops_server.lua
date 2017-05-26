@@ -199,16 +199,16 @@ TriggerEvent('es:addAdminCommand', 'copadd', 100000, function(source, args, user
 			local player = tonumber(args[2])
 			TriggerEvent("es:getPlayerFromId", player, function(target)
 				addCop(target.identifier)
-				TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Roger that !")
-				TriggerClientEvent('es_freeroam:notify', player, "CHAR_STEVE", 1, "LSPD", false, "Congrats, you're now a cop !")
+				TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Bien reçu !")
+				TriggerClientEvent('es_freeroam:notify', player, "CHAR_STEVE", 1, "LSPD", false, "Felicitations, vous êtes désormais policier !")
 				TriggerClientEvent('police:nowCop', player)
 			end)
 		else
-			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player with this ID !")
+			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Aucun joueur avec cet ID !")
 		end
 	end
 end, function(source, args, user) 
-	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You don't have the permission to do this !")
+	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Tu n'as pas la permission de faire cela !")
 end)
 
 TriggerEvent('es:addAdminCommand', 'coprem', 100000, function(source, args, user) 
@@ -219,8 +219,8 @@ TriggerEvent('es:addAdminCommand', 'coprem', 100000, function(source, args, user
 			local player = tonumber(args[2])
 			TriggerEvent("es:getPlayerFromId", player, function(target)
 				remCop(target.identifier)
-				TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Roger that !")
-				TriggerClientEvent('es_freeroam:notify', player, "CHAR_STEVE", 1, "LSPD", false, "You're no longer a cop !")
+				TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Bien reçu !")
+				TriggerClientEvent('es_freeroam:notify', player, "CHAR_STEVE", 1, "LSPD", false, "Vous n'etes plus policier !")
 				TriggerClientEvent('police:noLongerCop', player)
 			end)
 		else
