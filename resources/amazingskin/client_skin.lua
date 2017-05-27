@@ -31,7 +31,7 @@ local c_options = {
     helmet = 0,
     helmet_txt = 0,
     glasses = 0,
-    glasses_txt = 0
+    glasses_txt = 0,
     piercing = 0,
     piercing_txt = 0
 }
@@ -294,7 +294,7 @@ end
 
 RegisterNetEvent("mm:Customisationisagogogo")
 AddEventHandler("mm:Customisationisagogogo",function()
-    Customisation()
+    GCustomisation()
     mp_check = true
 end)
 
@@ -360,11 +360,11 @@ end
 
 function Accessories()
     texture_help = false
-    options.menu_subtitle = "Accessories"
+    options.menu_subtitle = "Male Accessories"
     ClearMenu()
     Menu.addButton("Helmet/Hats", "HelmetMenu")
     Menu.addButton("Glasses", "GlassesMenu")
-    Menu.addButton("Earings", "PercingMenu")
+    Menu.addButton("Earrings", "PiercingMenu")
     Menu.addButton("Masks", "MaskMenu")
     Menu.addButton("Remove Accessories", "RemoveAccessories")
     Menu.addButton("Return","Customisation",nil)
@@ -403,11 +403,11 @@ function FRemoveAccessories()
 end
 
 function riphat()
-    c_options.helmet = 0
+    c_options.helmet = 240
     ClearPedProp(GetPlayerPed(-1),0)
 end
 function ripglasses()
-    c_options.glasses = 0
+    c_options.glasses = 240
     ClearPedProp(GetPlayerPed(-1),1)
 end
 function ripearrings()

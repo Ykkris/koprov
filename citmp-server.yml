@@ -19,7 +19,7 @@ AutoStartResources:
     - assets
     - garages
     - banking
-    - model_menu
+    - amazingskin
     - vdk_inventory
     - vdk_recolt
     - paycheck
