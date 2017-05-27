@@ -1,5 +1,6 @@
 --Variables
 local recoltDistance = 5
+local fishingRecoltDistance = 200
 local timeForRecolt = 4000 --1000 for 1 second
 --
 
@@ -83,7 +84,7 @@ function IsNear()
 				local distance_field = GetDistanceBetweenCoords(item.fx, item.fy, item.fz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
 				local distance_treatment = GetDistanceBetweenCoords(item.tx, item.ty, item.tz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
 				local distance_seller = GetDistanceBetweenCoords(item.sx, item.sy, item.sz, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
-				if (distance_field <= recoltDistance) then
+				if (distance_field <= recoltDistance or (distance_field <= fishingRecoltDistance and jobId == 8)) then
 					--jobId = k
 					return 'field', item
 				elseif (distance_treatment <= recoltDistance) then
