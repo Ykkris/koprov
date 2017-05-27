@@ -7,14 +7,12 @@ AutoStartResources:
     - essentialmode
     - es_admin
     - es_freeroam
-    # - esx_skin
     - chat
     - spawnmanager
     - fivem-map-skater
     - baseevents
     - rconlog
     - hardcap # prevents the game from breaking
-    # - skinchanger
     - kmh
     - emergency
     - loadingscreen
@@ -35,7 +33,7 @@ AutoStartResources:
     - watermark
     - voip
     - tow
-    - towgarage
+    - towveh
     - policegarage
     - ulock
     - imenu
@@ -43,7 +41,7 @@ AutoStartResources:
     - thecops
     - cotcot
     - frfuel
-    - bucherongarage
+    - recoltveh
     - taxi2
     - pecheurgarage
     - mazone
@@ -51,7 +49,6 @@ AutoStartResources:
     - Iphone
     - afkkick
     - compass
-    # - SelCloth
     - interiors
     - mymairie
     - rent
