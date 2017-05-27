@@ -430,11 +430,6 @@ function ButtonSelected(button)
 	end
 end
 
-
-AddEventHandler("playerSpawned", function(spawn)
-    TriggerServerEvent("garages:PutVehFourGarages",source)
-end)
-
 AddEventHandler('FinishCheckForVeh', function(vehicle)
 	boughtcar = true
 	CloseCreator(vehicle)
@@ -477,6 +472,7 @@ local firstspawn = 0
 	AddEventHandler('playerSpawned', function(spawn)
 	if firstspawn == 0 then
 		ShowGarageBlips(true)
+		TriggerServerEvent("garages:PutVehFourGarages",source)
 		firstspawn = 1
 	end
 end)
