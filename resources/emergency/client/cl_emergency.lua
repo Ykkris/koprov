@@ -188,12 +188,10 @@ AddEventHandler('es_em:callTaken',
 end)
 
 RegisterNetEvent('es_em:cl_setJobId')
-AddEventHandler('es_em:cl_setJobId',
-	function(p_jobId)
-		jobId = p_jobId
-		GetService()
-	end
-)
+AddEventHandler('es_em:cl_setJobId', function(p_jobId)
+	jobId = p_jobId
+	GetService()
+end)
 
 --[[
 ################################

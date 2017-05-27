@@ -113,6 +113,11 @@ AddEventHandler('playerDropped', function()
   )
 end)
 
+RegisterServerEvent('es_em:healPlayer')
+AddEventHandler('es_em:healPlayer', function(target_id)
+  TriggerClientEvent('es_em:healPlayer', target_id)
+end)
+
 function GetJobId(source)
   local jobId = -1
 

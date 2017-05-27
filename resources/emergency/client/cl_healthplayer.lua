@@ -162,6 +162,13 @@ AddEventHandler('es_em:cl_resurectPlayer',
 	end
 )
 
+RegisterNetEvent('es_em:healPlayer')
+AddEventHandler('es_em:healPlayer', function()
+	local player = GetPlayerPed(-1)
+	SetEntityHealth(player, GetEntityMaxHealth(player))
+end)
+
+
 --[[
 ################################
         BUSINESS METHODS
