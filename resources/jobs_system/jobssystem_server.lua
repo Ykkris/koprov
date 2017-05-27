@@ -1,6 +1,9 @@
 require "resources/essentialmode/lib/MySQL"
 -- MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
+permission = {superadmin = 10, user = 0, admin = 9, moderateur = 6, helper = 4 -- je met ça en terme d'indiquation, j'utilise que le superadmin ici.
+  }
+
 RegisterServerEvent("jobs:wichone") -- return le job au client
 
 function nameJob(id)
@@ -99,7 +102,7 @@ end) --]]
 
 TriggerEvent('es:addCommand', 'jobadd', 
   function(source, args, user)
-    if user.group ~= "owner" then
+    if user.permission >= permission.superadmin then
       TriggerClientEvent("Iphone:notif", source,"Tu n'es pas Administrateur")
       CancelEvent()
     else
