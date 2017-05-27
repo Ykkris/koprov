@@ -13,8 +13,8 @@ function LoadUser(identifier, source, new)
 	local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@name'", {['@name'] = identifier})
 	local result = MySQL:getResults(executed_query, {'permission_level', 'money', 'dirty_money', 'identifier', 'group'}, "identifier")
 
-	--group = groups[result[1].group]
-	group = result[1].group
+	group = groups[result[1].group]
+	--group = result[1].group
 	Users[source] = Player(source, result[1].permission_level, result[1].money, result[1].dirty_money, result[1].identifier, group)
 
 	TriggerEvent('es:playerLoaded', source, Users[source])
