@@ -217,6 +217,11 @@ function SpawnAmbulance()
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
 	local spawned_car = CreateVehicle(vehicle, coords, 406.871, -1427.79, 29.4387, true, false)
 
+	SetVehicleMod(spawned_car, 11, 2)
+	SetVehicleMod(spawned_car, 12, 2)
+	SetVehicleMod(spawned_car, 13, 2)
+	SetVehicleEnginePowerMultiplier(spawned_car, 10.0)
+
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "MEDIC")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)

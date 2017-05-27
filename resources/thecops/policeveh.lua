@@ -361,7 +361,6 @@ Citizen.CreateThread(function()
 									while not HasModelLoaded(hash) do
 										Citizen.Wait(0)
 										drawTxt("~b~Loading...",0,1,0.5,0.5,1.5,255,255,255,255)
-
 									end
 									local veh = CreateVehicle(hash,plyCoords["x"], plyCoords["y"], plyCoords["z"],90.0,false,false)
 									while not DoesEntityExist(veh) do
@@ -371,8 +370,8 @@ Citizen.CreateThread(function()
 									FreezeEntityPosition(veh,true)
 									SetEntityInvincible(veh,true)
 									SetVehicleDoorsLocked(veh,4)
-									--SetEntityCollision(veh,false,false)
-									TaskWarpPedIntoVehicle(LocalPed(),veh,-1)
+									SetEntityCollision(veh,false,false)
+									-- TaskWarpPedIntoVehicle(LocalPed(),veh,-1)
 									for i = 0,24 do
 										SetVehicleModKit(veh,0)
 										RemoveVehicleMod(veh,i)
