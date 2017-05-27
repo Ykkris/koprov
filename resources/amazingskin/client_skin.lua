@@ -11,7 +11,6 @@ local options = {
     color_g = 76,
     color_b = 60,
 }
-
 local c_options = {
     armour = 0,   
     armour_txt = 0,
@@ -33,8 +32,9 @@ local c_options = {
     helmet_txt = 0,
     glasses = 0,
     glasses_txt = 0
+    piercing = 0,
+    piercing_txt = 0
 }
-
 mp_check = false
 shirt_help = false
 model_info = false
@@ -99,7 +99,12 @@ AddEventHandler("mm:changeeverything_spawn",function(user)
     c_options.helmet_txt = user.helmet_txt
     c_options.glasses = user.glasses
     c_options.glasses_txt = user.glasses_txt
-    SetPedComponentVariation(GetPlayerPed(-1), 0, tonumber(user.head), 0, 0) 
+    c_options.piercing = user.piercing
+    c_options.piercing_txt = user.piercing_txt
+
+    --SetPedComponentVariation(GetPlayerPed(-1), 0, tonumber(user.head), 0, 0) 
+    --The laziest way possible of doing this ^_^
+    SetPedHeadBlendData(GetPlayerPed(-1), tonumber(c_options.head), tonumber(c_options.head), 0, tonumber(c_options.head), tonumber(c_options.head), 0, 0.5, 0.5, 0.0, false)
     SetPedComponentVariation(GetPlayerPed(-1), 1, tonumber(user.mask), tonumber(user.mask_txt), 0)
     SetPedComponentVariation(GetPlayerPed(-1), 2, tonumber(user.hair), tonumber(user.hcolour), 0)
     SetPedComponentVariation(GetPlayerPed(-1), 6, tonumber(user.shoe), tonumber(user.shoe_txt), 0)
@@ -112,11 +117,13 @@ AddEventHandler("mm:changeeverything_spawn",function(user)
     SetPedComponentVariation(GetPlayerPed(-1), 9, tonumber(user.armour), tonumber(user.armour_txt), 0)
     SetPedPropIndex(GetPlayerPed(-1), 0, tonumber(user.helmet), tonumber(user.helmet_txt), 0)
     SetPedPropIndex(GetPlayerPed(-1), 1, tonumber(user.glasses), tonumber(user.glasses_txt), 0)
+    SetPedPropIndex(GetPlayerPed(-1), 2, tonumber(user.piercing), 0, 0)
 end)
-
 RegisterNetEvent("mm:changeeverything") --Sets mask and texture when spawned
 AddEventHandler("mm:changeeverything",function(user)
-    SetPedComponentVariation(GetPlayerPed(-1), 0, tonumber(user.head), 0, 0) 
+	--SetPedComponentVariation(GetPlayerPed(-1), 0, tonumber(user.head), 0, 0)
+    --The laziest way possible of doing this ^_^
+    SetPedHeadBlendData(GetPlayerPed(-1), tonumber(c_options.head), tonumber(c_options.head), 0, tonumber(c_options.head), tonumber(c_options.head), 0, 0.5, 0.5, 0.0, false) 
     SetPedComponentVariation(GetPlayerPed(-1), 1, tonumber(user.mask), tonumber(user.mask_txt), 0)
     SetPedComponentVariation(GetPlayerPed(-1), 2, tonumber(user.hair), tonumber(user.hcolour), 0)
     SetPedComponentVariation(GetPlayerPed(-1), 6, tonumber(user.shoe), tonumber(user.shoe_txt), 0)
@@ -129,6 +136,83 @@ AddEventHandler("mm:changeeverything",function(user)
     SetPedComponentVariation(GetPlayerPed(-1), 9, tonumber(user.armour), tonumber(user.armour_txt), 0)
     SetPedPropIndex(GetPlayerPed(-1), 0, tonumber(user.helmet), tonumber(user.helmet_txt), 0)
     SetPedPropIndex(GetPlayerPed(-1), 1, tonumber(user.glasses), tonumber(user.glasses_txt), 0)
+    SetPedPropIndex(GetPlayerPed(-1), 2, tonumber(user.piercing), 0, 0)
+    --SetPedHeadBlendData(Ped ped, int shapeFirstID, int shapeSecondID, int shapeThirdID, int skinFirstID, int skinSecondID, int skinThirdID, float shapeMix, float skinMix, float thirdMix, BOOL isParent)
+   --[[ if(user.head == 2)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 23, 3, 0, 23, 3, 0, 0.5, 0.5, 0.0, false)
+    end
+    if(user.head == 3)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 35, 15, 0, 35, 15, 0, 0.5, 0.5, 0.0, false)
+    end
+    if(user.head == 14)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 35, 24, 0, 35, 24, 0, 0.5, 0.5, 0.0, false)
+    end
+    elseif(user.head == 4)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 25, 5, 0, 25, 5, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 5)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 29, 11, 0, 29, 11, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 6)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 27, 18, 0, 27, 18, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 7)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 39, 17, 0, 39, 17, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 8)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 30, 19, 0, 30, 19, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 9)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 29, 19, 0, 29, 19, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 10)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 25, 5, 0, 25, 5, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 11)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 26, 19, 0, 26, 19, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 14)then
+        SetPedHeadBlendData(GetPlayerPed(-1), 35, 24, 0, 35, 24, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 15)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 16)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 17)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 18)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 19)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 20)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 23)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 24)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 25)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 26)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 27)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 28)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 29)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 30)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 31)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 32)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 35)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 36)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 37)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 38)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false)
+    elseif(user.head == 39)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false) 
+    elseif(user.head == 40)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false) 
+    elseif(user.head == 41)then
+        SetPedHeadBlendData(GetPlayerPed(-1), FemaleFace, MaleFace, 0, FemaleFace, MaleFace, 0, 0.5, 0.5, 0.0, false) --34
+    else
+    end--]]
 end)
 
 function changemodel(model)
@@ -243,6 +327,16 @@ function Main()
     Menu.addButton("Personnalisation", "checkCustomisation", nil)
 end
 
+function GCustomisation()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_title = "Gender?"
+    options.menu_subtitle = "Categories"
+    ClearMenu()
+    Menu.addButton("Male", "Customisation", nil)
+    Menu.addButton("Female", "FCustomisation", nil)
+    Menu.addButton("Return", "Main", nil)
+end
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Others Menu        Page 1/2
 --Multiplayer Models
@@ -255,7 +349,6 @@ function MPMenu()
     Menu.addButton(mp_models[Menu.buttonCount+1], "savempmodel", mp_models[Menu.buttonCount+1])
     Menu.addButton("Return","Main",nil)
 end
-
 --[[
      _                                    _           
     / \   ___ ___ ___  ___ ___  ___  _ __(_) ___  ___ 
@@ -271,10 +364,22 @@ function Accessories()
     ClearMenu()
     Menu.addButton("Helmet/Hats", "HelmetMenu")
     Menu.addButton("Glasses", "GlassesMenu")
-    --Menu.addButton("Earings", "PercingMenu")
+    Menu.addButton("Earings", "PercingMenu")
     Menu.addButton("Masks", "MaskMenu")
     Menu.addButton("Remove Accessories", "RemoveAccessories")
     Menu.addButton("Return","Customisation",nil)
+end
+
+function FAccessories()
+    texture_help = false
+    options.menu_subtitle = "Female Accessories"
+    ClearMenu()
+    Menu.addButton("Helmet/Hats", "FemaleHelmetMenu")
+    Menu.addButton("Glasses", "FemaleGlassesMenu")
+    Menu.addButton("Earrings", "FemalePiercingMenu")
+    Menu.addButton("Masks", "FMaskMenu")
+    Menu.addButton("Remove Accessories", "FRemoveAccessories")
+    Menu.addButton("Return","FCustomisation",nil)
 end
 
 function RemoveAccessories()
@@ -285,6 +390,16 @@ function RemoveAccessories()
     Menu.addButton("Remove earrings", "ripearrings",nil)
     Menu.addButton("Remove mask", "ripmask",nil)
     Menu.addButton("Return","Accessories",nil)
+end
+
+function FRemoveAccessories()
+    options.menu_subtitle = "Accessories"
+    ClearMenu()
+    Menu.addButton("Remove hat", "riphat",nil)
+    Menu.addButton("Remove glasses", "ripglasses",nil)
+    Menu.addButton("Remove earrings", "ripearrings",nil)
+    Menu.addButton("Remove mask", "ripmask",nil)
+    Menu.addButton("Return","FAccessories",nil)
 end
 
 function riphat()
@@ -302,7 +417,6 @@ function ripmask()
     c_options.mask = 0
     SetPedComponentVariation(GetPlayerPed(-1), 1, tonumber(c_options.mask), 0, 0)
 end
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Mask Menu                     Page 1/9
 --Masks
@@ -310,7 +424,7 @@ end
 
 function MaskMenu()
     texture_help = true
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 1 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "savemask", ass.masks_pg1[Menu.buttonCount+1])
@@ -330,7 +444,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu2()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 2 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "savemask", ass.masks_pg2[Menu.buttonCount+1])
@@ -350,7 +464,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu3()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 3 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "savemask", ass.masks_pg3[Menu.buttonCount+1])
@@ -370,7 +484,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu4()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 4 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "savemask", ass.masks_pg4[Menu.buttonCount+1])
@@ -390,7 +504,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu5()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 5 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "savemask", ass.masks_pg5[Menu.buttonCount+1])
@@ -410,7 +524,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu6()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 6 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "savemask", ass.masks_pg6[Menu.buttonCount+1])
@@ -422,7 +536,7 @@ function MaskMenu6()
     Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "savemask", ass.masks_pg6[Menu.buttonCount+1])
     Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "savemask", ass.masks_pg6[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaskMenu7",nil)
-    Menu.addButton("Previous Page","MaskMenu6",nil)
+    Menu.addButton("Previous Page","MaskMenu5",nil)
     Menu.addButton("Return","Accessories",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -430,7 +544,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu7()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 7 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "savemask", ass.masks_pg7[Menu.buttonCount+1])
@@ -450,7 +564,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu8()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 8 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "savemask", ass.masks_pg8[Menu.buttonCount+1])
@@ -470,7 +584,7 @@ end
 --Masks
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaskMenu9()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Masks                   Page 9 of 9"
     ClearMenu()
     Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "savemask", ass.masks_pg9[Menu.buttonCount+1])
@@ -490,7 +604,7 @@ end
 --Textures
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function maskTextures()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Textures                Page 1 of 4"
     ClearMenu()
     Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
@@ -510,7 +624,7 @@ end
 --Textures
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function maskTextures2()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Textures                Page 2 of 4"
     ClearMenu()
     Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
@@ -530,7 +644,7 @@ end
 --Textures
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function maskTextures3()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Textures                Page 3 of 4"
     ClearMenu()
     Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
@@ -550,7 +664,7 @@ end
 --Textures
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function maskTextures4()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Textures                Page 4 of 4"
     ClearMenu()
     Menu.addButton(ass.txt_pg4[Menu.buttonCount+1], "savetxt", ass.txt_pg4[Menu.buttonCount+1])
@@ -558,6 +672,262 @@ function maskTextures4()
     Menu.addButton("Next Page","maskTextures",nil)
     Menu.addButton("Previous Page","maskTextures3",nil)
     Menu.addButton("Return","MaskMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 1/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function FMaskMenu()
+    texture_help = true
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 1 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg1[Menu.buttonCount+1], "fsavemask", ass.masks_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu2",nil)
+    Menu.addButton("Previous Page","FMaskMenu9",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 2/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 2 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg2[Menu.buttonCount+1], "fsavemask", ass.masks_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu3",nil)
+    Menu.addButton("Previous Page","FMaskMenu",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 3/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 3 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg3[Menu.buttonCount+1], "fsavemask", ass.masks_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","MaskMenu4",nil)
+    Menu.addButton("Previous Page","MaskMenu2",nil)
+    Menu.addButton("Return","Accessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 4/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu4()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 4 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg4[Menu.buttonCount+1], "fsavemask", ass.masks_pg4[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu5",nil)
+    Menu.addButton("Previous Page","FMaskMenu3",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 5/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu5()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 5 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg5[Menu.buttonCount+1], "fsavemask", ass.masks_pg5[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu6",nil)
+    Menu.addButton("Previous Page","FMaskMenu4",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 6/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu6()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 6 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg6[Menu.buttonCount+1], "fsavemask", ass.masks_pg6[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu7",nil)
+    Menu.addButton("Previous Page","FMaskMenu5",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 7/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu7()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 7 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg7[Menu.buttonCount+1], "fsavemask", ass.masks_pg7[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu8",nil)
+    Menu.addButton("Previous Page","FMaskMenu6",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 8/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu8()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 8 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg8[Menu.buttonCount+1], "fsavemask", ass.masks_pg8[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu9",nil)
+    Menu.addButton("Previous Page","FMaskMenu7",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 9/9
+--Masks
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FMaskMenu9()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Masks                   Page 9 of 9"
+    ClearMenu()
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton(acc.masks_pg9[Menu.buttonCount+1], "fsavemask", ass.masks_pg9[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FMaskMenu",nil)
+    Menu.addButton("Previous Page","FMaskMenu8",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 1/4
+--Textures
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fmaskTextures()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 1 of 4"
+    ClearMenu()
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg1[Menu.buttonCount+1], "savetxt", ass.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fmaskTextures2",nil)
+    Menu.addButton("Previous Page","fmaskTextures4",nil)
+    Menu.addButton("Return","FMaskMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 2/4
+--Textures
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fmaskTextures2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 2 of 4"
+    ClearMenu()
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg2[Menu.buttonCount+1], "savetxt", ass.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fmaskTextures3",nil)
+    Menu.addButton("Previous Page","fmaskTextures",nil)
+    Menu.addButton("Return","FMaskMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 3/4
+--Textures
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fmaskTextures3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 3 of 4"
+    ClearMenu()
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg3[Menu.buttonCount+1], "savetxt", ass.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fmaskTextures4",nil)
+    Menu.addButton("Previous Page","fmaskTextures2",nil)
+    Menu.addButton("Return","FMaskMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mask Menu Female                     Page 4/4
+--Textures
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fmaskTextures4()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 4 of 4"
+    ClearMenu()
+    Menu.addButton(ass.txt_pg4[Menu.buttonCount+1], "savetxt", ass.txt_pg4[Menu.buttonCount+1])
+    Menu.addButton(ass.txt_pg4[Menu.buttonCount+1], "savetxt", ass.txt_pg4[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fmaskTextures",nil)
+    Menu.addButton("Previous Page","fmaskTextures3",nil)
+    Menu.addButton("Return","FMaskMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Mask Menu             --Credit to izio38 for helping me with one of my annoying errors :)
@@ -569,6 +939,12 @@ function savemask(mask) --Sets Players mask in database
     maskTextures()
 end
 
+function fsavemask(mask) --Sets Players mask in database
+    c_options.mask = mask
+    SetPedComponentVariation(GetPlayerPed(-1), 1, tonumber(c_options.mask), 0, 0)
+    fmaskTextures()
+end
+
 function savetxt(mask_txt) --Sets mask texture in database
     c_options.mask_txt = mask_txt
     SetPedComponentVariation(GetPlayerPed(-1), 1, tonumber(c_options.mask), tonumber(c_options.mask_txt), 0)
@@ -578,6 +954,7 @@ end
 --Helmet Menu
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HelmetMenu()
+    texture_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Helmets                 Page 1 of 5"
     ClearMenu()
@@ -661,15 +1038,109 @@ function HelmetMenu5()
     ClearMenu()
     Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
     Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
-    Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
-    Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
-    Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
-    Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
-    Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
-    Menu.addButton(hat.name5[Menu.buttonCount+1], "sethelmet", hat.drawable5[Menu.buttonCount+1])
     Menu.addButton("Next Page","HelmetMenu",nil)
     Menu.addButton("Previous Page","HelmetMenu4",nil)
     Menu.addButton("Return","Accessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 1/5
+--Helmets Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleHelmetMenu()
+    texture_help = true
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Helmets                 Page 1 of 5"
+    ClearMenu()
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(hat.fname[Menu.buttonCount+1], "fsethelmet", hat.fdrawable[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHelmetMenu2",nil)
+    Menu.addButton("Previous Page","FemaleHelmetMenu5",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 2/5
+--Helmets Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleHelmetMenu2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Helmets                 Page 2 of 5"
+    ClearMenu()
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(hat.fname2[Menu.buttonCount+1], "fsethelmet", hat.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHelmetMenu3",nil)
+    Menu.addButton("Previous Page","FemaleHelmetMenu",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 3/5
+--Helmets Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleHelmetMenu3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Helmets                 Page 3 of 5"
+    ClearMenu()
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(hat.fname3[Menu.buttonCount+1], "fsethelmet", hat.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHelmetMenu4",nil)
+    Menu.addButton("Previous Page","FemaleHelmetMenu2",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 4/5
+--Helmets Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleHelmetMenu4()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Helmets                 Page 4 of 5"
+    ClearMenu()
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(hat.fname4[Menu.buttonCount+1], "fsethelmet", hat.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHelmetMenu5",nil)
+    Menu.addButton("Previous Page","FemaleHelmetMenu3",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 5/5
+--Helmets Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleHelmetMenu5()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Helmets                 Page 5 of 5"
+    ClearMenu()
+    Menu.addButton(hat.fname5[Menu.buttonCount+1], "fsethelmet", hat.fdrawable5[Menu.buttonCount+1])
+    Menu.addButton(hat.fname5[Menu.buttonCount+1], "fsethelmet", hat.fdrawable5[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHelmetMenu",nil)
+    Menu.addButton("Previous Page","FemaleHelmetMenu4",nil)
+    Menu.addButton("Return","FAccessories",nil)
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Accessories          Page 1/2
@@ -690,7 +1161,7 @@ function helmetTextures()
     Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
     Menu.addButton("Next Page","helmetTextures2",nil)
     Menu.addButton("Previous Page","helmetTextures",nil)
-    Menu.addButton("Return","HelmetMenu",nil)
+    Menu.addButton("Return to male section","HelmetMenu",nil)
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Accessories          Page 2/2
@@ -710,7 +1181,50 @@ function helmetTextures2()
     Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
     Menu.addButton("Next Page","helmetTextures",nil)
     Menu.addButton("Previous Page","helmetTextures",nil)
-    Menu.addButton("Return","HelmetMenu",nil)
+    Menu.addButton("Return to male section","HelmetMenu",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 1/2
+--Helmet Menu
+--Textures
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fhelmetTextures()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Helmet Textures         Page 1 of 2"
+    ClearMenu()
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton(hat.texture[Menu.buttonCount+1], "sethelmet_txt", hat.texture[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fhelmetTextures2",nil)
+    Menu.addButton("Previous Page","fhelmetTextures",nil)
+    Menu.addButton("Return","FemaleHelmetMenu",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 2/2
+--Helmet Menu
+--Textures
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fhelmetTextures2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Helmet textures         Page 2 of 2"
+    ClearMenu()
+    Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
+    Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
+    Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
+    Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
+    Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
+    Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
+    Menu.addButton(hat.texture2[Menu.buttonCount+1], "sethelmet_txt", hat.texture2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fhelmetTextures",nil)
+    Menu.addButton("Previous Page","fhelmetTextures",nil)
+    Menu.addButton("Return","FemaleHelmetMenu",nil)
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Hat/Helmet Functions
@@ -722,6 +1236,13 @@ function sethelmet(helmet)
     helmetTextures()
 end
 
+function fsethelmet(helmet)
+    c_options.helmet = helmet
+    --c_options.helmet_txt = helmet_txt
+    SetPedPropIndex(GetPlayerPed(-1), 0, tonumber(c_options.helmet), 0, 0)
+    fhelmetTextures()
+end
+
 function sethelmet_txt(helmet_txt)
     c_options.helmet_txt = helmet_txt
     SetPedPropIndex(GetPlayerPed(-1), 0, tonumber(c_options.helmet), tonumber(c_options.helmet_txt), 0)
@@ -731,6 +1252,7 @@ end
 --Glasses Menu
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function GlassesMenu()
+    texture_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Glasses                 Page 1 of 3"
     ClearMenu()
@@ -783,8 +1305,124 @@ function GlassesMenu3()
     Menu.addButton("Return","Accessories",nil)
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 1/4
+--Glasses Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleGlassesMenu()
+    texture_help = true
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Glasses                 Page 1 of 4"
+    ClearMenu()
+    Menu.addButton(glasses.fname[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleGlassesMenu2",nil)
+    Menu.addButton("Previous Page","FemaleGlassesMenu4",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 2/4
+--Glasses Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleGlassesMenu2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Glasses                 Page 2 of 4"
+    ClearMenu()
+    Menu.addButton(glasses.fname2[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname2[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname2[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname2[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname2[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleGlassesMenu3",nil)
+    Menu.addButton("Previous Page","FemaleGlassesMenu",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 3/4
+--Glasses Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleGlassesMenu3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Glasses                 Page 3 of 4"
+    ClearMenu()
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname3[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleGlassesMenu4",nil)
+    Menu.addButton("Previous Page","FemaleGlassesMenu2",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 4/4
+--Glasses Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleGlassesMenu4()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Glasses                 Page 4 of 4"
+    ClearMenu()
+    Menu.addButton(glasses.fname4[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton(glasses.fname4[Menu.buttonCount+1], "fsetglasses", glasses.fdrawable4[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleGlassesMenu",nil)
+    Menu.addButton("Previous Page","FemaleGlassesMenu3",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Accessories          Page 1/2
 --Glasses Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fglassesTextures()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Glasses textures        Page 2 of 2"
+    ClearMenu()
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture[Menu.buttonCount+1], "setglasses_txt", glasses.texture[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fglassesTextures2",nil)
+    Menu.addButton("Previous Page","fglassesTextures2",nil)
+    Menu.addButton("Return","FemaleGlassesMenu",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 2/2
+--Glasses Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fglassesTextures2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Glasses textures        Page 2 of 2"
+    ClearMenu()
+    Menu.addButton(glasses.texture2[Menu.buttonCount+1], "setglasses_txt", glasses.texture2[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture2[Menu.buttonCount+1], "setglasses_txt", glasses.texture2[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture2[Menu.buttonCount+1], "setglasses_txt", glasses.texture2[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture2[Menu.buttonCount+1], "setglasses_txt", glasses.texture2[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture2[Menu.buttonCount+1], "setglasses_txt", glasses.texture2[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture2[Menu.buttonCount+1], "setglasses_txt", glasses.texture2[Menu.buttonCount+1])
+    Menu.addButton(glasses.texture2[Menu.buttonCount+1], "setglasses_txt", glasses.texture2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fglassesTextures",nil)
+    Menu.addButton("Previous Page","fglassesTextures",nil)
+    Menu.addButton("Return","FemaleGlassesMenu",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 1/2
+--Glasses Menu
+--male
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function glassesTextures()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
@@ -805,6 +1443,7 @@ end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Accessories          Page 2/2
 --Glasses Menu
+--male
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function glassesTextures2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
@@ -821,9 +1460,17 @@ function glassesTextures2()
     Menu.addButton("Previous Page","glassesTextures",nil)
     Menu.addButton("Return","GlassesMenu",nil)
 end
-
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories  
+--Glasses Functions
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function setglasses(glasses)
+    c_options.glasses = glasses
+    SetPedPropIndex(GetPlayerPed(-1), 1, tonumber(c_options.glasses), 0, 0)
+    glassesTextures()
+end
+
+function fsetglasses(glasses)
     c_options.glasses = glasses
     SetPedPropIndex(GetPlayerPed(-1), 1, tonumber(c_options.glasses), 0, 0)
     glassesTextures()
@@ -833,23 +1480,180 @@ function setglasses_txt(glasses_txt)
     c_options.glasses_txt = glasses_txt
    SetPedPropIndex(GetPlayerPed(-1), 1, tonumber(c_options.glasses), tonumber(c_options.glasses_txt), 0)
 end
-
-
-
-
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Hat, Earrings and Glasses
+--Accessories          Page 1/5
+--Piercing Menu
+--Male
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Credits to JcPires for this crap \/\/\/
-function setpercing()
-    SetPedPropIndex(GetPlayerPed(-1), 2, tonumber(c_options.percing), 0, 0)
+function PiercingMenu()
+    texture_help = true
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 1 of 5"
+    ClearMenu()
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton(ears.name[Menu.buttonCount+1], "setpiercing", ears.drawable[Menu.buttonCount+1])
+    Menu.addButton("Next Page","PiercingMenu2",nil)
+    Menu.addButton("Previous Page","PiercingMenu5",nil)
+    Menu.addButton("Return","Accessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 2/5
+--Piercing Menu
+--Male
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function PiercingMenu2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 2 of 5"
+    ClearMenu()
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.name2[Menu.buttonCount+1], "setpiercing", ears.drawable2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","PiercingMenu3",nil)
+    Menu.addButton("Previous Page","PiercingMenu",nil)
+    Menu.addButton("Return","Accessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 3/5
+--Piercing Menu
+--Male
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function PiercingMenu3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 3 of 5"
+    ClearMenu()
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.name3[Menu.buttonCount+1], "setpiercing", ears.drawable3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","PiercingMenu4",nil)
+    Menu.addButton("Previous Page","PiercingMenu2",nil)
+    Menu.addButton("Return","Accessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 4/5
+--Piercing Menu
+--Male
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function PiercingMenu4()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 4 of 5"
+    ClearMenu()
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton(ears.name4[Menu.buttonCount+1], "setpiercing", ears.drawable4[Menu.buttonCount+1])
+    Menu.addButton("Next Page","PiercingMenu5",nil)
+    Menu.addButton("Previous Page","PiercingMenu3",nil)
+    Menu.addButton("Return","Accessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 5/5
+--Piercing Menu
+--Male
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function PiercingMenu5()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 5 of 5"
+    ClearMenu()
+    Menu.addButton(ears.name5[Menu.buttonCount+1], "setpiercing", ears.drawable5[Menu.buttonCount+1])
+    Menu.addButton(ears.name5[Menu.buttonCount+1], "setpiercing", ears.drawable5[Menu.buttonCount+1])
+    Menu.addButton(ears.name5[Menu.buttonCount+1], "setpiercing", ears.drawable5[Menu.buttonCount+1])
+    Menu.addButton(ears.name5[Menu.buttonCount+1], "setpiercing", ears.drawable5[Menu.buttonCount+1])
+    Menu.addButton("Next Page","PiercingMenu",nil)
+    Menu.addButton("Previous Page","PiercingMenu4",nil)
+    Menu.addButton("Return","Accessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 1/3
+--Piercing Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemalePiercingMenu()
+    texture_help = true
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 1 of 3"
+    ClearMenu()
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton(ears.fname[Menu.buttonCount+1], "setpiercing", ears.fdrawable[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemalePiercingMenu2",nil)
+    Menu.addButton("Previous Page","FemalePiercingMenu3",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 2/3
+--Piercing Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemalePiercingMenu2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 2 of 3"
+    ClearMenu()
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton(ears.fname2[Menu.buttonCount+1], "setpiercing", ears.fdrawable2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemalePiercingMenu3",nil)
+    Menu.addButton("Previous Page","FemalePiercingMenu",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories          Page 3/3
+--Piercing Menu
+--Female
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemalePiercingMenu3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Piercing                Page 3 of 3"
+    ClearMenu()
+    Menu.addButton(ears.fname3[Menu.buttonCount+1], "setpiercing", ears.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.fname3[Menu.buttonCount+1], "setpiercing", ears.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton(ears.fname3[Menu.buttonCount+1], "setpiercing", ears.fdrawable3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemalePiercingMenu",nil)
+    Menu.addButton("Previous Page","FemalePiercingMenu2",nil)
+    Menu.addButton("Return","FAccessories",nil)
+end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Accessories  
+--Piercing Functions
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function setpiercing(piercing)
+    c_options.piercing = piercing
+    SetPedPropIndex(GetPlayerPed(-1), 2, tonumber(c_options.piercing), 0, 0)
 end
 
-function setpercing_txt()
-   SetPedPropIndex(GetPlayerPed(-1), 2, tonumber(c_options.percing), tonumber(c_options.percing_txt), 0)
+function setpiercing_txt(piercing_txt)
+    c_options.piercing_txt = piercing_txt
+    SetPedPropIndex(GetPlayerPed(-1), 2, tonumber(c_options.piercing), tonumber(c_options.piercing_txt), 0)
 end
-
 --[[
   ______                           _                 _               
  / _____)          _              (_)           _   (_)              
@@ -865,66 +1669,43 @@ function Customisation()
     options.menu_subtitle = "Customise your character"
     ClearMenu()
     Menu.addButton("Accessories", "Accessories")
-    --Menu.addButton("Head", "HeadMenu")
-    Menu.addButton("Head", "TempHeadMenu")
-    Menu.addButton("Hair", "HairMenu")
-    Menu.addButton("Shirt", "MainShirtMenu")
-    Menu.addButton("Undershirt", "UndershirtMenu")
-    Menu.addButton("Armour", "ArmourMenu")
+    Menu.addButton("Head", "HeadMenu")
+    Menu.addButton("Hair", "MaleHairMenu")
+    Menu.addButton("Shirt", "ShirtMenu")
+    Menu.addButton("Undershirt", "MaleUndershirtMenu")
+    Menu.addButton("Armour", "MaleArmourMenu")
     Menu.addButton("Hands", "HandsMenu")
-    Menu.addButton("Pants", "PantsMenu")
-    Menu.addButton("Shoes", "ShoeMenu")
-    Menu.addButton("Return","Main",nil)
+    Menu.addButton("Pants", "MalePantsMenu")
+    Menu.addButton("Shoes", "MaleShoeMenu")
+    Menu.addButton("Return","GCustomisation",nil)
+end
+
+function FCustomisation()
+    shirt_help = false
+    texture_help = false
+    options.menu_title = "Customisation"
+    options.menu_subtitle = "Customise your character"
+    ClearMenu()
+    Menu.addButton("Accessories", "FAccessories")
+    Menu.addButton("Head", "FemaleHeadMenu")
+    Menu.addButton("Hair", "FemaleHairMenu")
+    Menu.addButton("Shirt", "FemaleShirtMenu")
+    Menu.addButton("Undershirt", "FemaleUndershirtMenu")
+    Menu.addButton("Armour", "FemaleArmourMenu")
+    Menu.addButton("Hands", "FHandsMenu")
+    Menu.addButton("Pants", "FemalePantsMenu")
+    Menu.addButton("Shoes", "FemaleShoeMenu")
+    Menu.addButton("Return","GCustomisation",nil)
 end
 --Females 34,45,33,21
 --Males 1,12,13,22,42,43,44
-function TempHeadMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Gender"
-    ClearMenu()
-    Menu.addButton("Male","TempMaleHeadMenu",nil)
-    Menu.addButton("Female","TempFemaleHeadMenu",nil)
-    Menu.addButton("Return","Customisation",nil)
-end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Temp-Head
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function TempMaleHeadMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads"
-    ClearMenu()
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton(head.mname[Menu.buttonCount+1], "savehead", head.mhead[Menu.buttonCount+1])
-    Menu.addButton("Return","TempHeadMenu",nil)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Temp-Head
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function TempFemaleHeadMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads"
-    ClearMenu()
-    Menu.addButton(head.fname[Menu.buttonCount+1], "savehead", head.fhead[Menu.buttonCount+1])
-    Menu.addButton(head.fname[Menu.buttonCount+1], "savehead", head.fhead[Menu.buttonCount+1])
-    Menu.addButton(head.fname[Menu.buttonCount+1], "savehead", head.fhead[Menu.buttonCount+1])
-    Menu.addButton(head.fname[Menu.buttonCount+1], "savehead", head.fhead[Menu.buttonCount+1])
-    Menu.addButton("Return","TempHeadMenu",nil)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu       Page 1 of 6
+--Customisation Menu       Page 1 of 4
 --Head
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HeadMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads                   Page 1 of 6"
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Heads                   Page 1 of 4"
     ClearMenu()
     Menu.addButton(heads.name_pg1[Menu.buttonCount+1], "savehead", heads.drawable_pg1[Menu.buttonCount+1])
     Menu.addButton(heads.name_pg1[Menu.buttonCount+1], "savehead", heads.drawable_pg1[Menu.buttonCount+1])
@@ -935,16 +1716,16 @@ function HeadMenu()
     Menu.addButton(heads.name_pg1[Menu.buttonCount+1], "savehead", heads.drawable_pg1[Menu.buttonCount+1])
     Menu.addButton(heads.name_pg1[Menu.buttonCount+1], "savehead", heads.drawable_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","HeadMenu2",nil)
-    Menu.addButton("Previous Page","HeadMenu6",nil)
+    Menu.addButton("Previous Page","HeadMenu4",nil)
     Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu       Page 2 of 6
+--Customisation Menu       Page 2 of 4
 --Head
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HeadMenu2()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads                   Page 2 of 6"
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Heads                   Page 2 of 4"
     ClearMenu()
     Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
     Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
@@ -959,12 +1740,12 @@ function HeadMenu2()
     Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu       Page 3 of 6
+--Customisation Menu       Page 3 of 4
 --Head
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HeadMenu3()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads                   Page 3 of 6"
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Heads                   Page 3 of 4"
     ClearMenu()
     Menu.addButton(heads.name_pg3[Menu.buttonCount+1], "savehead", heads.drawable_pg3[Menu.buttonCount+1])
     Menu.addButton(heads.name_pg3[Menu.buttonCount+1], "savehead", heads.drawable_pg3[Menu.buttonCount+1])
@@ -979,105 +1760,85 @@ function HeadMenu3()
     Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu       Page 4 of 6
+--Customisation Menu       Page 4 of 4
 --Head
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HeadMenu4()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads                   Page 4 of 6"
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Heads                   Page 4 of 4"
     ClearMenu()
     Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg4[Menu.buttonCount+1], "savehead", heads.drawable_pg4[Menu.buttonCount+1])
-    Menu.addButton("Next Page","HeadMenu5",nil)
+    Menu.addButton("Next Page","HeadMenu",nil)
     Menu.addButton("Previous Page","HeadMenu3",nil)
     Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu       Page 5 of 6
+--Customisation Menu       Page 1 of 3
 --Head
+--Female
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function HeadMenu5()
+function FemaleHeadMenu()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads                   Page 5 of 6"
+    options.menu_subtitle = "Heads                   Page 1 of 3"
     ClearMenu()
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg5[Menu.buttonCount+1], "savehead", heads.drawable_pg5[Menu.buttonCount+1])
-    Menu.addButton("Next Page","HeadMenu6",nil)
-    Menu.addButton("Previous Page","HeadMenu4",nil)
-    Menu.addButton("Return","Customisation",nil)
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg1[Menu.buttonCount+1], "savehead", heads.fdrawable_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHeadMenu2",nil)
+    Menu.addButton("Previous Page","FemaleHeadMenu3",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu       Page 6 of 6
+--Customisation Menu       Page 2 of 3
 --Head
+--Female
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function HeadMenu6()
+function FemaleHeadMenu2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Heads                   Page 6 of 6"
+    options.menu_subtitle = "Heads                   Page 2 of 3"
     ClearMenu()
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg6[Menu.buttonCount+1], "savehead", heads.drawable_pg6[Menu.buttonCount+1])
-    Menu.addButton("Next Page","HeadMenu",nil)
-    Menu.addButton("Previous Page","HeadMenu5",nil)
-    Menu.addButton("Return","Customisation",nil)
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg2[Menu.buttonCount+1], "savehead", heads.fdrawable_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHeadMenu3",nil)
+    Menu.addButton("Previous Page","FemaleHeadMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu       Page 3 of 3
+--Head
+--Female
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FemaleHeadMenu3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Heads                   Page 3 of 3"
+    ClearMenu()
+    Menu.addButton(heads.fname_pg3[Menu.buttonCount+1], "savehead", heads.fdrawable_pg3[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg3[Menu.buttonCount+1], "savehead", heads.fdrawable_pg3[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg3[Menu.buttonCount+1], "savehead", heads.fdrawable_pg3[Menu.buttonCount+1])
+    Menu.addButton(heads.fname_pg3[Menu.buttonCount+1], "savehead", heads.fdrawable_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleHeadMenu",nil)
+    Menu.addButton("Previous Page","FemaleHeadMenu2",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 --[[
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu       Page 2 of 6
---Head
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function HeadMenu2()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Masks                   Page 2 of 6"
-    ClearMenu()
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton(heads.name_pg2[Menu.buttonCount+1], "savehead", heads.drawable_pg2[Menu.buttonCount+1])
-    Menu.addButton("Next Page","HeadMenu",nil)
-    Menu.addButton("Previous Page","HeadMenu",nil)
-    Menu.addButton("Return","Customisation",nil)
-end
-]]
---[[
-    Head Functions
+	Head Functions
 --]]
 function savehead(head) --Sets Players head in database
     c_options.head = head
-    SetPedComponentVariation(GetPlayerPed(-1), 0, tonumber(c_options.head), 0, 2)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Hair
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function HairMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Gender"
-    ClearMenu()
-    Menu.addButton("Male","MaleHairMenu",nil)
-    Menu.addButton("Female","FemaleHairMenu",nil)
-    Menu.addButton("Return","Customisation",nil)
+    --The laziest way possible of doing this ^_^
+    SetPedHeadBlendData(GetPlayerPed(-1), tonumber(c_options.head), tonumber(c_options.head), 0, tonumber(c_options.head), tonumber(c_options.head), 0, 0.5, 0.5, 0.0, false)
+    --SetPedComponentVariation(GetPlayerPed(-1), 0, tonumber(c_options.head), 0, 2)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 1 of 6
@@ -1085,7 +1846,7 @@ end
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleHairMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 1 of 4"
     ClearMenu()
     Menu.addButton(hair.m_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
@@ -1098,7 +1859,7 @@ function MaleHairMenu()
     Menu.addButton(hair.m_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleHairMenu2",nil)
     Menu.addButton("Previous Page","MaleHairMenu4",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 2 of 4
@@ -1106,7 +1867,7 @@ end
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleHairMenu2()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 2 of 4"
     ClearMenu()
     Menu.addButton(hair.m_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
@@ -1119,7 +1880,7 @@ function MaleHairMenu2()
     Menu.addButton(hair.m_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleHairMenu3",nil)
     Menu.addButton("Previous Page","MaleHairMenu",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 3 of 4
@@ -1127,7 +1888,7 @@ end
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleHairMenu3()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 3 of 4"
     ClearMenu()
     Menu.addButton(hair.m_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
@@ -1140,7 +1901,7 @@ function MaleHairMenu3()
     Menu.addButton(hair.m_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleHairMenu4",nil)
     Menu.addButton("Previous Page","MaleHairMenu2",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 4 of 4
@@ -1148,7 +1909,7 @@ end
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleHairMenu4()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 4 of 4"
     ClearMenu()
     Menu.addButton(hair.m_name_pg4[Menu.buttonCount+1], "savehair", hair.hair_pg4[Menu.buttonCount+1])
@@ -1157,7 +1918,7 @@ function MaleHairMenu4()
     Menu.addButton(hair.m_name_pg4[Menu.buttonCount+1], "savehair", hair.hair_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleHairMenu",nil)
     Menu.addButton("Previous Page","MaleHairMenu3",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 1 of 4
@@ -1168,17 +1929,17 @@ function FemaleHairMenu()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 1 of 4"
     ClearMenu()
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "savehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg1[Menu.buttonCount+1], "fsavehair", hair.hair_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleHairMenu2",nil)
     Menu.addButton("Previous Page","FemaleHairMenu4",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 2 of 4
@@ -1189,17 +1950,17 @@ function FemaleHairMenu2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 2 of 4"
     ClearMenu()
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "savehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg2[Menu.buttonCount+1], "fsavehair", hair.hair_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleHairMenu3",nil)
     Menu.addButton("Previous Page","FemaleHairMenu",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 3 of 4
@@ -1210,17 +1971,17 @@ function FemaleHairMenu3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 3 of 4"
     ClearMenu()
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "savehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg3[Menu.buttonCount+1], "fsavehair", hair.hair_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleHairMenu4",nil)
     Menu.addButton("Previous Page","FemaleHairMenu2",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       Page 4 of 4
@@ -1231,14 +1992,31 @@ function FemaleHairMenu4()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Hair                      Page 4 of 4"
     ClearMenu()
-    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "savehair", hair.hair_pg4[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "savehair", hair.hair_pg4[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "savehair", hair.hair_pg4[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "savehair", hair.hair_pg4[Menu.buttonCount+1])
-    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "savehair", hair.hair_pg4[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "fsavehair", hair.hair_pg4[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "fsavehair", hair.hair_pg4[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "fsavehair", hair.hair_pg4[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "fsavehair", hair.hair_pg4[Menu.buttonCount+1])
+    Menu.addButton(hair.f_name_pg4[Menu.buttonCount+1], "fsavehair", hair.hair_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleHairMenu",nil)
     Menu.addButton("Previous Page","FemaleHairMenu3",nil)
-    Menu.addButton("Return","HairMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Hair
+--Colour
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fHairColour()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hair Colour"
+    ClearMenu()
+    Menu.addButton(hair.hcolour_fname[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
+    Menu.addButton(hair.hcolour_fname[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
+    Menu.addButton(hair.hcolour_fname[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
+    Menu.addButton(hair.hcolour_fname[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
+    Menu.addButton(hair.hcolour_fname[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
+    Menu.addButton(hair.hcolour_fname[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
+    Menu.addButton("Return","FemaleHairMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -1246,8 +2024,8 @@ end
 --Colour
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HairColour()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hair Colour    M     F"
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hair Colour"
     ClearMenu()
     Menu.addButton(hair.hcolour_name[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
     Menu.addButton(hair.hcolour_name[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
@@ -1256,8 +2034,7 @@ function HairColour()
     Menu.addButton(hair.hcolour_name[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
     Menu.addButton(hair.hcolour_name[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
     Menu.addButton(hair.hcolour_name[Menu.buttonCount+1], "savecolour", hair.hcolour[Menu.buttonCount+1])
-    Menu.addButton("Return to male section","MaleHairMenu",nil)
-    Menu.addButton("Return to female section","FemaleHairMenu",nil)
+    Menu.addButton("Return","MaleHairMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -1269,6 +2046,11 @@ function savehair(hair) --Sets Players head in database
     SetPedComponentVariation(GetPlayerPed(-1), 2, tonumber(c_options.hair), 0, 0)
     HairColour()
 end
+function fsavehair(hair) --Sets Players head in database
+    c_options.hair = hair
+    SetPedComponentVariation(GetPlayerPed(-1), 2, tonumber(c_options.hair), 0, 0)
+    fHairColour()
+end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
 --Hair Textures
@@ -1279,25 +2061,13 @@ function savecolour(hcolour) --Sets mask texture in database
     SetPedComponentVariation(GetPlayerPed(-1), 2, tonumber(c_options.hair), tonumber(c_options.hcolour), 0)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Shirts
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function MainShirtMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Gender"
-    ClearMenu()
-    Menu.addButton("Male","ShirtMenu",nil)
-    Menu.addButton("Female","FemaleShirtMenu",nil)
-    Menu.addButton("Return","Customisation",nil)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 1/12
 --Male Shirts
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 1 of 12"
+    options.menu_subtitle = "Shirts                 Page 1 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg1[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg1[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg1[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg1[Menu.buttonCount+1])
@@ -1308,7 +2078,7 @@ function ShirtMenu()
     Menu.addButton(shirts.names_pg1[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu2",nil)
     Menu.addButton("Previous Page","ShirtMenu12",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 2/12
@@ -1316,7 +2086,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 2 of 12"
+    options.menu_subtitle = "Shirts                 Page 2 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg2[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg2[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg2[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg2[Menu.buttonCount+1])
@@ -1326,7 +2096,7 @@ function ShirtMenu2()
     Menu.addButton(shirts.names_pg2[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu3",nil)
     Menu.addButton("Previous Page","ShirtMenu",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 3/12
@@ -1334,7 +2104,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 3 of 12"
+    options.menu_subtitle = "Shirts                 Page 3 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg3[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg3[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg3[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg3[Menu.buttonCount+1])
@@ -1344,7 +2114,7 @@ function ShirtMenu3()
     Menu.addButton(shirts.names_pg3[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu4",nil)
     Menu.addButton("Previous Page","ShirtMenu2",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 4/12
@@ -1352,7 +2122,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu4()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 4 of 12"
+    options.menu_subtitle = "Shirts                 Page 4 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg4[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg4[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg4[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg4[Menu.buttonCount+1])
@@ -1363,7 +2133,7 @@ function ShirtMenu4()
     Menu.addButton(shirts.names_pg4[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu5",nil)
     Menu.addButton("Previous Page","ShirtMenu3",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 5/12
@@ -1371,7 +2141,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu5()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 5 of 12"
+    options.menu_subtitle = "Shirts                 Page 5 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg5[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg5[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg5[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg5[Menu.buttonCount+1])
@@ -1382,7 +2152,7 @@ function ShirtMenu5()
     Menu.addButton(shirts.names_pg5[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg5[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu6",nil)
     Menu.addButton("Previous Page","ShirtMenu4",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 6/12
@@ -1390,7 +2160,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu6()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 6 of 12"
+    options.menu_subtitle = "Shirts                 Page 6 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg6[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg6[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg6[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg6[Menu.buttonCount+1])
@@ -1400,7 +2170,7 @@ function ShirtMenu6()
     Menu.addButton(shirts.names_pg6[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg6[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu7",nil)
     Menu.addButton("Previous Page","ShirtMenu5",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 7/12
@@ -1408,7 +2178,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu7()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 7 of 12"
+    options.menu_subtitle = "Shirts                 Page 7 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg7[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg7[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg7[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg7[Menu.buttonCount+1])
@@ -1419,7 +2189,7 @@ function ShirtMenu7()
     Menu.addButton(shirts.names_pg7[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg7[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu8",nil)
     Menu.addButton("Previous Page","ShirtMenu6",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 8/12
@@ -1427,7 +2197,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu8()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 8 of 12"
+    options.menu_subtitle = "Shirts                 Page 8 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg8[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg8[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg8[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg8[Menu.buttonCount+1])
@@ -1439,7 +2209,7 @@ function ShirtMenu8()
     Menu.addButton(shirts.names_pg8[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg8[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu9",nil)
     Menu.addButton("Previous Page","ShirtMenu7",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 9/12
@@ -1447,7 +2217,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu9()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 9 of 12"
+    options.menu_subtitle = "Shirts                 Page 9 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg9[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg9[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg9[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg9[Menu.buttonCount+1])
@@ -1459,7 +2229,7 @@ function ShirtMenu9()
     Menu.addButton(shirts.names_pg9[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg9[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu10",nil)
     Menu.addButton("Previous Page","ShirtMenu8",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 10/12
@@ -1467,7 +2237,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu10()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 10 of 12"
+    options.menu_subtitle = "Shirts                Page 10 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg10[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg10[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg10[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg10[Menu.buttonCount+1])
@@ -1479,7 +2249,7 @@ function ShirtMenu10()
     Menu.addButton(shirts.names_pg10[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg10[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu11",nil)
     Menu.addButton("Previous Page","ShirtMenu9",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 11/12
@@ -1487,7 +2257,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu11()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 11 of 12"
+    options.menu_subtitle = "Shirts                Page 11 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg11[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg11[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg11[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg11[Menu.buttonCount+1])
@@ -1499,7 +2269,7 @@ function ShirtMenu11()
     Menu.addButton(shirts.names_pg11[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg11[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu12",nil)
     Menu.addButton("Previous Page","ShirtMenu10",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 12/12
@@ -1507,14 +2277,14 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ShirtMenu12()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 12 of 12"
+    options.menu_subtitle = "Shirts                Page 12 of 12"
     ClearMenu()
     Menu.addButton(shirts.names_pg12[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg12[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg12[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg12[Menu.buttonCount+1])
     Menu.addButton(shirts.names_pg12[Menu.buttonCount+1], "saveshirt", shirts.shirts_pg12[Menu.buttonCount+1])
     Menu.addButton("Next Page","ShirtMenu",nil)
     Menu.addButton("Previous Page","ShirtMenu11",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 1/11
@@ -1523,18 +2293,18 @@ end
 function FemaleShirtMenu()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 1 of 11"
+    options.menu_subtitle = "Shirts                 Page 1 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg1[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu2",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu11",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 2/11
@@ -1543,18 +2313,18 @@ end
 function FemaleShirtMenu2()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 2 of 11"
+    options.menu_subtitle = "Shirts                 Page 2 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg2[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu3",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 3/11
@@ -1563,18 +2333,18 @@ end
 function FemaleShirtMenu3()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 3 of 11"
+    options.menu_subtitle = "Shirts                 Page 3 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg3[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu4",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu2",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 4/11
@@ -1583,18 +2353,18 @@ end
 function FemaleShirtMenu4()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 4 of 11"
+    options.menu_subtitle = "Shirts                 Page 4 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg4[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu5",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu3",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 5/11
@@ -1603,18 +2373,18 @@ end
 function FemaleShirtMenu5()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 5 of 11"
+    options.menu_subtitle = "Shirts                 Page 5 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg5[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg5[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu6",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu4",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 6/11
@@ -1623,18 +2393,18 @@ end
 function FemaleShirtMenu6()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 6 of 11"
+    options.menu_subtitle = "Shirts                 Page 6 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg6[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg6[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu7",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu5",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 7/11
@@ -1643,18 +2413,18 @@ end
 function FemaleShirtMenu7()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 7 of 11"
+    options.menu_subtitle = "Shirts                 Page 7 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg7[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg7[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu8",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu6",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 8/11
@@ -1663,18 +2433,18 @@ end
 function FemaleShirtMenu8()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 8 of 11"
+    options.menu_subtitle = "Shirts                 Page 8 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg8[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg8[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu9",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu7",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 9/11
@@ -1683,18 +2453,18 @@ end
 function FemaleShirtMenu9()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 9 of 11"
+    options.menu_subtitle = "Shirts                 Page 9 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg9[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg9[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu10",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu8",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 10/11
@@ -1703,18 +2473,18 @@ end
 function FemaleShirtMenu10()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 10 of 11"
+    options.menu_subtitle = "Shirts                Page 10 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg10[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg10[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu11",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu9",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 11/11
@@ -1723,27 +2493,80 @@ end
 function FemaleShirtMenu11()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Shirts                  Page 11 of 11"
+    options.menu_subtitle = "Shirts                Page 11 of 11"
     ClearMenu()
-    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
-    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "saveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
+    Menu.addButton(fshirts.name_pg11[Menu.buttonCount+1], "fsaveshirt", fshirts.shirts_pg11[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShirtMenu",nil)
     Menu.addButton("Previous Page","FemaleShirtMenu10",nil)
-    Menu.addButton("Return","MainShirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
 --Shirts
 --Textures                      Page 1/3
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function shirtTextures()
+function fshirtTextures()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 1 of 3"
+    options.menu_subtitle = "Textures                Page 1 of 3"
+    ClearMenu()
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fshirtTextures2",nil)
+    Menu.addButton("Previous Page","fshirtTextures3",nil)
+    Menu.addButton("Return","FemaleShirtMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Shirts
+--Textures                      Page 2/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fshirtTextures2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 2 of 3"
+    ClearMenu()
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fshirtTextures3",nil)
+    Menu.addButton("Previous Page","fshirtTextures",nil)
+    Menu.addButton("Return","FemaleShirtMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Shirts
+--Textures                      Page 3/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fshirtTextures3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 3 of 3"
+    ClearMenu()
+    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fshirtTextures",nil)
+    Menu.addButton("Previous Page","fshirtTextures2",nil)
+    Menu.addButton("Return","FemaleShirtMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Shirts
+--Textures						Page 1/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function shirtTextures()
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 1 of 3"
     ClearMenu()
     Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
     Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
@@ -1754,18 +2577,17 @@ function shirtTextures()
     Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
     Menu.addButton(shirts.txt_pg1[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","shirtTextures2",nil)
-    Menu.addButton("Previous Page","shirtTextures",nil)
-    Menu.addButton("Return to male section","ShirtMenu",nil)
-    Menu.addButton("Return to female section","FemaleShirtMenu",nil)
+    Menu.addButton("Previous Page","shirtTextures3",nil)
+    Menu.addButton("Return","ShirtMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
 --Shirts
---Textures                      Page 2/3
+--Textures						Page 2/3
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function shirtTextures2()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 2 of 3"
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 2 of 3"
     ClearMenu()
     Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
     Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
@@ -1777,30 +2599,23 @@ function shirtTextures2()
     Menu.addButton(shirts.txt_pg2[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","shirtTextures3",nil)
     Menu.addButton("Previous Page","shirtTextures",nil)
-    Menu.addButton("Return to male section","ShirtMenu",nil)
-    Menu.addButton("Return to female section","FemaleShirtMenu",nil)
+    Menu.addButton("Return","ShirtMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
 --Shirts
---Textures                      Page 3/3
+--Textures						Page 3/3
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function shirtTextures3()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 3 of 3"
+	DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 3 of 3"
     ClearMenu()
-    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
     Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
     Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
     Menu.addButton(shirts.txt_pg3[Menu.buttonCount+1], "saveshirt_txt", shirts.txt_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","shirtTextures",nil)
     Menu.addButton("Previous Page","shirtTextures2",nil)
-    Menu.addButton("Return to male section","ShirtMenu",nil)
-    Menu.addButton("Return to female section","FemaleShirtMenu",nil)
+    Menu.addButton("Return","ShirtMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -1813,6 +2628,13 @@ function saveshirt(shirt) --Sets Players head in database
     SetPedComponentVariation(GetPlayerPed(-1), 8, 0, 240, 0)
     SetPedComponentVariation(GetPlayerPed(-1), 11, tonumber(c_options.shirt), 0, 0)
     shirtTextures()
+end
+function fsaveshirt(shirt) --Sets Players head in database
+    c_options.shirt = shirt
+    SetPedComponentVariation(GetPlayerPed(-1), 11, 0, 240, 0)
+    SetPedComponentVariation(GetPlayerPed(-1), 8, 0, 240, 0)
+    SetPedComponentVariation(GetPlayerPed(-1), 11, tonumber(c_options.shirt), 0, 0)
+    fshirtTextures()
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -1829,7 +2651,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 1 of 13"
+    options.menu_subtitle = "Hands                  Page 1 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
@@ -1849,7 +2671,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 2 of 13"
+    options.menu_subtitle = "Hands                  Page 2 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
@@ -1869,7 +2691,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 3 of 13"
+    options.menu_subtitle = "Hands                  Page 3 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
@@ -1889,7 +2711,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu4()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 4 of 13"
+    options.menu_subtitle = "Hands                  Page 4 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
@@ -1909,7 +2731,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu5()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 5 of 13"
+    options.menu_subtitle = "Hands                  Page 5 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
@@ -1929,7 +2751,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu6()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 6 of 13"
+    options.menu_subtitle = "Hands                  Page 6 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
@@ -1949,7 +2771,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu7()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 7 of 13"
+    options.menu_subtitle = "Hands                  Page 7 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
@@ -1969,7 +2791,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu8()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 8 of 13"
+    options.menu_subtitle = "Hands                  Page 8 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
@@ -1989,7 +2811,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu9()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 9 of 13"
+    options.menu_subtitle = "Hands                  Page 9 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
@@ -2009,7 +2831,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu10()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 10 of 13"
+    options.menu_subtitle = "Hands                 Page 10 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
@@ -2029,7 +2851,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu11()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 11 of 13"
+    options.menu_subtitle = "Hands                 Page 11 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
@@ -2049,7 +2871,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu12()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 12 of 13"
+    options.menu_subtitle = "Hands                 Page 12 of 13"
     ClearMenu()
     Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
@@ -2069,19 +2891,267 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function HandsMenu13()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Hands                    Page 13 of 13"
+    options.menu_subtitle = "Hands                 Page 13 of 13"
     ClearMenu()
-    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
-    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
-    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
-    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
-    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
-    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
     Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
     Menu.addButton("Next Page","HandsMenu",nil)
     Menu.addButton("Previous Page","HandsMenu12",nil)
     Menu.addButton("Return","Customisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 1/13
+--Hands Female
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 1 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg1[Menu.buttonCount+1], "savehand", hands.hands_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu2",nil)
+    Menu.addButton("Previous Page","FHandsMenu13",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 2/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 2 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg2[Menu.buttonCount+1], "savehand", hands.hands_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu3",nil)
+    Menu.addButton("Previous Page","FHandsMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 3/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 3 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg3[Menu.buttonCount+1], "savehand", hands.hands_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu4",nil)
+    Menu.addButton("Previous Page","FHandsMenu2",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 4/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu4()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 4 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg4[Menu.buttonCount+1], "savehand", hands.hands_pg4[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu5",nil)
+    Menu.addButton("Previous Page","FHandsMenu3",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 5/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu5()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 5 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg5[Menu.buttonCount+1], "savehand", hands.hands_pg5[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu6",nil)
+    Menu.addButton("Previous Page","FHandsMenu4",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 6/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu6()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 6 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg6[Menu.buttonCount+1], "savehand", hands.hands_pg6[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu7",nil)
+    Menu.addButton("Previous Page","FHandsMenu5",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 7/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu7()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 7 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg7[Menu.buttonCount+1], "savehand", hands.hands_pg7[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu9",nil)
+    Menu.addButton("Previous Page","FHandsMenu6",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 8/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu8()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 8 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg8[Menu.buttonCount+1], "savehand", hands.hands_pg8[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu9",nil)
+    Menu.addButton("Previous Page","FHandsMenu7",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 9/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu9()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                  Page 9 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg9[Menu.buttonCount+1], "savehand", hands.hands_pg9[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu10",nil)
+    Menu.addButton("Previous Page","FHandsMenu8",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 10/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu10()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                 Page 10 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg10[Menu.buttonCount+1], "savehand", hands.hands_pg10[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu11",nil)
+    Menu.addButton("Previous Page","FHandsMenu9",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 11/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu11()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                 Page 11 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg11[Menu.buttonCount+1], "savehand", hands.hands_pg11[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu12",nil)
+    Menu.addButton("Previous Page","FHandsMenu10",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 12/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu12()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                 Page 12 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg12[Menu.buttonCount+1], "savehand", hands.hands_pg12[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu13",nil)
+    Menu.addButton("Previous Page","FHandsMenu11",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu           Page 13/13
+--Hands
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function FHandsMenu13()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Hands                 Page 13 of 13"
+    ClearMenu()
+    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
+    Menu.addButton(hands.hands_pg13[Menu.buttonCount+1], "savehand", hands.hands_pg13[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FHandsMenu",nil)
+    Menu.addButton("Previous Page","FHandsMenu12",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2091,19 +3161,6 @@ end
 function savehand(hand) --Sets Players head in database
     c_options.hand = hand
     SetPedComponentVariation(GetPlayerPed(-1), 3, tonumber(c_options.hand), 0, 0)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Shoes
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function ShoeMenu()
-    texture_help = true
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Gender"
-    ClearMenu()
-    Menu.addButton("Male","MaleShoeMenu",nil)
-    Menu.addButton("Female","FemaleShoeMenu",nil)
-    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 1/5
@@ -2122,7 +3179,7 @@ function MaleShoeMenu()
     Menu.addButton(shoes.m_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleShoeMenu2",nil)
     Menu.addButton("Previous Page","MaleShoeMenu5",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 2/5
@@ -2141,7 +3198,7 @@ function MaleShoeMenu2()
     Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleShoeMenu3",nil)
     Menu.addButton("Previous Page","MaleShoeMenu",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 3/5
@@ -2160,7 +3217,7 @@ function MaleShoeMenu3()
     Menu.addButton(shoes.m_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleShoeMenu4",nil)
     Menu.addButton("Previous Page","MaleShoeMenu2",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 4/5
@@ -2179,7 +3236,7 @@ function MaleShoeMenu4()
     Menu.addButton(shoes.m_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleShoeMenu5",nil)
     Menu.addButton("Previous Page","MaleShoeMenu3",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 5/5
@@ -2192,7 +3249,7 @@ function MaleShoeMenu5()
     Menu.addButton(shoes.m_names_pg5[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg5[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleShoeMenu",nil)
     Menu.addButton("Previous Page","MaleShoeMenu4",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 1/5
@@ -2202,16 +3259,16 @@ function FemaleShoeMenu()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Shoes                    Page 1 of 5"
     ClearMenu()
-    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg1[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShoeMenu2",nil)
     Menu.addButton("Previous Page","FemaleShoeMenu5",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 2/5
@@ -2221,16 +3278,16 @@ function FemaleShoeMenu2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Shoes                    Page 2 of 5"
     ClearMenu()
-    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "saveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "fsaveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "fsaveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "fsaveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "fsaveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "fsaveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "fsaveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg2[Menu.buttonCount+1], "fsaveshoe", shoes.fshoes_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShoeMenu3",nil)
     Menu.addButton("Previous Page","FemaleShoeMenu",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 3/5
@@ -2240,16 +3297,16 @@ function FemaleShoeMenu3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Shoes                    Page 3 of 5"
     ClearMenu()
-    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg3[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShoeMenu4",nil)
     Menu.addButton("Previous Page","FemaleShoeMenu2",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 4/5
@@ -2259,16 +3316,16 @@ function FemaleShoeMenu4()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Shoes                    Page 4 of 5"
     ClearMenu()
-    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg4[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShoeMenu5",nil)
     Menu.addButton("Previous Page","FemaleShoeMenu3",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 5/5
@@ -2278,11 +3335,67 @@ function FemaleShoeMenu5()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Shoes                    Page 5 of 5"
     ClearMenu()
-    Menu.addButton(shoes.f_names_pg5[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg5[Menu.buttonCount+1])
-    Menu.addButton(shoes.f_names_pg5[Menu.buttonCount+1], "saveshoe", shoes.shoes_pg5[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg5[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg5[Menu.buttonCount+1])
+    Menu.addButton(shoes.f_names_pg5[Menu.buttonCount+1], "fsaveshoe", shoes.shoes_pg5[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleShoeMenu",nil)
     Menu.addButton("Previous Page","FemaleShoeMenu4",nil)
-    Menu.addButton("Return","ShoeMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Shoes
+--Textures                      Page 1/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fshoeTextures()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 1 of 3"
+    ClearMenu()
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fshoeTextures2",nil)
+    Menu.addButton("Previous Page","fshoeTextures3",nil)
+    Menu.addButton("Return","FemaleShoeMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Shoes
+--Textures                      Page 2/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fshoeTextures2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 2 of 3"
+    ClearMenu()
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fshoeTextures3",nil)
+    Menu.addButton("Previous Page","fshoeTextures",nil)
+    Menu.addButton("Return","FemaleShoeMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Shoes
+--Textures                      Page 3/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fshoeTextures3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 3 of 3"
+    ClearMenu()
+    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fshoeTextures",nil)
+    Menu.addButton("Previous Page","fshoeTextures2",nil)
+    Menu.addButton("Return","FemaleShoeMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2291,7 +3404,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function shoeTextures()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 1 of 3"
+    options.menu_subtitle = "Textures                Page 1 of 3"
     ClearMenu()
     Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
     Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
@@ -2303,8 +3416,7 @@ function shoeTextures()
     Menu.addButton(shoes.txt_pg1[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","shoeTextures2",nil)
     Menu.addButton("Previous Page","shoeTextures3",nil)
-    Menu.addButton("Return to male section","MaleShoeMenu",nil)
-    Menu.addButton("Return to female section","FemaleShoeMenu",nil)
+    Menu.addButton("Return","MaleShoeMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2313,7 +3425,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function shoeTextures2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 2 of 3"
+    options.menu_subtitle = "Textures                Page 2 of 3"
     ClearMenu()
     Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
     Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
@@ -2325,8 +3437,7 @@ function shoeTextures2()
     Menu.addButton(shoes.txt_pg2[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","shoeTextures3",nil)
     Menu.addButton("Previous Page","shoeTextures",nil)
-    Menu.addButton("Return to male section","MaleShoeMenu",nil)
-    Menu.addButton("Return to female section","FemaleShoeMenu",nil)
+    Menu.addButton("Return","MaleShoeMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2335,20 +3446,12 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function shoeTextures3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 3 of 3"
+    options.menu_subtitle = "Textures                Page 3 of 3"
     ClearMenu()
-    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
     Menu.addButton(shoes.txt_pg3[Menu.buttonCount+1], "saveshoe_txt", shoes.txt_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","shoeTextures",nil)
     Menu.addButton("Previous Page","shoeTextures2",nil)
-    Menu.addButton("Return to male section","MaleShoeMenu",nil)
-    Menu.addButton("Return to female section","FemaleShoeMenu",nil)
+    Menu.addButton("Return","MaleShoeMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2360,6 +3463,12 @@ function saveshoe(shoe) --Sets Players head in database
     SetPedComponentVariation(GetPlayerPed(-1), 6, tonumber(c_options.shoes), 0, 0)
     shoeTextures()
 end
+
+function fsaveshoe(shoe) --Sets Players head in database
+    c_options.shoes = shoe
+    SetPedComponentVariation(GetPlayerPed(-1), 6, tonumber(c_options.shoes), 0, 0)
+    fshoeTextures()
+end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
 --Shoe Textures
@@ -2368,19 +3477,6 @@ end
 function saveshoe_txt(shoe_txt) --Sets mask texture in database
     c_options.shoes_txt = shoe_txt
     SetPedComponentVariation(GetPlayerPed(-1), 6, tonumber(c_options.shoes), tonumber(c_options.shoes_txt), 0)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Pants
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function PantsMenu()
-    texture_help = true
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Gender"
-    ClearMenu()
-    Menu.addButton("Male","MalePantsMenu",nil)
-    Menu.addButton("Female","FemalePantsMenu",nil)
-    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2401,7 +3497,7 @@ function MalePantsMenu()
     Menu.addButton(pants.m_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","MalePantsMenu2",nil)
     Menu.addButton("Previous Page","MalePantsMenu6",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2421,7 +3517,7 @@ function MalePantsMenu2()
     Menu.addButton(pants.m_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","MalePantsMenu3",nil)
     Menu.addButton("Previous Page","MalePantsMenu",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2442,7 +3538,7 @@ function MalePantsMenu3()
     Menu.addButton(pants.m_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","MalePantsMenu4",nil)
     Menu.addButton("Previous Page","MalePantsMenu2",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2463,7 +3559,7 @@ function MalePantsMenu4()
     Menu.addButton(pants.m_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","MalePantsMenu5",nil)
     Menu.addButton("Previous Page","MalePantsMenu3",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2483,7 +3579,7 @@ function MalePantsMenu5()
     Menu.addButton(pants.m_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
     Menu.addButton("Next Page","MalePantsMenu6",nil)
     Menu.addButton("Previous Page","MalePantsMenu4",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2499,7 +3595,7 @@ function MalePantsMenu6()
     Menu.addButton(pants.m_names_pg6[Menu.buttonCount+1], "savepants", pants.pants_pg6[Menu.buttonCount+1])
     Menu.addButton("Next Page","MalePantsMenu",nil)
     Menu.addButton("Previous Page","MalePantsMenu5",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2510,17 +3606,17 @@ function FemalePantsMenu()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Pants                    Page 1 of 6"
     ClearMenu()
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "savepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg1[Menu.buttonCount+1], "fsavepants", pants.pants_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemalePantsMenu2",nil)
     Menu.addButton("Previous Page","FemalePantsMenu6",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2531,16 +3627,16 @@ function FemalePantsMenu2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Pants                    Page 2 of 6"
     ClearMenu()
-    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "savepants", pants.pants_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "fsavepants", pants.pants_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "fsavepants", pants.pants_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "fsavepants", pants.pants_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "fsavepants", pants.pants_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "fsavepants", pants.pants_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "fsavepants", pants.pants_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg2[Menu.buttonCount+1], "fsavepants", pants.pants_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemalePantsMenu3",nil)
     Menu.addButton("Previous Page","FemalePantsMenu",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2551,17 +3647,17 @@ function FemalePantsMenu3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Pants                    Page 3 of 6"
     ClearMenu()
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "savepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg3[Menu.buttonCount+1], "fsavepants", pants.pants_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemalePantsMenu4",nil)
     Menu.addButton("Previous Page","FemalePantsMenu2",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2572,17 +3668,17 @@ function FemalePantsMenu4()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Pants                    Page 4 of 6"
     ClearMenu()
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "savepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg4[Menu.buttonCount+1], "fsavepants", pants.pants_pg4[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemalePantsMenu5",nil)
     Menu.addButton("Previous Page","FemalePantsMenu3",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2593,16 +3689,16 @@ function FemalePantsMenu5()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Pants                    Page 5 of 6"
     ClearMenu()
-    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "savepants", pants.pants_pg5[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "fsavepants", pants.pants_pg5[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "fsavepants", pants.pants_pg5[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "fsavepants", pants.pants_pg5[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "fsavepants", pants.pants_pg5[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "fsavepants", pants.pants_pg5[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "fsavepants", pants.pants_pg5[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg5[Menu.buttonCount+1], "fsavepants", pants.pants_pg5[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemalePantsMenu6",nil)
     Menu.addButton("Previous Page","FemalePantsMenu4",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2613,14 +3709,70 @@ function FemalePantsMenu6()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
     options.menu_subtitle = "Pants                    Page 6 of 6"
     ClearMenu()
-    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "savepants", pants.pants_pg6[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "savepants", pants.pants_pg6[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "savepants", pants.pants_pg6[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "savepants", pants.pants_pg6[Menu.buttonCount+1])
-    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "savepants", pants.pants_pg6[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "fsavepants", pants.pants_pg6[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "fsavepants", pants.pants_pg6[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "fsavepants", pants.pants_pg6[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "fsavepants", pants.pants_pg6[Menu.buttonCount+1])
+    Menu.addButton(pants.f_names_pg6[Menu.buttonCount+1], "fsavepants", pants.pants_pg6[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemalePantsMenu",nil)
     Menu.addButton("Previous Page","FemalePantsMenu5",nil)
-    Menu.addButton("Return","PantsMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Pants
+--Textures                      Page 1/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fpantsTextures()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 1 of 3"
+    ClearMenu()
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fpantsTextures2",nil)
+    Menu.addButton("Previous Page","fpantsTextures3",nil)
+    Menu.addButton("Return","FemalePantsMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Pants
+--Textures                      Page 2/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fpantsTextures2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 2 of 3"
+    ClearMenu()
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fpantsTextures3",nil)
+    Menu.addButton("Previous Page","fpantsTextures",nil)
+    Menu.addButton("Return","FemalePantsMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Pants
+--Textures                      Page 3/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fpantsTextures3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 3 of 3"
+    ClearMenu()
+    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fpantsTextures",nil)
+    Menu.addButton("Previous Page","fpantsTextures2",nil)
+    Menu.addButton("Return","FemalePantsMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2629,7 +3781,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function pantsTextures()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 1 of 3"
+    options.menu_subtitle = "Textures                Page 1 of 3"
     ClearMenu()
     Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
     Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
@@ -2640,9 +3792,8 @@ function pantsTextures()
     Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
     Menu.addButton(pants.txt_pg1[Menu.buttonCount+1], "savepants_txt", pants.txt_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","pantsTextures2",nil)
-    Menu.addButton("Previous Page","pantsTextures",nil)
-    Menu.addButton("Return to male section","MalePantsMenu",nil)
-    Menu.addButton("Return to female section","FemalePantsMenu",nil)
+    Menu.addButton("Previous Page","pantsTextures3",nil)
+    Menu.addButton("Return","MalePantsMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2651,7 +3802,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function pantsTextures2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 2 of 3"
+    options.menu_subtitle = "Textures                Page 2 of 3"
     ClearMenu()
     Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
     Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
@@ -2663,8 +3814,7 @@ function pantsTextures2()
     Menu.addButton(pants.txt_pg2[Menu.buttonCount+1], "savepants_txt", pants.txt_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","pantsTextures3",nil)
     Menu.addButton("Previous Page","pantsTextures",nil)
-    Menu.addButton("Return to male section","MalePantsMenu",nil)
-    Menu.addButton("Return to female section","FemalePantsMenu",nil)
+    Menu.addButton("Return","MalePantsMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2673,20 +3823,12 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function pantsTextures3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 3 of 3"
+    options.menu_subtitle = "Textures                Page 3 of 3"
     ClearMenu()
-    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
-    Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
     Menu.addButton(pants.txt_pg3[Menu.buttonCount+1], "savepants_txt", pants.txt_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","pantsTextures",nil)
     Menu.addButton("Previous Page","pantsTextures2",nil)
-    Menu.addButton("Return to male section","MalePantsMenu",nil)
-    Menu.addButton("Return to female section","FemalePantsMenu",nil)
+    Menu.addButton("Return","MalePantsMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -2698,6 +3840,12 @@ function savepants(pants) --Sets Players head in database
     SetPedComponentVariation(GetPlayerPed(-1), 4, tonumber(c_options.pants), 0, 0)
     pantsTextures()
 end
+
+function fsavepants(pants) --Sets Players head in database
+    c_options.pants = pants
+    SetPedComponentVariation(GetPlayerPed(-1), 4, tonumber(c_options.pants), 0, 0)
+    fpantsTextures()
+end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
 --Pants Textures
@@ -2708,21 +3856,7 @@ function savepants_txt(pants_txt) --Sets mask texture in database
     SetPedComponentVariation(GetPlayerPed(-1), 4, tonumber(c_options.pants), tonumber(c_options.pants_txt), 0)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Undershirts
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function UndershirtMenu()
-    shirt_help = false
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Gender"
-    ClearMenu()
-    Menu.addButton("Male","MaleUndershirtMenu",nil)
-    Menu.addButton("Female","FemaleUndershirtMenu",nil)
-    Menu.addButton("Remove undershirt","RemoveUnderShirt")
-    Menu.addButton("Return","Customisation",nil)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 1/9
+--Customisation Menu           Page 1/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2739,12 +3873,13 @@ function MaleUndershirtMenu()
     Menu.addButton(undershirt.m_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Remove undershirt","RemoveUnderShirt")
+    Menu.addButton("Next Page","MaleUndershirtMenu2",nil)
+    Menu.addButton("Previous Page","MaleUndershirtMenu8",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 2/9
+--Customisation Menu           Page 2/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2760,18 +3895,18 @@ function MaleUndershirtMenu2()
     Menu.addButton(undershirt.m_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
+    Menu.addButton("Next Page","MaleUndershirtMenu3",nil)
     Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 3/9
+--Customisation Menu           Page 3/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleUndershirtMenu3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 3 of 8"
+    options.menu_subtitle = "Undershirts             Page 3 of 8"
     ClearMenu()
     Menu.addButton(undershirt.m_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
@@ -2781,18 +3916,18 @@ function MaleUndershirtMenu3()
     Menu.addButton(undershirt.m_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Next Page","MaleUndershirtMenu4",nil)
+    Menu.addButton("Previous Page","MaleUndershirtMenu2",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 4/9
+--Customisation Menu           Page 4/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleUndershirtMenu4()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 4 of 8"
+    options.menu_subtitle = "Undershirts             Page 4 of 8"
     ClearMenu()
     Menu.addButton(undershirt.m_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
@@ -2802,18 +3937,18 @@ function MaleUndershirtMenu4()
     Menu.addButton(undershirt.m_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Next Page","MaleUndershirtMenu5",nil)
+    Menu.addButton("Previous Page","MaleUndershirtMenu3",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 5/9
+--Customisation Menu           Page 5/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleUndershirtMenu5()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 5 of 8"
+    options.menu_subtitle = "Undershirts             Page 5 of 8"
     ClearMenu()
     Menu.addButton(undershirt.m_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
@@ -2823,18 +3958,18 @@ function MaleUndershirtMenu5()
     Menu.addButton(undershirt.m_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Next Page","MaleUndershirtMenu6",nil)
+    Menu.addButton("Previous Page","MaleUndershirtMenu4",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 6/9
+--Customisation Menu           Page 6/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleUndershirtMenu6()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 6 of 8"
+    options.menu_subtitle = "Undershirts             Page 6 of 8"
     ClearMenu()
     Menu.addButton(undershirt.m_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
@@ -2844,18 +3979,18 @@ function MaleUndershirtMenu6()
     Menu.addButton(undershirt.m_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Next Page","MaleUndershirtMenu7",nil)
+    Menu.addButton("Previous Page","MaleUndershirtMenu5",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 7/9
+--Customisation Menu           Page 7/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleUndershirtMenu7()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 7 of 8"
+    options.menu_subtitle = "Undershirts             Page 7 of 8"
     ClearMenu()
     Menu.addButton(undershirt.m_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
@@ -2865,18 +4000,18 @@ function MaleUndershirtMenu7()
     Menu.addButton(undershirt.m_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Next Page","MaleUndershirtMenu8",nil)
+    Menu.addButton("Previous Page","MaleUndershirtMenu6",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 8/9
+--Customisation Menu           Page 8/8
 --Undershirt
 --Male
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function MaleUndershirtMenu8()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 8 of 8"
+    options.menu_subtitle = "Undershirts             Page 8 of 8"
     ClearMenu()
     Menu.addButton(undershirt.m_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
@@ -2887,26 +4022,8 @@ function MaleUndershirtMenu8()
     Menu.addButton(undershirt.m_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
     Menu.addButton(undershirt.m_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
     Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
-end
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu           Page 9/9
---Undershirt
---Male
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function MaleUndershirtMenu9()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 9 of 8"
-    ClearMenu()
-    Menu.addButton(undershirt.m_names_pg9[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg9[Menu.buttonCount+1])
-    Menu.addButton(undershirt.m_names_pg9[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg9[Menu.buttonCount+1])
-    Menu.addButton(undershirt.m_names_pg9[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg9[Menu.buttonCount+1])
-    Menu.addButton(undershirt.m_names_pg9[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg9[Menu.buttonCount+1])
-    Menu.addButton(undershirt.m_names_pg9[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg9[Menu.buttonCount+1])
-    Menu.addButton("Next Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","MaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Previous Page","MaleUndershirtMenu7",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 1/8
@@ -2916,19 +4033,20 @@ end
 function FemaleUndershirtMenu()
     shirt_help = true
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 1 of 8"
+    options.menu_subtitle = "Undershirts             Page 1 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
-    Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg1[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg1[Menu.buttonCount+1])
+    Menu.addButton("Remove undershirt","RemoveUnderShirt")
+    Menu.addButton("Next Page","FemaleUndershirtMenu2",nil)
+    Menu.addButton("Previous Page","FemaleUndershirtMenu8",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 2/8
@@ -2937,19 +4055,19 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FemaleUndershirtMenu2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 2 of 8"
+    options.menu_subtitle = "Undershirts             Page 2 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
-    Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg2[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleUndershirtMenu3",nil)
     Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 3/8
@@ -2958,19 +4076,19 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FemaleUndershirtMenu3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 3 of 8"
+    options.menu_subtitle = "Undershirts             Page 3 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
-    Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg3[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleUndershirtMenu4",nil)
+    Menu.addButton("Previous Page","FemaleUndershirtMenu2",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 4/8
@@ -2979,19 +4097,19 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FemaleUndershirtMenu4()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 4 of 8"
+    options.menu_subtitle = "Undershirts             Page 4 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
-    Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg4[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg4[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleUndershirtMenu5",nil)
+    Menu.addButton("Previous Page","FemaleUndershirtMenu3",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 5/8
@@ -3000,19 +4118,19 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FemaleUndershirtMenu5()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 5 of 8"
+    options.menu_subtitle = "Undershirts             Page 5 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
-    Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg5[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg5[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleUndershirtMenu6",nil)
+    Menu.addButton("Previous Page","FemaleUndershirtMenu4",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 6/8
@@ -3021,19 +4139,19 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FemaleUndershirtMenu6()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 6 of 8"
+    options.menu_subtitle = "Undershirts             Page 6 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
-    Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg6[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg6[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleUndershirtMenu7",nil)
+    Menu.addButton("Previous Page","FemaleUndershirtMenu5",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 7/8
@@ -3042,19 +4160,19 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FemaleUndershirtMenu7()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 7 of 8"
+    options.menu_subtitle = "Undershirts             Page 7 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
-    Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg7[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg7[Menu.buttonCount+1])
+    Menu.addButton("Next Page","FemaleUndershirtMenu8",nil)
+    Menu.addButton("Previous Page","FemaleUndershirtMenu6",nil)
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu           Page 8/8
@@ -3063,19 +4181,79 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FemaleUndershirtMenu8()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Undershirts            Page 8 of 8"
+    options.menu_subtitle = "Undershirts             Page 8 of 8"
     ClearMenu()
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
-    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "saveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
+    Menu.addButton(undershirt.f_names_pg8[Menu.buttonCount+1], "fsaveundershirt", undershirt.undershirt_pg8[Menu.buttonCount+1])
     Menu.addButton("Next Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Previous Page","FemaleUndershirtMenu",nil)
-    Menu.addButton("Return","UndershirtMenu",nil)
+    Menu.addButton("Previous Page","FemaleUndershirtMenu7",nil)
+    Menu.addButton("Return","FCustomisation",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Undershirt
+--Textures                      Page 1/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fundershirtTextures()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 1 of 3"
+    ClearMenu()
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fundershirtTextures2",nil)
+    Menu.addButton("Previous Page","fundershirtTextures3",nil)
+    Menu.addButton("Return","FemaleUndershirtMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Undershirt
+--Textures                      Page 2/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fundershirtTextures2()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 2 of 3"
+    ClearMenu()
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fundershirtTextures3",nil)
+    Menu.addButton("Previous Page","fundershirtTextures",nil)
+    Menu.addButton("Return","FemaleUndershirtMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu
+--Undershirt
+--Textures                      Page 3/3
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function fundershirtTextures3()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Textures                Page 3 of 3"
+    ClearMenu()
+    Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
+    Menu.addButton("Next Page","fundershirtTextures",nil)
+    Menu.addButton("Previous Page","fundershirtTextures2",nil)
+    Menu.addButton("Return","FemaleUndershirtMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -3084,7 +4262,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function undershirtTextures()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 1 of 3"
+    options.menu_subtitle = "Textures                Page 1 of 3"
     ClearMenu()
     Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
     Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
@@ -3095,9 +4273,8 @@ function undershirtTextures()
     Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
     Menu.addButton(undershirt.txt_pg1[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg1[Menu.buttonCount+1])
     Menu.addButton("Next Page","undershirtTextures2",nil)
-    Menu.addButton("Previous Page","undershirtTextures",nil)
-    Menu.addButton("Return to male section","MaleUndershirtMenu",nil)
-    Menu.addButton("Return to female section","FemaleUndershirtMenu",nil)
+    Menu.addButton("Previous Page","undershirtTextures3",nil)
+    Menu.addButton("Return","MaleUndershirtMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -3106,7 +4283,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function undershirtTextures2()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 2 of 3"
+    options.menu_subtitle = "Textures                Page 2 of 3"
     ClearMenu()
     Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
     Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
@@ -3118,8 +4295,7 @@ function undershirtTextures2()
     Menu.addButton(undershirt.txt_pg2[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg2[Menu.buttonCount+1])
     Menu.addButton("Next Page","undershirtTextures3",nil)
     Menu.addButton("Previous Page","undershirtTextures",nil)
-    Menu.addButton("Return to male section","MaleUndershirtMenu",nil)
-    Menu.addButton("Return to female section","FemaleUndershirtMenu",nil)
+    Menu.addButton("Return","MaleUndershirtMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -3128,7 +4304,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function undershirtTextures3()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Textures                   Page 3 of 3"
+    options.menu_subtitle = "Textures                Page 3 of 3"
     ClearMenu()
     Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
     Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
@@ -3137,8 +4313,7 @@ function undershirtTextures3()
     Menu.addButton(undershirt.txt_pg3[Menu.buttonCount+1], "saveundershirt_txt", undershirt.txt_pg3[Menu.buttonCount+1])
     Menu.addButton("Next Page","undershirtTextures",nil)
     Menu.addButton("Previous Page","undershirtTextures2",nil)
-    Menu.addButton("Return to male section","MaleUndershirtMenu",nil)
-    Menu.addButton("Return to female section","FemaleUndershirtMenu",nil)
+    Menu.addButton("Return","MaleUndershirtMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -3149,6 +4324,12 @@ function saveundershirt(undershirt) --Sets Players head in database
     c_options.undershirt = undershirt
     SetPedComponentVariation(GetPlayerPed(-1), 8, undershirt, 0, 0)
     undershirtTextures()
+end
+
+function fsaveundershirt(undershirt) --Sets Players head in database
+    c_options.undershirt = undershirt
+    SetPedComponentVariation(GetPlayerPed(-1), 8, undershirt, 0, 0)
+    fundershirtTextures()
 end
 
 function RemoveUnderShirt()
@@ -3166,19 +4347,6 @@ function saveundershirt_txt(undershirt_txt) --Sets mask texture in database
     SetPedComponentVariation(GetPlayerPed(-1), 8, tonumber(c_options.undershirt), tonumber(c_options.undershirt_txt), 0)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Customisation Menu
---Armour
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function ArmourMenu()
-    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Gender"
-    ClearMenu()
-    Menu.addButton("Male","MaleArmourMenu",nil)
-    Menu.addButton("Female","FemaleArmourMenu",nil)
-    Menu.addButton("Return","Customisation",nil)
-end
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       
 --Armour
 --Male
@@ -3189,7 +4357,7 @@ function MaleArmourMenu()
     ClearMenu()
     Menu.addButton(armour.m_name[Menu.buttonCount+1], "removearmour", armour.m_armour[Menu.buttonCount+1])
     Menu.addButton(armour.m_name[Menu.buttonCount+1], "savearmour", armour.m_armour[Menu.buttonCount+1])
-    Menu.addButton("Return","ArmourMenu",nil)
+    Menu.addButton("Return","Customisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       
@@ -3201,8 +4369,8 @@ function FemaleArmourMenu()
     options.menu_subtitle = "Armour"
     ClearMenu()
     Menu.addButton(armour.f_name[Menu.buttonCount+1], "removearmour", armour.f_armour[Menu.buttonCount+1])
-    Menu.addButton(armour.f_name[Menu.buttonCount+1], "savearmour", armour.f_armour[Menu.buttonCount+1])
-    Menu.addButton("Return","ArmourMenu",nil)
+    Menu.addButton(armour.f_name[Menu.buttonCount+1], "fsavearmour", armour.f_armour[Menu.buttonCount+1])
+    Menu.addButton("Return","FCustomisation",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu       
@@ -3211,16 +4379,30 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function armourTextures()
     DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
-    options.menu_subtitle = "Armour"
+    options.menu_subtitle = "Armour Camos"
     ClearMenu()
     Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
     Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
     Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
     Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
     Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
-    Menu.addButton("Return to male section","MaleArmourMenu",nil)
-    Menu.addButton("Return to female section","FemaleArmourtMenu",nil)
-    Menu.addButton("Return","ArmourMenu",nil)
+    Menu.addButton("Return","MaleArmourMenu",nil)
+end
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Customisation Menu       
+--Armour
+--Textures
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function farmourTextures()
+    DisplayHelpText("Use ~INPUT_CELLPHONE_UP~ ~INPUT_CELLPHONE_DOWN~ to ~y~move~w~ and ~y~Enter~w~ to ~r~select")
+    options.menu_subtitle = "Armour Camos"
+    ClearMenu()
+    Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
+    Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
+    Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
+    Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
+    Menu.addButton(armour.txt_n[Menu.buttonCount+1], "savearmour_txt", armour.txt[Menu.buttonCount+1])
+    Menu.addButton("Return","FemaleArmourMenu",nil)
 end
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Customisation Menu
@@ -3231,6 +4413,12 @@ function savearmour(armour) --Sets Players head in database
     c_options.armour = armour
     SetPedComponentVariation(GetPlayerPed(-1), 9, tonumber(c_options.armour), 0, 0)
     armourTextures()
+end
+
+function fsavearmour(armour) --Sets Players head in database
+    c_options.armour = armour
+    SetPedComponentVariation(GetPlayerPed(-1), 9, tonumber(c_options.armour), 0, 0)
+    farmourTextures()
 end
 
 function removearmour(armour) --Sets Players head in database
@@ -3251,7 +4439,7 @@ end
 --Press E to open/close menu in the red marker
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local emplacement = {
-    {name="Clothing", id=73, x=74.291, y=-1396.929, z=29.200},
+	{name="Clothing", id=73, x=74.291, y=-1396.929, z=29.200},
     {name="Clothing", id=73, x=-709.985, y=-153.059, z=36.996},
     {name="Clothing", id=73, x=-163.204, y=-303.837, z=38.724},
     {name="Clothing", id=73, x=426.646, y=-803.452, z=29.338},
@@ -3266,9 +4454,7 @@ local emplacement = {
     {name="Clothing", id=73, x=-1103.373, y=2708.356, z=19.422},
     {name="Clothing", id=73, x=-1034.118, y=-2739.378, z=20.169},
 }
-
 incircle = false
-
 Citizen.CreateThread(function()
     for _, item in pairs(emplacement) do
       item.blip = AddBlipForCoord(item.x, item.y, item.z)
@@ -3284,10 +4470,10 @@ Citizen.CreateThread(function()
         local pos = GetEntityCoords(GetPlayerPed(-1), true)
         for k,v in ipairs(emplacement) do
             if(Vdist(pos.x, pos.y, pos.z, v.x, v.y, v.z) < 15.0)then
-                DrawMarker(1, v.x, v.y, v.z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 15, 167, 29, 200, 0, 0, 0,0)
+                DrawMarker(1, v.x, v.y, v.z - 1, 0, 0, 0, 0, 0, 0, 1.0001, 1.0001, 1.5001, 1555, 0, 0,165, 0, 0, 0,0)
                 if(Vdist(pos.x, pos.y, pos.z, v.x, v.y, v.z) < 1.0)then
                     if (incircle == false) then
-                        DisplayHelpText("Appuyez sur ~INPUT_CONTEXT~ pour personnaliser votre avatar.")
+                        DisplayHelpText("Press ~INPUT_CONTEXT~ to customise your character.")
                     end
                     incircle = true
                     if IsControlJustReleased(1, 51) then -- INPUT_CELLPHONE_DOWN
@@ -3320,9 +4506,11 @@ Citizen.CreateThread(function()
                                 helmet = c_options.helmet,
                                 helmet_txt = c_options.helmet_txt,
                                 glasses = c_options.glasses,
-                                glasses_txt = c_options.glasses_txt
+                                glasses_txt = c_options.glasses_txt,
+                                piercing = c_options.piercing,
+                                piercing_txt = c_options.piercing_txt
                             }
-                            Notify("~g~Vous avez enregistré votre tenue.") 
+                            Notify("~g~You saved your outfit.") 
                             TriggerServerEvent("mm:saveeverything", user)
                         else
                             secondsRemaining2 = 10
@@ -3348,11 +4536,11 @@ end)
 Citizen.CreateThread(function()
     while true do
         if shirt_help then
-            drawTxt(0.66, 1.45, 1.0,1.0,0.4, "~r~NOTICE~w~: Si les mains ou les bras de votre avatar sont invisibles allez dans le ~w~menu ~r~Hands.", 255, 255, 255, 255)
-            drawTxt(0.66, 1.42, 1.0,1.0,0.4, "~r~NOTICE~w~: Si le torse de votre avatar est invisible allez dans le ~w~menu ~r~Under Shirt.", 255, 255, 255, 255)
-            drawTxt(0.66, 1.37, 1.0,1.0,0.4, "~r~NOTICE~w~: Si le corps ou les bras de votre avatar traversent les vêtements allez dans le ~w~menu", 255, 255, 255, 255)
-            drawTxt(0.66, 1.39, 1.0,1.0,0.4, "               ~r~Hands.", 255, 255, 255, 255)
-            drawTxt(0.66, 1.34, 1.0,1.0,0.4, "~r~NOTICE~w~: (~g~Number~w~) = le nombre de ~g~Textures ~w~disponible.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.45, 1.0,1.0,0.4, "~r~NOTICE~w~: If your characters hands or arms are invisible then go to the ~r~Hands ~w~menu.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.42, 1.0,1.0,0.4, "~r~NOTICE~w~: If your characters chest is invisible then go to the ~r~Under Shirt ~w~menu.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.37, 1.0,1.0,0.4, "~r~NOTICE~w~: If your characters body or arms are going through clothing then go to the ~r~Hands", 255, 255, 255, 255)
+            drawTxt(0.66, 1.39, 1.0,1.0,0.4, "              ~w~menu.", 255, 255, 255, 255)
+            drawTxt(0.66, 1.34, 1.0,1.0,0.4, "~r~NOTICE~w~: (~g~Number~w~) = the number of ~g~Textures ~w~available.", 255, 255, 255, 255)
             drawTxt(0.66, 1.31, 1.0,1.0,0.4, "~r~NOTICE~w~: ~g~T~w~ = ~g~Textures ~w~and the numbers are textures that work with the clothing.", 255, 255, 255, 255)
         end
         Citizen.Wait(0)
