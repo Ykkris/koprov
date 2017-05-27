@@ -59,7 +59,6 @@ AutoStartResources:
     - gb_foodshops
     - pNotify
     - foodhud
-    - commands
 
 # do change
 RconPassword: koprobestv

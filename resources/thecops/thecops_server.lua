@@ -209,6 +209,19 @@ AddEventHandler('police:forceEnterAsk', function(t, v)
 end)
 
 -----------------------------------------------------------------------
+----------------------EVENT SPAWN POLICE VEH---------------------------
+-----------------------------------------------------------------------
+RegisterServerEvent('CheckPoliceVeh')
+AddEventHandler('CheckPoliceVeh', function(vehicle)
+	TriggerEvent('es:getPlayerFromId', source, function(user)
+
+			TriggerClientEvent('FinishPoliceCheckForVeh',source)
+			-- Spawn police vehicle
+			TriggerClientEvent('policeveh:spawnVehicle', source, vehicle)
+	end)
+end)
+
+-----------------------------------------------------------------------
 ---------------------COMMANDE ADMIN AJOUT / SUPP COP-------------------
 -----------------------------------------------------------------------
 TriggerEvent('es:addAdminCommand', 'copadd', 100000, function(source, args, user) 

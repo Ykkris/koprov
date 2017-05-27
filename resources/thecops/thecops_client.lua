@@ -305,6 +305,20 @@ function isNearTakeService()
 	end
 end
 
+function isNearStationGarage()
+	for i = 1, #stationGarage do
+		local ply = GetPlayerPed(-1)
+		local plyCoords = GetEntityCoords(ply, 0)
+		local distance = GetDistanceBetweenCoords(stationGarage[i].x, stationGarage[i].y, stationGarage[i].z, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+		if(distance < 30) then
+			DrawMarker(1, stationGarage[i].x, stationGarage[i].y, stationGarage[i].z-1, 0, 0, 0, 0, 0, 0, 2.0, 2.0, 1.0, 0, 155, 255, 200, 0, 0, 2, 0, 0, 0, 0)
+		end
+		if(distance < 2) then
+			return true
+		end
+	end
+end
+
 function ServiceOn()
 	TriggerServerEvent("police:registerservice")
 	isInService = true
