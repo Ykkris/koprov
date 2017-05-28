@@ -1,7 +1,7 @@
 -- CONFIG --
 
 -- How many milliseconds should 1 second be?
-local waitTime = 33
+local waitTime = 1000
 
 -- CODE --
 
