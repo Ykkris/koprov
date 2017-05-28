@@ -437,7 +437,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if depanveh.selectedbutton > 1 then
 					depanveh.selectedbutton = depanveh.selectedbutton -1
 					if buttoncount > 10 and depanveh.selectedbutton < depanveh.menu.from then
@@ -446,7 +446,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if depanveh.selectedbutton < buttoncount then
 					depanveh.selectedbutton = depanveh.selectedbutton +1
 					if buttoncount > 10 and depanveh.selectedbutton > depanveh.menu.to then

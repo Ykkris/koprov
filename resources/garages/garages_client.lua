@@ -385,7 +385,7 @@ local backlock = false
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if garage.selectedbutton > 1 then
 					garage.selectedbutton = garage.selectedbutton -1
 					if buttoncount > 10 and garage.selectedbutton < garage.menu.from then
@@ -394,7 +394,7 @@ local backlock = false
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if garage.selectedbutton < buttoncount then
 					garage.selectedbutton = garage.selectedbutton +1
 					if buttoncount > 10 and garage.selectedbutton > garage.menu.to then
