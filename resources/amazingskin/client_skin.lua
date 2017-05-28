@@ -4845,6 +4845,8 @@ Citizen.CreateThread(function()
                         texture_help = false
                     end
                     if(IsControlJustReleased(1, 23)) then 
+                            Citizen.Trace("On est dans F pressed")
+                            Citizen.Trace(tostring(mp_check))
                         if mp_check then
                             mp_check_message = false
                             local user = {
