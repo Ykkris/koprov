@@ -183,70 +183,70 @@ Citizen.CreateThread(function()
 
 			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 2.0) then
 				DisplayHelpText("Appuyez sur ~g~E~s~ pour vous enregistrer.")
-			end
 
-			if (IsControlJustReleased(1, 38)) then
+				if (IsControlJustReleased(1, 38)) then
+					if vehshop.opened then
+						ClosedCreator()
+					else 
+						OpenCreator()
+					end
+				end
+
 				if vehshop.opened then
-					ClosedCreator()
-				else 
-					OpenCreator()
-				end
-			end
+					local ped = LocalPed()
+					local menu = vehshop.menu[vehshop.currentmenu]
+					drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
+					drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
+					drawTxt(vehshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
+					local y = vehshop.menu.y + 0.12
+					buttoncount = tablelength(menu.buttons)
+					local selected = false
 
-			if vehshop.opened then
-				local ped = LocalPed()
-				local menu = vehshop.menu[vehshop.currentmenu]
-				drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
-				drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
-				drawTxt(vehshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
-				local y = vehshop.menu.y + 0.12
-				buttoncount = tablelength(menu.buttons)
-				local selected = false
+					for i,button in pairs(menu.buttons) do
+						if i >= vehshop.menu.from and i <= vehshop.menu.to then
 
-				for i,button in pairs(menu.buttons) do
-					if i >= vehshop.menu.from and i <= vehshop.menu.to then
+							if i == vehshop.selectedbutton then
+								selected = true
+							else
+								selected = false
+							end
+							drawMenuButton(button,vehshop.menu.x,y,selected)
 
-						if i == vehshop.selectedbutton then
-							selected = true
-						else
-							selected = false
-						end
-						drawMenuButton(button,vehshop.menu.x,y,selected)
+							y = y + 0.04
 
-						y = y + 0.04
-
-						if selected and IsControlJustPressed(1, 201) then
-							ButtonSelected(button)
+							if selected and IsControlJustPressed(1, 201) then
+								ButtonSelected(button)
+							end
 						end
 					end
 				end
-			end
-			if vehshop.opened then
-				if IsControlJustPressed(1,202) then
-					Back()
-				end
-			end
-			if IsControlJustReleased(1,202) then
-				backlock = false
-			end
-			if IsControlJustPressed(1,27) then
-				if vehshop.selectedbutton > 1 then
-					vehshop.selectedbutton = vehshop.selectedbutton -1
-					if buttoncount > 10 and vehshop.selectedbutton < vehshop.menu.from then
-						vehshop.menu.from = vehshop.menu.from -1
-						vehshop.menu.to = vehshop.menu.to - 1
+				if vehshop.opened then
+					if IsControlJustPressed(1,202) then
+						Back()
 					end
 				end
-			end
-			if IsControlJustPressed(1,173)then
-				if vehshop.selectedbutton < buttoncount then
-					vehshop.selectedbutton = vehshop.selectedbutton +1
-					if buttoncount > 10 and vehshop.selectedbutton > vehshop.menu.to then
-						vehshop.menu.to = vehshop.menu.to + 1
-						vehshop.menu.from = vehshop.menu.from + 1
+				if IsControlJustReleased(1,202) then
+					backlock = false
+				end
+				if IsControlJustPressed(1,27) then
+					if vehshop.selectedbutton > 1 then
+						vehshop.selectedbutton = vehshop.selectedbutton -1
+						if buttoncount > 10 and vehshop.selectedbutton < vehshop.menu.from then
+							vehshop.menu.from = vehshop.menu.from -1
+							vehshop.menu.to = vehshop.menu.to - 1
+						end
 					end
-				end	
-			end
+				end
+				if IsControlJustPressed(1,173)then
+					if vehshop.selectedbutton < buttoncount then
+						vehshop.selectedbutton = vehshop.selectedbutton +1
+						if buttoncount > 10 and vehshop.selectedbutton > vehshop.menu.to then
+							vehshop.menu.to = vehshop.menu.to + 1
+							vehshop.menu.from = vehshop.menu.from + 1
+						end
+					end	
+				end
+			end			
 		end
 	end
 end)
