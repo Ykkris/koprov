@@ -1,9 +1,6 @@
 require "resources/essentialmode/lib/MySQL"
 -- MySQL:open("localhost", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
-permission = {superadmin = 10, user = 0, admin = 9, moderateur = 6, helper = 4 -- je met ça en terme d'indiquation, j'utilise que le superadmin ici.
-  }
-
 RegisterServerEvent("jobs:wichone") -- return le job au client
 
 function nameJob(id)
@@ -79,7 +76,7 @@ AddEventHandler("jobs:wichone", function(job_id) -- return le job au client
    end)
 end)
 
---[[TriggerEvent('es:addAdminCommand', 'jobadd', 100000, function(source, args, user) 
+TriggerEvent('es:addAdminCommand', 'jobadd', 100000, function(source, args, user) 
      if(not args[2]) then
     TriggerClientEvent('chatMessage', source, 'SYSTEM', {255, 0, 0}, "Usage : /jobadd [ID] [IDJOB]")  
     else
@@ -98,38 +95,5 @@ end)
   end
 end, function(source, args, user) 
   TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Tu n'as pas la permission !")
-end) --]]
-
-TriggerEvent('es:addCommand', 'jobadd', 
-  function(source, args, user)
-    if user.permission >= permission.superadmin then
-      TriggerClientEvent("Iphone:notif", source,"Tu n'es pas Administrateur")
-      CancelEvent()
-    else
-      if #args-1 ~= 2 then
-        TriggerClientEvent("Iphone:notif", source,"/jobadd [ServerID] [JobID]")
-        CancelEvent()
-      else
-        if type(args[3]) == type(3) and type(args[2]) == type(3) then
-          TriggerEvent("es:getPlayerFromId", args[2], function(targetUser)
-            if targetUser ~= nil then
-              UpdateJobViaCommand(targetUser.identifier, args[3], args[2])
-            else
-              TriggerClientEvent("Iphone:notif", source, "Je ne trouve pas l'ID : "..args[2].."sur le serveur."
-            end
-
-          end)
-        end
-      end
-    end
-
-  end)
-
-function UpdateJobViaCommand(player, id, targetServerId) -- command = true si c'est la commande /jobadd qui est entré, sinon false
-  local job = id
-
-  MySQL:executeQuery("UPDATE users SET `job`='@value' WHERE identifier = '@identifier'", {['@value'] = job, ['@identifier'] = player})
-  TriggerClientEvent("recolt:updateJobs", targetServerId, job)
-  TriggerClientEvent("service:updateJobs", targetServerId, job)
-end
+end)
  

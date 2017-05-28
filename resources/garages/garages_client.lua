@@ -473,7 +473,6 @@ local firstspawn = 0
 	if firstspawn == 0 then
 		TriggerServerEvent("garages:PutVehFourGarages",source)
 		ShowGarageBlips(true)
-		TriggerServerEvent("garages:PutVehFourGarages",source)
 		firstspawn = 1
 	end
 end)
