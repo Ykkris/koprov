@@ -1039,6 +1039,7 @@ AddEventHandler('services:cbcopconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les policiers ont reçu votre appel")
 	end
 end)
 
@@ -1053,6 +1054,7 @@ AddEventHandler('services:cbmedconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les médecins ont reçu votre appel")
 	end
 end)
 
@@ -1067,6 +1069,7 @@ AddEventHandler('services:cbdepconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les dépanneurs ont reçu votre appel")
 	end
 end)
 
@@ -1081,6 +1084,7 @@ AddEventHandler('services:cbtaxconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les taxis ont reçu votre appel")
 	end
 end)
 
