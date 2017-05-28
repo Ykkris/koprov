@@ -11,6 +11,95 @@ require "resources/essentialmode/lib/MySQL"
 
 -- MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
+--ADD EMS job from admin
+function addEMS(identifier)
+  MySQL:executeQuery("INSERT INTO ems (`identifier`) VALUES ('@identifier')", { ['@identifier'] = identifier})
+end
+
+function remEMS(identifier)
+  MySQL:executeQuery("DELETE FROM ems WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
+end
+
+function checkIsEMS(identifier)
+  local query = MySQL:executeQuery("SELECT * FROM ems WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
+  local result = MySQL:getResults(query, {'rank'}, "identifier")
+  
+  if(not result[1]) then
+    TriggerClientEvent('ems:receiveIsEMS', source, "inconnu")
+  else
+    TriggerClientEvent('ems:receiveIsEMS', source, result[1].rank)
+  end
+end
+
+function s_checkIsEMS(identifier)
+  local query = MySQL:executeQuery("SELECT * FROM ems WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
+  local result = MySQL:getResults(query, {'rank'}, "identifier")
+  
+  if(not result[1]) then
+    return "nil"
+  else
+    return result[1].rank
+  end
+end
+
+RegisterServerEvent('ems:checkIsEMS')
+AddEventHandler('ems:checkIsEMS', function()
+  TriggerEvent("es:getPlayerFromId", source, function(user)
+    local identifier = user.identifier
+    checkIsEMS(identifier)
+  end)
+end)
+
+--ADD EMS job from admin
+
+-- Admin CMD
+--
+--
+
+TriggerEvent('es:addGroupCommand', 'emsadd', "admin", function(source, args, user)
+     if(not args[2]) then
+    TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "Usage : /emsadd [ID]")  
+  else
+    if(GetPlayerName(tonumber(args[2])) ~= nil)then
+      local player = tonumber(args[2])
+      TriggerEvent("es:getPlayerFromId", player, function(target)
+        addEMS(target.identifier)
+        TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "Roger that !")
+        TriggerClientEvent("es_freeroam:notify", player, "CHAR_ANDREAS", 1, "Government", false, "Congrats, you have been made a medic!")
+        TriggerClientEvent('ems:nowEMS', player)
+      end)
+    else
+      TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "No player with this ID !")
+    end
+  end
+end, function(source, args, user) 
+  TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "You haven't the permission to do that !")
+end)
+
+TriggerEvent('es:addGroupCommand', 'emsrem', "admin", function(source, args, user) 
+     if(not args[2]) then
+    TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "Usage : /emsrem [ID]")  
+  else
+    if(GetPlayerName(tonumber(args[2])) ~= nil)then
+      local player = tonumber(args[2])
+      TriggerEvent("es:getPlayerFromId", player, function(target)
+        remEMS(target.identifier)
+        TriggerClientEvent("es_freeroam:notify", player, "CHAR_ANDREAS", 1, "Government", false, "You're no longer a medic!")
+        TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "Roger that !")
+        TriggerClientEvent('ems:noLongerEMS', player)
+      end)
+    else
+      TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "No player with this ID !")
+    end
+  end
+end, function(source, args, user) 
+  TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, "You haven't the permission to do that !")
+end)
+
+--
+--
+---- Admin CMD
+
 RegisterServerEvent('es_em:sendEmergency')
 AddEventHandler('es_em:sendEmergency',
   function(reason, playerIDInComa, x, y, z)
@@ -88,12 +177,14 @@ AddEventHandler('es_em:sv_removeMoney',
     TriggerEvent("es:getPlayerFromId", source,
       function(user)
         if(user)then
-          user:setMoney(0)
-          user:setDirty_Money(0)
-          -- This part requires the mod vdk_inventory
-          TriggerEvent("item:resetoncoma", source)
+          if user.money > 0 then
+            user:setMoney(0)
+            user:setDirty_Money(0)
+          	-- This part requires the mod vdk_inventory
+          	TriggerEvent("item:resetoncoma", source)
         end
       end
+     end
     )
   end
 )
@@ -111,6 +202,10 @@ AddEventHandler('playerDropped', function()
       local executed_query = MySQL:executeQuery("UPDATE users SET enService = 0 WHERE users.identifier = '@identifier'", {['@identifier'] = user.identifier})
     end
   )
+end)
+
+TriggerEvent('es:addCommand', 'respawn', function(source, args, user)
+  TriggerClientEvent('es_em:cl_respawn', source)
 end)
 
 function GetJobId(source)
