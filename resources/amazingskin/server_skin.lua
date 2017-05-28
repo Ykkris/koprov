@@ -150,12 +150,10 @@ end)
 RegisterServerEvent("mm:saveeverything")
 AddEventHandler("mm:saveeverything",function(user)
 	TriggerEvent('es:getPlayerFromId', source, function(target)
-		print(tostring(target.identifier))
 		local executed_query = MySQL:executeQuery("UPDATE modelmenu SET armour='@armour', armour_txt='@atxt', head='@head', mask='@mask', mask_txt='@mtxt', hair='@hair', hair_colour='@hcolour', shirt='@shirt', shirt_txt='@stxt', hand='@hand', shoe='@shoe', shoe_txt='@shtxt', pants='@pants', pants_txt='@ptxt', undershirt='@undershirt', undershirt_txt='@ustxt', helmet='@helmet', helmet_txt='@htxt', glasses='@glasses', glasses_txt='@gtxt', percing='@piercing', percing_txt='@petxt' WHERE identifier='@user'",{['@armour']= user.armour,['@atxt']= user.armour_txt,['@head']= user.head,['@mask']= user.mask,['@mtxt']= user.mask_txt,['@hair']= user.hair,['@hcolour']= user.hcolour,['@shirt']= user.shirt,['@stxt']= user.shirt_txt,['@hand']= user.hand,['@shoe']= user.shoe,['@shtxt']= user.shoe_txt,['@pants']= user.pants,['@ptxt']= user.pants_txt,['@undershirt']= user.undershirt,['@ustxt']= user.undershirt_txt,['@helmet']= user.helmet,['@htxt']= user.helmet_txt,['@glasses']= user.glasses,['@gtxt']= user.glasses_txt,['@piercing']= user.piercing,['@petxt']= user.piercing_txt,['@user']= target.identifier})
 		local executed_query2 = MySQL:executeQuery("SELECT identifier FROM modelmenu WHERE identifier='@user'",{['@user']= target.identifier})
 		local result = MySQL:getResults(executed_query2, {'identifier'}, "identifier")
 		if result[1].identifier ~= nil then
-			print(tostring(result[1].identifier))
 			TriggerClientEvent("mm:changeeverything", source, user)
 		else
 			TriggerClientEvent("mm:changeeverything", source, user)
