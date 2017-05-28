@@ -102,25 +102,30 @@ end) --]]
 
 TriggerEvent('es:addCommand', 'jobadd', 
   function(source, args, user)
-    if user.permission >= permission.superadmin then
+    if user.permission_level <= permission.superadmin then
+      print(tostring(user.permission_level))
       TriggerClientEvent("Iphone:notif", source,"Tu n'es pas Administrateur")
       CancelEvent()
     else
       if #args-1 ~= 2 then
         TriggerClientEvent("Iphone:notif", source,"/jobadd [ServerID] [JobID]")
+        print("dans arg ~= expected")
         CancelEvent()
       else
         if type(args[3]) == type(3) and type(args[2]) == type(3) then
           TriggerEvent("es:getPlayerFromId", args[2], function(targetUser)
+            print("le bon type")
             if targetUser ~= nil then
               UpdateJobViaCommand(targetUser.identifier, args[3], args[2])
+              print("update job")
             else
-              TriggerClientEvent("Iphone:notif", source, "Je ne trouve pas l'ID : "..args[2].."sur le serveur."
+             TriggerClientEvent("Iphone:notif", source, "Je ne trouve pas l'ID : "..args[2].."sur le serveur.")
+             print("id incorrect")
             end
 
           end)
         end
-      end
+      end 
     end
 
   end)
@@ -132,4 +137,3 @@ function UpdateJobViaCommand(player, id, targetServerId) -- command = true si c'
   TriggerClientEvent("recolt:updateJobs", targetServerId, job)
   TriggerClientEvent("service:updateJobs", targetServerId, job)
 end
- 
