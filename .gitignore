@@ -1,4 +1,4 @@
 NLog.config
 /cache/
 /resources/\[local\]/
-/resources/[essential]/es_admin/positions.txt
+/resources/[essential]/es_admin/positions.txt/
