@@ -45,10 +45,10 @@ function checkInventory(target)
     TriggerEvent("es:getPlayerFromId", target, function(player)
     	identifier = player.identifier
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_inventory JOIN items ON `user_inventory`.`item_id` = `items`.`id` JOIN recolt ON `recolt`.`raw_id` = `user_inventory`.`item_id` WHERE user_id = '@username'", { ['@username'] = player.identifier })
-		local result = MySQL:getResults(executed_query, { 'quantity', 'libelle', 'item_id', 'job_id', 'isIllegal' }, "item_id")
+		local result = MySQL:getResults(executed_query, { 'quantity', 'libelle', 'item_id', 'job_id', 'illegal' }, "item_id")
 		if (result) then
 			for _, v in ipairs(result) do
-				if(v.quantity == 0) then
+				if(v.quantity ~= 0) then
 					strResult = strResult .. v.quantity .. " de " .. v.libelle .. ", "
 				end
 				if(v.isIllegal == "True") then
