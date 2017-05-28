@@ -29,6 +29,7 @@ local depanveh = {
 local fakecar = {model = '', car = nil}
 local boughtcar = false
 local vehicle_price = 0
+local isServiceMan = false
 
 local stationGarage = {
 	{x=391.96, y=-1621.23, z=29.29}
@@ -37,6 +38,14 @@ local stationGarage = {
 function LocalPed()
 	return GetPlayerPed(-1)
 end
+
+RegisterNetEvent('service:receiveJob')
+AddEventHandler('service:receiveJob', function(result)
+	job_id = result
+	if job_id == 4 then
+		isServiceMan = true
+	end
+end)
 
 -------------------------------------------------
 ----------------CONFIG SELECTION----------------
@@ -88,10 +97,10 @@ function isNearStationGarage()
 		local ply = GetPlayerPed(-1)
 		local plyCoords = GetEntityCoords(ply, 0)
 		local distance = GetDistanceBetweenCoords(stationGarage[i].x, stationGarage[i].y, stationGarage[i].z, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
-		if(distance < 30) then
+		if(distance < 30) and isServiceMan then
 			DrawMarker(1, stationGarage[i].x, stationGarage[i].y, stationGarage[i].z-1, 0, 0, 0, 0, 0, 0, 2.0, 2.0, 1.0, 185, 169, 65, 200, 0, 0, 2, 0, 0, 0, 0)
 		end
-		if(distance < 2) then
+		if(distance < 2) and isServiceMan then
 			return true
 		end
 	end
