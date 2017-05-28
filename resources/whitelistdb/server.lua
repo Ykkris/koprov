@@ -1,7 +1,7 @@
 -- Script made by Havanna (http://steamcommunity.com/id/HavannaPC/)
 
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "USER", "PASSWORD")
+--MySQL:open("127.0.0.1", "gta5_gamemode_essential", "USER", "PASSWORD")
 
 AddEventHandler( "playerConnecting", function(name, setReason )
 	local identifier = GetPlayerIdentifiers(source)[1]
