@@ -208,6 +208,11 @@ TriggerEvent('es:addCommand', 'respawn', function(source, args, user)
   TriggerClientEvent('es_em:cl_respawn', source)
 end)
 
+RegisterServerEvent('es_em:healPlayer')
+AddEventHandler('es_em:healPlayer', function(target_id)
+  TriggerClientEvent('es_em:healPlayer', target_id)
+end)
+
 function GetJobId(source)
   local jobId = -1
 

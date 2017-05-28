@@ -19,6 +19,7 @@ local Keys = {
 
 ------------------------------------------------------------------------------
 isCop = false --------------- A ENLEVER
+job_id = nil
 guiEnabled = false
 ActualJob = 0
 notificationInProgress = false
@@ -32,31 +33,6 @@ PhoneData = {
 }
 
 reloadphone = false
-
-AddEventHandler("playerSpawned", function()
-	TriggerServerEvent("police:checkIsCop")
-end)
-
-RegisterNetEvent('police:receiveIsCop')
-AddEventHandler('police:receiveIsCop', function(result)
-	if(result == "inconnu") then
-		isCop = false
-	else
-		isCop = true
-		rank = result
-	end
-end)
-
-RegisterNetEvent("service:updateJobs")
-AddEventHandler("service:updateJobs", function(jobid)
-	ActualJob = jobid
-end)
-
-RegisterNetEvent("service:onloaded")
-AddEventHandler("service:onloaded", function(jobid)
-	ActualJob = jobid
-end)
-
 
 local vehshop = {
 	opened = false,
@@ -84,8 +60,7 @@ local vehshop = {
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
 				{name = "Services", description = ""},
-				{name = "Donner de l'argent", description = ""},
-				{name = "Police", description = ""}
+				{name = "Donner de l'argent", description = ""}
 			}
 		},
 		["Telephone"] = {  -- avant vehicles
@@ -124,7 +99,7 @@ local vehshop = {
 				{name = "Branler", description = ''},
 				{name = "Selfie", description = ''},
 				{name = "Prout 1", description = ''},
-				{name = "Dancer", description = ''},
+				--{name = "Dancer", description = ''},
 				{name = "Guitare", description = ''},
 				{name = "High 5", description =''},
 				{name = "Calme", description =''},
@@ -199,6 +174,41 @@ local vehshop = {
 		},
 	}
 }
+
+AddEventHandler("playerSpawned", function()
+	TriggerServerEvent("police:checkIsCop")
+	TriggerServerEvent("service:getJobId") -- similar use than above but more general
+end)
+
+RegisterNetEvent('police:receiveIsCop')
+AddEventHandler('police:receiveIsCop', function(result)
+	if(result == "inconnu") then
+		isCop = false
+	else
+		isCop = true
+		rank = result
+	end
+end)
+
+RegisterNetEvent('service:receiveJob')
+AddEventHandler('service:receiveJob', function(result)
+	job_id = result
+	if job_id == 3 then
+		table.insert(vehshop.menu['main'].buttons, {name = "Soigner", description = ""})
+	elseif job_id == 2 then
+		table.insert(vehshop.menu['main'].buttons, {name = "Police", description = ""})
+	end
+end)
+
+RegisterNetEvent("service:updateJobs")
+AddEventHandler("service:updateJobs", function(jobid)
+	ActualJob = jobid
+end)
+
+RegisterNetEvent("service:onloaded")
+AddEventHandler("service:onloaded", function(jobid)
+	ActualJob = jobid
+end)
 
 function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
 	SetTextFont(font)
@@ -354,13 +364,7 @@ Citizen.CreateThread(function()
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu] -- vehshop.menu["Repertoire"].buttons
 
-			if isCop and vehshop.currentmenu == "main" then
-				buttoncount = tablelength(menu.buttons)
-			elseif vehshop.currentmenu == "main" then
-				buttoncount = tablelength(menu.buttons) - 1
-			else
-				buttoncount = tablelength(menu.buttons)
-			end
+			buttoncount = tablelength(menu.buttons)
 			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
 			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
 			drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
@@ -376,16 +380,8 @@ Citizen.CreateThread(function()
 						selected = false
 					end
 
-
-					if button.name ~= "Police" then
-						drawMenuButton(button,vehshop.menu.x,y,selected)
-						y = y + 0.04
-					elseif button.name == "Police" and isCop then  ------------------ On affiche le boutton que si on est flic 
-						drawMenuButton(button,vehshop.menu.x,y,selected)
-						y = y + 0.04
-					end ------------------------------------------------------------------------------------------------------
-
-					--y = y + 0.04
+					drawMenuButton(button,vehshop.menu.x,y,selected)
+					y = y + 0.04
 					
 					if selected and IsControlJustPressed(1,201) then
 						ButtonSelected(button)
@@ -448,8 +444,10 @@ function ButtonSelected(button)
 			IdCard()
 		elseif btn == "Donner de l'argent" then
 			GiveCash()
-		elseif btn == "Police" and isCop then
+		elseif btn == "Police" then
 			OpenMenu("Police")
+		elseif btn == "Soigner" then
+			Heal()
 		elseif btn == "Services" then
 			OpenMenu("Services")
 		end
@@ -706,6 +704,22 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 	table.insert(PhoneData.sms, receivesms)
 
 end)
+
+function Heal()
+	local target, distance = GetClosestPlayer()
+	local player = GetPlayerPed(-1)
+	if target ~= -1 and distance < 1 then
+		TaskStartScenarioInPlace(player, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+		Citizen.Wait(3000)
+		ClearPedTasks(player);
+		TriggerServerEvent("es_em:healPlayer", GetPlayerServerId(target))
+	else 
+		TaskStartScenarioInPlace(player, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+		Citizen.Wait(3000)
+		ClearPedTasks(player);
+		SetEntityHealth(player, GetEntityMaxHealth(player))
+	end
+end
 
 function OpenMenu(menu)
 	vehshop.lastmenu = vehshop.currentmenu
@@ -1025,6 +1039,7 @@ AddEventHandler('services:cbcopconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les policiers ont reçu votre appel")
 	end
 end)
 
@@ -1039,6 +1054,7 @@ AddEventHandler('services:cbmedconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les médecins ont reçu votre appel")
 	end
 end)
 
@@ -1053,6 +1069,7 @@ AddEventHandler('services:cbdepconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les dépanneurs ont reçu votre appel")
 	end
 end)
 
@@ -1067,6 +1084,7 @@ AddEventHandler('services:cbtaxconnected', function(cb)
 		local y = p_coords.y
 		local z = p_coords.z
 		TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les taxis ont reçu votre appel")
 	end
 end)
 
@@ -1180,6 +1198,7 @@ function GetPlayers()
 	for i = 0, 31 do
 		if NetworkIsPlayerActive(i) then
 			table.insert(players, i)
+			Citizen.Trace(i)
 		end
 	end
 	return players

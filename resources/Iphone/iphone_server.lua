@@ -280,8 +280,15 @@ function InitSave()
 	SetTimeout(saveTime, InitSave)
 end
 
-
-
+RegisterServerEvent('service:getJobId')
+AddEventHandler('service:getJobId',	function()
+	TriggerEvent('es:getPlayerFromId', source, function(user)
+		local executed_query = MySQL:executeQuery("SELECT job FROM users WHERE users.identifier = '@identifier'", {['@identifier'] = user.identifier})
+		local result = MySQL:getResults(executed_query, {'job'}, "identifier")
+		
+		TriggerClientEvent("service:receiveJob", source , result[1].job)
+  	end)
+end)
 
 RegisterServerEvent('service:connectedbyid')
 AddEventHandler('service:connectedbyid',
