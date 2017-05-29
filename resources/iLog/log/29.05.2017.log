@@ -1,1 +1,87 @@
 TEST
+[19.10.22] [VDK_INV]{LOAD} : Script has been loaded 
+[19.10.22] [VDK_INV]{LOAD} : Script has been loaded 
+[19.10.22] [VDK_INV]{LOAD} : Script has been loaded 
+[19.20.19] [VDK_INV]{LOAD} : Script has been loaded 
+[19.20.19] [VDK_INV]{LOAD} : Script has been loaded 
+[19.20.20] [VDK_INV]{LOAD} : Script has been loaded 
+[19.31.41] [VDK_INV]{LOAD} : Script has been loaded 
+[19.31.41] [VDK_INV]{LOAD} : Script has been loaded 
+[19.31.41] [VDK_INV]{LOAD} : Script has been loaded 
+[19.55.09] [Essential]{LOAD} : Player :steam:110000101f91cd2 source : 1 perm : 4 money : 10000000 dirty_money : 0 Succesfully Loaded
+[19.55.09] [Iphone]{SAVE} : Save Done
+[19.55.09] [Iphone]{LOAD} : Loading steam:110000101f91cd2 Peter Patasel
+[19.55.11] [Fourriere]{INFO} : Player steam:110000101f91cd2 have four his vehicle
+[19.55.11] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000101f91cd2
+[19.55.11] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Machete
+[19.55.11] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Pistol
+[19.56.51] [Essential]{LOAD} : Player :steam:11000010599af76 source : 2 perm : 4 money : 0 dirty_money : 0 Succesfully Loaded
+[19.56.51] [Iphone]{LOAD} : Loading steam:11000010599af76  
+[19.56.52] [Fourriere]{INFO} : Player steam:11000010599af76 have four his vehicle
+[19.56.52] [WeapShop]{LOAD} : Give Weapons To Player : steam:11000010599af76
+[19.57.00] [Essential]{LOAD} : Player :steam:110000107102b2c source : 3 perm : 0 money : 99158627 dirty_money : 0 Succesfully Loaded
+[19.57.00] [Iphone]{LOAD} : Loading steam:110000107102b2c Stanko Novosel
+[19.57.00] [MyMairie]{INFO} : Player : steam:110000107102b2c generating matricule 
+[19.57.01] [Fourriere]{INFO} : Player steam:110000107102b2c have four his vehicle
+[19.57.01] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000107102b2c
+[19.57.03] [Essential]{DROP} : Player : steam:110000107102b2c source : 
+[19.57.22] [Message]{INFO} : steam:110000101f91cd2 Accepted Entered message : /bring 2
+[19.57.38] [Essential]{LOAD} : Player :steam:110000107102b2c source : 4 perm : 0 money : 99158627 dirty_money : 0 Succesfully Loaded
+[19.57.38] [Iphone]{LOAD} : Loading steam:110000107102b2c Stanko Novosel
+[19.57.43] [Fourriere]{INFO} : Player steam:110000107102b2c have four his vehicle
+[19.57.43] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000107102b2c
+[20.02.50] [VDK_INV]{LOAD} : Script has been loaded 
+[20.02.57] [Essential]{DROP} : Player : steam:110000101f91cd2 source : 
+[20.03.17] [Essential]{LOAD} : Player :steam:110000101f91cd2 source : 5 perm : 4 money : 10000000 dirty_money : 0 Succesfully Loaded
+[20.03.17] [Iphone]{LOAD} : Loading steam:110000101f91cd2 Peter Patasel
+[20.03.19] [Fourriere]{INFO} : Player steam:110000101f91cd2 have four his vehicle
+[20.03.19] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000101f91cd2
+[20.03.19] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Machete
+[20.03.19] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Pistol
+[20.10.09] [Iphone]{SAVE} : Save Done
+[20.12.39] [PayCheck]{INFO} : Player : steam:110000107102b2c receive his paycheck 250
+[20.17.38] [VDK_INV]{LOAD} : Script has been loaded 
+[20.18.07] [Essential]{DROP} : Player : steam:110000101f91cd2 source : 
+[20.18.28] [Essential]{LOAD} : Player :steam:110000101f91cd2 source : 6 perm : 4 money : 10000000 dirty_money : 0 Succesfully Loaded
+[20.18.28] [Iphone]{LOAD} : Loading steam:110000101f91cd2 Peter Patasel
+[20.18.28] [Fourriere]{INFO} : Player steam:110000101f91cd2 have four his vehicle
+[20.18.28] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000101f91cd2
+[20.18.28] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Machete
+[20.18.28] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Pistol
+[20.22.10] [VDK_INV]{LOAD} : Script has been loaded 
+[20.22.37] [Essential]{DROP} : Player : steam:110000101f91cd2 source : 
+[20.23.29] [Essential]{LOAD} : Player :steam:110000101f91cd2 source : 7 perm : 4 money : 10000000 dirty_money : 0 Succesfully Loaded
+[20.23.29] [Iphone]{LOAD} : Loading steam:110000101f91cd2 Peter Patasel
+[20.23.30] [Fourriere]{INFO} : Player steam:110000101f91cd2 have four his vehicle
+[20.23.30] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000101f91cd2
+[20.23.30] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Machete
+[20.23.30] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Pistol
+[20.24.37] [VDK_INV]{LOAD} : Script has been loaded 
+[20.24.42] [Essential]{DROP} : Player : steam:110000101f91cd2 source : 
+[20.25.09] [Iphone]{SAVE} : Save Done
+[20.25.19] [Essential]{LOAD} : Player :steam:110000101f91cd2 source : 8 perm : 4 money : 10000000 dirty_money : 0 Succesfully Loaded
+[20.25.19] [Iphone]{LOAD} : Loading steam:110000101f91cd2 Peter Patasel
+[20.25.21] [Fourriere]{INFO} : Player steam:110000101f91cd2 have four his vehicle
+[20.25.21] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000101f91cd2
+[20.25.21] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Machete
+[20.25.21] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Pistol
+[20.27.40] [PayCheck]{INFO} : Player : steam:110000107102b2c receive his paycheck 250
+[20.28.22] [Essential]{DROP} : Player : steam:11000010599af76 source : 
+[20.29.22] [Essential]{DROP} : Player : steam:110000107102b2c source : 
+[20.29.25] [Essential]{DROP} : Player : steam:110000101f91cd2 source : 
+[20.34.59] [VDK_INV]{LOAD} : Script has been loaded 
+[20.34.59] [VDK_INV]{LOAD} : Script has been loaded 
+[20.34.59] [VDK_INV]{LOAD} : Script has been loaded 
+[20.35.34] [Essential]{LOAD} : Player :steam:110000101f91cd2 source : 1 perm : 4 money : 10000000 dirty_money : 0 Succesfully Loaded
+[20.35.34] [Iphone]{SAVE} : Save Done
+[20.35.34] [Iphone]{LOAD} : Loading steam:110000101f91cd2 Peter Patasel
+[20.35.37] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000101f91cd2
+[20.35.37] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Machete
+[20.35.37] [WeapShop]{LOAD} : Buy Weapons By Player : steam:110000101f91cd2 | Weapon : WEAPON_Pistol
+[20.36.32] [Essential]{LOAD} : Player :steam:110000107102b2c source : 2 perm : 0 money : 99159127 dirty_money : 0 Succesfully Loaded
+[20.36.32] [Iphone]{LOAD} : Loading steam:110000107102b2c Stanko Novosel
+[20.36.34] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000107102b2c
+[20.36.36] [Essential]{DROP} : Player : steam:110000107102b2c source : 
+[20.37.17] [Essential]{LOAD} : Player :steam:110000107102b2c source : 3 perm : 0 money : 99159127 dirty_money : 0 Succesfully Loaded
+[20.37.17] [Iphone]{LOAD} : Loading steam:110000107102b2c Stanko Novosel
+[20.37.22] [WeapShop]{LOAD} : Give Weapons To Player : steam:110000107102b2c
