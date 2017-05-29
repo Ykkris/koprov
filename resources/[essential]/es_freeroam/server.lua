@@ -4,6 +4,9 @@ TriggerEvent("es:setDefaultSettings", {
 
 RegisterServerEvent('playerSpawn')
 AddEventHandler('playerSpawn', function()
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+		TriggerEvent("log:addLogServer", "FreeRoam","SPAWN" , "Player : " .. user.identifier .. " at coords : " .. " X= " .. tostring(spawnCoords.x) .. " Y= " .. tostring(spawnCoords.y) .. " Z= " .. tostring(spawnCoords.z))
+	end)
 	TriggerClientEvent('es_freeroam:spawnPlayer', source, spawnCoords.x, spawnCoords.y, spawnCoords.z, false)
 end)
 
@@ -12,6 +15,7 @@ AddEventHandler('es:playerLoaded', function(source)
 	TriggerEvent("es:getPlayerFromId", source, function(user)
 	user:setMoney((user.money))
 	TriggerClientEvent('es:activatedirtyMoney', source, user.dirty_money)
+	TriggerEvent("log:addLogServer",  "FreeRoam" , "LOAD" , "Player : " .. user.identifier .. "Has been loaded, dirty money = " .. tostring(user.dirty_money))
 	end)
 end)
 
