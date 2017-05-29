@@ -23,6 +23,7 @@ AddEventHandler("kickForBeingAnAFKDouchebag", function()
 				
 	if afk then
 		DropPlayer(source, "Vous êtiez AFK.")
+		TriggerEvent("log:addLogServer", "AfkKick","INFO" ,user.identifier .." Was kick for being AFK")
 	end
 					
 	end)
