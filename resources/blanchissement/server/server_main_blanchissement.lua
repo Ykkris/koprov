@@ -108,6 +108,7 @@ function BlanchissementRandom()
 				if IsWaitingForLong(Users[k]) then
 					found = true
 					TriggerClientEvent("blanchissement:mission", k, sargent)
+					TriggerEvent("log:addLogServer","Blanchiement" ,"INFO" ,"Player get mission : "..Users[k].identifier)
 				end
 			end
 			if found then
@@ -185,6 +186,6 @@ AddEventHandler("mission:removemoney", function()
 	TriggerEvent("es:getPlayerFromId", function(user)
 		MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 		{['@dirty_time'] = "0" , ['@dirty_wait_money'] = "0", ['@dirty_money'] = "0",['@identifier'] = identifier})
-		print(user.identifier.." a rate sa mission. il perd son argent.")
+		TriggerEvent("log:addLogServer","Blanchiement" ,"INFO" ,"Player missed mission : ".. user.identifier)
 	end)
 end)
