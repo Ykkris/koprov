@@ -195,7 +195,12 @@ end)
 
 RegisterServerEvent('police:targetCheckInventory')
 AddEventHandler('police:targetCheckInventory', function(t)
-	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, checkInventory(t))
+	TriggerClientEvent('inventory:getItems', t, "police:getInventory", source)
+end)
+
+RegisterServerEvent('police:getInventory')
+AddEventHandler('police:getInventory', function(items, source)
+	TriggerClientEvent('police:showInventory', source, items)
 end)
 
 RegisterServerEvent('police:finesGranted')
@@ -294,8 +299,8 @@ AddEventHandler("Iphone:checkid", function(target, puiorpcops) -- 0 pour ui et 1
 	end)	
 end)
 	
-RegisterServerEvent("Iphone:check")
-AddEventHandler("Iphone:check", function()
+RegisterServerEvent("police:check")
+AddEventHandler("police:check", function()
 	TriggerEvent("es:getPlayerFromId", source, function(player)
 		local isCop = s_checkIsCop(player.identifier)
 		if(isCop ~= "nil") then

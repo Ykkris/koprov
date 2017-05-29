@@ -138,8 +138,6 @@ function Menu:drawButtons(options)
 		else
 			DrawRect(options.x,y,options.width,options.height,0,0,0,150)
 		end
-		Citizen.Trace('then')	
-		Citizen.Trace(options.x - options.width/2 + 0.005)	
 		DrawText(options.x - options.width/2 + 0.005, y - 0.04/2 + 0.0028)
 		---
 		-- Price

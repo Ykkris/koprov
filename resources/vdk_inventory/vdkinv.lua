@@ -65,6 +65,11 @@ AddEventHandler("player:sellItem", function(item, price)
     end
 end)
 
+RegisterNetEvent("inventory:getItems")
+AddEventHandler("inventory:getItems", function(callback, source)
+    TriggerServerEvent(callback, ITEMS, source)
+end)
+
 function sell(arg)
     local itemId = tonumber(arg[1])
     local price = arg[2]

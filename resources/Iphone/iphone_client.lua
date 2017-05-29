@@ -172,6 +172,11 @@ local vehshop = {
 				-- waiting for izio :) {name = "Supprimer le Contact", description = ""}
 			}
 		},
+		["Fouille"] = {
+			title = "Fouille",
+			name = "Fouille",
+			buttons = {}
+		},
 	}
 }
 
@@ -188,6 +193,17 @@ AddEventHandler('police:receiveIsCop', function(result)
 		isCop = true
 		rank = result
 	end
+end)
+
+RegisterNetEvent('police:showInventory')
+AddEventHandler('police:showInventory', function(items)
+    vehshop.menu['Fouille'].buttons = {}
+	for ind, value in pairs(items) do
+        if (value.quantity > 0) then
+            table.insert(vehshop.menu['Fouille'].buttons, {name = tostring(value.libelle) .. " : " .. tostring(value.quantity), description = ""})
+        end
+    end
+    OpenMenu("Fouille")
 end)
 
 RegisterNetEvent('service:receiveJob')
@@ -1123,7 +1139,7 @@ function Menotter()
 end
 
 function Fouiller()
-    TriggerServerEvent("Iphone:check")
+    TriggerServerEvent("police:check")
 end
 
 function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
