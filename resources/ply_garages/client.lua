@@ -4,6 +4,7 @@ RegisterNetEvent("ply_garages:getVehicles")
 RegisterNetEvent('ply_garages:SpawnVehicle')
 RegisterNetEvent('ply_garages:StoreVehicle')
 RegisterNetEvent('ply_garages:SelVehicle')
+RegisterNetEvent('ply_garages:getFourVehicles')
 
 
 
@@ -18,7 +19,7 @@ local garages = {
 	{name="Garage", colour=3, id=50, x=215.124, y=-791.377, z=29.646},
   	{name="Garage", colour=3, id=50, x=-334.685, y=289.773, z=84.705},
   	{name="Garage", colour=3, id=50, x=-55.272, y=-1838.71, z=25.442},
-  	{name="Garage", colour=3, id=50, x=126.434, y=6610.04, z=30.750},
+  	{name="Fourrière", colour=1, id=68, x=405.175, y=-1642.475, z=28.295},
 }
 
 garageSelected = { {x=nil, y=nil, z=nil}, }
@@ -26,6 +27,13 @@ garageSelected = { {x=nil, y=nil, z=nil}, }
 --[[Functions]]--
 
 function MenuGarage()
+
+	if GetDistanceBetweenCoords(405.175, -1642.475, 28.295, GetEntityCoords(LocalPed())) < 5 then
+		TriggerServerEvent("ply_garages:CheckFourForVeh")
+	else
+		TriggerServerEvent("ply_garages:CheckGarageForVeh")
+	end 
+
     ped = GetPlayerPed(-1);
     MenuTitle = "Garage"
     ClearMenu()
@@ -199,7 +207,7 @@ AddEventHandler('ply_garages:SpawnVehicle', function(vehicle, plate, state, prim
 		if DoesEntityExist(caisseo) then
 			drawNotification("La zone est encombrée") 
 		else
-			if state == "Sortit" then
+			if state == "out" then
 				drawNotification("Ce véhicule n'est pas dans le garage")
 			else
 				local mods = {}

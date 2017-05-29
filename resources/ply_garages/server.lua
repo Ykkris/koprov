@@ -15,6 +15,7 @@ RegisterServerEvent('ply_garages:PutVehInGarages')
 RegisterServerEvent('ply_garages:CheckGarageForVeh')
 RegisterServerEvent('ply_garages:CheckForSelVeh')
 RegisterServerEvent('ply_garages:SelVeh')
+RegisterServerEvent('ply_garages:CheckFourForVeh')
 
 
 
@@ -56,9 +57,9 @@ end)
 
 AddEventHandler('ply_garages:CheckForVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
-    local state = "Sortit"
+    local state = "out"
     local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state' OR vehicle_state = 'four'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
     if(result)then
       for k,v in ipairs(result)do
@@ -76,7 +77,7 @@ AddEventHandler('ply_garages:SetVehOut', function(vehicle, plate)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
     local vehicle = vehicle
-    local state = "Sortit"
+    local state = "out"
     local plate = plate
 
     local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate' AND vehicle_model = '@vehicle'",
@@ -88,7 +89,7 @@ AddEventHandler('ply_garages:SetVehIn', function(plate)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
     local plate = plate
-    local state = "Rentré"
+    local state = "in"
     local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
       {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
   end)
@@ -98,7 +99,7 @@ AddEventHandler('ply_garages:PutVehInGarages', function(vehicle)
   TriggerEvent('es:getPlayerFromId', source, function(user)
 
     local player = user.identifier
-    local state ="Rentré"
+    local state ="in"
 
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'identifier'})
@@ -123,7 +124,29 @@ AddEventHandler('ply_garages:CheckGarageForVeh', function()
   vehicles = {}
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier  
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'in'",{['@username'] = player})
+    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state'}, "id")
+    if (result) then
+        for _, v in ipairs(result) do
+                --print(v.vehicle_model)
+                --print(v.vehicle_plate)
+                --print(v.vehicle_state)
+                --print(v.id)
+            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_state"] = v.vehicle_state}
+            table.insert(vehicles, tonumber(v.id), t)
+        end
+    end
+  end)  
+    --print(vehicles[1].id)
+    --print(vehicles[2].vehicle_model)
+    TriggerClientEvent('ply_garages:getVehicles', source, vehicles)
+end)
+
+AddEventHandler('ply_garages:CheckFourForVeh', function()
+  vehicles = {}
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    local player = user.identifier  
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'four'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state'}, "id")
     if (result) then
         for _, v in ipairs(result) do
@@ -143,7 +166,7 @@ end)
 
 AddEventHandler('ply_garages:CheckForSelVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
-    local state = "Sortit"
+    local state = "out"
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
@@ -193,8 +216,8 @@ AddEventHandler('playerConnecting', function()
 		sum = 0
 	end
 	if (sum < 1) then
-		local old_state = "Sortit"
-		local state = "Rentré"
+		local old_state = "out"
+		local state = "four"
 		local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE vehicle_state = '@old_state'",
 		{['@old_state'] = old_state, ['@state'] = state})
 	end
