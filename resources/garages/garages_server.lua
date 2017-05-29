@@ -30,7 +30,7 @@ AddEventHandler('garages:PutVehInGarages', function(vehicle)
     end
 
     if joueur ~= nil then
-
+      TriggerEvent("log:addLogServer", "Garages", "INFO","Player " .. player .. " have " .. state .. " his vehicle" )
       local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE identifier = '@username'",
       {['@username'] = player, ['@state'] = state})
 
@@ -56,7 +56,7 @@ AddEventHandler('garages:PutVehFourGarages', function(vehicle)
     end
 
     if joueur ~= nil then
-
+      TriggerEvent("log:addLogServer", "Fourriere", "INFO","Player " .. player .. " have " .. state .. " his vehicle" )
       local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE identifier = '@username' AND vehicle_state ='out'",
       {['@username'] = player, ['@state'] = state})
 
@@ -108,6 +108,7 @@ end)
 AddEventHandler('garages:ToPay', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Vous avez payé 150$ de frais de fourrière")
+    TriggerEvent("log:addLogServer", "Fourriere", "INFO","Player " .. user.identifier .. " have paid " .. tostring(150) .. " for his vehicle" )
     user:removeMoney(150)
     end)
 end)
