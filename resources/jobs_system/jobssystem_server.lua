@@ -15,6 +15,7 @@ function updatejob(player, id)
   MySQL:executeQuery("UPDATE users SET `job`='@value' WHERE identifier = '@identifier'", {['@value'] = job, ['@identifier'] = player})
   TriggerClientEvent("recolt:updateJobs", source, job)
   TriggerClientEvent("service:updateJobs", source, job)
+  TriggerEvent("log:logAddServer", "Jobs", "INFO", "Player : " .. player .. " change his job to " .. job)
 end
 
 --RegisterServerEvent('jobs:updatejob')
