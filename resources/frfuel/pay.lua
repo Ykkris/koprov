@@ -32,8 +32,10 @@ AddEventHandler("essence:payer", function(litres) -- source, litres en float
     local resultat = MySQL:getResults(req, {'job'}, "identifier")
     print(tostring(resultat[1].job))
     if  (1 == service)  then
+      TriggerEvent("log:addLogServer","FrFuel" ,"INFO" ,"Player do'nt paid (inservice) : " .. user.identifier .. " amount : " .. tostring(prix))
       TriggerClientEvent("pNotify:SendNotification", source, { text = "Facture de <b style='color:green'>".. prix.."$</b> prise en charge pas l'état !", type = "info", timeout = 10000, layout = "centerLeft",})
-    else 
+    else
+      TriggerEvent("log:addLogServer","FrFuel" ,"INFO" ,"Player paid : " .. user.identifier .. " amount : " .. tostring(prix))
       user:removeMoney(prix)
     end        
   end)
