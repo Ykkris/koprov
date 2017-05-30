@@ -24,7 +24,7 @@ local vestpolice = {
 			name = "main",
 			buttons = {
 				{name = "Prise de service", description = ""},
-				{name = "Costume Inspecteur", description = ""}
+				{name = "Prise de service Inspecteur", description = ""},
 				{name = "Fin de service", description = ""},
 				{name = "Gilet pare balle", description = ""},
 				{name = "Gilet jaune", description = ""},
@@ -54,7 +54,7 @@ function ButtonSelectedVest(button)
 			giveUniforme()
 			TriggerEvent("pNotify:SendNotification", { text = "Tu es désormais en <b style='color:green'>service</b>", type = "info", timeout = 2500, layout = "centerLeft",})
 			TriggerEvent("pNotify:SendNotification", { text = "Appuie sur <b style='color:green'>F5</b> pour ouvrir le <b style='color:blue'>menu de police</b>", type = "info", timeout = 2500, layout = "centerLeft",})
-		elseif btn == "Costume Inspecteur" then
+		elseif btn == "Prise de service Inspecteur" then
 			ServiceOn()
 			giveInspector()
 			TriggerEvent("pNotify:SendNotification", { text = "Tu es désormais en <b style='color:green'>service</b>", type = "info", timeout = 2500, layout = "centerLeft",})
@@ -134,12 +134,13 @@ end
 
 function giveInspector()
 	Citizen.CreateThread(function()
-		if (GetEntityModel(GetPlayerPed(-1) == hashSkin) then
+
+		if (GetEntityModel(GetPlayerPed(-1)) == hashSkin) then
 
 			SetPedPropIndex(GetPlayerPed(-1), 1, 240, 1, 2)
 			SetPedPropIndex(GetPlayerPed(-1), 2, 0, 0, 2)
-			SetPedComponentVariation(GetPlayerPed(-1), 8, 77, 1, 2)
-			SetPedComponentVariation(GetPlayerPed(-1), 11, 3, 0, 2)
+			SetPedComponentVariation(GetPlayerPed(-1), 11, 77, 1, 2)
+			SetPedComponentVariation(GetPlayerPed(-1), 8, 3, 0, 2)
 			SetPedComponentVariation(GetPlayerPed(-1), 4, 10, 0, 2)
 			SetPedComponentVariation(GetPlayerPed(-1), 6, 24, 0, 2)
 			SetPedComponentVariation(GetPlayerPed(-1), 10, 8, 0, 2)
