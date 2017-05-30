@@ -14,12 +14,12 @@ require "resources/essentialmode/lib/MySQL"
 --ADD EMS job from admin
 function addEMS(identifier)
   MySQL:executeQuery("INSERT INTO ems (`identifier`) VALUES ('@identifier')", { ['@identifier'] = identifier})
-  TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player set as EMS : "..identifier)
+  TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player set as EMS : "..user.identifier)
 end
 
 function remEMS(identifier)
   MySQL:executeQuery("DELETE FROM ems WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
-  TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player remove from EMS : "..identifier)
+  TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player remove from EMS : "..user.identifier)
 end
 
 function checkIsEMS(identifier)
@@ -106,7 +106,7 @@ RegisterServerEvent('es_em:sendEmergency')
 AddEventHandler('es_em:sendEmergency',
   function(reason, playerIDInComa, x, y, z)
     TriggerEvent("es:getPlayers", function(players)
-      TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player ask for Ambulance : "..players[source].identifier .. " reason : " .. reason .. " at coords : " .. " X = " .. tostring(x) .. " Y = " .. tostring(y)  .. " Z = " tostring(z))
+      TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player ask for Ambulance : "..players[source].identifier .. " reason : " .. reason .. " at coords : " .. " X = " .. tostring(x) .. " Y = " .. tostring(y)  .. " Z = " tostring(z) ..)
       for i,v in pairs(players) do
         TriggerClientEvent('es_em:sendEmergencyToDocs', i, reason, playerIDInComa, x, y, z, source)
       end
