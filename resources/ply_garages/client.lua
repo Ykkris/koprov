@@ -19,7 +19,6 @@ local garages = {
 	{name="Garage", colour=3, id=50, x=215.124, y=-791.377, z=29.646},
   	{name="Garage", colour=3, id=50, x=-334.685, y=289.773, z=84.705},
   	{name="Garage", colour=3, id=50, x=-55.272, y=-1838.71, z=25.442},
-  	{name="Garage", colour=3, id=50, x=419.749, y=-1639.031, z=28.291},
   	{name="Garage", colour=3, id=50, x=-39.266, y=-2653.097, z=5.000},
   	{name="Garage", colour=3, id=50, x=114.427, y=-3103.314, z=5.009},
   	{name="Garage", colour=3, id=50, x=911.708, y=-163.067, z=73.424},
@@ -32,7 +31,7 @@ garageSelected = { {x=nil, y=nil, z=nil}, }
 
 function MenuGarage()
 
-	if GetDistanceBetweenCoords(405.175, -1642.475, 28.295, GetEntityCoords(LocalPed())) < 5 then
+	if GetDistanceBetweenCoords(405.175, -1642.475, 28.295, GetEntityCoords(LocalPed())) < 10 then
 		TriggerServerEvent("ply_garages:CheckFourForVeh")
 	else
 		TriggerServerEvent("ply_garages:CheckGarageForVeh")
@@ -41,9 +40,15 @@ function MenuGarage()
     ped = GetPlayerPed(-1);
     MenuTitle = "Garage"
     ClearMenu()
+    if GetDistanceBetweenCoords(405.175, -1642.475, 28.295, GetEntityCoords(LocalPed())) < 10 then
+    	MenuTitle = "Fourriere"
+		Menu.addButton("Sortir un véhicule","ListeVehicule",nil)
+    	Menu.addButton("Fermer","CloseMenu",nil) 
+	else
     Menu.addButton("Rentrer le véhicule","RentrerVehicule",nil)
     Menu.addButton("Sortir un véhicule","ListeVehicule",nil)
-    Menu.addButton("Fermer","CloseMenu",nil) 
+    Menu.addButton("Fermer","CloseMenu",nil)
+    end 
 end
 
 function RentrerVehicule()
@@ -56,7 +61,7 @@ function ListeVehicule()
     MenuTitle = "Vehicules"
     ClearMenu()
     for ind, value in pairs(VEHICLES) do
-            Menu.addButton(tostring(value.vehicle_name) .. " : " .. tostring(value.vehicle_state), "OptionVehicle", value.id)
+            Menu.addButton(tostring(value.vehicle_name) .. " : " .. tostring(value.vehicle_plate), "OptionVehicle", value.id)
     end    
     Menu.addButton("Retour","MenuGarage",nil)
 end
@@ -205,14 +210,15 @@ AddEventHandler('ply_garages:SpawnVehicle', function(vehicle, plate, state, prim
 	local secondarycolor = tonumber(secondarycolor)
 	local pearlescentcolor = tonumber(pearlescentcolor)
 	local wheelcolor = tonumber(wheelcolor)
+	local playerPed = GetPlayerPed(-1)
 	Citizen.CreateThread(function()
 		Citizen.Wait(3000)
 		local caisseo = GetClosestVehicle(garageSelected.x, garageSelected.y, garageSelected.z, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
-			drawNotification("La zone est encombrée") 
+			TriggerEvent("pNotify:SendNotification", { text = "La zone est encombrée", type = "warning", timeout = 10000, layout = "centerLeft",}) 
 		else
 			if state == "out" then
-				drawNotification("Ce véhicule n'est pas dans le garage")
+				TriggerEvent("pNotify:SendNotification", { text = "Ce véhicule n'est pas dans ton garage", type = "warning", timeout = 10000, layout = "centerLeft",})
 			else
 				local mods = {}
 				for i = 0,24 do
@@ -235,7 +241,11 @@ AddEventHandler('ply_garages:SpawnVehicle', function(vehicle, plate, state, prim
 				SetVehicleColours(veh, primarycolor, secondarycolor)
 				SetVehicleExtraColours(veh, pearlescentcolor, wheelcolor)
 				SetEntityInvincible(veh, false) 
-				drawNotification("Véhicule sorti")				
+				TriggerEvent("pNotify:SendNotification", { text = "Ton véhicule a été <b style='color:green'>sorti</b> du garage", type = "info", timeout = 2500, layout = "centerLeft",})
+				TaskWarpPedIntoVehicle(playerPed, veh, -1)
+				if GetDistanceBetweenCoords(405.175, -1642.475, 28.295, GetEntityCoords(LocalPed())) < 10 then
+					TriggerServerEvent('garages:ToPay')
+				end 				
 				TriggerServerEvent('ply_garages:SetVehOut', vehicle, plate)
    				TriggerServerEvent("ply_garages:CheckGarageForVeh")
 			end
@@ -253,15 +263,15 @@ AddEventHandler('ply_garages:StoreVehicle', function(vehicle, plate)
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then	
 			if plate ~= platecaissei then					
-				drawNotification("Ce n'est pas ton véhicule")
+				TriggerEvent("pNotify:SendNotification", { text = "Ce n'est pas ton véhicule", type = "warning", timeout = 10000, layout = "centerLeft",})
 			else
 				Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
-				drawNotification("Véhicule rentré")
+				TriggerEvent("pNotify:SendNotification", { text = "Ton véhicule a été <b style='color:green'>rentré</b> au garage", type = "info", timeout = 2500, layout = "centerLeft",})
 				TriggerServerEvent('ply_garages:SetVehIn', plate)
 				TriggerServerEvent("ply_garages:CheckGarageForVeh")
 			end
 		else
-			drawNotification("Aucun véhicule présent")
+			TriggerEvent("pNotify:SendNotification", { text = "Aucun véhicule n'est sur la zone", type = "warning", timeout = 10000, layout = "centerLeft",})
 		end   
 	end)
 end)
@@ -276,14 +286,14 @@ AddEventHandler('ply_garages:SelVehicle', function(vehicle, plate)
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then
 			if plate ~= platecaissei then
-				drawNotification("Ce n'est pas ton véhicule")
+				TriggerEvent("pNotify:SendNotification", { text = "Ce n'est pas ton véhicule", type = "warning", timeout = 10000, layout = "centerLeft",})
 			else
 				Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
 				TriggerServerEvent('ply_garages:SelVeh', plate)
 				TriggerServerEvent("ply_garages:CheckGarageForVeh")
 			end
 		else
-			drawNotification("Aucun véhicule présent")
+			TriggerEvent("pNotify:SendNotification", { text = "Aucun véhicule n'est sur la zone", type = "warning", timeout = 10000, layout = "centerLeft",})
 		end
 	end)
 end)

@@ -16,6 +16,7 @@ RegisterServerEvent('ply_garages:CheckGarageForVeh')
 RegisterServerEvent('ply_garages:CheckForSelVeh')
 RegisterServerEvent('ply_garages:SelVeh')
 RegisterServerEvent('ply_garages:CheckFourForVeh')
+RegisterServerEvent('garages:ToPay')
 
 
 
@@ -125,14 +126,14 @@ AddEventHandler('ply_garages:CheckGarageForVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier  
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'in'",{['@username'] = player})
-    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state'}, "id")
+    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_plate', 'vehicle_colorprimary'}, "id")
     if (result) then
         for _, v in ipairs(result) do
                 --print(v.vehicle_model)
                 --print(v.vehicle_plate)
                 --print(v.vehicle_state)
                 --print(v.id)
-            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_state"] = v.vehicle_state}
+            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_plate"] = v.vehicle_plate}
             table.insert(vehicles, tonumber(v.id), t)
         end
     end
@@ -236,4 +237,12 @@ AddEventHandler('playerDropped', function()
 		local player_state = "0"
 		MySQL:executeQuery("UPDATE users SET `player_state`='@player_state' WHERE identifier = '@identifier'",
 		{['@player_state'] = player_state, ['@identifier'] = playerID})
+end)
+
+AddEventHandler('garages:ToPay', function()
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Vous avez payé 150$ de frais de fourrière")
+    TriggerEvent("log:addLogServer", "Fourriere", "INFO","Player " .. user.identifier .. " have paid " .. tostring(150) .. " for his vehicle" )
+    user:removeMoney(150)
+    end)
 end)
