@@ -26,7 +26,7 @@ end)
 AddEventHandler('baseevents:enteredVehicle', function(data)
 	TriggerClientEvent('garages:enteredVehicle', source)
 	TriggerEvent("es:getPlayerFromId", source, function(user)
-		TriggerEvent("log:addLogServer","VehEnter" ,"INFO" , user.identifier .. " Enter in Vehicle : " .. tostring(data))
+		TriggerEvent("log:addLogServer","VehEnter" ,"INFO" , user.identifier .. " Enter in Vehicle : " .. tostring(data[2]) .. " at seat : " .. tostring(data[1]))
 	end)
 end)
 
