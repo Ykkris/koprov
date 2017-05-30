@@ -183,7 +183,7 @@ AddEventHandler('police:checkingPlate', function(plate)
 		TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1,  "LSPD", false, "The vehicle #"..plate.." isn't register !")
 	end
 	TriggerEvent("es:getPlayerFromId", source, function(user)
-		TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..user.identifier .. " has been check vehplate ")
+		TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..user.dentifier .. " has been check vehplate ")
 	end)
 	end)
 
