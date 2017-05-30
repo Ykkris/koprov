@@ -34,7 +34,6 @@ AutoStartResources:
     - voip
     - tow
     - towveh
-    - policegarage
     - ulock
     - imenu
     - SelVeh
