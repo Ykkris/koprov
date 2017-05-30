@@ -380,7 +380,7 @@ AddEventHandler("Iphone:amande", function(amount, cp, cd)
 			})
 		end
 	end)
-end)
+end) 
 
 RegisterServerEvent('Iphone:checkplate')
 AddEventHandler('Iphone:checkplate', function(plate)
@@ -394,7 +394,7 @@ AddEventHandler('Iphone:checkplate', function(plate)
 				timeout = 2500,
 				layout = "centerLeft",
 			})
-			TriggerEvent("log:addLogServer", "TheCops", "INFO", "Cop : " .. .. " has check " .. v.first_name .. " " .. v.last_name .. " Plate")
+			TriggerEvent("log:addLogServer", "TheCops", "INFO", "Cop : ".. " has check " .. v.first_name .. " " .. v.last_name .. " Plate")
 		end
 	else
 		TriggerClientEvent("pNotify:SendNotification", source, {
