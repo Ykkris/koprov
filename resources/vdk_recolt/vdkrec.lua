@@ -33,12 +33,14 @@ AddEventHandler("cli:getJobs", function(listJobs)
 	
     Citizen.CreateThread(function()
         for _, item in pairs(JOBS) do
-        	if(jobId == 6) then
-            	Citizen.Trace(tostring(item.fx.. " " ..item.fy .. " " .. item.fz))
-            	setBlip(item.fx, item.fy, item.fz, 17)
-            	setBlip(item.tx, item.ty, item.tz, 18)
-            	setBlip(item.sx, item.sy, item.sz, 19)
-        	end
+			if(item.job_id == jobId) then
+				if(jobId ~= 6) then
+				Citizen.Trace(tostring(item.fx.. " " ..item.fy .. " " .. item.fz))
+				setBlip(item.fx, item.fy, item.fz, 17)
+				setBlip(item.tx, item.ty, item.tz, 18)
+				setBlip(item.sx, item.sy, item.sz, 19)
+				end
+			end
         end
     end)
 end)
