@@ -59,7 +59,7 @@ AddEventHandler('ply_garages:CheckForVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local state = "out"
     local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state' OR vehicle_state = 'four'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
     if(result)then
       for k,v in ipairs(result)do
