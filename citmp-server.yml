@@ -39,16 +39,15 @@ AutoStartResources:
     - SelVeh
     - thecops
     - cotcot
-    - frfuel
+    # - frfuel
     - recoltveh
     - taxi2
     - pecheurgarage
-    - mazone
+    # - mazone
     - taxijob
     - Iphone
     - afkkick
     - compass
-    - interiors
     - mymairie
     - rent
     - blanchissement

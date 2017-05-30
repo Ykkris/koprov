@@ -77,6 +77,6 @@ AddEventHandler('BuyForVeh', function(name, vehicle, price, plate, primarycolor,
     local wheelcolor = wheelcolor
     local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_name`, `vehicle_model`, `vehicle_price`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`, `vehicle_pearlescentcolor`, `vehicle_wheelcolor`) VALUES ('@username', '@name', '@vehicle', '@price', '@plate', '@state', '@primarycolor', '@secondarycolor', '@pearlescentcolor', '@wheelcolor')",
     {['@username'] = player, ['@name'] = name, ['@vehicle'] = vehicle, ['@price'] = price, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor, ['@pearlescentcolor'] = pearlescentcolor, ['@wheelcolor'] = wheelcolor})
-    TriggerEvent("log:addLogServer","VehShop" ,"INFO" , "Player Bought Veh : " .. user.identifier .. " model : " .. vehicle .. " plate : " .. plate .. " name : " .. name .. " price : " .. tostring(price))  
+    -- TriggerEvent("log:addLogServer","VehShop" ,"INFO" , "Player Bought Veh : " .. user.identifier .. " model : " .. vehicle .. " plate : " .. plate .. " name : " .. name .. " price : " .. tostring(price))  
     end)
 end)

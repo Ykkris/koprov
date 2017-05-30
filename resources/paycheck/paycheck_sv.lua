@@ -15,7 +15,7 @@ AddEventHandler('paycheck:salary', function()
 
     if (job == 2 or job == 3 or job == 4 or job == 11) then
       user:addMoney(salary_job)
-	TriggerEvent("log:addLogServer", "PayCheck", "INFO", "Player : " ..user.identifier .. " receive his paycheck ".. tostring(salary_job))
+	-- TriggerEvent("log:addLogServer", "PayCheck", "INFO", "Player : " ..user.identifier .. " receive his paycheck ".. tostring(salary_job))
       --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Salaire metier reçu : + "..salary_job.." ~g~$")
       TriggerClientEvent("pNotify:SendNotification", source, { 
         text = "Tu as reçu ta paye de <b style='color:green'>".. salary_job .."$</b>", 

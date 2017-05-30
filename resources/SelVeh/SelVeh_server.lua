@@ -31,6 +31,7 @@ AddEventHandler('test:SelVeh', function(plate)
        price = result[1].vehicle_price
        price = price / 2
        deposit(source, price)
+          
 
     end
     local executed_query = MySQL:executeQuery("DELETE from user_vehicle WHERE identifier = '@username' AND vehicle_plate = '@plate'",

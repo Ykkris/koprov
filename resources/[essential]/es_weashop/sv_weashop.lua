@@ -42,7 +42,7 @@ end)
 RegisterServerEvent("weaponshop:playerSpawned")
 AddEventHandler("weaponshop:playerSpawned", function(spawn)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
-		TriggerEvent("log:addLogServer","WeapShop","LOAD" ,"Give Weapons To Player : " .. user.identifier)
+		-- TriggerEvent("log:addLogServer","WeapShop","LOAD" ,"Give Weapons To Player : " .. user.identifier)
 		TriggerEvent('weaponshop:GiveWeaponsToPlayer', source)
 	end)
 end)
@@ -61,7 +61,7 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 			for k,v in ipairs(result) do
 				-- if (tonumber(user.money) >= tonumber(v.withdraw_cost)) then
 				TriggerClientEvent("giveWeapon", player, v.weapon_model, delay)
-				TriggerEvent("log:addLogServer","WeapShop","LOAD" ,"Buy Weapons By Player : " .. user.identifier .. " | Weapon : " .. v.weapon_model )
+				-- TriggerEvent("log:addLogServer","WeapShop","LOAD" ,"Buy Weapons By Player : " .. user.identifier .. " | Weapon : " .. v.weapon_model )
 					-- user:removeMoney((v.withdraw_cost))
 				-- else
 					-- TriggerClientEvent("es_freeroam:notify", source, "CHAR_MP_ROBERTO", 1, "Roberto", false, "You don't have enough cash !\n")

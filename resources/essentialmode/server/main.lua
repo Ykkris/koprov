@@ -53,7 +53,7 @@ AddEventHandler('playerDropped', function()
 	if(Users[source])then
 		MySQL:executeQuery("UPDATE users SET `money`='@value', `dirty_money`='@v2' WHERE identifier = '@identifier'",
 		{['@value'] = Users[source].money, ['@v2'] = Users[source].dirty_money, ['@identifier'] = Users[source].identifier})
-		TriggerEvent("log:addLogServer", "Essential", "DROP", "Player : " .. Users[source].identifier .. " source : " source .. " money : " .. Users[source].money .. " dirty_money " .. Users[source].dirty_money .. " perm : " .. Users[source].permission_level)
+		-- TriggerEvent("log:addLogServer", "Essential", "DROP", "Player : " .. Users[source].identifier .. " source : " source .. " money : " .. Users[source].money .. " dirty_money " .. Users[source].dirty_money .. " perm : " .. Users[source].permission_level)
 		Users[source] = nil
 	end
 end)

@@ -15,7 +15,7 @@ function LoadUser(identifier, source, new)
 
 	group = groups[result[1].group]
 	--group = result[1].group
-	TriggerEvent("log:addLogServer", "Essential", "LOAD" , "Player :" .. result[1].identifier .. " source : " .. source .. " perm : " .. result[1].permission_level .. " money : ".. result[1].money .." dirty_money : " .. result[1].dirty_money .. " Succesfully Loaded")
+	-- TriggerEvent("log:addLogServer", "Essential", "LOAD" , "Player :" .. result[1].identifier .. " source : " .. source .. " perm : " .. result[1].permission_level .. " money : ".. result[1].money .." dirty_money : " .. result[1].dirty_money .. " Succesfully Loaded")
 	Users[source] = Player(source, result[1].permission_level, result[1].money, result[1].dirty_money, result[1].identifier, group)
 
 	TriggerEvent('es:playerLoaded', source, Users[source])

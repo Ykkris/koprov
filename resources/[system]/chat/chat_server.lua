@@ -17,7 +17,7 @@ end
 AddEventHandler('chatMessageEntered', function(name, color, message)
     TriggerEvent("es:getPlayerFromId", source, function(user)
         if not(user.permission_level > 2 or isAllowedCommand(message)) then
-            TriggerEvent("log:addLogServer", "Message","INFO" ,user.identifier .." Refused Entered message : " .. message)
+            -- TriggerEvent("log:addLogServer", "Message","INFO" ,user.identifier .." Refused Entered message : " .. message)
             return
         end
 
@@ -26,7 +26,7 @@ AddEventHandler('chatMessageEntered', function(name, color, message)
         end
 
         TriggerEvent('chatMessage', source, name, message)
-        TriggerEvent("log:addLogServer", "Message","INFO" ,user.identifier .." Accepted Entered message : " .. message)
+        -- TriggerEvent("log:addLogServer", "Message","INFO" ,user.identifier .." Accepted Entered message : " .. message)
 
         if not WasEventCanceled() then
             TriggerClientEvent('chatMessage', -1, name, color, message)
@@ -50,7 +50,7 @@ AddEventHandler('rconCommand', function(commandName, args)
     if commandName == "say" then
         local msg = table.concat(args, ' ')
             
-        TriggerEvent("log:addLogServer", "BroadCast","INFO" ," BroadCast Message : " .. msg)
+        -- TriggerEvent("log:addLogServer", "BroadCast","INFO" ," BroadCast Message : " .. msg)
 
         TriggerClientEvent('chatMessage', -1, 'console', { 0, 0x99, 255 }, msg)
         RconPrint('console: ' .. msg .. "\n")

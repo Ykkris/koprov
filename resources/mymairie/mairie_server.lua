@@ -31,7 +31,7 @@ AddEventHandler('es:playerLoaded', function(source)
 		local matriculeNumber    = result[1].matricule
 
 		if matriculeNumber == nil then
-			TriggerEvent("log:addLogServer", "MyMairie", "INFO", "Player : " ..user.identifier .. " generating matricule ")
+			-- TriggerEvent("log:addLogServer", "MyMairie", "INFO", "Player : " ..user.identifier .. " generating matricule ")
 			matriculeNumber = GenerateUniqueMatriculeNumber()
 			MySQL:executeQuery("UPDATE users SET matricule = '@matricule' WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@matricule'] = matriculeNumber})
 		end
@@ -50,7 +50,7 @@ AddEventHandler("mymairie:identity",function(prenom, nom, age)
 	user:setSessionVar("name", {first_name = prenom,
 				    last_name = nom
 				    })
-	TriggerEvent("log:addLogServer", "MyMairie", "INFO", "Player : " ..user.identifier .. " change his name to " .. prenom .. " " .. nom .. " age : " .. tostring(age))
+	-- TriggerEvent("log:addLogServer", "MyMairie", "INFO", "Player : " ..user.identifier .. " change his name to " .. prenom .. " " .. nom .. " age : " .. tostring(age))
 	MySQL:executeQuery("UPDATE users SET last_name = '@last_name', first_name = '@first_name', age = '@age' WHERE identifier = '@identifier' ",
 					{['@last_name'] = nom , ['@first_name'] = prenom , ['@age'] = age, ['@identifier'] = user.identifier})
 				
