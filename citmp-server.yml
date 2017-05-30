@@ -17,7 +17,7 @@ AutoStartResources:
     - emergency
     - loadingscreen
     - assets
-    - garages
+    - ply_garages
     - banking
     - amazingskin
     - vdk_inventory
@@ -29,7 +29,7 @@ AutoStartResources:
     - NeverWanted
     - lastpostodb
     - handsup
-    - whitelist
+    - whitelistdb
     - watermark
     - voip
     - tow
@@ -56,7 +56,8 @@ AutoStartResources:
     - gb_foodshops
     - pNotify
     - foodhud
-    - ply_garages
+    - iLog
+    - timesync
 
 # do change
 RconPassword: koprobestv

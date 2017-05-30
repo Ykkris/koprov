@@ -52,7 +52,7 @@ local blips = {
     --{name="FIB", id=106, x=105.455, y=-745.483, z=44.754},
     --{name="Lifeinvader", id=77, x=-1047.900, y=-233.000, z=39.000},
     --{name="Cluckin Bell", id=357, x=-72.68752, y=6253.72656, z=31.08991},
-    --{name="Tequil-La La", id=93, x=-565.171, y=276.625, z=83.286},
+    {name="Tequil-La La", id=93, x=-565.171, y=276.625, z=83.286},
     --{name="Morgue", id=310, x=243.351, y=-1376.014, z=39.534},
     --{name="Jewelry Store", id=52,  x=-630.400, y=-236.700, z=40.00},
     -- Propperty
