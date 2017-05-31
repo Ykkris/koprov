@@ -1,10 +1,10 @@
-RegisterServerEvent('CheckTaxiVeh')
-AddEventHandler('CheckTaxiVeh', function(vehicle)
+RegisterServerEvent('CheckJournaVeh')
+AddEventHandler('CheckJournaVeh', function(vehicle)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 
-			TriggerClientEvent('FinishTaxiCheckForVeh',source)
+			TriggerClientEvent('FinishJournaCheckForVeh',source)
 			-- Spawn police vehicle
-			TriggerClientEvent('taxiveh:spawnVehicle', source, vehicle)
+			TriggerClientEvent('journaveh:spawnVehicle', source, vehicle)
 			-- -- TriggerEvent("log:addLogServer", "TaxiGarage", "INFO", "Player : " ..user.identifier .. " spawned taxi ")
 	end)
 end)
