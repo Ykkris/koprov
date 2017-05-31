@@ -56,6 +56,7 @@ AutoStartResources:
     - foodhud
     - iLog
     - timesync
+    - journaliste
 
 # do change
 RconPassword: koprobestv

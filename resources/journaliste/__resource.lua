@@ -1,4 +1,4 @@
 
-server_scripts 'taxi_server.lua'
+server_scripts 'journaliste_server.lua'
 
-client_script 'taxi_client.lua'
+client_script 'journaliste_client.lua'
