@@ -53,7 +53,10 @@ function MenuGarage()
 end
 
 function RentrerVehicule()
-	TriggerServerEvent('ply_garages:CheckForVeh',source)
+	local caissei = GetClosestVehicle(garageSelected.x, garageSelected.y, garageSelected.z, 3.000, 0, 70)	
+	SetEntityAsMissionEntity(caissei, true, true)		
+	local plate = GetVehicleNumberPlateText(caissei)
+	TriggerServerEvent('ply_garages:CheckForVeh', plate)
 	CloseMenu()
 end
 
@@ -256,7 +259,7 @@ end)
 
 AddEventHandler('ply_garages:StoreVehicle', function(vehicle, plate)
 	local car = GetHashKey(vehicle)	
-	local plate = plate
+	local platereceived = plate
 	Citizen.CreateThread(function()
 		Citizen.Wait(3000)
 		local caissei = GetClosestVehicle(garageSelected.x, garageSelected.y, garageSelected.z, 3.000, 0, 70)

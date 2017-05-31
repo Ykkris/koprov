@@ -56,18 +56,17 @@ AddEventHandler('ply_garages:CheckForSpawnVeh', function(veh_id)
   end)
 end)
 
-AddEventHandler('ply_garages:CheckForVeh', function()
+AddEventHandler('ply_garages:CheckForVeh', function(platereceived)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local state = "out"
+    local plate = platereceived
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
-    local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
+    local result = MySQL:getResults(executed_query, {'vehicle_model'}, "identifier")
     if(result)then
       for k,v in ipairs(result)do
         vehicle = v.vehicle_model
-        plate = v.vehicle_plate
       local vehicle = vehicle
-      local plate = plate
       end
     end
     TriggerClientEvent('ply_garages:StoreVehicle', source, vehicle, plate)
