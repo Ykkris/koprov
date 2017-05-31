@@ -16,6 +16,7 @@ RegisterServerEvent('ply_garages:CheckGarageForVeh')
 RegisterServerEvent('ply_garages:CheckForSelVeh')
 RegisterServerEvent('ply_garages:SelVeh')
 RegisterServerEvent('ply_garages:CheckFourForVeh')
+RegisterServerEvent('ply_garages:SetVehOutOfFour')
 RegisterServerEvent('garages:ToPay')
 
 
