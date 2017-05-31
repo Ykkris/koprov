@@ -60,7 +60,7 @@ AddEventHandler('ply_garages:CheckForVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local state = "out"
     local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state ='@state'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = '@state' OR identifier = '@username' AND vehicle_state = 'fourout'",{['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate'}, "identifier")
     if(result)then
       for k,v in ipairs(result)do
@@ -79,6 +79,18 @@ AddEventHandler('ply_garages:SetVehOut', function(vehicle, plate)
     local player = user.identifier
     local vehicle = vehicle
     local state = "out"
+    local plate = plate
+
+    local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate' AND vehicle_model = '@vehicle'",
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@state'] = state, ['@plate'] = plate})
+  end)
+end)
+
+AddEventHandler('ply_garages:SetVehOutOfFour', function(vehicle, plate)
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    local player = user.identifier
+    local vehicle = vehicle
+    local state = "fourout"
     local plate = plate
 
     local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate' AND vehicle_model = '@vehicle'",
@@ -218,9 +230,10 @@ AddEventHandler('playerConnecting', function()
 	end
 	if (sum < 1) then
 		local old_state = "out"
+    local old_state2 = "fourout"
 		local state = "four"
-		local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE vehicle_state = '@old_state'",
-		{['@old_state'] = old_state, ['@state'] = state})
+		local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE vehicle_state = '@old_state' OR vehicle_state = '@old_state2'",
+		{['@old_state'] = old_state, ['@old_state2'] = old_state2, ['@state'] = state})
 	end
 end)
 

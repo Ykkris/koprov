@@ -246,8 +246,10 @@ AddEventHandler('ply_garages:SpawnVehicle', function(vehicle, plate, state, prim
 				TaskWarpPedIntoVehicle(playerPed, veh, -1)
 				if GetDistanceBetweenCoords(405.175, -1642.475, 28.295, GetEntityCoords(LocalPed())) < 10 then
 					TriggerServerEvent('garages:ToPay')
-				end 				
+					TriggerServerEvent('ply_garages:SetVehOutOfFour', vehicle, plate)
+				else 				
 				TriggerServerEvent('ply_garages:SetVehOut', vehicle, plate)
+				end
    				TriggerServerEvent("ply_garages:CheckGarageForVeh")
 			end
 		end
