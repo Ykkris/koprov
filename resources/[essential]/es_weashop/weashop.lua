@@ -426,7 +426,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if weashop.selectedbutton > 1 then
 					weashop.selectedbutton = weashop.selectedbutton -1
 					if buttoncount > 10 and weashop.selectedbutton < weashop.menu.from then
@@ -435,7 +435,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if weashop.selectedbutton < buttoncount then
 					weashop.selectedbutton = weashop.selectedbutton +1
 					if buttoncount > 10 and weashop.selectedbutton > weashop.menu.to then

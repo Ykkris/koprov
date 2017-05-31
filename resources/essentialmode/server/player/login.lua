@@ -13,8 +13,10 @@ function LoadUser(identifier, source, new)
 	local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@name'", {['@name'] = identifier})
 	local result = MySQL:getResults(executed_query, {'permission_level', 'money', 'dirty_money', 'identifier', 'group'}, "identifier")
 
-	local group = groups[result[1].group]
-	Users[source] = Player(source, result[1].permission_level, result[1].money, result[1].dirty_money, result[1].identifier , group)
+	group = groups[result[1].group]
+	--group = result[1].group
+	-- TriggerEvent("log:addLogServer", "Essential", "LOAD" , "Player :" .. result[1].identifier .. " source : " .. source .. " perm : " .. result[1].permission_level .. " money : ".. result[1].money .." dirty_money : " .. result[1].dirty_money .. " Succesfully Loaded")
+	Users[source] = Player(source, result[1].permission_level, result[1].money, result[1].dirty_money, result[1].identifier, group)
 
 	TriggerEvent('es:playerLoaded', source, Users[source])
 
@@ -82,17 +84,12 @@ end
 
 function registerUser(identifier, source)
 	if not hasAccount(identifier) then
-		print("Ykkris caca 1")
 		-- Inserting Default User Account Stats
 		MySQL:executeQuery("INSERT INTO users (`identifier`, `permission_level`, `money`, `group`) VALUES ('@username', '0', '@money', 'user')",
 		{['@username'] = identifier, ['@money'] = settings.defaultSettings.startingCash})
-		print("Ykkris caca 2")
 		LoadUser(identifier, source, true)
-		print("Ykkris caca 3")
 	else
-		print("Ykkris caca 4")
 		LoadUser(identifier, source)
-		print("Ykkris caca 5")
 	end
 end
 

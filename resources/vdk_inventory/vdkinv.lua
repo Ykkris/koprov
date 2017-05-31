@@ -65,6 +65,11 @@ AddEventHandler("player:sellItem", function(item, price)
     end
 end)
 
+RegisterNetEvent("inventory:getItems")
+AddEventHandler("inventory:getItems", function(callback, source)
+    TriggerServerEvent(callback, ITEMS, source)
+end)
+
 function sell(arg)
     local itemId = tonumber(arg[1])
     local price = arg[2]
@@ -87,7 +92,6 @@ end
 function use(item)
     if (ITEMS[item].quantity - 1 >= 0) then
         TriggerEvent("player:looseItem", item, 1)
-        TriggerServerEvent("item:updateQuantity", 1, item)
 
         if ITEMS[item].type == 2 then
             TriggerEvent("food:eat", ITEMS[item])

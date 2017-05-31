@@ -9,6 +9,7 @@ client_scripts {
   'thecops_client.lua',
   'vestpolice.lua',
   'menupolice.lua',
+  'policeveh.lua',
 }
 
 server_scripts {

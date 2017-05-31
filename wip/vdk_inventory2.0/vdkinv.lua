@@ -314,7 +314,7 @@ Citizen.CreateThread(function()
             if IsControlJustReleased(1,202) then
                 backlock = false
             end
-            if IsControlJustPressed(1,188) then
+            if IsControlJustPressed(1,27) then
                 if inventory.selectedbutton > 1 then
                     inventory.selectedbutton = inventory.selectedbutton -1
                     if buttoncount > 10 and inventory.selectedbutton < inventory.menu.from then
@@ -323,7 +323,7 @@ Citizen.CreateThread(function()
                     end
                 end
             end
-            if IsControlJustPressed(1,187)then
+            if IsControlJustPressed(1,173)then
                 if inventory.selectedbutton < buttoncount then
                     inventory.selectedbutton = inventory.selectedbutton +1
                     if buttoncount > 10 and inventory.selectedbutton > inventory.menu.to then

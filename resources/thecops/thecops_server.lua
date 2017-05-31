@@ -11,10 +11,12 @@ end
 
 function addCop(identifier)
 	MySQL:executeQuery("INSERT INTO police (`identifier`) VALUES ('@identifier')", { ['@identifier'] = identifier})
+	-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..identifier .. " had been added as Cop ")
 end
 
 function remCop(identifier)
 	MySQL:executeQuery("DELETE FROM police WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
+	-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..identifier .. " had been removed from Cop ")
 end
 
 function checkIsCop(identifier)
@@ -45,14 +47,15 @@ function checkInventory(target)
     TriggerEvent("es:getPlayerFromId", target, function(player)
     	identifier = player.identifier
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_inventory JOIN items ON `user_inventory`.`item_id` = `items`.`id` JOIN recolt ON `recolt`.`raw_id` = `user_inventory`.`item_id` WHERE user_id = '@username'", { ['@username'] = player.identifier })
-		local result = MySQL:getResults(executed_query, { 'quantity', 'libelle', 'item_id', 'job_id', 'isIllegal' }, "item_id")
+		local result = MySQL:getResults(executed_query, { 'quantity', 'libelle', 'item_id', 'job_id', 'illegal' }, "item_id")
 		if (result) then
 			for _, v in ipairs(result) do
-				if(v.quantity == 0) then
+				if(v.quantity ~= 0) then
 					strResult = strResult .. v.quantity .. " de " .. v.libelle .. ", "
 				end
 				if(v.isIllegal == "True") then
 					TriggerClientEvent('police:dropIllegalItem', target, v.item_id)
+					-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..identifier .. " has been check INV and got illegal items ")
 				end
 			end
 		end
@@ -67,6 +70,8 @@ function checkInventory(target)
 			end
 		end
 	end)
+	
+	-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..identifier .. " got weapons : " .. strResult)
 	
 	return strResult
 end
@@ -98,6 +103,18 @@ AddEventHandler('es:playerDropped', function(player)
 		end
 end)
 
+RegisterServerEvent('police:setService')
+AddEventHandler('police:setService',
+  function(service)
+    TriggerEvent('es:getPlayerFromId', source,
+      function(user)
+	-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..user.identifier .. " has taking service ")
+        local executed_query = MySQL:executeQuery("UPDATE users SET enService = @service WHERE users.identifier = '@identifier'", {['@identifier'] = user.identifier, ['@service'] = service})
+      end
+    )
+  end
+)
+
 RegisterServerEvent('police:checkIsCop')
 AddEventHandler('police:checkIsCop', function()
 	TriggerEvent("es:getPlayerFromId", source, function(user)
@@ -116,6 +133,15 @@ AddEventHandler('police:takeService', function()
 			TriggerClientEvent("police:resultAllCopsInService", i, inServiceCops)
 		end
 	end
+end)
+
+RegisterServerEvent('police:enService')
+AddEventHandler('police:enService', function()
+	local servingCops = false
+	if next(inServiceCops) then
+		servingCops = true
+	end
+	TriggerClientEvent("services:cbcopconnected", source, servingCops)
 end)
 
 RegisterServerEvent('police:checkService')
@@ -149,7 +175,6 @@ RegisterServerEvent('police:checkingPlate')
 AddEventHandler('police:checkingPlate', function(plate)
 	local executed_query = MySQL:executeQuery("SELECT last_name FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '@plate'", { ['@plate'] = plate })
 	local result = MySQL:getResults(executed_query, { 'last_name' }, "identifier")
-	RconPrint(tostring(plate))
 	if (result[1]) then
 		for _, v in ipairs(result) do
 			TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "The vehicle #"..plate.." is the property of " .. v.last_name)
@@ -157,7 +182,10 @@ AddEventHandler('police:checkingPlate', function(plate)
 	else
 		TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1,  "LSPD", false, "The vehicle #"..plate.." isn't register !")
 	end
-end)
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+		-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..user.identifier .. " has been check vehplate ")
+	end)
+	end)
 
 RegisterServerEvent('police:confirmUnseat')
 AddEventHandler('police:confirmUnseat', function(t)
@@ -167,25 +195,52 @@ end)
 
 RegisterServerEvent('police:targetCheckInventory')
 AddEventHandler('police:targetCheckInventory', function(t)
-	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, checkInventory(t))
+	TriggerClientEvent('inventory:getItems', t, "police:getInventory", source)
+end)
+
+RegisterServerEvent('police:getInventory')
+AddEventHandler('police:getInventory', function(items, source)
+	TriggerClientEvent('police:showInventory', source, items)
 end)
 
 RegisterServerEvent('police:finesGranted')
 AddEventHandler('police:finesGranted', function(t, amount)
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, GetPlayerName(t).. " paid a $"..amount.." fines.")
 	TriggerClientEvent('police:payFines', t, amount)
-end)
+	TriggerEvent("es:getPlayers", function(Users)
+		-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..Users[t].identifier .. " has been fined " .. " by " .. Users[source].identifier)
+	end)
+	end)
 
 RegisterServerEvent('police:cuffGranted')
 AddEventHandler('police:cuffGranted', function(t)
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, GetPlayerName(t).. " toggle cuff (except if it's a cop :3 ) !")
 	TriggerClientEvent('police:getArrested', t)
+	TriggerEvent("es:getPlayers", function(Users)
+		-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..Users[t].identifier .. " has been Cuffed " .. " by " .. Users[source].identifier)
+	end)
 end)
 
 RegisterServerEvent('police:forceEnterAsk')
 AddEventHandler('police:forceEnterAsk', function(t, v)
 	TriggerClientEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, GetPlayerName(t).. " get to the car ! (if he's cuffed :) )")
 	TriggerClientEvent('police:forcedEnteringVeh', t, v)
+	TriggerEvent("es:getPlayers", function(Users)
+		-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..Users[t].identifier .. " has been forced Enter " .. " by " .. Users[source].identifier)
+	end)
+end)
+
+-----------------------------------------------------------------------
+----------------------EVENT SPAWN POLICE VEH---------------------------
+-----------------------------------------------------------------------
+RegisterServerEvent('CheckPoliceVeh')
+AddEventHandler('CheckPoliceVeh', function(vehicle)
+	TriggerEvent('es:getPlayerFromId', source, function(user)
+
+			TriggerClientEvent('FinishPoliceCheckForVeh',source)
+			-- Spawn police vehicle
+			TriggerClientEvent('policeveh:spawnVehicle', source, vehicle)
+	end)
 end)
 
 -----------------------------------------------------------------------
@@ -244,12 +299,13 @@ AddEventHandler("Iphone:checkid", function(target, puiorpcops) -- 0 pour ui et 1
 	end)	
 end)
 	
-RegisterServerEvent("Iphone:check")
-AddEventHandler("Iphone:check", function()
+RegisterServerEvent("police:check")
+AddEventHandler("police:check", function()
 	TriggerEvent("es:getPlayerFromId", source, function(player)
 		local isCop = s_checkIsCop(player.identifier)
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:checkInventory', source)
+			-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..player.identifier .. " has check inv ")
 		else
 			TriggerClientEvent("pNotify:SendNotification", -1, {
 				text = "Vous n'avez pas la permission de faire ça !",
@@ -267,6 +323,7 @@ AddEventHandler("Iphone:forceenter", function()
 		local isCop = s_checkIsCop(player.identifier)
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:forceEnter', source)
+			-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..player.identifier .. " has forced enter ")
 		else
 			TriggerClientEvent("pNotify:SendNotification", -1, {
 				text = "Vous n'avez pas la permission de faire ça !",
@@ -284,6 +341,7 @@ AddEventHandler("Iphone:cuff", function()
 		local isCop = s_checkIsCop(player.identifier)
 		if(isCop ~= "nil") then
 			TriggerClientEvent('police:cuff', source)
+			-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..player.identifier .. " has cuffed ")
 		else
 			TriggerClientEvent("pNotify:SendNotification", -1, {
 				text = "Vous n'avez pas la permission de faire ça !",
@@ -304,6 +362,7 @@ AddEventHandler("Iphone:amande", function(amount, cp, cd)
 
 				if(GetPlayerName(cp) ~= nil and cd <= 5 )then
 					TriggerClientEvent('police:fines', source, cp, amount)
+					-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Player : " ..player.identifier .. " has fined " .. tostring(amount))
 				else
 					TriggerClientEvent("pNotify:SendNotification", -1, {
 				text = "Pas de joueur à porté.",
@@ -321,7 +380,7 @@ AddEventHandler("Iphone:amande", function(amount, cp, cd)
 			})
 		end
 	end)
-end)
+end) 
 
 RegisterServerEvent('Iphone:checkplate')
 AddEventHandler('Iphone:checkplate', function(plate)
@@ -335,6 +394,7 @@ AddEventHandler('Iphone:checkplate', function(plate)
 				timeout = 2500,
 				layout = "centerLeft",
 			})
+			-- TriggerEvent("log:addLogServer", "TheCops", "INFO", "Cop : ".. " has check " .. v.first_name .. " " .. v.last_name .. " Plate")
 		end
 	else
 		TriggerClientEvent("pNotify:SendNotification", source, {

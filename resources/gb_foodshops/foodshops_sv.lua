@@ -34,6 +34,7 @@ AddEventHandler('gabs:menuvdk', function(fooditem)
 				if (user.money >= fooditem[3]) then
 					user:removeMoney(fooditem[3])
 					TriggerClientEvent("player:receiveItem", source, fooditem[1], fooditem[2])
+					-- TriggerEvent("log:addLogServer", "FoodItem", "INFO","Player " .. user.identifier .. " have paid " .. tostring(fooditem[3]) .. " for his food" )
 				else
 					--TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "Vous n'avez pas assez d'argent.")
 					TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu n'as pas <b style='color:red'>".. fooditem[3] .."$</b> sur toi.", type = "warning", timeout = 2500, layout = "centerLeft",})

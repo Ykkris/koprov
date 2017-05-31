@@ -35,6 +35,7 @@ local function GenerateUniquePhoneNumber()
 		end
 
 	end
+	
 
 	return phoneNumber
 
@@ -50,6 +51,7 @@ AddEventHandler('es:playerLoaded', function(source)
 
 		if phoneNumber == nil then
 			phoneNumber = GenerateUniquePhoneNumber()
+			-- TriggerEvent("log:addLogServer","Iphone" ,"FIRST" ,"Generating Phone Number For : ".. user.identifier .. "number = ".. tostring(phoneNumber))
 			MySQL:executeQuery("UPDATE users SET phone_number = '@phone_number' WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@phone_number'] = phoneNumber})
 		end
 
@@ -101,6 +103,7 @@ AddEventHandler('es:playerLoaded', function(source)
 			}
 
 		user:setSessionVar("name", name)
+		-- TriggerEvent("log:addLogServer","Iphone" ,"LOAD" ,"Loading " ..user.identifier.." "..name.first_name .. " " .. name.last_name )
 		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms, name)
 
 		end)
@@ -128,6 +131,8 @@ AddEventHandler("Iphone:addcontact",function(pfirst_name, plast_name, pnumber)
 
 			--print("CEST BON ?")
 			local encodedUserContacts = json.encode(userContacts)
+				
+			-- TriggerEvent("log:addLogServer","Iphone" ,"INFO" ,"Adding Contact : "..userContacts.number .. " " .. userContact.first_name .. " " .. userContacts.last_name .. " For Player : " .. user.identifier )
 
 			MySQL:executeQuery("UPDATE users SET contacts = '@contacts' WHERE identifier = '@identifier' ",
 					{['@contacts'] = encodedUserContacts , ['@identifier'] = user.identifier})
@@ -145,6 +150,7 @@ AddEventHandler("Iphone:removecontact", function(toNumber)
 		for i=1, #localContacts, 1 do
 			if localContacts[i].number == toNumber then
 				table.remove(localContacts, i)
+				-- TriggerEvent("log:addLogServer","Iphone" ,"INFO" ,"Remove contact : ".. toNumber .. " For Player : " .. user.identifier)
 				foundContacts = true
 			end
 			if foundContacts then
@@ -216,6 +222,8 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						mois = actualDate.month
 						}
 					local targetServerId = targetUser.source
+					local targetName = targetUser:getSessionVar("name")
+					-- TriggerEvent("log:addLogServer","Iphone" ,"INFO" , Users[source].identifier.. "/".. sname.first_name .. " " .. sname.last_name .. "Send Sms to ONLINE PLAYER : ".. targetUser.identifier .."/".. targetName.first_name .. " " .. targetName.last_name .. " With Message : " .. smessage )
 					TriggerClientEvent("Iphone:receivesms", targetServerId, updateOneSms) ----------------------------------ICI ROMAIN --------------------------------------
 
 				else 
@@ -237,7 +245,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 						mois = actualDate.month
 						})
 
-
+					-- TriggerEvent("log:addLogServer","Iphone" ,"Send SmS" , Users[source].identifier .. "/".. sname.first_name .. " " .. sname.last_name .."Send Sms to OFFLINE PLAYER : ".. rnumber .. " With Message : " .. smessage )
 					local encodedSms = json.encode(sms)
 					MySQL:executeQuery("UPDATE users SET sms = '@sms' WHERE phone_number = '@phone_number'", {['@sms'] = encodedSms, ['@phone_number'] = rnumber})
 
@@ -247,6 +255,7 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 			end)
 		else
 			TriggerClientEvent("Iphone:notif", source, "Son téléphone est cassé")
+			-- TriggerEvent("log:addLogServer","Iphone" ,"INFO" , Users[source].identifier .. "/".. sname.first_name .. " " .. sname.last_name.."Send Sms to UNKNOW PLAYER : ".. tostring(rnumber) .. " With Message : " .. smessage )
 		end
 
 	--result[1].identifier -- THIS IS THE TARGET PLAYER
@@ -259,7 +268,8 @@ AddEventHandler("Iphone:sendposto", function(toNumber, sname, x, y, z)
 	local result         = MySQL:getResults(executed_query, {'identifier'})
 	TriggerEvent("es:getPlayerFromIdentifier", result[1].identifier, function(user)
 		if user ~= nil then
-			TriggerClientEvent("Iphone:receivepos", x, y, z, sname)
+			TriggerClientEvent("Iphone:receivepos", user.source,x, y, z, sname)
+			-- TriggerEvent("log:addLogServer","Iphone","INFO" , sname.first_name .. " " .. sname.last_name .."Send Pos to : " .. user.identifier .. " with number " .. tostring(toNumber) .. " pos : X= " .. tostring(x) .. " Y= " .. tostring(y) .. " Z= " .. tostring(z))
 		else
 			TriggerClientEvent("Iphone:notif", source, sname.." a son téléphone est éteint.")
 		end
@@ -277,11 +287,19 @@ function InitSave()
 			end
 		end
 	end)
+	-- TriggerEvent("log:addLogServer","Iphone","SAVE" ,"Save Done" )
 	SetTimeout(saveTime, InitSave)
 end
 
-
-
+RegisterServerEvent('service:getJobId')
+AddEventHandler('service:getJobId',	function()
+	TriggerEvent('es:getPlayerFromId', source, function(user)
+		local executed_query = MySQL:executeQuery("SELECT job FROM users WHERE users.identifier = '@identifier'", {['@identifier'] = user.identifier})
+		local result = MySQL:getResults(executed_query, {'job'}, "identifier")
+		
+		TriggerClientEvent("service:receiveJob", source , result[1].job)
+  	end)
+end)
 
 RegisterServerEvent('service:connectedbyid')
 AddEventHandler('service:connectedbyid',
@@ -305,6 +323,7 @@ AddEventHandler('service:connectedbyid',
 
 				    if (result[1] ~= nil) then
 				    	isConnected = true
+					-- TriggerEvent("log:addLogServer","Service","INFO" , tostring(id_service).. " Online" .. " asked by : " .. players[source].identifier)
 				    end
 			    end
 		    end
@@ -337,6 +356,7 @@ AddEventHandler('service:takecall', function(service_id , playerName , playerID,
 	TriggerEvent("es:getPlayers", function(players)
 		for i,v in pairs(players) do
 			TriggerClientEvent('service:calltaken', i, service_id, playerName, playerID, x, y, z, sourcePlayerInComa)
+			-- TriggerEvent("log:addLogServer","Service","INFO" ,"Send asked service to : " .. players[i].identifier .. " Asked by " .. players[sourcePlayerInComa].identifier )
 		end
 		end)
 end

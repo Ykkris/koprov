@@ -13,6 +13,10 @@ local takingService = {
    {x=457.956909179688, y=-992.72314453125, z=30.6895866394043}
 }
 
+local stationGarage = {
+	{x=452.115966796875, y=-1018.10681152344, z=28.4786586761475}
+}
+
 AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("police:checkIsCop")
 end)
@@ -301,11 +305,26 @@ function isNearTakeService()
 	end
 end
 
+function isNearStationGarage()
+	for i = 1, #stationGarage do
+		local ply = GetPlayerPed(-1)
+		local plyCoords = GetEntityCoords(ply, 0)
+		local distance = GetDistanceBetweenCoords(stationGarage[i].x, stationGarage[i].y, stationGarage[i].z, plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+		if(distance < 30) then
+			DrawMarker(1, stationGarage[i].x, stationGarage[i].y, stationGarage[i].z-1, 0, 0, 0, 0, 0, 0, 2.0, 2.0, 1.0, 0, 155, 255, 200, 0, 0, 2, 0, 0, 0, 0)
+		end
+		if(distance < 2) then
+			return true
+		end
+	end
+end
+
 function ServiceOn()
 	TriggerServerEvent("police:registerservice")
 	isInService = true
 	TriggerServerEvent("jobssystem:jobs", 2)
 	TriggerServerEvent("police:takeService")
+	TriggerServerEvent('police:setService', 1) -- set enService in DB so they can respond to calls
 end
 
 function ServiceOff()
@@ -313,6 +332,7 @@ function ServiceOff()
 	isInService = false
 	TriggerServerEvent("jobssystem:jobs", 1)
 	TriggerServerEvent("police:breakService")
+	TriggerServerEvent('police:setService', 0) -- set enService in DB
 	
 	allServiceCops = {}
 	
@@ -337,6 +357,26 @@ Citizen.CreateThread(function()
 				if IsControlJustPressed(1,166) then 
 					OpenPoliceMenu()
 				end
+			end
+
+			if(isInService) then
+				if(isNearStationGarage()) then
+					if(policevehicle ~= nil) then --existingVeh
+						DisplayHelpText('Press ~INPUT_CONTEXT~ to store ~b~your vehicle',0,1,0.5,0.8,0.6,255,255,255,255)
+					else
+						DisplayHelpText('Press ~INPUT_CONTEXT~ to open the ~b~cop garage',0,1,0.5,0.8,0.6,255,255,255,255)
+					end
+					
+					if IsControlJustPressed(1,51) then
+						if(policevehicle ~= nil) then
+							SetEntityAsMissionEntity(policevehicle, true, true)
+							Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(policevehicle))
+							policevehicle = nil
+						else
+							OpenVeh()
+						end
+					end
+				end		
 			end
 		else
 			if (handCuffed == true) then
@@ -371,6 +411,38 @@ Citizen.CreateThread(function()
 					end
 				else
 					alreadyDead = false
+				end
+
+				DrawMarker(1,449.113,-981.084,42.691,0,0,0,0,0,0,2.0,2.0,2.0,0,155,255,200,0,0,0,0)
+			
+				if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), 449.113,-981.084,43.691, true ) < 5 then
+					if(existingVeh ~= nil) then
+						DisplayHelpText('Press ~INPUT_CONTEXT~ to store ~b~your ~b~helicopter',0,1,0.5,0.8,0.6,255,255,255,255)
+					else
+						DisplayHelpText('Press ~INPUT_CONTEXT~ to drive an helicopter out',0,1,0.5,0.8,0.6,255,255,255,255)
+					end
+					
+					if IsControlJustPressed(1,51)  then
+						if(existingVeh ~= nil) then
+							SetEntityAsMissionEntity(existingVeh, true, true)
+							Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(existingVeh))
+							existingVeh = nil
+						else
+							local car = GetHashKey("polmav")
+							local ply = GetPlayerPed(-1)
+							local plyCoords = GetEntityCoords(ply, 0)
+							
+							RequestModel(car)
+							while not HasModelLoaded(car) do
+									Citizen.Wait(0)
+							end
+							
+							existingVeh = CreateVehicle(car, plyCoords["x"], plyCoords["y"], plyCoords["z"], 90.0, true, false)
+							local id = NetworkGetNetworkIdFromEntity(existingVeh)
+							SetNetworkIdCanMigrate(id, true)
+							TaskWarpPedIntoVehicle(ply, existingVeh, -1)
+						end
+					end
 				end
 			end
 		end

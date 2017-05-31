@@ -58,6 +58,17 @@ local jobId = -1
 local notificationInProgress = false
 local playerInComaIsADoc = false
 
+-- EMS local
+--
+--
+--
+local isEMS = false
+local rank = "inconnu"
+--
+--
+--
+-- EMS LOCAL
+
 --[[
 ################################
             THREADS
@@ -105,7 +116,7 @@ Citizen.CreateThread(
 
 			local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
 
-			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) and isInService and jobId == 3 then
+			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) and isEMS then
 				-- Service car
 				DrawMarker(1, x, y, z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 255, 165, 0,165, 0, 0, 0,0)
 
@@ -125,6 +136,56 @@ end)
             EVENTS
 ################################
 --]]
+
+
+--EMS EVENTS
+--
+--
+--
+--
+
+AddEventHandler("playerSpawned", function()
+	TriggerServerEvent("ems:checkIsEMS")
+end)
+
+RegisterNetEvent('ems:receiveIsEMS')
+AddEventHandler('ems:receiveIsEMS', function(result)
+	if(result == "inconnu") then
+		isEMS = false
+	else
+		isEMS = true
+		rank = result
+	end
+end)
+
+RegisterNetEvent('ems:nowEMS')
+AddEventHandler('ems:nowEMS', function()
+	isEMS = true
+end)
+
+RegisterNetEvent('ems:noLongerEMS')
+AddEventHandler('ems:noLongerEMS', function()
+	isEMS = false
+	isInService = false
+	
+	local playerPed = GetPlayerPed(-1)
+						
+--	TriggerServerEvent("skin_customization:SpawnPlayer")
+	RemoveAllPedWeapons(playerPed)
+	
+	if(existingVeh ~= nil) then
+		SetEntityAsMissionEntity(existingVeh, true, true)
+		Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(existingVeh))
+		existingVeh = nil
+	end
+	
+--	ServiceOff()
+end)
+--
+--
+--
+--
+--EMS EVENTS
 
 RegisterNetEvent('es_em:sendEmergencyToDocs')
 AddEventHandler('es_em:sendEmergencyToDocs',
@@ -188,12 +249,10 @@ AddEventHandler('es_em:callTaken',
 end)
 
 RegisterNetEvent('es_em:cl_setJobId')
-AddEventHandler('es_em:cl_setJobId',
-	function(p_jobId)
-		jobId = p_jobId
-		GetService()
-	end
-)
+AddEventHandler('es_em:cl_setJobId', function(p_jobId)
+	jobId = p_jobId
+	GetService()
+end)
 
 --[[
 ################################
@@ -217,11 +276,17 @@ function SpawnAmbulance()
 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
 	local spawned_car = CreateVehicle(vehicle, coords, 406.871, -1427.79, 29.4387, true, false)
 
+	SetVehicleMod(spawned_car, 11, 2)
+	SetVehicleMod(spawned_car, 12, 2)
+	SetVehicleMod(spawned_car, 13, 2)
+	SetVehicleEnginePowerMultiplier(spawned_car, 10.0)
+
 	SetVehicleOnGroundProperly(spawned_car)
 	SetVehicleNumberPlateText(spawned_car, "MEDIC")
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	SetModelAsNoLongerNeeded(vehicle)
-	Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car))
+	SetEntityAsMissionEntity(spawned_car,true,true)
+	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
 end
 
 function StartEmergency(x, y, z, sourcePlayerInComa)
@@ -254,22 +319,26 @@ function StartEmergency(x, y, z, sourcePlayerInComa)
 end
 
 -- Get job form server
+-- This also sets your job when taking the service
+-- Removes job when going out of service
 function GetService()
 	local playerPed = GetPlayerPed(-1)
 
-	if jobId ~= 3 then
-		SendNotification(txt[lang]['notDoc'])
-		return
-	end
+	-- if jobId ~= 3 then
+	-- 	SendNotification(txt[lang]['notDoc'])
+	-- 	return
+	-- end
 
 	if isInService then
 		TriggerServerEvent("police:unregisterservice")
 		SendNotification(txt[lang]['stopService'])
 		TriggerServerEvent("mm:spawn")
 		TriggerServerEvent('es_em:sv_setService', 0)
+		TriggerServerEvent("jobssystem:jobs", 1)
 	else
 		TriggerServerEvent("police:registerservice")
 		SendNotification(txt[lang]['startService'])
+		TriggerServerEvent("jobssystem:jobs", 3)
 		TriggerServerEvent('es_em:sv_setService', 1)
 	end
 

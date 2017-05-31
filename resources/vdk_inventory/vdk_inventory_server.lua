@@ -19,6 +19,7 @@ AddEventHandler("onResourceStart", function(vdk_inventory)
       TriggerEvent("update:getItems", k)
       
       end
+      -- TriggerEvent("log:addLogServer", "VDK_INV", "LOAD", "Script has been loaded ")
         
 end)
 
@@ -68,9 +69,11 @@ AddEventHandler("item:sell", function(id, qty, price)
         
         if not(ill) then
             user:addMoney(tonumber(price))
+             -- TriggerEvent("log:addLogServer", "VDK_INV", "INFO", "Player : " .. user.identifier .. " has sell legit for : " .. tostring(price))
         else
             local divisepardeux = tonumber(price) / 2
             user:addDirty_Money(tonumber(divisepardeux))
+            -- TriggerEvent("log:addLogServer", "VDK_INV", "INFO", "Player : " .. user.identifier .. " has sell illegal for : " .. tostring(divisepardeux))
         end
     end)
 end)
@@ -137,6 +140,9 @@ AddEventHandler("player:giveItem", function(item, name, qty, target)
                 timeout = 2500,
                 layout = "centerLeft",
             })
+         TriggerEvent("es:getPlayers", function(Users)
+            -- TriggerEvent("log:addLogServer","Vdk_Inv","INFO","Player : " ..Users[source].identifier .. " gave " .. tostring(qty) .. " of " .. tostring(item) .. " to " ..Users[target].identifier)
+         end)
     end
 end)
 

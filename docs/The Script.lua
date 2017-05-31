@@ -1653,7 +1653,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if housing.selectedbutton > 1 then
 					housing.selectedbutton = housing.selectedbutton -1
 					if buttoncount > 10 and housing.selectedbutton < housing.menu.from then
@@ -1662,7 +1662,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if housing.selectedbutton < buttoncount then
 					housing.selectedbutton = housing.selectedbutton +1
 					if buttoncount > 10 and housing.selectedbutton > housing.menu.to then
@@ -2961,7 +2961,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if housingplaza.selectedbutton > 1 then
 					housingplaza.selectedbutton = housingplaza.selectedbutton -1
 					if buttoncount > 10 and housingplaza.selectedbutton < housingplaza.menu.from then
@@ -2970,7 +2970,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if housingplaza.selectedbutton < buttoncount then
 					housingplaza.selectedbutton = housingplaza.selectedbutton +1
 					if buttoncount > 10 and housingplaza.selectedbutton > housingplaza.menu.to then
@@ -3666,7 +3666,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if garagehouse.selectedbutton > 1 then
 					garagehouse.selectedbutton = garagehouse.selectedbutton -1
 					if buttoncount > 10 and garagehouse.selectedbutton < garagehouse.menu.from then
@@ -3675,7 +3675,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if garagehouse.selectedbutton < buttoncount then
 					garagehouse.selectedbutton = garagehouse.selectedbutton +1
 					if buttoncount > 10 and garagehouse.selectedbutton > garagehouse.menu.to then
@@ -4288,7 +4288,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if menuadmin.selectedbutton > 1 then
 					menuadmin.selectedbutton = menuadmin.selectedbutton -1
 					if buttoncount > 10 and menuadmin.selectedbutton < menuadmin.menu.from then
@@ -4297,7 +4297,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if menuadmin.selectedbutton < buttoncount then
 					menuadmin.selectedbutton = menuadmin.selectedbutton +1
 					if buttoncount > 10 and menuadmin.selectedbutton > menuadmin.menu.to then
@@ -5696,7 +5696,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if depmenu.selectedbutton > 1 then
 					depmenu.selectedbutton = depmenu.selectedbutton -1
 					if buttoncount > 10 and depmenu.selectedbutton < depmenu.menu.from then
@@ -5705,7 +5705,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if depmenu.selectedbutton < buttoncount then
 					depmenu.selectedbutton = depmenu.selectedbutton +1
 					if buttoncount > 10 and depmenu.selectedbutton > depmenu.menu.to then
@@ -7262,7 +7262,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if journamenu.selectedbutton > 1 then
 					journamenu.selectedbutton = journamenu.selectedbutton -1
 					if buttoncount > 10 and journamenu.selectedbutton < journamenu.menu.from then
@@ -7271,7 +7271,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if journamenu.selectedbutton < buttoncount then
 					journamenu.selectedbutton = journamenu.selectedbutton +1
 					if buttoncount > 10 and journamenu.selectedbutton > journamenu.menu.to then
@@ -8937,7 +8937,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if poleemploi.selectedbutton > 1 then
 					poleemploi.selectedbutton = poleemploi.selectedbutton -1
 					if buttoncount > 10 and poleemploi.selectedbutton < poleemploi.menu.from then
@@ -8946,7 +8946,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if poleemploi.selectedbutton < buttoncount then
 					poleemploi.selectedbutton = poleemploi.selectedbutton +1
 					if buttoncount > 10 and poleemploi.selectedbutton > poleemploi.menu.to then
@@ -9673,7 +9673,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if taximenu.selectedbutton > 1 then
 					taximenu.selectedbutton = taximenu.selectedbutton -1
 					if buttoncount > 10 and taximenu.selectedbutton < taximenu.menu.from then
@@ -9682,7 +9682,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if taximenu.selectedbutton < buttoncount then
 					taximenu.selectedbutton = taximenu.selectedbutton +1
 					if buttoncount > 10 and taximenu.selectedbutton > taximenu.menu.to then
@@ -10664,7 +10664,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if patronmenu.selectedbutton > 1 then
 					patronmenu.selectedbutton = patronmenu.selectedbutton -1
 					if buttoncount > 10 and patronmenu.selectedbutton < patronmenu.menu.from then
@@ -10673,7 +10673,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if patronmenu.selectedbutton < buttoncount then
 					patronmenu.selectedbutton = patronmenu.selectedbutton +1
 					if buttoncount > 10 and patronmenu.selectedbutton > patronmenu.menu.to then
@@ -14783,7 +14783,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if Dealer1.selectedbutton > 1 then
 					Dealer1.selectedbutton = Dealer1.selectedbutton -1
 					if buttoncount > 10 and Dealer1.selectedbutton < Dealer1.menu.from then
@@ -14792,7 +14792,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if Dealer1.selectedbutton < buttoncount then
 					Dealer1.selectedbutton = Dealer1.selectedbutton +1
 					if buttoncount > 10 and Dealer1.selectedbutton > Dealer1.menu.to then
@@ -15355,7 +15355,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if Dealer2.selectedbutton > 1 then
 					Dealer2.selectedbutton = Dealer2.selectedbutton -1
 					if buttoncount > 10 and Dealer2.selectedbutton < Dealer2.menu.from then
@@ -15364,7 +15364,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if Dealer2.selectedbutton < buttoncount then
 					Dealer2.selectedbutton = Dealer2.selectedbutton +1
 					if buttoncount > 10 and Dealer2.selectedbutton > Dealer2.menu.to then
@@ -15927,7 +15927,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if Dealer3.selectedbutton > 1 then
 					Dealer3.selectedbutton = Dealer3.selectedbutton -1
 					if buttoncount > 10 and Dealer3.selectedbutton < Dealer3.menu.from then
@@ -15936,7 +15936,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if Dealer3.selectedbutton < buttoncount then
 					Dealer3.selectedbutton = Dealer3.selectedbutton +1
 					if buttoncount > 10 and Dealer3.selectedbutton > Dealer3.menu.to then
@@ -16809,7 +16809,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if emsmenu.selectedbutton > 1 then
 					emsmenu.selectedbutton = emsmenu.selectedbutton -1
 					if buttoncount > 10 and emsmenu.selectedbutton < emsmenu.menu.from then
@@ -16818,7 +16818,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if emsmenu.selectedbutton < buttoncount then
 					emsmenu.selectedbutton = emsmenu.selectedbutton +1
 					if buttoncount > 10 and emsmenu.selectedbutton > emsmenu.menu.to then
@@ -17332,7 +17332,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if EMSgarage.selectedbutton > 1 then
 					EMSgarage.selectedbutton = EMSgarage.selectedbutton -1
 					if buttoncount > 10 and EMSgarage.selectedbutton < EMSgarage.menu.from then
@@ -17341,7 +17341,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if EMSgarage.selectedbutton < buttoncount then
 					EMSgarage.selectedbutton = EMSgarage.selectedbutton +1
 					if buttoncount > 10 and EMSgarage.selectedbutton > EMSgarage.menu.to then
@@ -17713,7 +17713,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if civilmenu.selectedbutton > 1 then
 					civilmenu.selectedbutton = civilmenu.selectedbutton -1
 					if buttoncount > 10 and civilmenu.selectedbutton < civilmenu.menu.from then
@@ -17722,7 +17722,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if civilmenu.selectedbutton < buttoncount then
 					civilmenu.selectedbutton = civilmenu.selectedbutton +1
 					if buttoncount > 10 and civilmenu.selectedbutton > civilmenu.menu.to then
@@ -18508,7 +18508,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if invmenu.selectedbutton > 1 then
 					invmenu.selectedbutton = invmenu.selectedbutton -1
 					if buttoncount > 10 and invmenu.selectedbutton < invmenu.menu.from then
@@ -18517,7 +18517,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if invmenu.selectedbutton < buttoncount then
 					invmenu.selectedbutton = invmenu.selectedbutton +1
 					if buttoncount > 10 and invmenu.selectedbutton > invmenu.menu.to then
@@ -19976,7 +19976,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if CIAgarage.selectedbutton > 1 then
 					CIAgarage.selectedbutton = CIAgarage.selectedbutton -1
 					if buttoncount > 10 and CIAgarage.selectedbutton < CIAgarage.menu.from then
@@ -19985,7 +19985,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if CIAgarage.selectedbutton < buttoncount then
 					CIAgarage.selectedbutton = CIAgarage.selectedbutton +1
 					if buttoncount > 10 and CIAgarage.selectedbutton > CIAgarage.menu.to then
@@ -20643,7 +20643,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if FBIgarages.selectedbutton > 1 then
 					FBIgarages.selectedbutton = FBIgarages.selectedbutton -1
 					if buttoncount > 10 and FBIgarages.selectedbutton < FBIgarages.menu.from then
@@ -20652,7 +20652,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if FBIgarages.selectedbutton < buttoncount then
 					FBIgarages.selectedbutton = FBIgarages.selectedbutton +1
 					if buttoncount > 10 and FBIgarages.selectedbutton > FBIgarages.menu.to then
@@ -21504,7 +21504,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if gouvgarages.selectedbutton > 1 then
 					gouvgarages.selectedbutton = gouvgarages.selectedbutton -1
 					if buttoncount > 10 and gouvgarages.selectedbutton < gouvgarages.menu.from then
@@ -21513,7 +21513,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if gouvgarages.selectedbutton < buttoncount then
 					gouvgarages.selectedbutton = gouvgarages.selectedbutton +1
 					if buttoncount > 10 and gouvgarages.selectedbutton > gouvgarages.menu.to then
@@ -22028,7 +22028,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				Back3lock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if weaponshop.selectedbutton > 1 then
 					weaponshop.selectedbutton = weaponshop.selectedbutton -1
 					if buttoncount > 10 and weaponshop.selectedbutton < weaponshop.menu.from then
@@ -22037,7 +22037,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if weaponshop.selectedbutton < buttoncount then
 					weaponshop.selectedbutton = weaponshop.selectedbutton +1
 					if buttoncount > 10 and weaponshop.selectedbutton > weaponshop.menu.to then
@@ -22648,7 +22648,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if polgarageshop.selectedbutton > 1 then
 					polgarageshop.selectedbutton = polgarageshop.selectedbutton -1
 					if buttoncount > 10 and polgarageshop.selectedbutton < polgarageshop.menu.from then
@@ -22657,7 +22657,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if polgarageshop.selectedbutton < buttoncount then
 					polgarageshop.selectedbutton = polgarageshop.selectedbutton +1
 					if buttoncount > 10 and polgarageshop.selectedbutton > polgarageshop.menu.to then
@@ -23018,7 +23018,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if polhelicoshop.selectedbutton > 1 then
 					polhelicoshop.selectedbutton = polhelicoshop.selectedbutton -1
 					if buttoncount > 10 and polhelicoshop.selectedbutton < polhelicoshop.menu.from then
@@ -23027,7 +23027,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if polhelicoshop.selectedbutton < buttoncount then
 					polhelicoshop.selectedbutton = polhelicoshop.selectedbutton +1
 					if buttoncount > 10 and polhelicoshop.selectedbutton > polhelicoshop.menu.to then
@@ -23471,7 +23471,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if policemenu.selectedbutton > 1 then
 					policemenu.selectedbutton = policemenu.selectedbutton -1
 					if buttoncount > 10 and policemenu.selectedbutton < policemenu.menu.from then
@@ -23480,7 +23480,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if policemenu.selectedbutton < buttoncount then
 					policemenu.selectedbutton = policemenu.selectedbutton +1
 					if buttoncount > 10 and policemenu.selectedbutton > policemenu.menu.to then
@@ -24351,7 +24351,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if vestiaireshop.selectedbutton > 1 then
 					vestiaireshop.selectedbutton = vestiaireshop.selectedbutton -1
 					if buttoncount > 10 and vestiaireshop.selectedbutton < vestiaireshop.menu.from then
@@ -24360,7 +24360,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if vestiaireshop.selectedbutton < buttoncount then
 					vestiaireshop.selectedbutton = vestiaireshop.selectedbutton +1
 					if buttoncount > 10 and vestiaireshop.selectedbutton > vestiaireshop.menu.to then
@@ -24940,7 +24940,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if invmenutarget.selectedbutton > 1 then
 					invmenutarget.selectedbutton = invmenutarget.selectedbutton -1
 					if buttoncount > 10 and invmenutarget.selectedbutton < invmenutarget.menu.from then
@@ -24949,7 +24949,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if invmenutarget.selectedbutton < buttoncount then
 					invmenutarget.selectedbutton = invmenutarget.selectedbutton +1
 					if buttoncount > 10 and invmenutarget.selectedbutton > invmenutarget.menu.to then
@@ -26889,7 +26889,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if clothshop.selectedbutton > 1 then
 					clothshop.selectedbutton = clothshop.selectedbutton -1
 					if buttoncount > 10 and clothshop.selectedbutton < clothshop.menu.from then
@@ -26898,7 +26898,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if clothshop.selectedbutton < buttoncount then
 					clothshop.selectedbutton = clothshop.selectedbutton +1
 					if buttoncount > 10 and clothshop.selectedbutton > clothshop.menu.to then
@@ -27391,7 +27391,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if helicoshop.selectedbutton > 1 then
 					helicoshop.selectedbutton = helicoshop.selectedbutton -1
 					if buttoncount > 10 and helicoshop.selectedbutton < helicoshop.menu.from then
@@ -27400,7 +27400,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if helicoshop.selectedbutton < buttoncount then
 					helicoshop.selectedbutton = helicoshop.selectedbutton +1
 					if buttoncount > 10 and helicoshop.selectedbutton > helicoshop.menu.to then
@@ -28127,7 +28127,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if vehshop.selectedbutton > 1 then
 					vehshop.selectedbutton = vehshop.selectedbutton -1
 					if buttoncount > 10 and vehshop.selectedbutton < vehshop.menu.from then
@@ -28136,7 +28136,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if vehshop.selectedbutton < buttoncount then
 					vehshop.selectedbutton = vehshop.selectedbutton +1
 					if buttoncount > 10 and vehshop.selectedbutton > vehshop.menu.to then
@@ -28607,7 +28607,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if armurerieciv.selectedbutton > 1 then
 					armurerieciv.selectedbutton = armurerieciv.selectedbutton -1
 					if buttoncount > 10 and armurerieciv.selectedbutton < armurerieciv.menu.from then
@@ -28616,7 +28616,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if armurerieciv.selectedbutton < buttoncount then
 					armurerieciv.selectedbutton = armurerieciv.selectedbutton +1
 					if buttoncount > 10 and armurerieciv.selectedbutton > armurerieciv.menu.to then
@@ -28997,7 +28997,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if armurerierebelle.selectedbutton > 1 then
 					armurerierebelle.selectedbutton = armurerierebelle.selectedbutton -1
 					if buttoncount > 10 and armurerierebelle.selectedbutton < armurerierebelle.menu.from then
@@ -29006,7 +29006,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if armurerierebelle.selectedbutton < buttoncount then
 					armurerierebelle.selectedbutton = armurerierebelle.selectedbutton +1
 					if buttoncount > 10 and armurerierebelle.selectedbutton > armurerierebelle.menu.to then
@@ -29401,7 +29401,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if boatshop.selectedbutton > 1 then
 					boatshop.selectedbutton = boatshop.selectedbutton -1
 					if buttoncount > 10 and boatshop.selectedbutton < boatshop.menu.from then
@@ -29410,7 +29410,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if boatshop.selectedbutton < buttoncount then
 					boatshop.selectedbutton = boatshop.selectedbutton +1
 					if buttoncount > 10 and boatshop.selectedbutton > boatshop.menu.to then
@@ -30409,7 +30409,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if clothshopluxe.selectedbutton > 1 then
 					clothshopluxe.selectedbutton = clothshopluxe.selectedbutton -1
 					if buttoncount > 10 and clothshopluxe.selectedbutton < clothshopluxe.menu.from then
@@ -30418,7 +30418,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if clothshopluxe.selectedbutton < buttoncount then
 					clothshopluxe.selectedbutton = clothshopluxe.selectedbutton +1
 					if buttoncount > 10 and clothshopluxe.selectedbutton > clothshopluxe.menu.to then
@@ -31199,7 +31199,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if maskshop.selectedbutton > 1 then
 					maskshop.selectedbutton = maskshop.selectedbutton -1
 					if buttoncount > 10 and maskshop.selectedbutton < maskshop.menu.from then
@@ -31208,7 +31208,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if maskshop.selectedbutton < buttoncount then
 					maskshop.selectedbutton = maskshop.selectedbutton +1
 					if buttoncount > 10 and maskshop.selectedbutton > maskshop.menu.to then
@@ -31654,7 +31654,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if coiffeur.selectedbutton > 1 then
 					coiffeur.selectedbutton = coiffeur.selectedbutton -1
 					if buttoncount > 10 and coiffeur.selectedbutton < coiffeur.menu.from then
@@ -31663,7 +31663,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if coiffeur.selectedbutton < buttoncount then
 					coiffeur.selectedbutton = coiffeur.selectedbutton +1
 					if buttoncount > 10 and coiffeur.selectedbutton > coiffeur.menu.to then
@@ -32944,7 +32944,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if propshop.selectedbutton > 1 then
 					propshop.selectedbutton = propshop.selectedbutton -1
 					if buttoncount > 10 and propshop.selectedbutton < propshop.menu.from then
@@ -32953,7 +32953,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if propshop.selectedbutton < buttoncount then
 					propshop.selectedbutton = propshop.selectedbutton +1
 					if buttoncount > 10 and propshop.selectedbutton > propshop.menu.to then
@@ -33334,7 +33334,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if dab.selectedbutton > 1 then
 					dab.selectedbutton = dab.selectedbutton -1
 					if buttoncount > 10 and dab.selectedbutton < dab.menu.from then
@@ -33343,7 +33343,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if dab.selectedbutton < buttoncount then
 					dab.selectedbutton = dab.selectedbutton +1
 					if buttoncount > 10 and dab.selectedbutton > dab.menu.to then
@@ -33774,7 +33774,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if dab2.selectedbutton > 1 then
 					dab2.selectedbutton = dab2.selectedbutton -1
 					if buttoncount > 10 and dab2.selectedbutton < dab2.menu.from then
@@ -33783,7 +33783,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if dab2.selectedbutton < buttoncount then
 					dab2.selectedbutton = dab2.selectedbutton +1
 					if buttoncount > 10 and dab2.selectedbutton > dab2.menu.to then
@@ -34349,7 +34349,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if createhead.selectedbutton > 1 then
 					createhead.selectedbutton = createhead.selectedbutton -1
 					if buttoncount > 10 and createhead.selectedbutton < createhead.menu.from then
@@ -34358,7 +34358,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if createhead.selectedbutton < buttoncount then
 					createhead.selectedbutton = createhead.selectedbutton +1
 					if buttoncount > 10 and createhead.selectedbutton > createhead.menu.to then
@@ -34737,7 +34737,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if superet.selectedbutton > 1 then
 					superet.selectedbutton = superet.selectedbutton -1
 					if buttoncount > 10 and superet.selectedbutton < superet.menu.from then
@@ -34746,7 +34746,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if superet.selectedbutton < buttoncount then
 					superet.selectedbutton = superet.selectedbutton +1
 					if buttoncount > 10 and superet.selectedbutton > superet.menu.to then
@@ -35112,7 +35112,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if recelvehi.srecelvehiedbutton > 1 then
 					recelvehi.srecelvehiedbutton = recelvehi.srecelvehiedbutton -1
 					if buttoncount > 10 and recelvehi.srecelvehiedbutton < recelvehi.menu.from then
@@ -35121,7 +35121,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if recelvehi.srecelvehiedbutton < buttoncount then
 					recelvehi.srecelvehiedbutton = recelvehi.srecelvehiedbutton +1
 					if buttoncount > 10 and recelvehi.srecelvehiedbutton > recelvehi.menu.to then
@@ -36016,7 +36016,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if garagemenu.selectedbutton > 1 then
 					garagemenu.selectedbutton = garagemenu.selectedbutton -1
 					if buttoncount > 10 and garagemenu.selectedbutton < garagemenu.menu.from then
@@ -36025,7 +36025,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if garagemenu.selectedbutton < buttoncount then
 					garagemenu.selectedbutton = garagemenu.selectedbutton +1
 					if buttoncount > 10 and garagemenu.selectedbutton > garagemenu.menu.to then
@@ -36498,7 +36498,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if garagemenuboat.selectedbutton > 1 then
 					garagemenuboat.selectedbutton = garagemenuboat.selectedbutton -1
 					if buttoncount > 10 and garagemenuboat.selectedbutton < garagemenuboat.menu.from then
@@ -36507,7 +36507,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if garagemenuboat.selectedbutton < buttoncount then
 					garagemenuboat.selectedbutton = garagemenuboat.selectedbutton +1
 					if buttoncount > 10 and garagemenuboat.selectedbutton > garagemenuboat.menu.to then
@@ -36834,7 +36834,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if garagemenuheli.selectedbutton > 1 then
 					garagemenuheli.selectedbutton = garagemenuheli.selectedbutton -1
 					if buttoncount > 10 and garagemenuheli.selectedbutton < garagemenuheli.menu.from then
@@ -36843,7 +36843,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if garagemenuheli.selectedbutton < buttoncount then
 					garagemenuheli.selectedbutton = garagemenuheli.selectedbutton +1
 					if buttoncount > 10 and garagemenuheli.selectedbutton > garagemenuheli.menu.to then
@@ -38877,7 +38877,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if lsc.selectedbutton > 1 then
 					lsc.selectedbutton = lsc.selectedbutton -1
 					if buttoncount > 10 and lsc.selectedbutton < lsc.menu.from then
@@ -38886,7 +38886,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if lsc.selectedbutton < buttoncount then
 					lsc.selectedbutton = lsc.selectedbutton +1
 					if buttoncount > 10 and lsc.selectedbutton > lsc.menu.to then

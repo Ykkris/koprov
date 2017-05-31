@@ -20,7 +20,7 @@ end)
 AddEventHandler('playerConnecting', function(name, setReason)
   print('Connecting: ' .. name)
 
-  if playerCount >= 32 then
+  if playerCount >= 24 then
     print('Dommage :(')
 
     setReason('Le serveur est plein, patiente... :D')

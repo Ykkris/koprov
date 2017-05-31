@@ -4,6 +4,7 @@ AddEventHandler("taxi:getpaid", function(paid)
   TriggerEvent('es:getPlayerFromId', source, function(user)
         local finalpaid = math.ceil(paid)
         user:addMoney(finalpaid)
+        -- -- TriggerEvent("log:addLogServer","TaxiJob" ,"INFO" , user.identifier .. " gain" .. tostring(finalpaid))
     
   end)
   

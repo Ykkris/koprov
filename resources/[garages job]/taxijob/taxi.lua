@@ -345,33 +345,33 @@ AddEventHandler("jobs:yesornot", function(yesornot)
 end)
 
 function CalculMoney(stime, sdistance)
-	Citizen.Trace(tostring(stime))
-	Citizen.Trace(tostring(sdistance))
+	Citizen.Trace(tostring(stime)) -- 90014
+	Citizen.Trace(tostring(sdistance)) -- 2478
 	time = tonumber(stime)
 	distance = tonumber(sdistance)
 	local timeCommand =        {2,   5,   8,   11,   15} -- 
-	local moneyTimeCommand =  {0.4, 0.55, 0.66, 0.85, 1.1, 1.3}
+	local moneyTimeCommand =  {40, 55, 66, 85, 110, 130}
 	local distanceCommand = {200, 500, 800, 1100, 1600, 2000, 3000}
-	local moneyCommand =    {20 , 35 , 50 , 75  , 90  , 120 , 180 , 250}
+	local moneyCommand =    {20 , 35 , 50 , 75  , 90  , 120 , 180 , 220, 250}
 	time = ((time / 1000) / 60)
-	local pallierTime = 0
-	local pallierDistance = 0
+	Citizen.Trace(tostring(time)) --1.5
 	for i=1, #timeCommand do
 		if time < timeCommand[i] or i == #timeCommand then
 			pallierTime = i
+			Citizen.Trace(tostring(i)) --1
 			break
 		end
 	end
 	for i=1, #distanceCommand do
-		if distance < distanceCommand[i] or i == #distanceCommand do
+		if distance < distanceCommand[i] or i == #distanceCommand then
 			pallierDistance = i
+			Citizen.Trace(tostring(i)) --7
 			break
 		end
 
 	end
 	receiveMoney = math.random(moneyCommand[pallierDistance], moneyCommand[pallierDistance+1])
-	multiplicator = math.random(moneyTimeCommand[pallierTime], moneyTimeCommand[pallierTime+1])
+	multiplicator = ((math.random(moneyTimeCommand[pallierTime], moneyTimeCommand[pallierTime+1])) / 100)
 	return (receiveMoney * multiplicator)
 end
 	
-

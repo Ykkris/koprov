@@ -7,19 +7,17 @@ AutoStartResources:
     - essentialmode
     - es_admin
     - es_freeroam
-    # - esx_skin
     - chat
     - spawnmanager
     - fivem-map-skater
     - baseevents
     - rconlog
     - hardcap # prevents the game from breaking
-    # - skinchanger
     - kmh
     - emergency
     - loadingscreen
     - assets
-    - garages
+    - ply_garages
     - banking
     - amazingskin
     - vdk_inventory
@@ -31,35 +29,34 @@ AutoStartResources:
     - NeverWanted
     - lastpostodb
     - handsup
-    - whitelist
+    - whitelistdb
     - watermark
     - voip
     - tow
-    - towgarage
-    - policegarage
+    - towveh
     - ulock
     - imenu
     - SelVeh
     - thecops
     - cotcot
-    - frfuel
-    - bucherongarage
-    - taxicar
+    # - frfuel
+    - recoltveh
+    - taxi2
     - pecheurgarage
-    - mazone
+    # - mazone
     - taxijob
     - Iphone
     - afkkick
     - compass
-    # - SelCloth
-    - interiors
     - mymairie
     - rent
     - blanchissement
     - gb_foodshops
     - pNotify
     - foodhud
-    - commands
+    - iLog
+    - timesync
+    - journaliste
 
 # do change
 RconPassword: koprobestv

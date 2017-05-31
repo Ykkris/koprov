@@ -19,6 +19,7 @@ local Keys = {
 
 ------------------------------------------------------------------------------
 isCop = false --------------- A ENLEVER
+job_id = nil
 guiEnabled = false
 ActualJob = 0
 notificationInProgress = false
@@ -32,31 +33,6 @@ PhoneData = {
 }
 
 reloadphone = false
-
-AddEventHandler("playerSpawned", function()
-	TriggerServerEvent("police:checkIsCop")
-end)
-
-RegisterNetEvent('police:receiveIsCop')
-AddEventHandler('police:receiveIsCop', function(result)
-	if(result == "inconnu") then
-		isCop = false
-	else
-		isCop = true
-		rank = result
-	end
-end)
-
-RegisterNetEvent("service:updateJobs")
-AddEventHandler("service:updateJobs", function(jobid)
-	ActualJob = jobid
-end)
-
-RegisterNetEvent("service:onloaded")
-AddEventHandler("service:onloaded", function(jobid)
-	ActualJob = jobid
-end)
-
 
 local vehshop = {
 	opened = false,
@@ -84,7 +60,7 @@ local vehshop = {
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
 				{name = "Services", description = ""},
-				{name = "Police", description = ""}
+				{name = "Donner de l'argent", description = ""}
 			}
 		},
 		["Telephone"] = {  -- avant vehicles
@@ -105,7 +81,7 @@ local vehshop = {
 				{name = "Calme (long)", description = ''},
 				{name = "Zut", description = ''},
 				{name = "Dance", description = ''},
-				{name = "Applaudir", description = ''},
+				{name = "Peur", description = ''},
 				{name = "Fumer / AFK", description = ''},
 				{name = "Applaudir (calme)", description = ''},
 				{name = "Enlacer", description = ''},
@@ -123,7 +99,7 @@ local vehshop = {
 				{name = "Branler", description = ''},
 				{name = "Selfie", description = ''},
 				{name = "Prout 1", description = ''},
-				{name = "Dancer", description = ''},
+				--{name = "Dancer", description = ''},
 				{name = "Guitare", description = ''},
 				{name = "High 5", description =''},
 				{name = "Calme", description =''},
@@ -152,6 +128,13 @@ local vehshop = {
 				{name = "Médecin", description = ""},
 				{name = "Dépanneur", description = ""},
 				{name = "Taxi", description = ""}
+			}
+		},
+		["Donner de l'argent"] = {
+			title = "Donner de l'argent",
+			name = "Donner de l'argent",
+			buttons = {
+
 			}
 		},
 		["Police"] = {
@@ -189,8 +172,59 @@ local vehshop = {
 				-- waiting for izio :) {name = "Supprimer le Contact", description = ""}
 			}
 		},
+		["Fouille"] = {
+			title = "Fouille",
+			name = "Fouille",
+			buttons = {}
+		},
 	}
 }
+
+AddEventHandler("playerSpawned", function()
+	TriggerServerEvent("police:checkIsCop")
+	TriggerServerEvent("service:getJobId") -- similar use than above but more general
+end)
+
+RegisterNetEvent('police:receiveIsCop')
+AddEventHandler('police:receiveIsCop', function(result)
+	if(result == "inconnu") then
+		isCop = false
+	else
+		isCop = true
+		rank = result
+	end
+end)
+
+RegisterNetEvent('police:showInventory')
+AddEventHandler('police:showInventory', function(items)
+    vehshop.menu['Fouille'].buttons = {}
+	for ind, value in pairs(items) do
+        if (value.quantity > 0) then
+            table.insert(vehshop.menu['Fouille'].buttons, {name = tostring(value.libelle) .. " : " .. tostring(value.quantity), description = ""})
+        end
+    end
+    OpenMenu("Fouille")
+end)
+
+RegisterNetEvent('service:receiveJob')
+AddEventHandler('service:receiveJob', function(result)
+	job_id = result
+	if job_id == 3 then
+		table.insert(vehshop.menu['main'].buttons, {name = "Soigner", description = ""})
+	elseif job_id == 2 then
+		table.insert(vehshop.menu['main'].buttons, {name = "Police", description = ""})
+	end
+end)
+
+RegisterNetEvent("service:updateJobs")
+AddEventHandler("service:updateJobs", function(jobid)
+	ActualJob = jobid
+end)
+
+RegisterNetEvent("service:onloaded")
+AddEventHandler("service:onloaded", function(jobid)
+	ActualJob = jobid
+end)
 
 function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
 	SetTextFont(font)
@@ -346,13 +380,7 @@ Citizen.CreateThread(function()
 			local ped = LocalPed()
 			local menu = vehshop.menu[vehshop.currentmenu] -- vehshop.menu["Repertoire"].buttons
 
-			if isCop and vehshop.currentmenu == "main" then
-				buttoncount = tablelength(menu.buttons)
-			elseif vehshop.currentmenu == "main" then
-				buttoncount = tablelength(menu.buttons) - 1
-			else
-				buttoncount = tablelength(menu.buttons)
-			end
+			buttoncount = tablelength(menu.buttons)
 			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
 			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
 			drawTxt(vehshop.selectedbutton.."/"..buttoncount,0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
@@ -368,16 +396,8 @@ Citizen.CreateThread(function()
 						selected = false
 					end
 
-
-					if button.name ~= "Police" then
-						drawMenuButton(button,vehshop.menu.x,y,selected)
-						y = y + 0.04
-					elseif button.name == "Police" and isCop then  ------------------ On affiche le boutton que si on est flic 
-						drawMenuButton(button,vehshop.menu.x,y,selected)
-						y = y + 0.04
-					end ------------------------------------------------------------------------------------------------------
-
-					--y = y + 0.04
+					drawMenuButton(button,vehshop.menu.x,y,selected)
+					y = y + 0.04
 					
 					if selected and IsControlJustPressed(1,201) then
 						ButtonSelected(button)
@@ -393,7 +413,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(1,202) then
 				backlock = false
 			end
-			if IsControlJustPressed(1,188) then
+			if IsControlJustPressed(1,27) then
 				if vehshop.selectedbutton > 1 then
 					vehshop.selectedbutton = vehshop.selectedbutton -1
 					if buttoncount > 10 and vehshop.selectedbutton < vehshop.menu.from then
@@ -402,7 +422,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(1,187)then
+			if IsControlJustPressed(1,173)then
 				if vehshop.selectedbutton < buttoncount then
 					vehshop.selectedbutton = vehshop.selectedbutton +1
 					if buttoncount > 10 and vehshop.selectedbutton > vehshop.menu.to then
@@ -438,8 +458,12 @@ function ButtonSelected(button)
 			OpenMenu('Emotes')
 		elseif btn == "Carte d'identite" then
 			IdCard()
-		elseif btn == "Police" and isCop then
+		elseif btn == "Donner de l'argent" then
+			GiveCash()
+		elseif btn == "Police" then
 			OpenMenu("Police")
+		elseif btn == "Soigner" then
+			Heal()
 		elseif btn == "Services" then
 			OpenMenu("Services")
 		end
@@ -454,7 +478,7 @@ function ButtonSelected(button)
 			Emote(3)
 		elseif btn == "Dance" then
 			Emote(4)
-		elseif btn == "Applaudir" then
+		elseif btn == "Peur" then
 			Emote(5)
 		elseif btn == "Fumer / AFK" then
 			Emote(6)
@@ -697,6 +721,22 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 
 end)
 
+function Heal()
+	local target, distance = GetClosestPlayer()
+	local player = GetPlayerPed(-1)
+	if target ~= -1 and distance < 1 then
+		TaskStartScenarioInPlace(player, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+		Citizen.Wait(3000)
+		ClearPedTasks(player);
+		TriggerServerEvent("es_em:healPlayer", GetPlayerServerId(target))
+	else 
+		TaskStartScenarioInPlace(player, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+		Citizen.Wait(3000)
+		ClearPedTasks(player);
+		SetEntityHealth(player, GetEntityMaxHealth(player))
+	end
+end
+
 function OpenMenu(menu)
 	vehshop.lastmenu = vehshop.currentmenu
 	if menu == "Telephone" then
@@ -855,7 +895,7 @@ function animsActionScenario(animObj)
         local head = GetEntityHeading(ped);
         --TaskStartScenarioAtPosition(ped, animObj.anim, pos['x'], pos['y'], pos['z'] - 1, head, -1, false, false);
         TaskStartScenarioInPlace(ped, animObj.anim, 0, false)
-        if IsControlJustPressed(1,188) then
+        if IsControlJustPressed(1,27) then
         end
 
     end
@@ -1004,90 +1044,75 @@ function BoiteReception()
 
 end
 
+RegisterNetEvent('services:cbcopconnected')
+AddEventHandler('services:cbcopconnected', function(cb)
+	isCopConnected = cb
+	if not(isCopConnected) then
+		ShowNotification("Pas de policiers en ville")
+	else
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les policiers ont reçu votre appel")
+	end
+end)
+
+RegisterNetEvent('services:cbmedconnected')
+AddEventHandler('services:cbmedconnected', function(cb)
+	isMedicConnected = cb
+	if not(isMedicConnected) then
+		ShowNotification("Pas de médecins en ville")
+	else
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les médecins ont reçu votre appel")
+	end
+end)
+
+RegisterNetEvent('services:cbdepconnected')
+AddEventHandler('services:cbdepconnected', function(cb)
+	isDepanConnected = cb
+	if not(isDepanConnected) then
+		ShowNotification("Pas de dépanneurs en ville")
+	else 
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les dépanneurs ont reçu votre appel")
+	end
+end)
+
+RegisterNetEvent('services:cbtaxconnected')
+AddEventHandler('services:cbtaxconnected', function(cb)
+	isTaxiConnected = cb
+	if not(isTaxiConnected) then
+		ShowNotification("Pas de taxis en ville")
+	else
+		local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
+		local x = p_coords.x
+		local y = p_coords.y
+		local z = p_coords.z
+		TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
+		ShowNotification("Les taxis ont reçu votre appel")
+	end
+end)
+
 function Services(nom_service)
 	if nom_service == "Police " then
-		TriggerServerEvent('service:connectedbyid', 2)	
-		Citizen.CreateThread(function()
-			while isCopConnected == nil do
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbcopconnected')
-    			AddEventHandler('services:cbcopconnected', function(cb)
-    				isCopConnected = cb
-    				if not(isCopConnected) then
-    					ShowNotification("Pas de policiers en ville")
-    				else
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 2 ,GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-    	end)
-
+		TriggerServerEvent('police:enService')
     elseif nom_service == "Médecin" then
     	TriggerServerEvent('service:connectedbyid', 3)
-    	Citizen.CreateThread(function()
-    		while isMedicConnected == nil do
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbmedconnected')
-    			AddEventHandler('services:cbmedconnected', function(cb)
-    				isMedicConnected = cb
-    				if not(isMedicConnected) then
-    					ShowNotification("Pas de médecins en ville")
-    				else
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 3 , GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-   		end)
-
     elseif nom_service == "Taxi" then
-    	TriggerServerEvent('service:connectedbyid', 9)	
-    	Citizen.CreateThread(function()
-    		while isTaxiConnected == nil do
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbtaxconnected')
-    			AddEventHandler('services:cbtaxconnected', function(cb)
-    				isTaxiConnected = cb
-    				if not(isTaxiConnected) then
-    					ShowNotification("Pas de taxis en ville")
-    				else
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 9 ,GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-    	end)
-
+    	TriggerServerEvent('service:connectedbyid', 9)
     elseif nom_service == "Dépanneur" then
     	TriggerServerEvent('service:connectedbyid', 4)
-    	Citizen.CreateThread(function()
-    		while isDepanConnected == nil do
-    			Citizen.Wait(1)
-    			RegisterNetEvent('services:cbdepconnected')
-    			AddEventHandler('services:cbdepconnected', function(cb)
-    				isDepanConnected = cb
-    				if not(isDepanConnected) then
-    					ShowNotification("Pas de dépanneurs en ville")
-    				else 
-    					local p_coords = GetEntityCoords(GetPlayerPed(-1), true)
-    					local x = p_coords.x
-    					local y = p_coords.y
-    					local z = p_coords.z
-    					TriggerServerEvent('service:sendservice', 4 ,GetPlayerServerId(PlayerId()), x, y, z)
-    				end
-    			end)
-    		end
-    	end)
 	end
 end
 
@@ -1095,12 +1120,26 @@ function IdCard()
 	TriggerServerEvent("Iphone:checkid", GetPlayerServerId(PlayerId()), 0)
 end
 
+function GiveCash()
+	local target, distance = GetClosestPlayer()
+    if target ~= nil and distance < 1 then
+        DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+        while (UpdateOnscreenKeyboard() == 0) do
+            DisableAllControlActions(0)
+            Wait(0)
+        end
+        if (GetOnscreenKeyboardResult()) then
+            TriggerServerEvent("bank:givecash", GetPlayerServerId(target), GetOnscreenKeyboardResult())
+        end
+    end
+end
+
 function Menotter()
 	TriggerServerEvent("Iphone:cuff")
 end
 
 function Fouiller()
-    TriggerServerEvent("Iphone:check")
+    TriggerServerEvent("police:check")
 end
 
 function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
@@ -1175,6 +1214,7 @@ function GetPlayers()
 	for i = 0, 31 do
 		if NetworkIsPlayerActive(i) then
 			table.insert(players, i)
+			Citizen.Trace(i)
 		end
 	end
 	return players
@@ -1251,7 +1291,7 @@ AddEventHandler('service:sendserviceto',
 				notificationInProgress = true
 				if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 10000) then -- APPEL REDUIT à 10 SECONDES POUR LES SERVICES
 					callAlreadyTaken = true
-					ShowNotification('L\'appel a été pris par ~b~')
+					ShowNotification('L\'appel a été pris')
 				end
 				if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
 					callAlreadyTaken = true

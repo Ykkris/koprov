@@ -50,6 +50,7 @@ local txt = {
 local isDead = false
 local isKO = false
 local isRes = false
+local emergencyComes = false
 
 --[[
 ################################
@@ -142,6 +143,7 @@ AddEventHandler('baseevents:onPlayerKilled',
 RegisterNetEvent('es_em:cl_sendMessageToPlayerInComa')
 AddEventHandler('es_em:cl_sendMessageToPlayerInComa',
 	function()
+		emergencyComes = true
 		SendNotification(txt[lang]['ambIsComming'])
 	end
 )
@@ -161,6 +163,19 @@ AddEventHandler('es_em:cl_resurectPlayer',
 		end
 	end
 )
+
+RegisterNetEvent('es_em:cl_respawn')
+AddEventHandler('es_em:cl_respawn',
+	function()
+		ResPlayer()
+	end
+)
+
+RegisterNetEvent('es_em:healPlayer')
+AddEventHandler('es_em:healPlayer', function()
+	local player = GetPlayerPed(-1)
+	SetEntityHealth(player, GetEntityMaxHealth(player))
+end)
 
 --[[
 ################################
@@ -184,7 +199,7 @@ function ResPlayer()
 	isRes = true
 	TriggerServerEvent('es_em:sv_removeMoney')
 	TriggerServerEvent("item:reset")
-	TriggerServerEvent("skin_customization:SpawnPlayer")
+	TriggerServerEvent("mm:spawn")
 	RemoveAllPedWeapons(GetPlayerPed(-1),true)
 	NetworkResurrectLocalPlayer(342.394, -1397.949, 32.509, true, true, false)
 end
@@ -218,13 +233,16 @@ function OnPlayerDied(playerId, reasonID, reason)
 	Citizen.CreateThread(
 		function()
 			local emergencyCalled = false
+			local notifReceivedAt = nil
 
 			while not isRes do
 				Citizen.Wait(1)
+
 				if (IsControlJustReleased(1, Keys['E'])) and not emergencyCalled then
 					if not isDocConnected then
 						ResPlayer()
 					else
+						notifReceivedAt = GetGameTimer()
 						SendNotification(txt[lang]['youCallAmb'])
 						TriggerServerEvent('es_em:sendEmergency', reason, GetPlayerServerId(PlayerId()), pos.x, pos.y, pos.z)
 					end
@@ -233,10 +251,17 @@ function OnPlayerDied(playerId, reasonID, reason)
 				elseif (IsControlJustReleased(1, Keys['X'])) then
 					ResPlayer()
 				end
+
+				if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 15000) and not emergencyComes and emergencyCalled then
+					SendNotification(txt[lang]['callAmb'])
+					emergencyCalled = false
+				end
+
 			end
 
 			isDocConnected = nil
 			isRes = false
+			emergencyComes = false
 	end)
 end
 

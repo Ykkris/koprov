@@ -21,6 +21,7 @@ first = true
 
 AddEventHandler('onResourceStart', function(resource)
 	if not(first) and resource == "blanchissement" then
+		-- TriggerEvent("log:addLogServer","Blanchiement" ,"INFO" ,"Loaded blanchissement")
 		first = true
 		BlanchissementRandom()
 	end
@@ -46,6 +47,7 @@ AddEventHandler("mission:sendmoney", function()
 		 		rargent = money * Policier[policier+1]
 		 	end
 		 	user:addMoney(rargent)
+			-- TriggerEvent("log:addLogServer","Blanchiement" ,"INFO" ,"Player receive money : "..user.identifier .. " amount : " .. tostring(rargent) )
 		 	TriggerClientEvent("blanchissement:notification", source, "Tiens, allez casse toi p'tite merde !")
 		 end
 	 end)
@@ -56,17 +58,15 @@ RegisterServerEvent("blanchissement:sendblanchissement")
 AddEventHandler("blanchissement:sendblanchissement", function()
 	TriggerEvent('es:getPlayerFromId', source,function(user)
 		identifier = user.identifier
-		RconPrint(identifier)
 		local req = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@identifier' ", {['@identifier'] = identifier })
 	    	local resultat = MySQL:getResults(req, {'dirty_money'}, "identifier")
 	    	argent = tonumber(resultat[1].dirty_money)
-	    	print(tostring(argent))
 	    	local receiveMoney = CalculMoney(argent)
 	    	local time = os.time()
 	    	MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 						{['@dirty_time'] = time , ['@dirty_wait_money'] = argent, ['@dirty_money'] = "0",['@identifier'] = identifier})
 	    	user:setDirty_Money(0) ---<<<< non je ne suis pas un troll, je met bel et bien 0 en nombre é_é
-
+		-- TriggerEvent("log:addLogServer","Blanchiement" ,"INFO" ,"Player send dirty money : "..user.identifier .. " amount : " .. tostring(argent) )
 	    	TriggerClientEvent("blanchissement:receiveblanchissement", source, argent)
 
 	end)
@@ -108,6 +108,7 @@ function BlanchissementRandom()
 				if IsWaitingForLong(Users[k]) then
 					found = true
 					TriggerClientEvent("blanchissement:mission", k, sargent)
+					-- TriggerEvent("log:addLogServer","Blanchiement" ,"INFO" ,"Player get mission : "..Users[k].identifier)
 				end
 			end
 			if found then
@@ -185,6 +186,6 @@ AddEventHandler("mission:removemoney", function()
 	TriggerEvent("es:getPlayerFromId", function(user)
 		MySQL:executeQuery("UPDATE users SET dirty_time = '@dirty_time', dirty_wait_money = '@dirty_wait_money', dirty_money = '@dirty_money' WHERE identifier = '@identifier' ",
 		{['@dirty_time'] = "0" , ['@dirty_wait_money'] = "0", ['@dirty_money'] = "0",['@identifier'] = identifier})
-		print(user.identifier.." a rate sa mission. il perd son argent.")
+		-- TriggerEvent("log:addLogServer","Blanchiement" ,"INFO" ,"Player missed mission : ".. user.identifier)
 	end)
 end)
