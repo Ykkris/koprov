@@ -185,7 +185,7 @@ local vehshop = {
 }
 
 AddEventHandler("playerSpawned", function()
-	TriggerServerEvent("police:checkIsCop")
+	-- TriggerServerEvent("police:checkIsCop") noneed for it to be in thecops and here for the same event (playerspawned)
 	TriggerServerEvent("service:getJobId") -- similar use than above but more general
 end)
 
