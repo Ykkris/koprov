@@ -23,7 +23,7 @@ function remEMS(identifier)
 end
 
 function checkIsEMS(identifier)
-  local query = MySQL:executeQuery("SELECT * FROM medic WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
+  local query = MySQL:executeQuery("SELECT * FROM ems WHERE identifier = '@identifier'", { ['@identifier'] = identifier})
   local result = MySQL:getResults(query, {'rank'}, "identifier")
   
   if(not result[1]) then
