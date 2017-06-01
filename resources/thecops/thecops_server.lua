@@ -187,6 +187,38 @@ AddEventHandler('police:checkingPlate', function(plate)
 	end)
 	end)
 
+RegisterServerEvent('police:havedirty')
+AddEventHandler('police:havedirty', function(target)
+	TriggerEvent("es:getPlayerFromId", target, function(user)
+	local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@username'", { ['@username'] = user.identifier })
+	local result = MySQL:getResults(executed_query, { 'dirty_money' }, 'identifier' )
+	if (result) then
+			for _, v in ipairs(result) do
+				if v.dirty_money > 0 then
+				TriggerClientEvent("pNotify:SendNotification", source, { text = "<b style='color:red'>" .. v.dirty_money .. "$</b> non déclarés ont été trouvés", type = "info", timeout = 5000, layout = "centerLeft",})
+			end
+		end
+	end
+end)
+	end)
+
+RegisterServerEvent('police:saisir')
+AddEventHandler('police:saisir', function(target)
+	TriggerEvent("es:getPlayerFromId", target, function(user)
+	local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@username'", { ['@username'] = user.identifier })
+	local result = MySQL:getResults(executed_query, { 'dirty_money' }, 'identifier' )
+	if (result) then
+			for _, v in ipairs(result) do
+				if v.dirty_money > 0 then
+				TriggerClientEvent("pNotify:SendNotification", source, { text = "<b style='color:red'>" .. v.dirty_money .. "$</b> non déclarés ont été saisis", type = "info", timeout = 5000, layout = "centerLeft",})
+				local amount = v.dirty_money
+				user:removeDirty_Money(amount)
+			end
+		end
+	end
+end)
+	end)
+
 RegisterServerEvent('police:confirmUnseat')
 AddEventHandler('police:confirmUnseat', function(t)
 	TriggerClientEvent('chatMessage', source, 'GOVERNMENT', {255, 0, 0}, GetPlayerName(t).. " is out !")

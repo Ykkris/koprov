@@ -60,7 +60,7 @@ local vehshop = {
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
 				{name = "Services", description = ""},
-				{name = "Donner de l'argent", description = ""}
+				{name = "Donner argent", description = ""}
 			}
 		},
 		["Telephone"] = {  -- avant vehicles
@@ -130,10 +130,12 @@ local vehshop = {
 				{name = "Taxi", description = ""}
 			}
 		},
-		["Donner de l'argent"] = {
-			title = "Donner de l'argent",
-			name = "Donner de l'argent",
+		["Donner argent"] = {
+			title = "Donner",
+			name = "Donner",
 			buttons = {
+			{name = "Argent", description = ""},
+			{name = "Argent sale", description = ""}
 
 			}
 		},
@@ -143,6 +145,7 @@ local vehshop = {
 			buttons = {
 				{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identite, oblige a rentrer dans le vehicle
 				{name = "Fouiller", description = ""},
+				{name = "Saisir", description = ""},
 				{name = "Amende", description = ""},
 				{name = "Controler l'identite", description = ""},
 				{name = "Controler le vehicule", description = ""},
@@ -201,7 +204,7 @@ AddEventHandler('police:showInventory', function(items)
 	for ind, value in pairs(items) do
         if (value.quantity > 0) then
             table.insert(vehshop.menu['Fouille'].buttons, {name = tostring(value.libelle) .. " : " .. tostring(value.quantity), description = ""})
-        end
+    	end
     end
     OpenMenu("Fouille")
 end)
@@ -458,10 +461,10 @@ function ButtonSelected(button)
 			OpenMenu('Emotes')
 		elseif btn == "Carte d'identite" then
 			IdCard()
-		elseif btn == "Donner de l'argent" then
-			GiveCash()
 		elseif btn == "Police" then
 			OpenMenu("Police")
+		elseif btn == "Donner argent" then
+			OpenMenu("Donner argent")
 		elseif btn == "Soigner" then
 			Heal()
 		elseif btn == "Services" then
@@ -547,6 +550,13 @@ function ButtonSelected(button)
 			--OpenMenu("Services")
 		end
 
+	elseif this == "Donner argent" then
+		if btn == "Argent" then
+			GiveCash()
+		elseif btn == "Argent sale" then
+			Dirty()
+		end
+
 	elseif this == "Boite de reception" then
 			text = button.description
 			vehshop.menu.from = 1
@@ -560,6 +570,8 @@ function ButtonSelected(button)
 			Menotter()
 		elseif btn == "Fouiller" then
 			Fouiller()
+		elseif btn == "Saisir" then
+			Saisir()
 		elseif btn == "Amende" then
 			Amande()
 		elseif btn == "Controler l'identite" then
@@ -749,6 +761,8 @@ function OpenMenu(menu)
 		vehshop.lastmenu = "main"
 	elseif menu == "Services" then
 		vehshop.lastmenu = "main"
+	elseif menu == "Donner argent" then
+		vehshop.lastmenu = "main"
 	end
 
 	vehshop.menu.from = 1
@@ -764,7 +778,7 @@ function Back()
 	backlock = true
 	if vehshop.currentmenu == "main" then
 		CloseCreator()
-	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" then
+	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" or vehshop.currentmenu == "Donner argent" then
 		vehshop.currentmenu = "main"
 	elseif vehshop.currentmenu == "Repertoire" then
 		vehshop.currentmenu = "Telephone"
@@ -1134,12 +1148,37 @@ function GiveCash()
     end
 end
 
+function Dirty()
+	local target, distance = GetClosestPlayer()
+    if target ~= nil and distance < 1 then
+        DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+        while (UpdateOnscreenKeyboard() == 0) do
+            DisableAllControlActions(0)
+            Wait(0)
+        end
+        if (GetOnscreenKeyboardResult()) then
+            TriggerServerEvent("bank:givedirtycash", GetPlayerServerId(target), GetOnscreenKeyboardResult())
+        end
+    end
+end
+
 function Menotter()
 	TriggerServerEvent("Iphone:cuff")
 end
 
 function Fouiller()
-    TriggerServerEvent("police:check")
+    local target, distance = GetClosestPlayer()
+    if target ~= nil and distance < 2 then
+		TriggerServerEvent("police:havedirty",  GetPlayerServerId(target))
+		TriggerServerEvent("police:check")
+	end
+end
+
+function Saisir()
+    local target, distance = GetClosestPlayer()
+    if target ~= nil and distance < 2 then
+		TriggerServerEvent("police:saisir",  GetPlayerServerId(target))
+	end    
 end
 
 function Amande() -- sous menu avec choix (7)prix choix (22)infractionss
