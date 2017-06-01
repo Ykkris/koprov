@@ -736,7 +736,12 @@ end)
 function Heal()
 	local target, distance = GetClosestPlayer()
 	local player = GetPlayerPed(-1)
-	if target ~= -1 and distance < 1 then
+	if target ~= -1 and distance < 1 and GetEntityHealth(target) == nil then
+		TaskStartScenarioInPlace(player, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+		Citizen.Wait(8000)
+		ClearPedTasks(player);
+	    TriggerServerEvent('es_em:sv_resurectPlayer', GetPlayerServerId(target))
+	elseif target ~= -1 and distance < 1 then
 		TaskStartScenarioInPlace(player, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
 		Citizen.Wait(3000)
 		ClearPedTasks(player);

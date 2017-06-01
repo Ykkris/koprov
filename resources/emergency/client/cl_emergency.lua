@@ -297,24 +297,16 @@ function StartEmergency(x, y, z, sourcePlayerInComa)
 
 	SendNotification(txt[lang]['gps'])
 
-	Citizen.CreateThread(
-		function()
-			local isRes = false
-			local ped = GetPlayerPed(-1);
-			while not isRes do
-				Citizen.Wait(0)
-
-				if (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), x,y,z, true)<3.0) then
-						DisplayHelpText(txt[lang]['res'])
-						if (IsControlJustReleased(1, Keys['E'])) then
-							TaskStartScenarioInPlace(ped, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
-							Citizen.Wait(8000)
-							ClearPedTasks(ped);
-	            TriggerServerEvent('es_em:sv_resurectPlayer', sourcePlayerInComa)
-	            isRes = true
-	          end
-				end
+	Citizen.CreateThread(function()
+		local isRes = false
+		local ped = GetPlayerPed(-1);
+		while not isRes do
+			Citizen.Wait(0)
+			if (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), x,y,z, true)<3.0) then
+				RemoveBlip(BLIP_EMERGENCY)
+			    isRes = true
 			end
+		end
 	end)
 end
 
