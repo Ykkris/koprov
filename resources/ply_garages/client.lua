@@ -66,7 +66,13 @@ function ListeVehicule()
     MenuTitle = "Vehicules"
     ClearMenu()
     for ind, value in pairs(VEHICLES) do
-            Menu.addButton(tostring(value.vehicle_name) .. " : " .. tostring(value.vehicle_state), "OptionVehicle", value.id)
+    	if value.vehicle_state == "four" then
+    		value.vehicle_state = "~r~150$~w~"
+    	end
+    	if value.vehicle_state == "in" then
+    		value.vehicle_state = ""
+    	end
+            Menu.addButton(tostring(value.vehicle_name).. " n°" .. tostring(value.vehicle_plate) .." ".. tostring(value.vehicle_state), "OptionVehicle", value.id)
     end    
     Menu.addButton("Retour","MenuGarage",nil)
 end

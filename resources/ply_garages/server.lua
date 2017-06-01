@@ -125,14 +125,14 @@ AddEventHandler('ply_garages:CheckGarageForVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier  
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'in'",{['@username'] = player})
-    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state'}, "id")
+    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state', 'vehicle_plate'}, "id")
     if (result) then
         for _, v in ipairs(result) do
                 --print(v.vehicle_model)
                 --print(v.vehicle_plate)
                 --print(v.vehicle_state)
                 --print(v.id)
-            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_state"] = v.vehicle_state}
+            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_state"] = v.vehicle_state, ["vehicle_plate"] = v.vehicle_plate,}
             table.insert(vehicles, tonumber(v.id), t)
         end
     end
@@ -147,14 +147,14 @@ AddEventHandler('ply_garages:CheckFourForVeh', function()
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier  
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username' AND vehicle_state = 'four'",{['@username'] = player})
-    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state'}, "id")
+    local result = MySQL:getResults(executed_query, {'id','vehicle_model', 'vehicle_name', 'vehicle_state', 'vehicle_plate'}, "id")
     if (result) then
         for _, v in ipairs(result) do
                 --print(v.vehicle_model)
                 --print(v.vehicle_plate)
                 --print(v.vehicle_state)
                 --print(v.id)
-            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_state"] = v.vehicle_state}
+            t = { ["id"] = v.id, ["vehicle_model"] = v.vehicle_model, ["vehicle_name"] = v.vehicle_name, ["vehicle_state"] = v.vehicle_state, ["vehicle_plate"] = v.vehicle_plate}
             table.insert(vehicles, tonumber(v.id), t)
         end
     end
