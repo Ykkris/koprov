@@ -18,8 +18,9 @@ local Keys = {
 }
 
 ------------------------------------------------------------------------------
-isCop = false --------------- A ENLEVER
-job_id = nil
+isCop = false 
+isEMS = false
+job_id = nil -- probably useless now, keep that for later
 guiEnabled = false
 ActualJob = 0
 notificationInProgress = false
@@ -194,6 +195,18 @@ AddEventHandler('police:receiveIsCop', function(result)
 		isCop = false
 	else
 		isCop = true
+		table.insert(vehshop.menu['main'].buttons, {name = "Police", description = ""})
+		rank = result
+	end
+end)
+
+RegisterNetEvent('ems:receiveIsEMS')
+AddEventHandler('ems:receiveIsEMS', function(result)
+	if(result == "inconnu") then
+		isEMS = false
+	else
+		isEMS = true
+		table.insert(vehshop.menu['main'].buttons, {name = "Soigner", description = ""})
 		rank = result
 	end
 end)
@@ -209,14 +222,10 @@ AddEventHandler('police:showInventory', function(items)
     OpenMenu("Fouille")
 end)
 
+-- This is kinda useless because of the switch chomeur/job when player is serving or not
 RegisterNetEvent('service:receiveJob')
 AddEventHandler('service:receiveJob', function(result)
 	job_id = result
-	if job_id == 3 then
-		table.insert(vehshop.menu['main'].buttons, {name = "Soigner", description = ""})
-	elseif job_id == 2 then
-		table.insert(vehshop.menu['main'].buttons, {name = "Police", description = ""})
-	end
 end)
 
 RegisterNetEvent("service:updateJobs")
