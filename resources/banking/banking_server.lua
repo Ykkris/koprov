@@ -212,8 +212,10 @@ AddEventHandler('bank:givedirtycash', function(toPlayer, amount)
     if (tonumber(user.dirty_money) >= tonumber(amount)) then
       local player = user.identifier
       user:removeDirty_Money(amount)
+      local executed_query = MySQL:executeQuery("UPDATE users SET dirty_money = @dirty WHERE identifier = '@identifier'", {['@identifier'] = player, ['@dirty'] = user.dirty_money})
       TriggerEvent('es:getPlayerFromId', toPlayer, function(recipient)
         recipient:addDirty_Money(amount)
+        local executed_query = MySQL:executeQuery("UPDATE users SET dirty_money = @dirty WHERE identifier = '@identifier'", {['@identifier'] = user.recipient, ['@dirty'] = recipient.dirty_money})
         --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent sale donné: ~r~-$".. amount .." ~n~~s~Cash: ~g~$" .. user.money)
         --TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent sale donné: ~g~$".. amount .." ~n~~s~Cash: ~g~$" .. recipient.money)
         TriggerEvent("es:getPlayerFromId", toPlayer, function(toUser)

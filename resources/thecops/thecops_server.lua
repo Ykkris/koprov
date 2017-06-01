@@ -213,6 +213,7 @@ AddEventHandler('police:saisir', function(target)
 				TriggerClientEvent("pNotify:SendNotification", source, { text = "<b style='color:red'>" .. v.dirty_money .. "$</b> non déclarés ont été saisis", type = "info", timeout = 5000, layout = "centerLeft",})
 				local amount = v.dirty_money
 				user:removeDirty_Money(amount)
+				local executed_query = MySQL:executeQuery("UPDATE users SET dirty_money = @dirty WHERE identifier = '@identifier'", {['@identifier'] = user.identifier, ['@dirty'] = user.dirty_money})
 			end
 		end
 	end
