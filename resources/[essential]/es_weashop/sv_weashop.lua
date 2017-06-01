@@ -56,7 +56,7 @@ AddEventHandler("weaponshop:GiveWeaponsToPlayer", function(player)
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_weapons WHERE identifier = '@username'",{['@username'] = playerID})
 		local result = MySQL:getResults(executed_query, {'weapon_model','withdraw_cost'}, "identifier")
 	
-		delay = 500
+		delay = 2000
 		if(result)then
 			for k,v in ipairs(result) do
 				-- if (tonumber(user.money) >= tonumber(v.withdraw_cost)) then
