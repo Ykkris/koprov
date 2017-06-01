@@ -131,6 +131,7 @@ local vehshop = {
 				{name = "Stinger GT", costs = 720000, description = {}, model = "stingergt"},
 				{name = "Stirling GT", costs = 720000, description = {}, model = "feltzer3"},
 				{name = "Z-Type", costs = 900000, description = {}, model = "ztype"},
+				{name = "Futo", costs = 35000, description = {}, model = "futo"},
 			}
 		},
 		["super"] = {

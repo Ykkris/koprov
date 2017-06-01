@@ -275,7 +275,7 @@ Citizen.CreateThread(function()
 									local random_wait = GetRandomIntInRange(35, 60)*1000 -- de 35 à 60 secondes
 									showLoadingPromt("Appel vers la centrale taxi", random_wait, 3)
 									Wait(random_wait)
-									DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
+									DrawMissionText("Conduit un peu et trouve un autre ~h~~y~passager~w~.", 10000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 								end
@@ -285,7 +285,7 @@ Citizen.CreateThread(function()
 						if jobs.flag[1] > 0 then
 							jobs.flag[1] = 0
 							jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
-							DrawMissionText("Conduit un peut et trouve un autre ~h~~y~passager~w~.", 10000)
+							DrawMissionText("Conduit un peu et trouve un autre ~h~~y~passager~w~.", 10000)
 							if jobs.blip[1] ~= nil and DoesBlipExist(jobs.blip[1]) then
 								Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(jobs.blip[1]))
 								jobs.blip[1] = nil

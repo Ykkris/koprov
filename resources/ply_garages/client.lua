@@ -23,7 +23,12 @@ local garages = {
   	{name="Garage", colour=3, id=50, x=114.427, y=-3103.314, z=5.009},
   	{name="Garage", colour=3, id=50, x=911.708, y=-163.067, z=73.424},
   	{name="Garage", colour=3, id=50, x=460.450, y=-1694.450, z=28.295},
-  	{name="Garage", colour=3, id=50, x=431.152, y=-997.132, z=25.763},
+  	{name="Garage", colour=3, id=50, x=431.152, y=-997.132, z=24.763},
+  	{name="Garage", colour=3, id=50, x=-570.721, y=5239.781, z=69.469},
+  	{name="Garage", colour=3, id=50, x=2665.922, y=3517.127, z=51.782},
+  	{name="Garage", colour=3, id=50, x=1552.983, y=-2121.615, z=76.237},
+  	{name="Garage", colour=3, id=50, x=2674.913, y=1704.303, z=23.488},
+  	{name="Garage", colour=3, id=50, x=2904.476, y=4396.575, z=49.263},
   	{name="Fourrière", colour=1, id=68, x=405.175, y=-1642.475, z=28.295},
 }
 

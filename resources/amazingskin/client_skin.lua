@@ -4807,7 +4807,7 @@ local emplacement = {
     {name="Clothing", id=73, x=-824.193, y=-1074.333, z=11.022},
     {name="Clothing", id=73, x=-1192.098, y=-767.020, z=17.163},
     {name="Clothing", id=73, x=-1450.63, y=-237.126, z=49.185},
-    {name="Clothing", id=73, x=-7.777, y=6514.491, z=31.533},
+    {name="Clothing", id=73, x=4.034, y=6512.04, z=31.877},
     {name="Clothing", id=73, x=1694.586, y=4825.133, z=42.046},
     {name="Clothing", id=73, x=125.335, y=-225.199, z=54.505},
     {name="Clothing", id=73, x=1196.169, y=2710.895, z=37.866},
