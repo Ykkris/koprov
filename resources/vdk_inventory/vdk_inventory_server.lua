@@ -129,7 +129,7 @@ end)
 
 AddEventHandler("player:giveItem", function(item, name, qty, target)
     local player = getPlayerID(source)
-    local executed_query = MySQL:executeQuery("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = '@username'", { ['@username'] = player })
+    local executed_query = MySQL:executeQuery("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = '@username'", { ['@username'] = target })
     local result = MySQL:getResults(executed_query, { 'total' })
     local total = result[1].total
     if (total + qty <= 64) then

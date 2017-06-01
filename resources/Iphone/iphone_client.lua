@@ -1267,7 +1267,6 @@ function GetPlayers()
 	for i = 0, 31 do
 		if NetworkIsPlayerActive(i) then
 			table.insert(players, i)
-			Citizen.Trace(i)
 		end
 	end
 	return players
