@@ -5,7 +5,7 @@ local Config = {}
 
 Config.PlayerLimit = 24                -- How many playerslots your server has
 
-Config.PlaceInQueueAt = 15             --[[ This determines when it will start placing players in the queue. For example, if the server has 5 people ingame, and this is set to 5, it will start placing players in queue. 
+Config.PlaceInQueueAt = false             --[[ This determines when it will start placing players in the queue. For example, if the server has 5 people ingame, and this is set to 5, it will start placing players in queue. 
                                             If there were 3 people in the server and it was set to 5, it would allow 2 more people to join without going through the queue.
                                             Setting this to false will disable it and will only place players in queue when the server is full. This is useful for server restarts which will assure priority users get in.]]
 
@@ -39,16 +39,16 @@ Config.Priority = {                    -- An array of steamids that have permane
 
 Config.Language = {
     separator = " | ",   
-    steamiderr = "Error: We couldn't retrieve your SteamID",
+    steamiderr = "Erreur: Nous ne retrouvons pas votre SteamID",
     refreshwindow = "Your refresh window is from %s to %s",
     refreshwarning = "Spam protection is 1 minute long, you have 3 minutes after spam protection to refresh your position",
     blistwarning = "You were blacklisted for 5 minutes for spamming too much too quickly",
     blistrefreshwarning = "Spam protection is 1 minute long, you may check your remaining time in the blacklist queue after spam protection",
     blistbanwarning = "You were banned until the next server restart for spamming in the blacklist queue!",
     attemptcnct = "You may attempt to reconnect at %s",
-    spam = "DO NOT SPAM",
+    spam = "NE PAS SPAMMER",
     unbanned = "You were unbanned, you may join the queue the next time you connect",
-    warnings = "WARNING %d/%d",
+    warnings = "ATTENTION %d/%d",
     blistspamming = "You are blacklisted for spamming too much too quickly",
     blistremain = "You have %u minute(s) and %u second(s) (%s) remaining until you are removed from the blacklist queue",
     prioritizeplaced = "You were prioritized and placed %d/%d in the queue",
