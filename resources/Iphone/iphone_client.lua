@@ -471,9 +471,9 @@ Citizen.CreateThread(function()
 			end
 		end
 
-		if vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "Vehicule" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "portes" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "limitateur" then -- enlever le menu quand le joueur n'est pas dans un vehicle
+		if vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "portes" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "limitateur" then -- enlever le menu quand le joueur n'est pas dans un vehicle
 			TriggerEvent("pNotify:SendNotification", { text = "Tu n'es pas dans un vehicule", type = "warning", timeout = 500, layout = "centerLeft",})
-				vehshop.currentmenu = "main"
+				vehshop.currentmenu = "Vehicule"
 		end
 
 		if vehshop.opened then
@@ -715,7 +715,7 @@ function ButtonSelected(button)
 	
 	
 	---------------------------------------------------------------------------
-	elseif this == "Vehicule" and playerVeh ~= 0 then
+	elseif this == "Vehicule" then
 		if btn == "Gérer les portes" then
 			OpenMenu('portes')
 		elseif btn == "Limitateur de vitesse" then
@@ -723,7 +723,7 @@ function ButtonSelected(button)
 		elseif btn == "Eteindre le moteur" then
 			OpenMenu("moteur")
 		end
-	elseif this == "Gérer les portes" then
+	elseif this == "Gérer les portes" and playerVeh ~= 0 then
 		if btn == "Coffre" then
 			OpenCloseDoor('Coffre')
 		elseif btn == "Capot" then
@@ -737,7 +737,7 @@ function ButtonSelected(button)
 		elseif btn == "Arrière droite" then
 			OpenCloseDoor('Arrière droite')
 		end
-	elseif this == "Limitateur de vitesse" then
+	elseif this == "Limitateur de vitesse" and playerVeh ~= 0 then
 		if btn == "10" then
 			OpenLimitator('10')
 		elseif btn == "30" then
@@ -751,7 +751,7 @@ function ButtonSelected(button)
 		elseif btn == "Enlever la limite" then
 			StopLimitator()
 		end
-	elseif this == "Eteindre le moteur" then
+	elseif this == "Eteindre le moteur"  and playerVeh ~= 0 then
 			CloseCreator()
 			OpenCreator()
 
