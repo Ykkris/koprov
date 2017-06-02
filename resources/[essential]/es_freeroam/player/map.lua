@@ -50,7 +50,7 @@ local blips = {
     -- {name="Weapon store", id=110, x=-3157.450, y=1079.633, z=20.692},
     -- Basic
     --{name="FIB", id=106, x=105.455, y=-745.483, z=44.754},
-    --{name="Lifeinvader", id=77, x=-1047.900, y=-233.000, z=39.000},
+    {name="Journaliste", id=77, x=-1047.900, y=-233.000, z=39.000},
     --{name="Cluckin Bell", id=357, x=-72.68752, y=6253.72656, z=31.08991},
     {name="Tequil-La La", id=93, x=-565.171, y=276.625, z=83.286},
     --{name="Morgue", id=310, x=243.351, y=-1376.014, z=39.534},
@@ -58,8 +58,8 @@ local blips = {
     -- Propperty
     --{name="Casino", id=207, x=925.329, y=46.152, z=80.908 },
     -- {name="Maze Bank Arena", id=135, x=-250.604, y=-2030.000, z=30.000},
-    {name="Stripbar", id=121, x=134.476, y=-1307.887, z=28.983},
-    {name="Downtown Cab Co", id=198, x=900.461, y=-181.466, z=73.89},
+    {name="Unicorn", id=121, x=134.476, y=-1307.887, z=28.983},
+    {name="Taxis", id=198, x=900.461, y=-181.466, z=73.89},
     -- Gas stations
     -- {name="Gas Station", id=361, x=49.4187,   y=2778.793,  z=58.043},
     -- {name="Gas Station", id=361, x=263.894,   y=2606.463,  z=44.983},
@@ -86,7 +86,7 @@ local blips = {
     -- {name="Gas Station", id=361, x=620.843,  y= 269.100,  z=103.089},
     -- {name="Gas Station", id=361, x=2581.321, y=362.039, 108.468},
     -- Police Stations
-    {name="Police Station", id=60, x=425.130, y=-979.558, z=30.711},
+    {name="Commissariat", id=60, x=425.130, y=-979.558, z=30.711},
     --{name="Police Station", id=60, x=1859.234, y= 3678.742, z=33.690},
     --{name="Police Station", id=60, x=-438.862, y=6020.768, z=31.490},
     --{name="Police Station", id=60, x=818.221, y=-1289.883, z=26.300},
@@ -96,7 +96,7 @@ local blips = {
     -- {name="Hospital", id=61, x= -247.76, y= 6331.23, z=32.43},
     -- {name="Hospital", id=61, x= -449.67, y= -340.83, z= 34.50},
     -- {name="Hospital", id=61, x= 357.43, y= -593.36, z= 28.79},
-    {name="Hospital", id=61, x= 295.83, y= -1446.94, z= 29.97},
+    {name="Hôpital", id=61, x= 295.83, y= -1446.94, z= 29.97},
     -- {name="Hospital", id=61, x= -676.98, y= 310.68, z= 83.08},
     -- {name="Hospital", id=61, x= 1151.21, y= -1529.62, z= 35.37},
     -- {name="Hospital", id=61, x= -874.64, y= -307.71, z= 39.58},
@@ -111,7 +111,7 @@ local blips = {
     {name="Location", id=270, x=-1011.81, y= -2687.27, z= 12.97},
     {name="Bateau", id=427, x= 107.2117, y= -3085.819, z= 5.9999},
     {name="Camion", id=318, x= -31.124, y= -2653.691, z= 5.0162},
-    {name="Médecin", id=153, x= 392.398, y= -1434.503, z= 28.4475},
+    -- {name="Médecin", id=153, x= 392.398, y= -1434.503, z= 28.4475},
     {name="Mairie", id=419, x= -427.924, y= 1115.1776, z= 326.772},
   }
 

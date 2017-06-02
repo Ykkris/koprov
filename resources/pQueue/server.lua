@@ -11,6 +11,8 @@ Config.PlaceInQueueAt = false             --[[ This determines when it will star
 
 Config.Debug = true                   -- Will print debug info while players are leaving/joining/refreshing the queue
 
+Config.GreenLight = false               -- Will enable/disable green lighting people for join.
+
 Config.DisconnectPriority = true       -- Enables/Disables disconnect priority feature
 Config.DisconnectPriorityTime = 300    -- How long a player has priority queue after they disconnect
 Config.ConnectPriority = true          -- Enabled/Disables giving players timed priority when they join, incase they crash or something goes wrong while they are loading. Currently shares disconnect priorities time.
@@ -40,29 +42,29 @@ Config.Priority = {                    -- An array of steamids that have permane
 Config.Language = {
     separator = " | ",   
     steamiderr = "Erreur: Nous ne retrouvons pas votre SteamID",
-    refreshwindow = "Your refresh window is from %s to %s",
-    refreshwarning = "Spam protection is 1 minute long, you have 3 minutes after spam protection to refresh your position",
-    blistwarning = "You were blacklisted for 5 minutes for spamming too much too quickly",
-    blistrefreshwarning = "Spam protection is 1 minute long, you may check your remaining time in the blacklist queue after spam protection",
-    blistbanwarning = "You were banned until the next server restart for spamming in the blacklist queue!",
-    attemptcnct = "You may attempt to reconnect at %s",
+    refreshwindow = "Votre fenêtre de raffraichissement est de %s à %s",
+    refreshwarning = "La protection anti-spam est de 1 min, vous avez 3 mins après la protection pour actualiser votre position",
+    blistwarning = "Vous êtes blacklist pendant 5 minutes pour avoir trop spammé rapidement",
+    blistrefreshwarning = "La protection anti-spam est de 1 minute, vous pouvez vérifier le temps restant dans la blacklist apès la protection anti-spam",
+    blistbanwarning = "Vous êtes banni jusqu'au prochain redémarrage du serveur pour avoir spammé dans la file d'attente de la blacklist!",
+    attemptcnct = "Vous pouvez essayer de vous reconnecter à %s",
     spam = "NE PAS SPAMMER",
-    unbanned = "You were unbanned, you may join the queue the next time you connect",
+    unbanned = "Vous êtes déban, vous pourrez rejoindre la file d'attente à votre prochaine connexion",
     warnings = "ATTENTION %d/%d",
     blistspamming = "You are blacklisted for spamming too much too quickly",
-    blistremain = "You have %u minute(s) and %u second(s) (%s) remaining until you are removed from the blacklist queue",
-    prioritizeplaced = "You were prioritized and placed %d/%d in the queue",
-    placed = "You were placed %d/%d in the queue",
-    currentpos = "You're currently %d/%d",
-    queuerefresh = "Queue refreshed : You're currently %d/%d",
-    spampunish = "You were moved back in the queue for spamming!",
+    blistremain = "Vous avez %u minute(s) et %u second(s) (%s) restante avant d'être supprimé de la liste d'attente de la blacklist",
+    prioritizeplaced = "Vous êtes prioritaire et placé %d/%d dans la file d'attente",
+    placed = "Vous êtes placé %d/%d dans la file d'attente",
+    currentpos = "Vous êtes actuellement %d/%d",
+    queuerefresh = "File actualisé : Vous êtes actuellement %d/%d",
+    spampunish = "Vous avez reculé dans la file pour avoir spammer!",
     queueerr = "Error: There was a problem placing you in queue or finding your position in queue", -- this should never happen
     permit = "You were not permitted to join, did the queue glitch?"
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------
 local QueueList = {}
-
---[[QueueList = {
+--[[
+QueueList = {
     [1] = {
         steamid = "test1",
         firstconnect = 0,
@@ -81,9 +83,19 @@ local QueueList = {}
         warnings = 0,
         lastwarning = false,
         consecwarnings = 0
-    }
-}]]
+    },
 
+    [3] = {
+        steamid = "test3",
+        firstconnect = 0,
+        lastconnect = 99999999999999,
+        priority = true,
+        warnings = 0,
+        lastwarning = false,
+        consecwarnings = 0
+    }
+}
+]]
 --[[for i = 1, 1000 do
     local priority = true
 
@@ -189,15 +201,7 @@ local function greenLight(steamid, ignore)
         return
     end
 
-    local len = #RecentQueue
-    
-    if len >= 8 then
-        for i = 8, len do
-            table_remove(RecentQueue, i)
-        end
-    end
-
-    table.insert(RecentQueue, steamid)
+    table_insert(RecentQueue, steamid)
 
     debugPrint("pQueue: "..steamid.." was greenlit for join")
 end
@@ -524,15 +528,17 @@ end)
 
 RegisterServerEvent("pQueue:playerActivated")
 AddEventHandler("pQueue:playerActivated", function()
-    if not List[source] then
+    local src = source
+
+    if not List[src] then
         PlayerCount = PlayerCount + 1
-        List[source] = true
+        List[src] = true
 
         local greenlit = false -- I have seen instances, in other queue scripts, where players could join out of random and it doesn't seem to be a problem of the script, this aims to combat that.
-        local steamID = source ~= nil and GetPlayerIdentifiers(source)[1] or false -- recieved object is nil when I disconnected (too quick maybe), this may or may not fix it.
+        local steamID = src ~= nil and GetPlayerIdentifiers(src)[1] or false -- recieved object is nil when I disconnected (too quick maybe), this may or may not fix it.
 
         if not steamID then
-            if source then
+            if src then
                 SetTimeout(3000, function() DropPlayer(source, Config.Language.steamiderr) end) -- seems to break things / other resources if I drop them instantly
             end
             return
@@ -541,6 +547,7 @@ AddEventHandler("pQueue:playerActivated", function()
         if IgnoreRecent[steamID] then
             greenlit = true
             IgnoreRecent[steamID] = nil
+            debugPrint("pQueue: "..GetPlayerName(source).."["..steamID.."] was found in ignore recent table, they are greenlit")
         end
 
         if not greenlit then
@@ -548,17 +555,22 @@ AddEventHandler("pQueue:playerActivated", function()
                 if v == steamID then
                     greenlit = true
                     table_remove(RecentQueue, k)
+                    debugPrint("pQueue: "..GetPlayerName(source).."["..steamID.."] was found in the recent queue table, they are greenlit")
                     break
                 end
             end
         end
 
-        if not greenlit then
-            DontPrioritize[steamID] = true
-            SetTimeout(3000, function() DropPlayer(source, Config.Language.permit) end)
+        if Config.GreenLight then
+            if not greenlit then
+                DontPrioritize[steamID] = true
+                SetTimeout(3000, function() DropPlayer(source, Config.Language.permit) end)
 
-            debugPrint("pQueue: "..GetPlayerName(source).."["..steamID.."] was dropped because they weren't greenlit for join")
-            return
+                debugPrint("pQueue: "..GetPlayerName(source).."["..steamID.."] was dropped because they weren't greenlit for join")
+                return
+            else
+                debugPrint("PQueue: "..GetPlayerName(source).."["..steamID.."] was found in the greenlit table and will not be kicked")
+            end
         end
     end
 end)
