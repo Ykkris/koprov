@@ -471,7 +471,7 @@ Citizen.CreateThread(function()
 			end
 		end
 
-		if vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "portes" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "limitateur" then -- enlever le menu quand le joueur n'est pas dans un vehicle
+		if vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "portes" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "limitateur" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "moteur" then -- enlever le menu quand le joueur n'est pas dans un vehicle
 			TriggerEvent("pNotify:SendNotification", { text = "Tu n'es pas dans un vehicule", type = "warning", timeout = 500, layout = "centerLeft",})
 				vehshop.currentmenu = "Vehicule"
 		end
@@ -751,7 +751,7 @@ function ButtonSelected(button)
 		elseif btn == "Enlever la limite" then
 			StopLimitator()
 		end
-	elseif this == "Eteindre le moteur"  and playerVeh ~= 0 then
+	elseif this == "Eteindre le moteur" then
 			CloseCreator()
 			OpenCreator()
 
@@ -994,13 +994,18 @@ function OpenCloseDoor(dumbledoor)
 end
 
 function ToggleEngineOff()
-	if engine then
-		SetVehicleEngineOn(playerVeh, false, true)
-		SetVehicleUndriveable(playerVeh, engine)
+	if playerVeh ~= 0 then
+		if engine then
+			SetVehicleEngineOn(playerVeh, false, true)
+			SetVehicleUndriveable(playerVeh, engine)
+		end
+		engine = false
+		CloseCreator()
+		OpenCreator()
+	else
+		TriggerEvent("pNotify:SendNotification", { text = "Tu n'es pas dans un vehicule", type = "warning", timeout = 500, layout = "centerLeft",})
+		vehshop.currentmenu = "Vehicule"
 	end
-	engine = false
-	CloseCreator()
-	OpenCreator()
 end
 
 function OpenLimitator(acombienjetelimitemonbro)
