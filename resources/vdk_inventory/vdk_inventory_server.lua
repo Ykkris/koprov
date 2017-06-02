@@ -73,7 +73,6 @@ AddEventHandler("item:sell", function(id, qty, price)
         else
             local divisepardeux = tonumber(price) / 2
             user:addDirty_Money(tonumber(divisepardeux))
-            local executed_query = MySQL:executeQuery("UPDATE users SET dirty_money = @dirty WHERE identifier = '@identifier'", {['@identifier'] = player, ['@dirty'] = user.dirty_money})
             -- TriggerEvent("log:addLogServer", "VDK_INV", "INFO", "Player : " .. user.identifier .. " has sell illegal for : " .. tostring(divisepardeux))
         end
     end)
