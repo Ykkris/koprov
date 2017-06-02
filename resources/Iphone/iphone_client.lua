@@ -98,7 +98,7 @@ local vehshop = {
 				{name = "Siffler taxi", description = ''},
 				{name = "Yoga", description = ''},
 				{name = "Branler", description = ''},
-				{name = "Selfie", description = ''},
+				{name = "Appareil photo", description = ''},
 				{name = "Prout 1", description = ''},
 				--{name = "Dancer", description = ''},
 				{name = "Guitare", description = ''},
@@ -522,7 +522,7 @@ function ButtonSelected(button)
 			Emote(19)
 		elseif btn == "Branler" then
 			Emote(20)
-		elseif btn == "Selfie" then
+		elseif btn == "Appareil photo" then
 			Emote(21)
 		elseif btn == "Dancer" then
 			Emote(22)
