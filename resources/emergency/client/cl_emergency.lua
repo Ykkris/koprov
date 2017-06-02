@@ -249,10 +249,12 @@ AddEventHandler('es_em:callTaken',
 end)
 
 RegisterNetEvent('es_em:cl_setJobId')
-AddEventHandler('es_em:cl_setJobId', function(p_jobId)
-	jobId = p_jobId
-	GetService()
-end)
+AddEventHandler('es_em:cl_setJobId', 
+	function(p_jobId)
+		jobId = p_jobId
+		GetService()
+	end
+)
 
 --[[
 ################################
@@ -303,8 +305,14 @@ function StartEmergency(x, y, z, sourcePlayerInComa)
 		while not isRes do
 			Citizen.Wait(0)
 			if (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), x,y,z, true)<3.0) then
-				RemoveBlip(BLIP_EMERGENCY)
-			    isRes = true
+				DisplayHelpText(txt[lang]['res'])
+					if (IsControlJustReleased(1, Keys['E'])) then
+						TaskStartScenarioInPlace(ped, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+						Citizen.Wait(8000)
+						ClearPedTasks(ped);
+						TriggerServerEvent('es_em:sv_resurectPlayer', sourcePlayerInComa)
+						isRes = true
+					end
 			end
 		end
 	end)
