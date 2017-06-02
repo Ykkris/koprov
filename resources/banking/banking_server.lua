@@ -233,7 +233,6 @@ AddEventHandler('es:playerLoaded', function(source)
   TriggerEvent('es:getPlayerFromId', source, function(user)
       local player = user.identifier
       local bankbalance = bankBalance(player)
-      local executed_query = MySQL:executeQuery("UPDATE users SET dirty_money = @dirty WHERE identifier = '@identifier'", {['@identifier'] = player, ['@dirty'] = user.dirty_money})
       TriggerClientEvent("banking:updateBalance", source, bankbalance)
     end)
 end)
