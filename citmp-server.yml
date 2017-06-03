@@ -29,7 +29,7 @@ AutoStartResources:
     - NeverWanted
     - lastpostodb
     - handsup
-    - whitelistdb
+    # - whitelistdb
     - watermark
     - voip
     - tow
@@ -55,14 +55,15 @@ AutoStartResources:
     - pNotify
     - foodhud
     - iLog
-    - timesync
+    - sync
     - journaliste
+    - pQueue
 
 # do change
 RconPassword: koprobestv
 
 # configure this, please
-Hostname: Kopro V [YKKRISDEV]
+Hostname: Kopro V [YKKRIS MEDIC]
 
 ScriptDebug: true
 
