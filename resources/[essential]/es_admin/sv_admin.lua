@@ -19,6 +19,12 @@ TriggerEvent('es:addCommand', 'admin', function(source, args, user)
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Group: ^2" .. user.group.group)
 end)
 
+TriggerEvent('es:addGroupCommand', 'viewname', "owner", function(source, args, user)
+    TriggerClientEvent("es_admin:viewname", source)
+end, function(source, args, user)
+    TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficient permissions!")
+end)
+
 TriggerEvent('es:addCommand', 'car', function(source, args, user)
 	TriggerClientEvent('es_admin:spawnVehicle', source, args[2])
 end)
