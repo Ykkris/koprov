@@ -18,6 +18,7 @@ AutoStartResources:
     - loadingscreen
     - assets
     - ply_garages
+    - Interactsound
     - banking
     - amazingskin
     - vdk_inventory
@@ -55,14 +56,15 @@ AutoStartResources:
     - pNotify
     - foodhud
     - iLog
-    - timesync
+    # - timesync
     - journaliste
+    - sync
 
 # do change
 RconPassword: koprobestv
 
 # configure this, please
-Hostname: Kopro V [YKKRISDEV]
+Hostname: Kopro V [TWIIKDEV]
 
 ScriptDebug: true
 
