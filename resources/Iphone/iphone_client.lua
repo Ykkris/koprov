@@ -1032,7 +1032,7 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en gén�
 	if id == 0 then  
 		PlayEmote("on sen fou","grave ",120, 0.9 ,1, 0)  -- arreter l'emote
 	elseif id == 1 then  
-		PlayEmote("random@arrests","kneeling_arrest_idle",32, 1 ,0 , 0) -- main en l'air en étant au sol | 0.2 en duration == TRES COURT
+		PlayEmote("random@arrests","kneeling_arrest_idle",32, 1 ,0 , 1) -- main en l'air en étant au sol | 0.2 en duration == TRES COURT
 	elseif id == 2 then    
 		PlayEmote("amb@code_human_police_crowd_control@idle_a", "idle_a", 32, 0.85 ,0 , 0) -- Blabla bizarre
 	elseif id == 3 then    
