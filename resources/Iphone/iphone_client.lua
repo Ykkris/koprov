@@ -862,6 +862,7 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 		table.remove(PhoneData.sms, 1)
 	else
 		-- ShowNotification("Vous venez de recevoir un message de : " ..sname)
+		TriggerEvent('InteractSound_CL:PlayOnOne', 'receive', 0.5)
 		TriggerEvent("pNotify:SendNotification", { text = "Nouveau message de : <b style='color:green'>"..sname.."</b>.", type = "sms", timeout = 5000, layout = "bottomCenter",})
 	end
 	table.insert(vehshop.menu["Boite de reception"].buttons, {
@@ -1393,9 +1394,11 @@ function Menotter()
 	TriggerServerEvent("Iphone:cuff")
 end
 
+RegisterNetEvent('InteractSound_SV:PlayWithinDistance')
 function Fouiller()
     local target, distance = GetClosestPlayer()
     if target ~= nil and distance < 2 then
+    	TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 3, 'zip', 1)
 		TriggerServerEvent("police:havedirty",  GetPlayerServerId(target))
 		TriggerServerEvent("police:check")
 	end
