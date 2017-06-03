@@ -25,6 +25,8 @@ guiEnabled = false
 ActualJob = 0
 notificationInProgress = false
 taillemaxsms = 30
+limitator = false
+engine = true
 
 PhoneData = {
 	phone_number = 0,
@@ -58,6 +60,7 @@ local vehshop = {
 			name = "main",
 			buttons = { 
 				{name = "Telephone", description = ""},
+				{name = "Vehicule", description =""},
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
 				{name = "Services", description = ""},
@@ -152,6 +155,45 @@ local vehshop = {
 				{name = "Controler le vehicule", description = ""},
 				{name = "Faire rentrer dans le vehicule", description = ""},
 				{name = "Faire sortir du vehicule", description = ""}, --------------- Repertoire Boite de reception
+			}
+		},
+		["Vehicule"] = {
+			title = "Vehicule",
+			name = "Vehicule",
+			buttons = {
+			{name = "Gérer les portes", description = ""},
+			{name = "Limitateur de vitesse", description = ""},
+			{name = "Eteindre le moteur", description = ""}
+			}
+		},
+		["portes"] = {  -- avant vehicles
+			title = "Gestion des portes", 
+			name = "Gérer les portes",
+			buttons = { 
+				{name = "Coffre", description = ''},
+				{name = "Capot", description = ''},
+				{name = "Avant gauche", description = ''},
+				{name = "Avant droite", description = ''},
+				{name = "Arrière gauche", description = ''},
+				{name = "Arrière droite", description = ''}
+			}
+		},
+		["limitateur"] = {
+			title = "Limitateur", 
+			name = "Limitateur de vitesse",
+			buttons = { 
+				{name = "10", description = ''},
+				{name = "30", description = ''},
+				{name = "50", description = ''},
+				{name = "90", description = ''},
+				{name = "110", description = ''},
+				{name = "Enlever la limite", description = ''}
+			}
+		},
+		["moteur"] = {
+			title = "Moteur", 
+			name = "Eteindre le moteur",
+			buttons = { 
 			}
 		},
 		["Repertoire"] = {
@@ -384,9 +426,20 @@ Citizen.CreateThread(function()
 			if vehshop.opened then
 				CloseCreator()
 			else
+				local player = GetPlayerPed(-1)	
+				playerVeh = 0
+				playerVeh = GetVehiclePedIsIn(player, false)
 				OpenCreator()
 			end
 		end ----------------------------------------------------------------------------------------------------
+
+		if (IsControlJustPressed(1 , 71)) then      		------ On enleve le limitateur
+			if ((GetVehiclePedIsIn(GetPlayerPed(-1), false)) ~= 0 ) then
+					SetVehicleEngineOn(playerVeh, true, true)
+					SetVehicleUndriveable(playerVeh, false)
+					engine = true
+			end
+		end
 
 		if vehshop.opened then
 			local ped = LocalPed()
@@ -416,6 +469,11 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
+		end
+
+		if vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "portes" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "limitateur" or vehshop.opened and not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) and vehshop.currentmenu == "moteur" then -- enlever le menu quand le joueur n'est pas dans un vehicle
+			TriggerEvent("pNotify:SendNotification", { text = "Tu n'es pas dans un vehicule", type = "warning", timeout = 500, layout = "centerLeft",})
+				vehshop.currentmenu = "Vehicule"
 		end
 
 		if vehshop.opened then
@@ -466,6 +524,8 @@ function ButtonSelected(button)
 	if this == "main" then
 		if btn == "Telephone" then
 			OpenMenu('Telephone')
+		elseif btn == "Vehicule" then
+			OpenMenu("Vehicule")
 		elseif btn == "Emotes" then
 			OpenMenu('Emotes')
 		elseif btn == "Carte d'identite" then
@@ -616,6 +676,86 @@ function ButtonSelected(button)
 			vehshop.currentmenu = "Contact"
 		end
 
+
+	elseif   btn == "Coffre" then dtd(btn)
+
+	elseif  btn == "Capot" then dtd(btn)
+
+	elseif  btn == "Avant gauche" then dtd(btn)
+
+	elseif  btn == "Avant droite" then dtd(btn)
+
+	elseif  btn == "Arrière gauche" then dtd(btn)
+
+	elseif  btn == "Arrière droite" then dtd(btn)
+---
+
+	elseif btn == "10"  then OpenLimitator(tonumber(btn))
+
+	elseif btn == "30"  then OpenLimitator(tonumber(btn))
+
+	elseif btn == "50"  then OpenLimitator(tonumber(btn))
+
+	elseif btn == "90"  then OpenLimitator(tonumber(btn))
+
+	elseif btn == "110"  then OpenLimitator(tonumber(btn))
+
+	elseif btn == "Enlever la limite"  then OpenLimitator(500) -- trop hacky
+---
+
+
+	elseif btn == "Eteindre le moteur" then ToggleEngineOff()
+
+
+	
+	
+	
+	
+	
+	
+	
+	---------------------------------------------------------------------------
+	elseif this == "Vehicule" then
+		if btn == "Gérer les portes" then
+			OpenMenu('portes')
+		elseif btn == "Limitateur de vitesse" then
+			OpenMenu('limitateur')
+		elseif btn == "Eteindre le moteur" then
+			OpenMenu("moteur")
+		end
+	elseif this == "Gérer les portes" and playerVeh ~= 0 then
+		if btn == "Coffre" then
+			OpenCloseDoor('Coffre')
+		elseif btn == "Capot" then
+			OpenCloseDoor('Capot')
+		elseif btn == "Avant gauche" then
+			OpenCloseDoor('Avant gauche')
+		elseif btn == "Avant Droite" then
+			OpenCloseDoor('Avant Droite')
+		elseif btn == "Arrière gauche" then
+			OpenCloseDoor("Arrière gauche")
+		elseif btn == "Arrière droite" then
+			OpenCloseDoor('Arrière droite')
+		end
+	elseif this == "Limitateur de vitesse" and playerVeh ~= 0 then
+		if btn == "10" then
+			OpenLimitator('10')
+		elseif btn == "30" then
+			OpenLimitator('30')
+		elseif btn == "50" then
+			OpenLimitator('50')
+		elseif btn == "90" then
+			OpenLimitator('90')
+		elseif btn == "110" then
+			OpenLimitator("110")
+		elseif btn == "Enlever la limite" then
+			StopLimitator()
+		end
+	elseif this == "Eteindre le moteur" then
+			CloseCreator()
+			OpenCreator()
+
+
 	elseif this == "Contact" then
 		if btn == "Envoyer un Sms" then
 			local editing = true
@@ -722,6 +862,7 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 		table.remove(PhoneData.sms, 1)
 	else
 		-- ShowNotification("Vous venez de recevoir un message de : " ..sname)
+		TriggerEvent('InteractSound_CL:PlayOnOne', 'receive', 0.5)
 		TriggerEvent("pNotify:SendNotification", { text = "Nouveau message de : <b style='color:green'>"..sname.."</b>.", type = "sms", timeout = 5000, layout = "bottomCenter",})
 	end
 	table.insert(vehshop.menu["Boite de reception"].buttons, {
@@ -777,6 +918,8 @@ function OpenMenu(menu)
 		vehshop.lastmenu = "main"
 	elseif menu == "Donner argent" then
 		vehshop.lastmenu = "main"
+	elseif menu == "Vehicule" then
+		vehshop.lastmenu = "main"
 	end
 
 	vehshop.menu.from = 1
@@ -792,10 +935,12 @@ function Back()
 	backlock = true
 	if vehshop.currentmenu == "main" then
 		CloseCreator()
-	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" or vehshop.currentmenu == "Donner argent" then
+	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" or vehshop.currentmenu == "Donner argent" or vehshop.currentmenu == "Vehicule"  then
 		vehshop.currentmenu = "main"
 	elseif vehshop.currentmenu == "Repertoire" then
 		vehshop.currentmenu = "Telephone"
+	elseif vehshop.currentmenu == "portes" or vehshop.currentmenu == "limitateur" then
+		vehshop.currentmenu = "Vehicule"
 	else
 		--OpenMenu(vehshop.lastmenu)
 		vehshop.currentmenu = vehshop.lastmenu
@@ -813,12 +958,81 @@ function ShowNotification(message)
 	DrawNotification(false, false)
 end
 
+function dtd(dumbledor)
+	if dumbledor == "Coffre" then  OpenCloseDoor(5)
+		elseif dumbledor == "Capot" then  OpenCloseDoor(4)
+		elseif dumbledor == "Avant gauche" then  OpenCloseDoor(0)
+		elseif dumbledor == "Avant droite" then  OpenCloseDoor(1)
+		elseif dumbledor == "Arrière gauche" then OpenCloseDoor(2)
+		elseif dumbledor == "Arrière droite" then OpenCloseDoor(3)
+	
+	end
+end
+
+function OpenCloseDoor(dumbledoor)
+
+	
+
+	local isdoordamaged = IsVehicleDoorDamaged(playerVeh, dumbledoor)
+	
+	if isdoordamaged then TriggerEvent("pNotify:SendNotification", { text = "La porte est <b style='color:red'>cassée</b>", type = "warning", timeout = 1000, layout = "centerLeft",}) --ShowNotification("La porte est cassé.") 
+	end
+	
+	local angle = GetVehicleDoorAngleRatio(playerVeh, dumbledoor)
+	
+	if angle == 0 then
+		--ShowNotification("La porte est ouverte.")
+		TriggerEvent("pNotify:SendNotification", { text = "La porte est <b style='color:green'>ouverte</b>", type = "warning", timeout = 500, layout = "centerLeft",})
+		SetVehicleDoorOpen(playerVeh, dumbledoor, false, false)
+	else
+		--ShowNotification("La porte est fermé.")
+		TriggerEvent("pNotify:SendNotification", { text = "La portes est <b style='color:red'>fermée</b>", type = "warning", timeout = 500, layout = "centerLeft",})
+		SetVehicleDoorShut(playerVeh, dumbledoor, false)
+	
+	--GET_VEHICLE_DOOR_ANGLE_RATIO
+	--SET_VEHICLE_DOOR_OPEN	
+	end
+end
+
+function ToggleEngineOff()
+	if playerVeh ~= 0 then
+		if engine then
+			SetVehicleEngineOn(playerVeh, false, true)
+			SetVehicleUndriveable(playerVeh, engine)
+		end
+		engine = false
+		CloseCreator()
+		OpenCreator()
+	else
+		TriggerEvent("pNotify:SendNotification", { text = "Tu n'es pas dans un vehicule", type = "warning", timeout = 500, layout = "centerLeft",})
+		vehshop.currentmenu = "Vehicule"
+	end
+end
+
+function OpenLimitator(acombienjetelimitemonbro)
+	okjetelimiteaca = tonumber(acombienjetelimitemonbro) / 3.6
+	SetEntityMaxSpeed(playerVeh, toFloat(okjetelimiteaca))
+	limitator = true
+	OpenCreator()	  
+end
+
+function StopLimitator()
+	local test = GetVehicleClassMaxAcceleration(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+	SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), toFloat(test))
+	--ShowNotification("Limitateur enlevé")
+	TriggerEvent("pNotify:SendNotification", { text = "Limitateur enlevé", type = "warning", timeout = 10000, layout = "centerLeft",})
+end
+
+function toFloat(number)
+	return number+0.0
+end
+
 function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en général d'après mes test LIS AUSSI LE PLAYEMOTE
 	
 	if id == 0 then  
 		PlayEmote("on sen fou","grave ",120, 0.9 ,1, 0)  -- arreter l'emote
 	elseif id == 1 then  
-		PlayEmote("random@arrests","kneeling_arrest_idle",32, 1 ,0 , 0) -- main en l'air en étant au sol | 0.2 en duration == TRES COURT
+		PlayEmote("random@arrests","kneeling_arrest_idle",32, 1 ,0 , 1) -- main en l'air en étant au sol | 0.2 en duration == TRES COURT
 	elseif id == 2 then    
 		PlayEmote("amb@code_human_police_crowd_control@idle_a", "idle_a", 32, 0.85 ,0 , 0) -- Blabla bizarre
 	elseif id == 3 then    
@@ -1180,9 +1394,11 @@ function Menotter()
 	TriggerServerEvent("Iphone:cuff")
 end
 
+RegisterNetEvent('InteractSound_SV:PlayWithinDistance')
 function Fouiller()
     local target, distance = GetClosestPlayer()
     if target ~= nil and distance < 2 then
+    	TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 3, 'zip', 1)
 		TriggerServerEvent("police:havedirty",  GetPlayerServerId(target))
 		TriggerServerEvent("police:check")
 	end

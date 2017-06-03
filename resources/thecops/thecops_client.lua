@@ -8,6 +8,7 @@ local isAlreadyDead = false
 local allServiceCops = {}
 local blipsCops = {}
 
+RegisterNetEvent('InteractSound_SV:PlayWithinDistance')
 -- Location to enable an officer service
 local takingService = {
    {x=457.956909179688, y=-992.72314453125, z=30.6895866394043}
@@ -62,7 +63,7 @@ AddEventHandler('police:checkInventory', function()
 		if(distance ~= -1 and distance < 1) then
 			TriggerServerEvent("police:targetCheckInventory", GetPlayerServerId(t))
 		else
-			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you !")
+			TriggerEvent("pNotify:SendNotification", { text = "Personne proche de vous!", type = "warning", timeout = 1000, layout = "centerLeft", })
 		end
 	else
 		TriggerEvent("pNotify:SendNotification", {
@@ -79,12 +80,7 @@ AddEventHandler('police:fines', function(t, amount)
 	if(isInService) then
 		TriggerServerEvent("police:finesGranted", t, amount)
 	else
-		TriggerEvent("pNotify:SendNotification", {
-			text = "Merci de prendre votre service !",
-			type = "warning",
-			timeout = 2500,
-			layout = "centerLeft",
-			})
+		TriggerEvent("pNotify:SendNotification", { text = "Merci de prendre votre service !", type = "warning", timeout = 1000, layout = "centerLeft", })
 	end
 end)
 
@@ -95,7 +91,7 @@ AddEventHandler('police:cuff', function(t)
 		if(distance ~= -1 and distance < 1) then
 			TriggerServerEvent("police:cuffGranted", GetPlayerServerId(t))
 		else
-			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you (maybe get closer) !")
+			TriggerEvent("pNotify:SendNotification", { text = "Personne proche de vous!", type = "warning", timeout = 1000, layout = "centerLeft", })
 		end
 	else
 		TriggerEvent("pNotify:SendNotification", {
@@ -112,9 +108,11 @@ AddEventHandler('police:getArrested', function()
 	if(isCop == false) then
 		handCuffed = not handCuffed
 		if(handCuffed) then
-			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "You are now cuff.")
+			TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 3, 'cuff', 0.5)
+			TriggerEvent("pNotify:SendNotification", { text = "Tu es menotté(e)", type = "warning", timeout = 1000, layout = "centerLeft", })
 		else
-			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "Freedom !")
+			TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 3, 'cuff', 0.5)
+			TriggerEvent("pNotify:SendNotification", { text = "Tu es démenotté(e)", type = "warning", timeout = 1000, layout = "centerLeft", })
 		end
 	end
 end)
@@ -139,7 +137,7 @@ AddEventHandler('police:forceEnter', function(id)
 			Citizen.Trace("Veh : " .. v)
 			TriggerServerEvent("police:forceEnterAsk", GetPlayerServerId(t), v)
 		else
-			TriggerEvent('es_freeroam:notify', source, "CHAR_STEVE", 1, "LSPD", false, "No player near you (maybe get closer) !")
+			TriggerEvent("pNotify:SendNotification", { text = "Personne proche de vous!", type = "warning", timeout = 1000, layout = "centerLeft", })
 		end
 	else
 		TriggerEvent("pNotify:SendNotification", {
