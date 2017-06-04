@@ -29,7 +29,7 @@ AutoStartResources:
     - NeverWanted
     - lastpostodb
     - handsup
-    # - whitelistdb
+    - whitelistdb
     - watermark
     - voip
     - tow
@@ -43,7 +43,6 @@ AutoStartResources:
     - recoltveh
     - taxi2
     - pecheurgarage
-    # - mazone
     - taxijob
     - Iphone
     - afkkick
@@ -58,6 +57,7 @@ AutoStartResources:
     - sync
     - journaliste
     - pQueue
+    - InteractSound
 
 # do change
 RconPassword: koprobestv
