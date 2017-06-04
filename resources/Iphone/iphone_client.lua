@@ -43,6 +43,7 @@ local vehshop = {
 	currentmenu = "main",
 	lastmenu = nil,
 	currentpos = nil,
+	previouslyselectedbutton = 0,
 	selectedbutton = 0,
 	marker = { r = 231, g = 76, b = 60, a = 255, type = 1 },
 	menu = {
@@ -490,6 +491,10 @@ Citizen.CreateThread(function()
 						vehshop.menu.from = vehshop.menu.from -1
 						vehshop.menu.to = vehshop.menu.to - 1
 					end
+				elseif vehshop.selectedbutton == 1 then
+					vehshop.selectedbutton = buttoncount
+					vehshop.menu.from = vehshop.selectedbutton - 10
+					vehshop.menu.to = vehshop.selectedbutton
 				end
 			end
 			if IsControlJustPressed(1,173)then
@@ -499,6 +504,10 @@ Citizen.CreateThread(function()
 						vehshop.menu.to = vehshop.menu.to + 1
 						vehshop.menu.from = vehshop.menu.from + 1
 					end
+				elseif vehshop.selectedbutton == buttoncount then
+					vehshop.selectedbutton = 1
+					vehshop.menu.from = 1
+					vehshop.menu.to = 10
 				end	
 			end
 		end
@@ -925,6 +934,7 @@ function OpenMenu(menu)
 
 	vehshop.menu.from = 1
 	vehshop.menu.to = 10
+	vehshop.previouslyselectedbutton = vehshop.selectedbutton
 	vehshop.selectedbutton = 0
 	vehshop.currentmenu = menu	
 end
@@ -938,6 +948,9 @@ function Back()
 		CloseCreator()
 	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" or vehshop.currentmenu == "Donner argent" or vehshop.currentmenu == "Vehicule"  then
 		vehshop.currentmenu = "main"
+		vehshop.selectedbutton = vehshop.previouslyselectedbutton
+		vehshop.menu.from = 1
+		vehshop.menu.to = 10
 	elseif vehshop.currentmenu == "Repertoire" then
 		vehshop.currentmenu = "Telephone"
 	elseif vehshop.currentmenu == "portes" or vehshop.currentmenu == "limitateur" then
