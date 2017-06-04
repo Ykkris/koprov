@@ -323,6 +323,7 @@ end
 -- Removes job when going out of service
 function GetService()
 	local playerPed = GetPlayerPed(-1)
+	local model = GetEntityModel(GetPlayerPed(-1))
 
 	-- if jobId ~= 3 then
 	-- 	SendNotification(txt[lang]['notDoc'])
@@ -343,12 +344,25 @@ function GetService()
 	end
 
 	isInService = not isInService
+	Citizen.Trace(model)
 
-	SetPedComponentVariation(playerPed, 11, 13, 3, 2)
-	SetPedComponentVariation(playerPed, 8, 15, 0, 2)
-	SetPedComponentVariation(playerPed, 4, 9, 3, 2)
-	SetPedComponentVariation(playerPed, 3, 92, 0, 2)
-	SetPedComponentVariation(playerPed, 6, 25, 0, 2)
+	if model == 0x705E61F2 then
+
+		SetPedComponentVariation(playerPed, 11, 13, 3, 2) -- chemise
+		SetPedComponentVariation(playerPed, 8, 15, 0, 2)
+		SetPedComponentVariation(playerPed, 4, 9, 3, 2)
+		SetPedComponentVariation(playerPed, 3, 92, 0, 2) -- gants
+		SetPedComponentVariation(playerPed, 6, 25, 0, 2) -- shoes
+
+	else
+
+		SetPedComponentVariation(playerPed, 3, 85, 0, 2)
+		SetPedComponentVariation(playerPed, 4, 3, 2, 2)
+		SetPedComponentVariation(playerPed, 11, 27, 0, 2)
+		SetPedComponentVariation(playerPed, 6, 24, 0, 2)
+		SetPedComponentVariation(playerPed, 5, 85, 0, 2)
+	end
+
 end
 
 --[[
