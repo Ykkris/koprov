@@ -859,13 +859,14 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 	sname = ssms.first_name .. " " .. ssms.last_name
 	if #PhoneData.sms >= taillemaxsms then
 		ShowNotification("Vous venez de recevoir un sms mais la taille est dépassé. Veuillez faire le tri")
-		table.remove(PhoneData.sms, 1)
+		table.remove(PhoneData.sms, #PhoneData.sms)
 	else
 		-- ShowNotification("Vous venez de recevoir un message de : " ..sname)
 		TriggerEvent('InteractSound_CL:PlayOnOne', 'receive', 0.3)
 		TriggerEvent("pNotify:SendNotification", { text = "Nouveau message de : <b style='color:green'>"..sname.."</b>.", type = "sms", timeout = 5000, layout = "bottomCenter",})
 	end
-	table.insert(vehshop.menu["Boite de reception"].buttons, {
+
+	table.insert(vehshop.menu["Boite de reception"].buttons, 1, {
 						name = snameplusdate,
 						description = ssms.text
 					})
@@ -879,7 +880,7 @@ AddEventHandler("Iphone:receivesms", function(ssms)
 		mois = ssms.mois
 	}
 
-	table.insert(PhoneData.sms, receivesms)
+	table.insert(PhoneData.sms, 1, receivesms)
 
 end)
 
