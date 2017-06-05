@@ -774,6 +774,7 @@ function ButtonSelected(button)
 				if UpdateOnscreenKeyboard() == 2 then 
 					editing = false
 					ShowNotification("Sms annulé")
+					return
 				end
 				if UpdateOnscreenKeyboard() == 1 then
 					editing = false
