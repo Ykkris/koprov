@@ -177,23 +177,16 @@ AddEventHandler('es_em:sv_setService',
 )
 
 RegisterServerEvent('es_em:sv_removeMoney')
-AddEventHandler('es_em:sv_removeMoney',
-  function()
-    TriggerEvent("es:getPlayerFromId", source,
-      function(user)
-        if(user)then
-          if user.money > 0 then
-            -- TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player lost money, dirty_money, items : "..user.identifier)
-            user:setMoney(0)
-            user:setDirty_Money(0)
-          	-- This part requires the mod vdk_inventory
-          	TriggerEvent("item:resetoncoma", source)
-        end
-      end
-     end
-    )
-  end
-)
+AddEventHandler('es_em:sv_removeMoney', function()
+  TriggerEvent("es:getPlayerFromId", source, function(user)
+    -- TriggerEvent("log:addLogServer","Emergency" ,"INFO" ,"Player lost money, dirty_money, items : "..user.identifier)
+    user:setMoney(0)
+    user:setDirty_Money(0)
+    local executed_query = MySQL:executeQuery("UPDATE users SET money = 0, dirty_money = 0 WHERE users.identifier = '@identifier'", {['@identifier'] = user.identifier})
+    -- This part requires the mod vdk_inventory
+    TriggerEvent("item:resetoncoma", source)
+  end)
+end)
 
 RegisterServerEvent('es_em:sv_sendMessageToPlayerInComa')
 AddEventHandler('es_em:sv_sendMessageToPlayerInComa',
