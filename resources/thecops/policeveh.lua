@@ -316,7 +316,7 @@ function CloseVeh() -- Close Creator
 			SetVehicleMod(policevehicle, 11, 2)
 			SetVehicleMod(policevehicle, 12, 2)
 			SetVehicleMod(policevehicle, 13, 2)
-			SetVehicleEnginePowerMultiplier(policevehicle, 35.0)
+			SetVehicleEnginePowerMultiplier(policevehicle, 25.0)
 			
 			SetVehicleOnGroundProperly(policevehicle)
 			SetVehicleHasBeenOwnedByPlayer(policevehicle,true)
