@@ -105,31 +105,31 @@ Citizen.CreateThread(
 		end
 end)
 
-Citizen.CreateThread(
-	function()
-		local x = 406.871
-		local y = -1427.79
-		local z = 29.4387
+-- Citizen.CreateThread(
+-- 	function()
+-- 		local x = 406.871
+-- 		local y = -1427.79
+-- 		local z = 29.4387
 
-		while true do
-			Citizen.Wait(1)
+-- 		while true do
+-- 			Citizen.Wait(1)
 
-			local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
+-- 			local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
 
-			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) and isEMS then
-				-- Service car
-				DrawMarker(1, x, y, z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 255, 165, 0,165, 0, 0, 0,0)
+-- 			if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 100.0) and isEMS then
+-- 				-- Service car
+-- 				DrawMarker(1, x, y, z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 1.5001, 255, 165, 0,165, 0, 0, 0,0)
 
-				if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 2.0) then
-					DisplayHelpText(txt[lang]['getAmbulance'])
+-- 				if (Vdist(playerPos.x, playerPos.y, playerPos.z, x, y, z) < 2.0) then
+-- 					DisplayHelpText(txt[lang]['getAmbulance'])
 
-					if (IsControlJustReleased(1, 51)) then
-						SpawnAmbulance()
-					end
-				end
-			end
-		end
-end)
+-- 					if (IsControlJustReleased(1, 51)) then
+-- 						SpawnAmbulance()
+-- 					end
+-- 				end
+-- 			end
+-- 		end
+-- end)
 
 --[[
 ################################
@@ -262,34 +262,34 @@ AddEventHandler('es_em:cl_setJobId',
 ################################
 --]]
 
-function SpawnAmbulance()
-	Citizen.Wait(0)
-	local myPed = GetPlayerPed(-1)
-	local player = PlayerId()
-	local vehicle = GetHashKey('ambulance')
+-- function SpawnAmbulance()
+-- 	Citizen.Wait(0)
+-- 	local myPed = GetPlayerPed(-1)
+-- 	local player = PlayerId()
+-- 	local vehicle = GetHashKey('ambulance')
 
-	RequestModel(vehicle)
+-- 	RequestModel(vehicle)
 
-	while not HasModelLoaded(vehicle) do
-		Wait(1)
-	end
+-- 	while not HasModelLoaded(vehicle) do
+-- 		Wait(1)
+-- 	end
 
-	local plate = math.random(100, 900)
-	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
-	local spawned_car = CreateVehicle(vehicle, coords, 406.871, -1427.79, 29.4387, true, false)
+-- 	local plate = math.random(100, 900)
+-- 	local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+-- 	local spawned_car = CreateVehicle(vehicle, coords, 406.871, -1427.79, 29.4387, true, false)
 
-	SetVehicleMod(spawned_car, 11, 2)
-	SetVehicleMod(spawned_car, 12, 2)
-	SetVehicleMod(spawned_car, 13, 2)
-	SetVehicleEnginePowerMultiplier(spawned_car, 10.0)
+-- 	SetVehicleMod(spawned_car, 11, 2)
+-- 	SetVehicleMod(spawned_car, 12, 2)
+-- 	SetVehicleMod(spawned_car, 13, 2)
+-- 	SetVehicleEnginePowerMultiplier(spawned_car, 10.0)
 
-	SetVehicleOnGroundProperly(spawned_car)
-	SetVehicleNumberPlateText(spawned_car, "MEDIC")
-	SetPedIntoVehicle(myPed, spawned_car, - 1)
-	SetModelAsNoLongerNeeded(vehicle)
-	SetEntityAsMissionEntity(spawned_car,true,true)
-	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
-end
+-- 	SetVehicleOnGroundProperly(spawned_car)
+-- 	SetVehicleNumberPlateText(spawned_car, "MEDIC")
+-- 	SetPedIntoVehicle(myPed, spawned_car, - 1)
+-- 	SetModelAsNoLongerNeeded(vehicle)
+-- 	SetEntityAsMissionEntity(spawned_car,true,true)
+-- 	--Citizen.InvokeNative(0xB736A491E64A32CF, Citizen.PointerValueIntInitialized(spawned_car)) WHY WOULD YOU CALL THAS AFTER SPAWNING IT ??
+-- end
 
 function StartEmergency(x, y, z, sourcePlayerInComa)
 	BLIP_EMERGENCY = AddBlipForCoord(x, y, z)
