@@ -56,13 +56,17 @@ AddEventHandler("item:sell", function(id, qty, price)
 end)
 
 AddEventHandler("player:giveItem", function(item, name, qty, target)
-    local player = getPlayerID(source)
-    local total = MySQL.Sync.fetchScalar("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = '@username'", { ['@username'] = player })
-    if (total + qty <= 64) then
-        TriggerClientEvent("player:looseItem", source, item, qty)
-        TriggerClientEvent("player:receiveItem", target, item, qty)
-        TriggerClientEvent("es_freeroam:notify", target, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Vous venez de recevoir " .. qty .. " " .. name)
-    end
+    TriggerEvent("es:getPlayerFromId", target, function(user)
+        
+        local identifier = user.identifier
+        local total = MySQL.Sync.fetchScalar("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = @username", { ['@username'] = identifier })
+
+        if (total + qty <= 64) then
+            TriggerClientEvent("player:looseItem", source, item, qty)
+            TriggerClientEvent("player:receiveItem", target, item, qty)
+            TriggerClientEvent("es_freeroam:notify", target, "CHAR_MP_STRIPCLUB_PR", 1, "Mairie", false, "Vous venez de recevoir " .. qty .. " " .. name)
+        end
+    end)
 end)
 
 AddEventHandler("player:swapMoney", function(amount, target)
