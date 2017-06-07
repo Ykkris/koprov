@@ -115,7 +115,8 @@ local vehshop = {
 				{name = "A terre", description =''},
 				{name = "Wip", description =''},
 				{name = "Gratter couilles", description =''},
-				{name = "Arreter", description =''}
+				{name = "Arreter", description =''},
+				{name = "Jumelle", description =''}
 				--{name = "110", description = ''},  AJOUTER UNE LIGNE POUR CHAQUE EMOTE PLUS VOIR LIGNE ~340 
 			}
 		},
@@ -617,6 +618,8 @@ function ButtonSelected(button)
 			Emote(32)
 		elseif btn == "Arreter" then
 			Emote(33)
+		elseif btn == "Jumelle" then
+			Emote(34)
 		end
 
 	elseif this == "Telephone" then
@@ -1131,6 +1134,8 @@ function Emote(id) -- 0 - 7 -- IL FAUT JOUER AVEC LES FLAGS 0,32 et 120 en g√©n√
 		animsAction({ lib = "mp_player_int_uppergrab_crotch", anim = "mp_player_int_grab_crotch" })
 	elseif id == 33 then
 		animsAction({ lib = "mp_arresting", anim = "a_arrest_on_floor"})
+	elseif id == 34 then
+		animsActionScenario({ anim = "WORLD_HUMAN_BINOCULARS"})
 	end
 end
 

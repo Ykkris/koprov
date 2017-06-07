@@ -74,14 +74,14 @@ local menupolice = {
 			title = txt[config.lang]["menu_fines_title"],
 			name = txt[config.lang]["menu_fines_title"],
 			buttons = {
-				{name = "$250", description = ''},
+				{name = "$200", description = ''},
 				{name = "$500", description = ''},
 				{name = "$1000", description = ''},
 				{name = "$1500", description = ''},
 				{name = "$2000", description = ''},
 				{name = "$4000", description = ''},
+				{name = "$5000", description = ''},
 				{name = "$6000", description = ''},
-				{name = "$8000", description = ''},
 				{name = "$10000", description = ''},
 				{name = txt[config.lang]["menu_custom_amount_fine_title"], description = ''},
 			}
@@ -145,8 +145,8 @@ function ButtonSelectedPolice(button)
 			CheckPlate()
 		end
 	elseif this == txt[config.lang]["menu_fines_title"] then
-		if btn == "$250"then
-			Fines(250)
+		if btn == "$200"then
+			Fines(200)
 		elseif btn == "$500" then
 			Fines(500)
 		elseif btn == "$1000" then
@@ -157,10 +157,10 @@ function ButtonSelectedPolice(button)
 			Fines(2000)
 		elseif btn == "$4000" then
 			Fines(4000)
+		elseif btn == "$5000" then
+			Fines(5000)
 		elseif btn == "$6000" then
 			Fines(6000)
-		elseif btn == "$8000" then
-			Fines(8000)
 		elseif btn == "$10000" then
 			Fines(10000)
 		elseif btn == txt[config.lang]["menu_custom_amount_fine_title"] then

@@ -159,10 +159,10 @@ AddEventHandler('police:checkingPlate', function(plate)
 			TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, txt[config.lang]["vehicle_checking_plate_part_1"]..plate..txt[config.lang]["vehicle_checking_plate_not_registered"])
 		end
 	elseif(db.driver == "mysql-async") then
-		MySQL.Async.fetchAll("SELECT Nom FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '"..plate.."'", { ['@plate'] = plate }, function (result)
+		MySQL.Async.fetchAll("SELECT last_name FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '"..plate.."'", { ['@plate'] = plate }, function (result)
 			if(result[1]) then
 				for _, v in ipairs(result) do
-					TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, txt[config.lang]["vehicle_checking_plate_part_1"]..plate..txt[config.lang]["vehicle_checking_plate_part_2"] .. v.Nom..txt[config.lang]["vehicle_checking_plate_part_3"])
+					TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, txt[config.lang]["vehicle_checking_plate_part_1"]..plate..txt[config.lang]["vehicle_checking_plate_part_2"] .. v.last_name..txt[config.lang]["vehicle_checking_plate_part_3"])
 				end
 			else
 				TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, txt[config.lang]["vehicle_checking_plate_part_1"]..plate..txt[config.lang]["vehicle_checking_plate_not_registered"])

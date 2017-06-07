@@ -226,7 +226,11 @@ end
 ------------------------- EXPORTS METHODS -------------------------
 
 function getQuantity(itemId)
-    return ITEMS[tonumber(itemId)].quantity
+	if(not ITEMS[tonumber(itemId)]) then
+		return 0
+	else
+    	return ITEMS[tonumber(itemId)].quantity
+    end
 end
 
 function getPods()
