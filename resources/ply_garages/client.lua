@@ -29,7 +29,7 @@ local garages = {
   	{name="Garage", colour=3, id=50, x=1552.983, y=-2121.615, z=76.237},
   	{name="Garage", colour=3, id=50, x=2674.913, y=1704.303, z=23.488},
   	{name="Garage", colour=3, id=50, x=2904.476, y=4396.575, z=49.263},
-  	{name="Garage", colour=3, id=50, x=375.589, y=-1443.655, z=29.431},
+  	{name="Garage", colour=3, id=50, x=375.589, y=-1443.655, z=28.431},
   	{name="Fourrière", colour=1, id=68, x=405.175, y=-1642.475, z=28.295},
 }
 

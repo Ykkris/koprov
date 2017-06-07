@@ -31,6 +31,15 @@ local medicveh = {
 local fakecar = {model = '', car = nil}
 local boughtcar = false
 local vehicle_price = 0
+local isMedic = false
+
+RegisterNetEvent('service:receiveJob')
+AddEventHandler('service:receiveJob', function(result)
+	job_id = result
+	if job_id == 3 then
+		isMedic = true
+	end
+end)
 
 local stationGarage = {
 	{x=406.871, y=-1427.79, z=29.4387}
@@ -62,11 +71,15 @@ end)
 -------------------PLAYER HAVE VEH---------------
 -------------------------------------------------
 function DoesPlayerHaveVehicle(model,button,y,selected)
-		local t = false
-		--TODO:check if player own car
-		if t then
-			drawMenuRight("OWNED",medicveh.menu.x,y,selected)
-		end
+	fakecar = {model = '', car = nil}
+	taxiveh.lastmenu = medicveh.currentmenu
+	if menu == "main" then
+		medicveh.lastmenu = "main"
+	end
+	medicveh.menu.from = 1
+	medicveh.menu.to = 10
+	medicveh.selectedbutton = 0
+	medicveh.currentmenu = menu 
 end
 -------------------------------------------------
 ----------------CONFIG OPEN MENU-----------------

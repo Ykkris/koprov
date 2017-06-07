@@ -34,6 +34,7 @@ AutoStartResources:
     - voip
     - tow
     - towveh
+    - medicveh
     - ulock
     - imenu
     - SelVeh
@@ -53,17 +54,18 @@ AutoStartResources:
     - gb_foodshops
     - pNotify
     - foodhud
-    - iLog
+    # - iLog
     - sync
     - journaliste
     - pQueue
     - InteractSound
+    - mysql-async
 
 # do change
 RconPassword: koprobestv
 
 # configure this, please
-Hostname: Kopro V [YKKRIS MEDIC]
+Hostname: Kopro V [YKKRIS DEV]
 
 ScriptDebug: true
 
