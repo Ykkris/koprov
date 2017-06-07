@@ -217,6 +217,7 @@ local vehshop = {
 			buttons = {
 				{name = "Envoyer un Sms", description = ""}, --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
 				--{name = "Envoyer la position[WIP]", description = ""},
+				{name = "Modifier le Contact", description = ""},
 				{name = "Supprimer le Contact", description = ""}
 			}
 		},
@@ -800,8 +801,10 @@ function ButtonSelected(button)
 			vehshop.menu.to = 10
 			vehshop.selectedbutton = 0
 			vehshop.currentmenu = "Repertoire"
+		elseif btn == "Modifier le Contact" then
+			updateContact(buttonIndex)
 		elseif btn == "Supprimer le Contact" then
-			TriggerServerEvent("Iphone:removecontact", toNumber)
+			TriggerServerEvent("Iphone:removecontact", buttonIndex)
 			Citizen.Trace(buttonIndex)
 			table.remove(PhoneData.contacts, buttonIndex)
 			
@@ -1220,6 +1223,61 @@ function PlayEmote(dict, name, flags, duration ,stop, loop) -- duration entre 0 
     end
 end
 
+function updateContact(index)
+	local editing1 = true
+   	local editing2 = true
+   	local quit1 = false
+   	local quit2 = false
+
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", PhoneData.contacts[index].first_name.." "..PhoneData.contacts[index].last_name, "", "", "", 120)
+	while editing1 do
+		Wait(0)
+		if UpdateOnscreenKeyboard() == 2 then
+			editing1 = false
+			quit1 = true
+			ShowNotification("Annulé!")
+		end
+		if UpdateOnscreenKeyboard() == 1 then
+			editing1 = false
+			resultat1 = GetOnscreenKeyboardResult()
+			ShowNotification("Entre maintenant le numero")
+		end
+	end
+
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", PhoneData.contacts[index].number, "", "", "", 120)
+	while editing2 do
+		Wait(0)
+		if UpdateOnscreenKeyboard() == 2 then
+			editing2 = false
+			quit2 = true
+			ShowNotification("Annulé!")
+		end
+		if UpdateOnscreenKeyboard() == 1 then
+			editing2 = false
+			resultat2 = GetOnscreenKeyboardResult()
+			ShowNotification("Contact modifié")
+		end
+	end
+
+	if not(quit1) and not(quit2) then
+		result = {}
+		for token in string.gmatch(resultat1, "[^%s]+") do
+  			table.insert(result, token)
+		end
+   			-----------------------
+   		PhoneData.contacts[index] = {
+   			first_name = tostring(result[1]),
+			last_name = tostring(result[2]),
+			number = tostring(resultat2)
+		}
+
+		loadContacts()
+
+   		TriggerServerEvent("Iphone:updatecontact", result[1], result[2], resultat2, index)
+
+   	end
+end
+
 function AddContact()
 	local editing1 = true
    	local editing2 = true
@@ -1252,7 +1310,7 @@ function AddContact()
 		if UpdateOnscreenKeyboard() == 1 then
 			editing2 = false
 			resultat2 = GetOnscreenKeyboardResult()
-			ShowNotification("Contact ajouté !")
+			ShowNotification("Contact ajouté")
 		end
 	end
 

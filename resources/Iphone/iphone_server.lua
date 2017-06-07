@@ -109,6 +109,26 @@ AddEventHandler('es:playerLoaded', function(source)
 		end)
 	end) 
 
+RegisterServerEvent("Iphone:updatecontact")
+AddEventHandler("Iphone:updatecontact",function(pfirst_name, plast_name, pnumber, index)
+	TriggerEvent("es:getPlayerFromId", source, function(user)
+		userContacts = user:getSessionVar("contacts")
+		userContacts[index] = {
+			first_name   = pfirst_name,
+			last_name = plast_name,
+			number = pnumber
+		}
+
+		user:setSessionVar("contacts", userContacts)
+
+		local encodedUserContacts = json.encode(userContacts)
+
+		MySQL:executeQuery("UPDATE users SET contacts = '@contacts' WHERE identifier = '@identifier' ",
+				{['@contacts'] = encodedUserContacts , ['@identifier'] = user.identifier})
+		end)
+
+end)
+
 RegisterServerEvent("Iphone:addcontact")
 AddEventHandler("Iphone:addcontact",function(pfirst_name, plast_name, pnumber)
 
@@ -143,20 +163,11 @@ AddEventHandler("Iphone:addcontact",function(pfirst_name, plast_name, pnumber)
 end)
 
 RegisterServerEvent("Iphone:removecontact")
-AddEventHandler("Iphone:removecontact", function(toNumber)
+AddEventHandler("Iphone:removecontact", function(index)
 	TriggerEvent("es:getPlayerFromId", source, function(user)
 		foundContacts = false
 		localContacts = user:getSessionVar("contacts")
-		for i=1, #localContacts, 1 do
-			if localContacts[i].number == toNumber then
-				table.remove(localContacts, i)
-				-- TriggerEvent("log:addLogServer","Iphone" ,"INFO" ,"Remove contact : ".. toNumber .. " For Player : " .. user.identifier)
-				foundContacts = true
-			end
-			if foundContacts then
-				break
-			end
-		end
+		table.remove(localContacts, index)
 		user:setSessionVar("contacts", localContacts)
 
 		local localEncodedContacts = json.encode(localContacts)
