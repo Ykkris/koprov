@@ -151,7 +151,7 @@ AddEventHandler('police:payFines', function(amount, sender)
 					break
 				end
 				
-				if IsControlPressed(1, 45) then
+				if IsControlPressed(1, 249) then
 					TriggerServerEvent('police:finesETA', sender, 3)
 					lockAskingFine = false
 					break
