@@ -202,7 +202,7 @@ local vehshop = {
 			title = "Repertoire", 
 			name = "Repertoire",
 			buttons = {
-				{name = "Ajouter un contact", description = "TestTest ça supporte combien de carracter exactemncarracter exactemncarracter exactemncarracter exactemncarracter exactemn"}
+				{name = "Ajouter un contact", description = ""}
 			}
 		},
 		["Boite de reception"] = {
@@ -216,8 +216,8 @@ local vehshop = {
 			name = "Contact",
 			buttons = {
 				{name = "Envoyer un Sms", description = ""}, --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
-				{name = "Envoyer la position[WIP]", description = ""},
-				-- waiting for izio :) {name = "Supprimer le Contact", description = ""}
+				--{name = "Envoyer la position[WIP]", description = ""},
+				{name = "Supprimer le Contact", description = ""}
 			}
 		},
 		["Fouille"] = {
@@ -681,6 +681,7 @@ function ButtonSelected(button)
 			AddContact()
 		else -- c'est que c'est forcément un contact de la table PhoneData.contacts
 			toNumber = button.description
+			buttonIndex = button.index
 			vehshop.lastmenu = "Repertoire"
 			vehshop.menu.from = 1
 			vehshop.menu.to = 10
@@ -801,11 +802,10 @@ function ButtonSelected(button)
 			vehshop.currentmenu = "Repertoire"
 		elseif btn == "Supprimer le Contact" then
 			TriggerServerEvent("Iphone:removecontact", toNumber)
-			for i=1 , #PhoneData.contacts, 1 do
-				if PhoneData.contacts[i].number == toNumber then
-					table.remove(PhoneData.contacts, i)
-				end
-			end
+			Citizen.Trace(buttonIndex)
+			table.remove(PhoneData.contacts, buttonIndex)
+			
+			loadContacts()
 			vehshop.menu.from = 1
 			vehshop.menu.to = 10
 			vehshop.selectedbutton = 0
@@ -1261,10 +1261,6 @@ function AddContact()
 		for token in string.gmatch(resultat1, "[^%s]+") do
   			table.insert(result, token)
 		end
-   		table.insert(vehshop.menu["Repertoire"].buttons, {
-   			name = tostring(result[1]).. " " .. tostring(result[2]),
-			description = tostring(resultat2)
-		})
    			-----------------------
    		table.insert(PhoneData.contacts, {
    			first_name = tostring(result[1]),
@@ -1272,7 +1268,7 @@ function AddContact()
 			number = tostring(resultat2)
 		})
 
-
+		loadContacts()
 --PhoneData = {
 	--phone_number = "numberHERE",
 	--contacts = {
@@ -1641,6 +1637,21 @@ function StartService(x, y, z, sourceplayersender, service_id)
 	end)
 end
 
+function loadContacts()
+	local buttons = {}
+	table.insert(buttons, {name = "Ajouter un contact", description = ""})
+	for i=1, #PhoneData.contacts do
+			table.insert(buttons,
+				{
+					name = PhoneData.contacts[i].first_name.. " " .. PhoneData.contacts[i].last_name,
+					description = PhoneData.contacts[i].number,
+					index = i
+				}
+			)
+	end
+	vehshop.menu["Repertoire"].buttons = buttons
+end
+
 function isNearArea(x,y,z) -- Je ne vais pas utiliser le z finalement, à voir
 	local coords_player = GetEntityCoords(GetPlayerPed(-1), true)
 	local x2 = coords_player.x
@@ -1670,13 +1681,7 @@ AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
 	PhoneData.phone_number = lphoneNumber
 
 	if contact ~= {} then
-		for i=1, #PhoneData.contacts do
-			table.insert(vehshop.menu["Repertoire"].buttons, {
-							name = PhoneData.contacts[i].first_name.. " " .. PhoneData.contacts[i].last_name,
-							description = PhoneData.contacts[i].number
-			})
-		end
-
+		loadContacts()
 	end
 
 	if sms ~= {} then
