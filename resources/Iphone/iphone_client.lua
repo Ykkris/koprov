@@ -145,20 +145,20 @@ local vehshop = {
 
 			}
 		},
-		["Police"] = {
-			title = "Police",
-			name = "Police",
-			buttons = {
-				{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identite, oblige a rentrer dans le vehicle
-				{name = "Fouiller", description = ""},
-				{name = "Saisir", description = ""},
-				{name = "Amende", description = ""},
-				{name = "Controler l'identite", description = ""},
-				{name = "Controler le vehicule", description = ""},
-				{name = "Faire rentrer dans le vehicule", description = ""},
-				{name = "Faire sortir du vehicule", description = ""}, --------------- Repertoire Boite de reception
-			}
-		},
+		-- ["Police"] = {
+		-- 	title = "Police",
+		-- 	name = "Police",
+		-- 	buttons = {
+		-- 		{name = "Menotter", description = ""}, --mennoter , fouiller, mettre une amende, controler l'identite, oblige a rentrer dans le vehicle
+		-- 		{name = "Fouiller", description = ""},
+		-- 		{name = "Saisir", description = ""},
+		-- 		{name = "Amende", description = ""},
+		-- 		{name = "Controler l'identite", description = ""},
+		-- 		{name = "Controler le vehicule", description = ""},
+		-- 		{name = "Faire rentrer dans le vehicule", description = ""},
+		-- 		{name = "Faire sortir du vehicule", description = ""}, --------------- Repertoire Boite de reception
+		-- 	}
+		-- },
 		["Vehicule"] = {
 			title = "Vehicule",
 			name = "Vehicule",
@@ -233,16 +233,16 @@ AddEventHandler("playerSpawned", function()
 	TriggerServerEvent("service:getJobId") -- similar use than above but more general
 end)
 
-RegisterNetEvent('police:receiveIsCop')
-AddEventHandler('police:receiveIsCop', function(result)
-	if(result == "inconnu") then
-		isCop = false
-	else
-		isCop = true
-		table.insert(vehshop.menu['main'].buttons, {name = "Police", description = ""})
-		rank = result
-	end
-end)
+-- RegisterNetEvent('police:receiveIsCop')
+-- AddEventHandler('police:receiveIsCop', function(result)
+-- 	if(result == "inconnu") then
+-- 		isCop = false
+-- 	else
+-- 		isCop = true
+-- 		table.insert(vehshop.menu['main'].buttons, {name = "Police", description = ""})
+-- 		rank = result
+-- 	end
+-- end)
 
 RegisterNetEvent('ems:receiveIsEMS')
 AddEventHandler('ems:receiveIsEMS', function(result)
@@ -255,16 +255,16 @@ AddEventHandler('ems:receiveIsEMS', function(result)
 	end
 end)
 
-RegisterNetEvent('police:showInventory')
-AddEventHandler('police:showInventory', function(items)
-    vehshop.menu['Fouille'].buttons = {}
-	for ind, value in pairs(items) do
-        if (value.quantity > 0) then
-            table.insert(vehshop.menu['Fouille'].buttons, {name = tostring(value.libelle) .. " : " .. tostring(value.quantity), description = ""})
-    	end
-    end
-    OpenMenu("Fouille")
-end)
+-- RegisterNetEvent('police:showInventory')
+-- AddEventHandler('police:showInventory', function(items)
+--     vehshop.menu['Fouille'].buttons = {}
+-- 	for ind, value in pairs(items) do
+--         if (value.quantity > 0) then
+--             table.insert(vehshop.menu['Fouille'].buttons, {name = tostring(value.libelle) .. " : " .. tostring(value.quantity), description = ""})
+--     	end
+--     end
+--     OpenMenu("Fouille")
+-- end)
 
 -- This is kinda useless because of the switch chomeur/job when player is serving or not
 RegisterNetEvent('service:receiveJob')
@@ -540,8 +540,8 @@ function ButtonSelected(button)
 			OpenMenu('Emotes')
 		elseif btn == "Carte d'identite" then
 			IdCard()
-		elseif btn == "Police" then
-			OpenMenu("Police")
+		-- elseif btn == "Police" then
+		-- 	OpenMenu("Police")
 		elseif btn == "Donner argent" then
 			OpenMenu("Donner argent")
 		elseif btn == "Soigner" then
@@ -646,24 +646,24 @@ function ButtonSelected(button)
 			--ShowNotification(text)
 			TriggerEvent("pNotify:SendNotification", { text = ""..text.."", type = "sms", timeout = 10000, layout = "bottomCenter",})
 
-	elseif this == "Police" then
-		if btn == "Menotter" then
-			Menotter()
-		elseif btn == "Fouiller" then
-			Fouiller()
-		elseif btn == "Saisir" then
-			Saisir()
-		elseif btn == "Amende" then
-			Amande()
-		elseif btn == "Controler l'identite" then
-			IdControl()
-		elseif btn == "Controler le vehicule" then
-			PlateControl()
-		elseif btn == "Faire rentrer dans le vehicule" then
-			EnterVehicle()
-		elseif btn == "Faire sortir du vehicule" then
-			SortirVehicle()
-		end
+	-- elseif this == "Police" then
+	-- 	if btn == "Menotter" then
+	-- 		Menotter()
+	-- 	elseif btn == "Fouiller" then
+	-- 		Fouiller()
+	-- 	elseif btn == "Saisir" then
+	-- 		Saisir()
+	-- 	elseif btn == "Amende" then
+	-- 		Amande()
+	-- 	elseif btn == "Controler l'identite" then
+	-- 		IdControl()
+	-- 	elseif btn == "Controler le vehicule" then
+	-- 		PlateControl()
+	-- 	elseif btn == "Faire rentrer dans le vehicule" then
+	-- 		EnterVehicle()
+	-- 	elseif btn == "Faire sortir du vehicule" then
+	-- 		SortirVehicle()
+	-- 	end
 
 	elseif this == "Services" then
 		if btn == "Police " then 
