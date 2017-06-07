@@ -128,6 +128,15 @@ AddEventHandler('police:takeService', function()
 	end
 end)
 
+RegisterServerEvent('police:enService')
+AddEventHandler('police:enService', function()
+	local servingCops = false
+	if next(inServiceCops) then
+		servingCops = true
+	end
+	TriggerClientEvent("services:cbcopconnected", source, servingCops)
+end)
+
 RegisterServerEvent('police:breakService')
 AddEventHandler('police:breakService', function()
 
