@@ -61,6 +61,7 @@ AutoStartResources:
     - InteractSound
     - mysql-async
     - Driver
+    - DriverMoto
 
 # do change
 RconPassword: koprobestv

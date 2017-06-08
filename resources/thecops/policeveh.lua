@@ -26,10 +26,10 @@ local policeveh = {
 				-- {name = "Voiture de police", costs = 0, description = {}, model = "police3"},
 				{name = "Cop Car", costs = 0, description = {}, model = "police4"},
 				{name = "Voiture BAC", costs = 0, description = {}, model = "fbi"},
-				{name = "Panto", costs = 0, description = {}, model = "policeold1"},
+				-- {name = "Old", costs = 0, description = {}, model = "policeold1"},
 				--{name = "Police Esperanto", costs = 0, description = {}, model = "policeold2"},
 				{name = "Police Transport Van", costs = 0, description = {}, model = "policet"},
-				--{name = "FBI", costs = 0, description = {}, model = "fbi"},
+				{name = "Panto", costs = 0, description = {}, model = "fbi2"},
 				--{name = "FBI2", costs = 0, description = {}, model = "fbi2"},
 				{name = "Moto de Police", costs = 0, description = {}, model = "policeb"},
 			

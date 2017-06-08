@@ -1,0 +1,1 @@
+client_script 'drivermoto_cl.lua' 

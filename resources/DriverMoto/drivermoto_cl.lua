@@ -8,7 +8,7 @@ local permis = {
 }
 
 local permis_locations = {
-{entering = {249.7434,-1512.085,29.34321}, inside = {38.34729,-969.293,29.09835}, outside = {249.7434,-1512.085,29.34321}},
+{entering = {246.49,-1508.75,29.1449}, inside = {38.34729,-969.293,29.09835}, outside = {246.49,-1508.75,29.1449}},
 }
 
 local permis_blips ={}
@@ -43,7 +43,7 @@ function ShowpermisBlips(bool)
 		for station,pos in pairs(permis_locations) do
 			local loc = pos
 			pos = pos.entering
-			local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
+			-- local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
 			SetBlipSprite(blip,430)
 			SetBlipColour(blip, 5)
 			BeginTextCommandSetBlipName("STRING")
@@ -59,7 +59,7 @@ function ShowpermisBlips(bool)
 				local inrange = false
 				for i,b in ipairs(permis_blips) do
 					if IsPlayerWantedLevelGreater(GetPlayerIndex(),0) == false and permis.opened == false and  GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed()),true) > 0 then
-						DrawMarker(20,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
+						DrawMarker(21,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,230,29,29,200,0,0,0,0)
 						currentlocation = b
 						if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed()),true) < 4 and IsPedInAnyVehicle(LocalPed(), true) == false then
 							ShowInfoPermis("Appuyez ~INPUT_CONTEXT~ pour passer votre ~b~permis de conduire.", 0)
@@ -115,7 +115,7 @@ function SpawnPermisCar()
 	Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
-	local vehicle = GetHashKey('blista')
+	local vehicle = GetHashKey('pcj')
 
     RequestModel(vehicle)
 
