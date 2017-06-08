@@ -75,10 +75,11 @@ AddEventHandler('es:playerLoaded', function(source)
 		local sms = {}
 
 		local executed_query3 = MySQL:executeQuery("SELECT sms FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
+		print('result')
 		local result3         = MySQL:getResults(executed_query3, {'sms'})
-
+		print('test')
 		local decodedResult3 = json.decode(result3[1].sms)
-
+		print('decoded')
 		for i=1, #decodedResult3, 1 do
 				table.insert(sms, {
 					first_name   = decodedResult3[i].first_name,

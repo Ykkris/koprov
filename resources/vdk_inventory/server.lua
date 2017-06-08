@@ -50,14 +50,30 @@ end)
 
 AddEventHandler("item:sell", function(id, qty, price)
     TriggerEvent('es:getPlayerFromId', source, function(user)
+        local ill = isIllegal(id)
         local player = user.identifier
-        user:addMoney(tonumber(price))
+
+        if not(ill) then
+            user:addMoney(tonumber(price))
+        else
+            user:addDirty_Money(tonumber(price))
+            MySQL.Async.execute("UPDATE user SET `dirty_money` = @dirty WHERE identifier = @identifier", { ['@identifier'] = player, ['@dirty'] = user.dirty_money })
+        end
     end)
 end)
 
+function isIllegal(id)
+    local item = MySQL.Sync.fetchAll("SELECT * FROM items WHERE id = @id AND illegal = @illegal", { ['@id'] = id, ['@illegal'] = 1 })
+    if next(item) then
+        return true
+    else
+        return false
+    end      
+end
+
 AddEventHandler("player:giveItem", function(item, name, qty, target)
     TriggerEvent("es:getPlayerFromId", target, function(user)
-        
+
         local identifier = user.identifier
         local total = MySQL.Sync.fetchScalar("SELECT SUM(quantity) as total FROM user_inventory WHERE user_id = @username", { ['@username'] = identifier })
 
