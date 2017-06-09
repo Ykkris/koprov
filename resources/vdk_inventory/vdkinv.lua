@@ -100,18 +100,19 @@ function new(item, quantity)
 end
 
 function give(item)
-    local player = getNearPlayer()
-    if (player ~= nil) then
-    DisplayOnscreenKeyboard(p0, windowTitle, p2, defaultText, defaultConcat1, defaultConcat2, defaultConcat3, maxInputLength)
-        DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 30)
+    local target, distance = GetClosestPlayer()
+    if (target ~= nil and distance < 2) then
+        DisplayOnscreenKeyboard(true, "FMMC_MPM_NA", "", "", "", "", "", 30)
         while (UpdateOnscreenKeyboard() == 0) do
             DisableAllControlActions(0)
             Wait(0);
         end
         if (GetOnscreenKeyboardResult()) then
             local res = tonumber(GetOnscreenKeyboardResult())
-            if (ITEMS[item].quantity - res >= 0) then
-                TriggerServerEvent("player:giveItem", item, ITEMS[item].libelle, res, GetPlayerServerId(player))
+            if res ~= nil then
+                if (ITEMS[item].quantity - res >= 0) then
+                    TriggerServerEvent("player:giveItem", item, ITEMS[item].libelle, res, GetPlayerServerId(player))
+                end
             end
         end
     end
@@ -308,35 +309,35 @@ end)
 
 ------------------------- GENERAL METHODS -------------------------
 
-function getPlayers()
-    local playerList = {}
-    for i = 0, 32 do
-        local player = GetPlayerFromServerId(i)
-        if NetworkIsPlayerActive(player) then
-            table.insert(playerList, player)
+function GetPlayers()
+    local players = {}
+    for i = 0, 31 do
+        if NetworkIsPlayerActive(i) then
+            table.insert(players, i)
         end
     end
-    return playerList
+    return players
 end
 
-function getNearPlayer()
-    local players = getPlayers()
-    local pos = GetEntityCoords(GetPlayerPed(-1))
-    local pos2
-    local distance
-    local minDistance = 3
-    local playerNear
-    for _, player in pairs(players) do
-        pos2 = GetEntityCoords(GetPlayerPed(player))
-        distance = GetDistanceBetweenCoords(pos["x"], pos["y"], pos["z"], pos2["x"], pos2["y"], pos2["z"], true)
-        if (pos ~= pos2 and distance < minDistance) then
-            playerNear = player
-            minDistance = distance
+function GetClosestPlayer()
+    local players = GetPlayers()
+    local closestDistance = -1
+    local closestPlayer = -1
+    local ply = GetPlayerPed(-1)
+    local plyCoords = GetEntityCoords(ply, 0)
+    
+    for index,value in ipairs(players) do
+        local target = GetPlayerPed(value)
+        if(target ~= ply) then
+            local targetCoords = GetEntityCoords(GetPlayerPed(value), 0)
+            local distance = GetDistanceBetweenCoords(targetCoords["x"], targetCoords["y"], targetCoords["z"], plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
+            if(closestDistance == -1 or closestDistance > distance) then
+                closestPlayer = value
+                closestDistance = distance
+            end
         end
     end
-    if (minDistance < 3) then
-        return playerNear
-    end
+    return closestPlayer, closestDistance
 end
 
 function Chat(debugg)
