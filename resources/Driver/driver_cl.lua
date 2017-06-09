@@ -115,7 +115,7 @@ function SpawnPermisCar()
 	Citizen.Wait(0)
 	local myPed = GetPlayerPed(-1)
 	local player = PlayerId()
-	local vehicle = GetHashKey('blista')
+	local vehicle = GetHashKey('asea')
 
     RequestModel(vehicle)
 
