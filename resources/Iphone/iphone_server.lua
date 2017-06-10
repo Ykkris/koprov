@@ -187,8 +187,24 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage, masked)
 			found = 0
 		
 			local actualTime = os.time()
-			local actualDate = os.date("*t", actualTime)
+			local actualDate = os.date("*t", actualTime - 7200)
 		    actualModifiedDate = {}
+		    local jour = tostring(actualDate.day)
+		    local heure = tostring(actualDate.hour)
+		    local minute = tostring(actualDate.min)
+		    local mois = tostring(actualDate.month)
+		    if string.len(jour) == 1 then
+		    	jour = '0'..jour
+		    end
+		    if string.len(heure) == 1 then
+		    	heure = '0'..heure
+		    end
+		    if string.len(minute) == 1 then
+		    	minute = '0'..minute
+		    end
+		    if string.len(mois) == 1 then
+		    	mois = '0'..mois
+		    end
 		
 
 			TriggerEvent("es:getPlayers", function(Users)
@@ -214,10 +230,10 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage, masked)
 					updateSms = targetUser:getSessionVar("sms")
 					updateOneSms = {
 						text = smessage,
-						jour = actualDate.day,
-						heure = actualDate.hour,
-						minute = actualDate.min,
-						mois = actualDate.month,
+						jour = jour,
+						heure = heure,
+						minute = minute,
+						mois = mois,
 						number = sender_number,
 						masked = masked
 					}
@@ -236,16 +252,15 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage, masked)
 						sms = {}
 					end
 					
-					table.insert(sms, {
-						name = sname.name,
+					table.insert(sms, 1, {
 						text = smessage,
-						jour = actualDate.day,
-						heure = actualDate.hour,
-						minute = actualDate.min,
-						mois = actualDate.month,
-						number = rnumber,
+						jour = jour,
+						heure = heure,
+						minute = minute,
+						mois = mois,
+						number = sender_number,
 						masked = masked
-						})
+					})
 
 					-- TriggerEvent("log:addLogServer","Iphone" ,"Send SmS" , Users[source].identifier .. "/".. sname.first_name .. " " .. sname.last_name .."Send Sms to OFFLINE PLAYER : ".. rnumber .. " With Message : " .. smessage )
 					local encodedSms = json.encode(sms)

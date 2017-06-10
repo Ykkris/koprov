@@ -273,8 +273,8 @@ function ItemMenu(val)
     local canUse = val[2]
     ClearMenu()
     MenuTitle="Details :"
-    Menu.addButton("Donner", "give", itemId)
     Menu.addButton("Utiliser", "use", itemId)
+    Menu.addButton("Donner", "give", itemId)
     Menu.addButton("Supprimer", "delete", { itemId, 1 })
 end
 
