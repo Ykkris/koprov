@@ -62,61 +62,56 @@ AddEventHandler('es:playerLoaded', function(source)
 		local result2         = MySQL:getResults(executed_query2, {'contacts'})
 		local decodedResult2 = json.decode(result2[1].contacts)
 
-		for i=1, #decodedResult2, 1 do
-			
-			table.insert(contacts, {
-				first_name   = decodedResult2[i].first_name,
-				last_name   = decodedResult2[i].last_name,
-				number = decodedResult2[i].number
-				})
-
+		if next(decodedResult2) then
+			for i=1, #decodedResult2, 1 do
+				if decodedResult2[i].first_name ~= nil then		
+					table.insert(contacts, {
+						name   = decodedResult2[i].first_name.." "..decodedResult2[i].last_name,
+						number = decodedResult2[i].number
+					})
+				else
+					table.insert(contacts, {
+						name   = decodedResult2[i].name,
+						number = decodedResult2[i].number
+					})
+				end
+			end
 		end
+
+		
 		user:setSessionVar("contacts", contacts)
 		local sms = {}
 
 		local executed_query3 = MySQL:executeQuery("SELECT sms FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		print('result')
 		local result3         = MySQL:getResults(executed_query3, {'sms'})
-		print('test')
 		local decodedResult3 = json.decode(result3[1].sms)
-		print('decoded')
+
 		for i=1, #decodedResult3, 1 do
 				table.insert(sms, {
-					first_name   = decodedResult3[i].first_name,
-					last_name =    decodedResult3[i].last_name,   --number = result3[i].number,		Si pour plus tard on veut avoir le numéro d'un sms anonyme	
-					text   =       decodedResult3[i].text,
+					name = decodedResult3[i].name,
+					text = decodedResult3[i].text,
 					jour = decodedResult3[i].jour,
 					heure = decodedResult3[i].heure,
 					minute = decodedResult3[i].minute,
-					mois = decodedResult3[i].mois
+					mois = decodedResult3[i].mois,
+					number = decodedResult3[i].number,
+					masked = decodedResult3[i].masked
 					})
 
 			end
 		user:setSessionVar("sms", sms)
-
-		local executed_query4 = MySQL:executeQuery("SELECT first_name, last_name FROM users WHERE identifier = '@identifier'", {['@identifier'] = user.identifier})
-		local result4         = MySQL:getResults(executed_query4, {'first_name', 'last_name'})
-
-
-		local name = {
-			first_name = result4[1].first_name,
-			last_name = result4[1].last_name
-			}
-
-		user:setSessionVar("name", name)
 		-- TriggerEvent("log:addLogServer","Iphone" ,"LOAD" ,"Loading " ..user.identifier.." "..name.first_name .. " " .. name.last_name )
-		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms, name)
+		TriggerClientEvent('Iphone:loaded', source, phoneNumber, contacts, sms)
 
 		end)
 	end) 
 
 RegisterServerEvent("Iphone:updatecontact")
-AddEventHandler("Iphone:updatecontact",function(pfirst_name, plast_name, pnumber, index)
+AddEventHandler("Iphone:updatecontact",function(pname, pnumber, index)
 	TriggerEvent("es:getPlayerFromId", source, function(user)
 		userContacts = user:getSessionVar("contacts")
 		userContacts[index] = {
-			first_name   = pfirst_name,
-			last_name = plast_name,
+			name = pname,
 			number = pnumber
 		}
 
@@ -131,13 +126,12 @@ AddEventHandler("Iphone:updatecontact",function(pfirst_name, plast_name, pnumber
 end)
 
 RegisterServerEvent("Iphone:addcontact")
-AddEventHandler("Iphone:addcontact",function(pfirst_name, plast_name, pnumber)
+AddEventHandler("Iphone:addcontact",function(pname, pnumber)
 
 		TriggerEvent("es:getPlayerFromId", source, function(user)
 			userContacts = user:getSessionVar("contacts")
 			table.insert(userContacts, {
-				first_name   = pfirst_name,
-				last_name = plast_name,
+				name = pname,
 				number = pnumber
 			})
 
@@ -180,61 +174,56 @@ end)
 
 
 RegisterServerEvent("Iphone:sendsmsfromone")
-AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
+AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage, masked)
+	TriggerEvent('es:getPlayerFromId', source, function(user)
 
+		local executed_query = MySQL:executeQuery("SELECT identifier FROM users WHERE phone_number = '@phone_number'", {['@phone_number'] = rnumber})
 
-	local executed_query = MySQL:executeQuery("SELECT identifier FROM users WHERE phone_number = '@phone_number'", {['@phone_number'] = rnumber})
+		local result         = MySQL:getResults(executed_query, {'identifier'})
 
-	local result         = MySQL:getResults(executed_query, {'identifier'})
+		if result[1]~=nil then
+			targetIdentifier = result[1].identifier
 
-	if result[1]~=nil then
-		targetIdentifier = result[1].identifier
-
-		found = 0
-	
-		local actualTime = os.time()
-		local actualDate = os.date("*t", actualTime)
-	    actualModifiedDate = {}
-	
-
-		TriggerEvent("es:getPlayers", function(Users)
-			sname = Users[source]:getSessionVar("name")
-			for k,v in pairs(Users) do
-
-				if targetIdentifier == Users[k].identifier then
-					found = k
-					targetUser = Users[k]
-					--print(tostring(v)) -- table -- table
-					--print(tostring(k))  -- 2 -- 6
-					--print(tostring(k.identifier)) -- nil -- nil
-					--print(tostring(v.identifier)) -- steamid -- steamid
-				end
-			end
+			found = 0
 		
+			local actualTime = os.time()
+			local actualDate = os.date("*t", actualTime)
+		    actualModifiedDate = {}
+		
+
+			TriggerEvent("es:getPlayers", function(Users)
+				for k,v in pairs(Users) do
+
+					if targetIdentifier == Users[k].identifier then
+						found = k
+						targetUser = Users[k]
+						--print(tostring(v)) -- table -- table
+						--print(tostring(k))  -- 2 -- 6
+						--print(tostring(k.identifier)) -- nil -- nil
+						--print(tostring(v.identifier)) -- steamid -- steamid
+					end
+				end
+
+				local sender_number = user:getSessionVar("phone_number")
+				if masked then
+					sender_number = ""
+				end
+			
 				if found~=0 then
 					local senderIdentifier = Users[source].identifier	
 					updateSms = targetUser:getSessionVar("sms")
-					table.insert(updateSms, {
-						first_name = sname.first_name,
-						last_name = sname.last_name,
-						text = smessage,
-						jour = actualDate.day,
-						heure = actualDate.hour,
-						minute = actualDate.min,
-						mois = actualDate.month
-						})
-					targetUser:setSessionVar("updateSms", updateSms)
 					updateOneSms = {
-						first_name = sname.first_name,
-						last_name = sname.last_name,
 						text = smessage,
 						jour = actualDate.day,
 						heure = actualDate.hour,
 						minute = actualDate.min,
-						mois = actualDate.month
-						}
+						mois = actualDate.month,
+						number = sender_number,
+						masked = masked
+					}
+					table.insert(updateSms, updateOneSms)
+					targetUser:setSessionVar("updateSms", updateSms)
 					local targetServerId = targetUser.source
-					local targetName = targetUser:getSessionVar("name")
 					-- TriggerEvent("log:addLogServer","Iphone" ,"INFO" , Users[source].identifier.. "/".. sname.first_name .. " " .. sname.last_name .. "Send Sms to ONLINE PLAYER : ".. targetUser.identifier .."/".. targetName.first_name .. " " .. targetName.last_name .. " With Message : " .. smessage )
 					TriggerClientEvent("Iphone:receivesms", targetServerId, updateOneSms) ----------------------------------ICI ROMAIN --------------------------------------
 
@@ -248,13 +237,14 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 					end
 					
 					table.insert(sms, {
-						first_name = sname.first_name,
-						last_name = sname.last_name,
+						name = sname.name,
 						text = smessage,
 						jour = actualDate.day,
 						heure = actualDate.hour,
 						minute = actualDate.min,
-						mois = actualDate.month
+						mois = actualDate.month,
+						number = rnumber,
+						masked = masked
 						})
 
 					-- TriggerEvent("log:addLogServer","Iphone" ,"Send SmS" , Users[source].identifier .. "/".. sname.first_name .. " " .. sname.last_name .."Send Sms to OFFLINE PLAYER : ".. rnumber .. " With Message : " .. smessage )
@@ -270,8 +260,8 @@ AddEventHandler("Iphone:sendsmsfromone", function(rnumber, smessage)
 			-- TriggerEvent("log:addLogServer","Iphone" ,"INFO" , Users[source].identifier .. "/".. sname.first_name .. " " .. sname.last_name.."Send Sms to UNKNOW PLAYER : ".. tostring(rnumber) .. " With Message : " .. smessage )
 		end
 
-	--result[1].identifier -- THIS IS THE TARGET PLAYER
-
+		--result[1].identifier -- THIS IS THE TARGET PLAYER
+	end)
 end)
 
 RegisterServerEvent("Iphone:sendposto")

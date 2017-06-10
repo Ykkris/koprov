@@ -20,6 +20,7 @@ local Keys = {
 ------------------------------------------------------------------------------
 isCop = false 
 isEMS = false
+response_delay = false
 job_id = nil -- probably useless now, keep that for later
 guiEnabled = false
 ActualJob = 0
@@ -216,6 +217,7 @@ local vehshop = {
 			name = "Contact",
 			buttons = {
 				{name = "Envoyer un Sms", description = ""}, --  table = {name = sender.name.. " " ..sender.num }  for i=2, var, 1 do table.insert(vehshop.menu["Repertoire"].buttons, table)  end
+				{name = "Envoyer un Sms (masqué)", description = ""},
 				--{name = "Envoyer la position[WIP]", description = ""},
 				{name = "Modifier le Contact", description = ""},
 				{name = "Supprimer le Contact", description = ""}
@@ -640,12 +642,17 @@ function ButtonSelected(button)
 		end
 
 	elseif this == "Boite de reception" then
-			text = button.description
-			vehshop.menu.from = 1
-			vehshop.menu.to = 10
-			vehshop.selectedbutton = 0
-			--ShowNotification(text)
+		text = button.description
+		if response_delay and button.number ~= "" then
+			sendSms(button.number, false)
+		else				
 			TriggerEvent("pNotify:SendNotification", { text = ""..text.."", type = "sms", timeout = 10000, layout = "bottomCenter",})
+		end			
+		response_delay = true
+		Citizen.CreateThread(function()
+			Wait(500)
+			response_delay = false
+		end)
 
 	-- elseif this == "Police" then
 	-- 	if btn == "Menotter" then
@@ -772,29 +779,11 @@ function ButtonSelected(button)
 
 	elseif this == "Contact" then
 		if btn == "Envoyer un Sms" then
-			local editing = true
-			DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
-			while editing do
-				Wait(0)
-				if UpdateOnscreenKeyboard() == 2 then 
-					editing = false
-					ShowNotification("Sms annulé")
-					return
-				end
-				if UpdateOnscreenKeyboard() == 1 then
-					editing = false
-					resultat = GetOnscreenKeyboardResult()
-					ShowNotification("Sms envoyé")
-				end
-			end
-			local sendSms = tostring(resultat)
-			TriggerServerEvent("Iphone:sendsmsfromone", toNumber,sendSms)
-			vehshop.menu.from = 1
-			vehshop.menu.to = 10
-			vehshop.selectedbutton = 0
-			vehshop.currentmenu = "Repertoire"
+			sendSms(toNumber, false)
+		elseif btn == "Envoyer un Sms (masqué)" then
+			sendSms(toNumber, true)
 		elseif btn == "Envoyer la position" then
-			local name = PhoneData.name.first_name.. " " ..PhoneData.name.last_name
+			local name = PhoneData.name
 			local spos = GetEntityCoords(GetPlayerPed(-1), true)
 			TriggerServerEvent("Iphone:sendposto", toNumber, sname, spos.x, spos.y, spos.z)
 			vehshop.menu.from = 1
@@ -802,10 +791,9 @@ function ButtonSelected(button)
 			vehshop.selectedbutton = 0
 			vehshop.currentmenu = "Repertoire"
 		elseif btn == "Modifier le Contact" then
-			updateContact(buttonIndex)
+			toNumber = updateContact(buttonIndex)
 		elseif btn == "Supprimer le Contact" then
 			TriggerServerEvent("Iphone:removecontact", buttonIndex)
-			Citizen.Trace(buttonIndex)
 			table.remove(PhoneData.contacts, buttonIndex)
 			
 			loadContacts()
@@ -815,6 +803,26 @@ function ButtonSelected(button)
 			vehshop.currentmenu = "Repertoire"
 		end
 	end
+end
+
+function sendSms(toNumber, masked)
+	local editing = true
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+	while editing do
+		Wait(0)
+		if UpdateOnscreenKeyboard() == 2 then 
+			editing = false
+			ShowNotification("Sms annulé")
+			return
+		end
+		if UpdateOnscreenKeyboard() == 1 then
+			editing = false
+			resultat = GetOnscreenKeyboardResult()
+			ShowNotification("Sms envoyé")
+		end
+	end
+	local send_sms = tostring(resultat)
+	TriggerServerEvent("Iphone:sendsmsfromone", toNumber, send_sms, masked)
 end
 
 
@@ -869,34 +877,49 @@ AddEventHandler("Iphone:receivepos", function(x, y, z, sendername)
 	end
 end)
 
+function getLabelFromNumber(number)
+	local label = number
+	for i=1, #PhoneData.contacts do
+		if PhoneData.contacts[i].number == number then
+			label = PhoneData.contacts[i].name
+		end
+	end
+	return label
+end
+
 RegisterNetEvent("Iphone:receivesms")
 AddEventHandler("Iphone:receivesms", function(ssms)
-	snameplusdate = ssms.first_name .. " " .. ssms.last_name .. " : ".. ssms.jour .. "/".. ssms.mois .. " à " .. ssms.heure .. "h" .. ssms.minute
-	sname = ssms.first_name .. " " .. ssms.last_name
+	local label = getLabelFromNumber(ssms.number)
+	if ssms.masked then
+		label = "???"
+		ssms.number = ""
+	end
+	snameplusdate = label .. " : ".. ssms.jour .. "/".. ssms.mois .. " à " .. ssms.heure .. "h" .. ssms.minute
 	if #PhoneData.sms >= taillemaxsms then
 		ShowNotification("Vous venez de recevoir un sms mais la taille est dépassé. Veuillez faire le tri")
 		table.remove(PhoneData.sms, #PhoneData.sms)
 	else
 		-- ShowNotification("Vous venez de recevoir un message de : " ..sname)
 		TriggerEvent('InteractSound_CL:PlayOnOne', 'receive', 0.3)
-		TriggerEvent("pNotify:SendNotification", { text = "Nouveau message de : <b style='color:green'>"..sname.."</b>.", type = "sms", timeout = 5000, layout = "bottomCenter",})
+		TriggerEvent("pNotify:SendNotification", { text = "Nouveau message de : <b style='color:green'>"..label.."</b>.", type = "sms", timeout = 5000, layout = "bottomCenter",})
 	end
 
 	table.insert(vehshop.menu["Boite de reception"].buttons, 1, {
 						name = snameplusdate,
-						description = ssms.text
+						description = ssms.text,
+						number = ssms.number
 					})
-	local receiveSms = {
-		first_name = ssms.first_name,
-		last_name = ssms.last_name,
+	local received_sms = {
 		text = ssms.text,
 		jour = ssms.jour,
 		heure = ssms.heure,
 		minute = ssms.minute,
-		mois = ssms.mois
+		mois = ssms.mois,
+		number = ssms.number,
+		masked = ssms.masked
 	}
 
-	table.insert(PhoneData.sms, 1, receivesms)
+	table.insert(PhoneData.sms, 1, received_sms)
 
 end)
 
@@ -1229,7 +1252,7 @@ function updateContact(index)
    	local quit1 = false
    	local quit2 = false
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", PhoneData.contacts[index].first_name.." "..PhoneData.contacts[index].last_name, "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", PhoneData.contacts[index].name, "", "", "", 120)
 	while editing1 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
@@ -1260,21 +1283,16 @@ function updateContact(index)
 	end
 
 	if not(quit1) and not(quit2) then
-		result = {}
-		for token in string.gmatch(resultat1, "[^%s]+") do
-  			table.insert(result, token)
-		end
-   			-----------------------
+
    		PhoneData.contacts[index] = {
-   			first_name = tostring(result[1]),
-			last_name = tostring(result[2]),
+   			name = tostring(resultat1),
 			number = tostring(resultat2)
 		}
 
 		loadContacts()
 
-   		TriggerServerEvent("Iphone:updatecontact", result[1], result[2], resultat2, index)
-
+   		TriggerServerEvent("Iphone:updatecontact", resultat1, resultat2, index)
+   		return tostring(resultat2)
    	end
 end
 
@@ -1284,7 +1302,7 @@ function AddContact()
    	local quit1 = false
    	local quit2 = false
 
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[PRENOM] [NOM]", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "[CONTACT]", "", "", "", 120)
 	while editing1 do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then
@@ -1315,14 +1333,9 @@ function AddContact()
 	end
 
 	if not(quit1) and not(quit2) then
-		result = {}
-		for token in string.gmatch(resultat1, "[^%s]+") do
-  			table.insert(result, token)
-		end
-   			-----------------------
+
    		table.insert(PhoneData.contacts, {
-   			first_name = tostring(result[1]),
-			last_name = tostring(result[2]),
+   			name = tostring(resultat1),
 			number = tostring(resultat2)
 		})
 
@@ -1343,7 +1356,7 @@ function AddContact()
 --}
 
 
-   		TriggerServerEvent("Iphone:addcontact", result[1], result[2], resultat2)
+   		TriggerServerEvent("Iphone:addcontact", resultat1, resultat2)
 
    	end
 end
@@ -1701,7 +1714,7 @@ function loadContacts()
 	for i=1, #PhoneData.contacts do
 			table.insert(buttons,
 				{
-					name = PhoneData.contacts[i].first_name.. " " .. PhoneData.contacts[i].last_name,
+					name = PhoneData.contacts[i].name,
 					description = PhoneData.contacts[i].number,
 					index = i
 				}
@@ -1727,14 +1740,10 @@ end
 
 
 RegisterNetEvent('Iphone:loaded')
-AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
+AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms)
 
 	PhoneData.contacts = lcontacts
-
 	PhoneData.sms = lsms
-
-	PhoneData.name.first_name = lname.first_name
-	PhoneData.name.last_name = lname.last_name
 
 	PhoneData.phone_number = lphoneNumber
 
@@ -1744,9 +1753,13 @@ AddEventHandler('Iphone:loaded', function(lphoneNumber, lcontacts, lsms, lname)
 
 	if sms ~= {} then
 		for i=1, #PhoneData.sms do
+			local label = getLabelFromNumber(PhoneData.sms[i].number)
+			if PhoneData.sms[i].masked then
+				label = "???"
+			end
 			table.insert(vehshop.menu["Boite de reception"].buttons, {
-							name = PhoneData.sms[i].first_name.. " " .. PhoneData.sms[i].last_name .. " : " .. PhoneData.sms[i].jour .. "/" .. PhoneData.sms[i].mois .. " à " .. PhoneData.sms[i].heure .."h"..PhoneData.sms[i].minute,
-							description = PhoneData.sms[i].text
+							name = label .. " : " .. PhoneData.sms[i].jour .. "/" .. PhoneData.sms[i].mois .. " à " .. PhoneData.sms[i].heure .."h"..PhoneData.sms[i].minute,
+							description = PhoneData.sms[i].text, number = PhoneData.sms[i].number
 			})
 		end
 	end
