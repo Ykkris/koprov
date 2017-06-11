@@ -28,7 +28,7 @@ function addCop(identifier)
 		end
 		
 		if(result == "nil") then
-			MySQL:executeQuery("INSERT INTO police (`identifier`) VALUES ('')", { ['@identifier'] = identifier})
+			MySQL:executeQuery("INSERT INTO police (`identifier`) VALUES ('@identifier')", { ['@identifier'] = identifier})
 		end
 		
 	elseif(db.driver == "mysql-async") then
@@ -158,11 +158,11 @@ RegisterServerEvent('police:checkingPlate')
 AddEventHandler('police:checkingPlate', function(plate)
 
 	if(db.driver == "mysql") then
-		local executed_query = MySQL:executeQuery("SELECT Nom FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '@plate'", { ['@plate'] = plate })
-		local result = MySQL:getResults(executed_query, { 'Nom' }, "identifier")
+		local executed_query = MySQL:executeQuery("SELECT last_name FROM user_vehicle JOIN users ON user_vehicle.identifier = users.identifier WHERE vehicle_plate = '@plate'", { ['@plate'] = plate })
+		local result = MySQL:getResults(executed_query, { 'last_name' }, "identifier")
 		if (result[1]) then
 			for _, v in ipairs(result) do
-				TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, txt[config.lang]["vehicle_checking_plate_part_1"]..plate..txt[config.lang]["vehicle_checking_plate_part_2"] .. v.Nom..txt[config.lang]["vehicle_checking_plate_part_3"])
+				TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, txt[config.lang]["vehicle_checking_plate_part_1"]..plate..txt[config.lang]["vehicle_checking_plate_part_2"] .. v.last_name..txt[config.lang]["vehicle_checking_plate_part_3"])
 			end
 		else
 			TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, txt[config.lang]["vehicle_checking_plate_part_1"]..plate..txt[config.lang]["vehicle_checking_plate_not_registered"])
@@ -218,11 +218,13 @@ AddEventHandler('police:targetCheckInventory', function(target)
 		elseif(db.driver == "mysql-async") then
 			MySQL.Async.fetchAll("SELECT * FROM `user_inventory` JOIN items ON items.id = user_inventory.item_id WHERE user_id = '"..identifier.."'", { ['@username'] = identifier }, function (result)
 				local strResult = txt[config.lang]["checking_inventory_part_1"] .. GetPlayerName(target) .. txt[config.lang]["checking_inventory_part_2"]
+				print("on est dans le print")
 				
 				for _, v in ipairs(result) do
 					if(v.quantity ~= 0) then
 						strResult = strResult .. v.quantity .. "*" .. v.libelle .. ", "
 					end
+					print(v.quantity)
 					
 					if(v.isIllegal == "1" or v.isIllegal == "True" or v.isIllegal == 1 or v.isIllegal == true) then
 						TriggerClientEvent('police:dropIllegalItem', target, v.item_id)
@@ -260,7 +262,27 @@ AddEventHandler('police:targetCheckInventory', function(target)
 				TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, strResult)
 			end)
 		end
-	end	
+	end
+
+	if(config.useVDKInventory == true) then
+
+		if(db.driver == "mysql") then 
+			local strResult = txt[config.lang]["checking_dirty_part_1"] .. GetPlayerName(target) .. txt[config.lang]["checking_dirty_part_2"]
+
+			local executed_query = MySQL:executeQuery("SELECT dirty_money FROM users WHERE identifier = '@username'", { ['@username'] = identifier })
+			local result = MySQL:getResults(executed_query, { 'dirty_money' }, 'identifier' )
+			if(result) then
+				for _, v in ipairs(result) do
+					if(v.dirty_money ~= 0) then
+						strResult = strResult .. v.dirty_money .. ", "
+					end
+				end
+			end
+
+			TriggerClientEvent("police:notify", source, "CHAR_ANDREAS", 1, txt[config.lang]["title_notification"], false, strResult)
+
+		end
+	end
 end)
 
 RegisterServerEvent('police:finesGranted')

@@ -57,13 +57,14 @@ AutoStartResources:
     # - iLog
     - sync
     - journaliste
-    - pQueue
     - InteractSound
     - mysql-async
     - Driver
     - DriverMoto
     - Apartments
     - trainer
+    - sirencontrols
+    - vdk_truck
 
 # do change
 RconPassword: koprobestv
