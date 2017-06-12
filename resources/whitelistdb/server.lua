@@ -12,6 +12,16 @@ AddEventHandler( "playerConnecting", function(name, setReason )
     end
 end)
 
+AddEventHandler("amiwhitelisted", function(source)
+	TriggerEvent('es:getPlayerFromId', source, function(user)
+		local identifier = user.identifier
+		if not isWhiteListed(identifier) then
+			setReason("You are not whitelisted on this server")
+			print("(" .. identifier .. ") has been kicked because he is not WhiteListed")
+	    end
+	end)
+end)
+
 -- Chat Command to add someone in WhiteList
 TriggerEvent('es:addGroupCommand', 'wladd', "admin", function(source, args, user)
 	if #args == 2 then
