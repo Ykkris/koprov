@@ -225,7 +225,7 @@ end
 function CheckId()
 	local t , distance  = GetClosestPlayer()
     if(distance ~= -1 and distance < 3) then
-		TriggerServerEvent('gc:copOpenIdentity', GetPlayerServerId(t))
+		TriggerServerEvent("Iphone:checkid", GetPlayerServerId(target), 1)
     else
 		TriggerEvent('chatMessage', txt[config.lang]["title_notification"], {255, 0, 0}, txt[config.lang]["no_player_near_ped"])
 	end
