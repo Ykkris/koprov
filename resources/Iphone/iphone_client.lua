@@ -25,7 +25,7 @@ job_id = nil -- probably useless now, keep that for later
 guiEnabled = false
 ActualJob = 0
 notificationInProgress = false
-taillemaxsms = 30
+taillemaxsms = 666
 limitator = false
 engine = true
 
