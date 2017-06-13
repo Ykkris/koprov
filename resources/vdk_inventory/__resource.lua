@@ -1,10 +1,10 @@
 server_scripts {
-	'server.lua'
+	'config.lua',
+	'vdk_inventory_server.lua'
 }
 client_script {
-	'GUI.lua',
-	'client/vdkinv.lua',
-	'client/anims.lua',
+	'vdkinv.lua',
+	'GUI.lua'
 }
 
 export 'getQuantity'
