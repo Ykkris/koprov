@@ -808,7 +808,7 @@ end
 
 function sendSms(toNumber, masked)
 	local editing = true
-	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
+	DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 160)
 	while editing do
 		Wait(0)
 		if UpdateOnscreenKeyboard() == 2 then 
