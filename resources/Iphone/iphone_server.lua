@@ -2,10 +2,47 @@
 -- You can use it, share it and modify it BUT you're not allowed to make benefit with it. --
 -- Contact us for more informations at koprov.fr --
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
+--MySQL:open("127.0.0.1", "gta5_gamemode_essential", "root", "5M32bNCpFdgG")
 
 first = true
 saveTime = 900000 -- in ms
+identifierList = {}
+
+local function has_value (tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
+function CheckWhitelist()
+	if not next(identifierList) then
+		local executed_query = MySQL:executeQuery("SELECT * FROM user_whitelist")
+	    local result = MySQL:getResults(executed_query, {'identifier'})
+	    local identifierList = {}
+	    for k,v in pairs(result) do
+			table.insert(identifierList, result[k].identifier)
+		end
+	end
+	local player = nil
+
+
+	TriggerEvent("es:getPlayers", function(Users)
+		for k,v in pairs(Users) do
+			if not has_value(identifierList, Users[k].identifier) then
+				player = k
+			end
+		end
+
+		if player then
+			DropPlayer(player, "ResidentSleeper")
+		end
+	end)
+	SetTimeout(CheckWhitelist, 1000 * 20)
+end
 
 
 AddEventHandler("es:playerLoaded", function(resource)
