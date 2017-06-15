@@ -40,7 +40,7 @@ AddEventHandler('service:receiveJob', function(result)
 end)
 
 local stationGarage = {
-	{x=907.280, y=-176.027, z=74.128}
+	{x=161.688, y=-1145.518, z=29.291}
 }
 
 function LocalPed()
@@ -234,7 +234,7 @@ end
 function OpenVeh() --OpenCreator
 	boughtcar = false
 	local ped = LocalPed()
-	local pos = {907.280,-176.027,74.128}
+	local pos = {161.688, -1145.518, 29.291}
 	FreezeEntityPosition(ped,true)
 	SetEntityVisible(ped,false)
 	local g = Citizen.InvokeNative(0xC906A7DAB05C8D2B,pos[1],pos[2],pos[3],Citizen.PointerValueFloat(),0)
@@ -323,7 +323,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetDistanceBetweenCoords(907.280, -176.027, 74.128,GetEntityCoords(GetPlayerPed(-1))) > 5 then
+		if GetDistanceBetweenCoords(161.688, -1145.518, 29.291,GetEntityCoords(GetPlayerPed(-1))) > 5 then
 			if taxiveh.opened then
 				CloseVeh()
 			end
