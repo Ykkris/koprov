@@ -46,7 +46,7 @@ function CheckWhitelist()
 	end)
 	SetTimeout(CheckWhitelist, 1000 * 30)
 end
-
+CheckWhitelist()
 
 AddEventHandler("es:playerLoaded", function(resource)
 	if first then
