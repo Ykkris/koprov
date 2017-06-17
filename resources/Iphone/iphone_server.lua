@@ -7,6 +7,7 @@ require "resources/essentialmode/lib/MySQL"
 first = true
 saveTime = 900000 -- in ms
 identifierList = {}
+whiteListCheckCount = 0
 
 local function has_value (tab, val)
     for index, value in ipairs(tab) do
@@ -19,13 +20,15 @@ local function has_value (tab, val)
 end
 
 function CheckWhitelist()
-	if not next(identifierList) then
+	if not next(identifierList) or whiteListCheckCount == 5 then
+		whiteListCheckCount = 0
 		local executed_query = MySQL:executeQuery("SELECT * FROM user_whitelist")
 	    local result = MySQL:getResults(executed_query, {'identifier'})
-	    local identifierList = {}
+	    identifierList = {}
 	    for k,v in pairs(result) do
 			table.insert(identifierList, result[k].identifier)
 		end
+		whiteListCheckCount = whiteListCheckCount + 1
 	end
 	local player = nil
 
@@ -41,7 +44,7 @@ function CheckWhitelist()
 			DropPlayer(player, "ResidentSleeper")
 		end
 	end)
-	SetTimeout(CheckWhitelist, 1000 * 20)
+	SetTimeout(CheckWhitelist, 1000 * 30)
 end
 
 
