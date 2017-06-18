@@ -66,7 +66,7 @@ local vehshop = {
 				{name = "Emotes", description = ""},
 				{name = "Carte d'identite", description = ""},
 				{name = "Services", description = ""},
-				{name = "Donner argent", description = ""}
+				{name = "Argent", description = ""}
 			}
 		},
 		["Telephone"] = {  -- avant vehicles
@@ -137,13 +137,13 @@ local vehshop = {
 				{name = "Taxi", description = ""}
 			}
 		},
-		["Donner argent"] = {
+		["Argent"] = {
 			title = "Donner",
 			name = "Donner",
 			buttons = {
-			{name = "Argent", description = ""},
-			{name = "Argent sale", description = ""}
-
+				{name = "Donner argent", description = ""},
+				{name = "Donner argent (sale)", description = ""},
+				{name = "Jeter argent sale", description = ""}
 			}
 		},
 		-- ["Police"] = {
@@ -635,11 +635,13 @@ function ButtonSelected(button)
 			--OpenMenu("Services")
 		end
 
-	elseif this == "Donner argent" then
-		if btn == "Argent" then
+	elseif this == "Argent" then
+		if btn == "Donner argent" then
 			GiveCash()
-		elseif btn == "Argent sale" then
-			Dirty()
+		elseif btn == "Donner argent (sale)" then
+			Dirty(false)
+		elseif btn == "Jeter argent sale" then
+			Dirty(true)
 		end
 
 	elseif this == "Boite de reception" then
@@ -1452,7 +1454,7 @@ end
 
 function GiveCash()
 	local target, distance = GetClosestPlayer()
-    if target ~= nil and distance < 1 then
+    if target ~= -1 and distance < 1 then
         DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
         while (UpdateOnscreenKeyboard() == 0) do
             DisableAllControlActions(0)
@@ -1464,16 +1466,17 @@ function GiveCash()
     end
 end
 
-function Dirty()
+function Dirty(discard)
 	local target, distance = GetClosestPlayer()
-    if target ~= nil and distance < 1 then
+	local target_id = nil
+    if target ~= -1 and distance < 1 or discard then
         DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
         while (UpdateOnscreenKeyboard() == 0) do
             DisableAllControlActions(0)
             Wait(0)
         end
         if (GetOnscreenKeyboardResult()) then
-            TriggerServerEvent("bank:givedirtycash", GetPlayerServerId(target), GetOnscreenKeyboardResult())
+            TriggerServerEvent("bank:givedirtycash", GetPlayerServerId(target), GetOnscreenKeyboardResult(), discard)
         end
     end
 end
@@ -1485,7 +1488,7 @@ end
 RegisterNetEvent('InteractSound_SV:PlayWithinDistance')
 function Fouiller()
     local target, distance = GetClosestPlayer()
-    if target ~= nil and distance < 2 then
+    if target ~= -1 and distance < 2 then
     	TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 3, 'zip', 1)
 		TriggerServerEvent("police:havedirty",  GetPlayerServerId(target))
 		TriggerServerEvent("police:check")
@@ -1494,7 +1497,7 @@ end
 
 function Saisir()
     local target, distance = GetClosestPlayer()
-    if target ~= nil and distance < 2 then
+    if target ~= -1 and distance < 2 then
 		TriggerServerEvent("police:saisir",  GetPlayerServerId(target))
 	end    
 end
