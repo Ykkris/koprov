@@ -416,3 +416,71 @@ function GetPlayers()
 
     return players
 end
+
+local alreadyDead = false
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+			if(isInService) then
+				if(config.useModifiedEmergency == false) then
+					if(IsPlayerDead(PlayerId())) then
+						if(alreadyDead == false) then
+							ServiceOff()
+							handCuffed = false
+							alreadyDead = true
+						end
+					else
+						alreadyDead = false
+					end
+				end
+			
+				DrawMarker(1,313.273,-1465.350,45.509,0,0,0,0,0,0,2.0,2.0,2.0,0,155,255,200,0,0,0,0)
+			
+				if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), 313.273,-1465.350,45.509, true ) < 5 then
+					if(existingVeh ~= nil) then
+						DisplayHelpText(txt[config.lang]["help_text_put_heli_into_garage"],0,1,0.5,0.8,0.6,255,255,255,255)
+					else
+						DisplayHelpText(txt[config.lang]["help_text_get_heli_out_garage"],0,1,0.5,0.8,0.6,255,255,255,255)
+					end
+					
+					if IsControlJustPressed(1,51)  then
+						if(existingVeh ~= nil) then
+							SetEntityAsMissionEntity(existingVeh, true, true)
+							Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(existingVeh))
+							existingVeh = nil
+						else
+							local car = GetHashKey("polmav")
+							local ply = GetPlayerPed(-1)
+							local plyCoords = GetEntityCoords(ply, 0)
+							
+							RequestModel(car)
+							while not HasModelLoaded(car) do
+									Citizen.Wait(0)
+							end
+							
+							existingVeh = CreateVehicle(car, plyCoords["x"], plyCoords["y"], plyCoords["z"], 90.0, true, false)
+							local id = NetworkGetNetworkIdFromEntity(existingVeh)
+							SetNetworkIdCanMigrate(id, true)
+							SetVehicleLivery(existingVeh, 0)
+							TaskWarpPedIntoVehicle(ply, existingVeh, -1)
+						end
+					end
+				end
+			end
+		if(config.enableNeverWanted == true) then
+			SetPlayerWantedLevel(PlayerId(), 0, false)
+			SetPlayerWantedLevelNow(PlayerId(), false)
+			ClearAreaOfCops()
+			SetPoliceIgnorePlayer(PlayerId(), true)
+			SetDispatchCopsForPlayer(PlayerId(), false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 1, false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 2, false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 3, false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 5, false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 8, false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 9, false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 10, false)
+			Citizen.InvokeNative(0xDC0F817884CDD856, 11, false)
+		end
+    end
+end)

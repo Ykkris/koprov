@@ -7,5 +7,6 @@ dependency 'essentialmode'
 -- Emergency
 client_script 'client/cl_healthplayer.lua'
 client_script 'client/cl_emergency.lua'
+client_script 'client/config.lua'
 
 server_script 'server/sv_emergency.lua'
