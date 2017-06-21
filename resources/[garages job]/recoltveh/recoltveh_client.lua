@@ -20,8 +20,7 @@ local recoltveh = {
 			title = "CATEGORIES",
 			name = "main",
 			buttons = {
-				{name = "Camion bucheron", costs = 0, description = {}, model = "rubble"},
-				{name = "Camion mineur", costs = 0, description = {}, model = "tiptruck2"},
+				{name = "Remorque", costs = 0, description = {}, model = "hauler"},
 			}
 		},
 	}

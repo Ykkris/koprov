@@ -21,7 +21,7 @@ client_scripts {
 
 server_scripts {
   'config.lua',
-  'es_freeroam_server.lua',
+  'server.lua',
   'player/commands.lua',
   'stores/vehshop_s.lua',
 }
