@@ -1652,11 +1652,11 @@ AddEventHandler('service:sendserviceto',
 				notificationInProgress = true
 				if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 10000) then -- APPEL REDUIT à 10 SECONDES POUR LES SERVICES
 					callAlreadyTaken = true
-					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
+					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(temporary_blip))
 					ShowNotification('L\'appel a été pris')
 				end
 				if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
-					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
+					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(temporary_blip))
 					callAlreadyTaken = true
 					controlPressed = true
 					TriggerServerEvent('service:takecall', service_id ,GetPlayerName(PlayerId()), playerServerId, x, y, z, sourceplayersender)
