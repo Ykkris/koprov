@@ -1645,18 +1645,14 @@ AddEventHandler('service:sendserviceto',
 				ShowNotification('<b>~r~Appel : ~s~ <br><br>~b~quelqu\'un a besoin de votre service~s~: </b>')
 				ShowNotification('<b>Appuyez sur ~g~Y~s~ pour prendre l\'appel</b>')
 			end
-			local temporary_blip = AddBlipForCoord(x, y, z)
-			N_0x80ead8e2e1d5d52e(temporary_blip)
 			while not controlPressed and not callAlreadyTaken do
 				Citizen.Wait(0)
 				notificationInProgress = true
 				if (GetTimeDifference(GetGameTimer(), notifReceivedAt) > 10000) then -- APPEL REDUIT à 10 SECONDES POUR LES SERVICES
 					callAlreadyTaken = true
-					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
 					ShowNotification('L\'appel a été pris')
 				end
 				if IsControlPressed(1, Keys["Y"]) and not callAlreadyTaken then
-					Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(Blipvariable))
 					callAlreadyTaken = true
 					controlPressed = true
 					TriggerServerEvent('service:takecall', service_id ,GetPlayerName(PlayerId()), playerServerId, x, y, z, sourceplayersender)
