@@ -45,7 +45,9 @@ end)
 RegisterServerEvent('bank:deposit')
 AddEventHandler('bank:deposit', function(amount)
   TriggerEvent('es:getPlayerFromId', source, function(user)
-      if(tonumber(amount) <= tonumber(user:money) and tonumber(amount) + tonumber(bankBalance(player)) >= 0 or tonumber(amount) >= 0) then
+      if(tonumber(amount) <= tonumber(user:money)) and (tonumber(amount) >= 0) then
+      	print(bankBalance)
+      	print(amount)
         user:removeMoney((amount))
         local player = user.identifier
         deposit(player, amount)
