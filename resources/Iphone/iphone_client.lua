@@ -546,8 +546,8 @@ function ButtonSelected(button)
 			IdCard()
 		-- elseif btn == "Police" then
 		-- 	OpenMenu("Police")
-		elseif btn == "Donner argent" then
-			OpenMenu("Donner argent")
+		elseif btn == "Argent" then
+			OpenMenu("Argent")
 		elseif btn == "Soigner" then
 			Heal()
 		elseif btn == "Services" then
@@ -959,7 +959,7 @@ function OpenMenu(menu)
 		vehshop.lastmenu = "main"
 	elseif menu == "Services" then
 		vehshop.lastmenu = "main"
-	elseif menu == "Donner argent" then
+	elseif menu == "Argent" then
 		vehshop.lastmenu = "main"
 	elseif menu == "Vehicule" then
 		vehshop.lastmenu = "main"
@@ -979,7 +979,7 @@ function Back()
 	backlock = true
 	if vehshop.currentmenu == "main" then
 		CloseCreator()
-	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" or vehshop.currentmenu == "Donner argent" or vehshop.currentmenu == "Vehicule"  then
+	elseif vehshop.currentmenu == "Emotes" or vehshop.currentmenu == "Telephone" or vehshop.currentmenu == "Services" or vehshop.currentmenu == "Police" or vehshop.currentmenu == "Argent" or vehshop.currentmenu == "Vehicule"  then
 		vehshop.currentmenu = "main"
 		vehshop.selectedbutton = vehshop.previouslyselectedbutton
 		vehshop.menu.from = 1

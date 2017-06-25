@@ -45,7 +45,7 @@ end)
 RegisterServerEvent('bank:deposit')
 AddEventHandler('bank:deposit', function(amount)
   TriggerEvent('es:getPlayerFromId', source, function(user)
-    	if(tonumber(amount) <= tonumber(user:money) and (tonumber(amount) + tonumber(bankBalance(player)) >= 0 or tonumber(amount) >= 0 ) then
+      if(tonumber(amount) <= tonumber(user:money) and tonumber(amount) + tonumber(bankBalance(player)) >= 0 or tonumber(amount) >= 0) then
         user:removeMoney((amount))
         local player = user.identifier
         deposit(player, amount)
@@ -100,13 +100,13 @@ AddEventHandler('bank:withdrawAmende', function(amount)
     TriggerEvent('es:getPlayerFromId', source, function(user)
         local player = user.identifier
         local bankbalance = bankBalance(player)
-		withdraw(player, amount)
-		local new_balance = bankBalance(player)
-		--TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Nouveau Solde: ~g~$" .. new_balance)
+    withdraw(player, amount)
+    local new_balance = bankBalance(player)
+    --TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Nouveau Solde: ~g~$" .. new_balance)
     TriggerClientEvent("pNotify:SendNotification", source, { text = "Tu as payé(e) <b style='color:red'>".. amount .."$</b> d'amende !", type = "warning", timeout = 2500, layout = "centerLeft",})
-		TriggerClientEvent("banking:updateBalance", source, new_balance)
-		TriggerClientEvent("banking:removeBalance", source, amount)
-		CancelEvent()
+    TriggerClientEvent("banking:updateBalance", source, new_balance)
+    TriggerClientEvent("banking:removeBalance", source, amount)
+    CancelEvent()
     end)
 end)
 
@@ -120,7 +120,7 @@ TriggerEvent('es:addCommand', 'transfer', function(source, args, user)
     toPlayer = tonumber(args[2])
     amount = tonumber(args[3])
     TriggerClientEvent('bank:transfer', source, fromPlayer, toPlayer, amount)
-	else
+  else
     --TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Utilise la commande /transfer [id] [montant]^0")
     return false
   end
@@ -174,10 +174,10 @@ TriggerEvent('es:addCommand', 'givecash', function(source, args, user)
     toPlayer = tonumber(args[2])
     amount = tonumber(args[3])
     TriggerEvent("es:getPlayers", function(Users)
-	    -- TriggerEvent("log:addLogServer" , "Banking", "INFO" , Users[fromPlayer].identifier .. "Give : " .. tostring(amount) .. " to player : " .. Users[toPlayer].identifier)
+      -- TriggerEvent("log:addLogServer" , "Banking", "INFO" , Users[fromPlayer].identifier .. "Give : " .. tostring(amount) .. " to player : " .. Users[toPlayer].identifier)
     end)
     TriggerClientEvent('bank:givecash', source, toPlayer, amount)
-	else
+  else
     TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Utilise la commande /givecash [id] [montant]^0")
     return false
   end
@@ -185,25 +185,25 @@ end)
 
 RegisterServerEvent('bank:givecash')
 AddEventHandler('bank:givecash', function(toPlayer, amount)
-	TriggerEvent('es:getPlayerFromId', source, function(user)
-		if (tonumber(user.money) >= tonumber(amount) and tonumber(amount) >= 0) then
-			local player = user.identifier
-			user:removeMoney(amount)
-			TriggerEvent('es:getPlayerFromId', toPlayer, function(recipient)
-				recipient:addMoney(amount)
-				TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donné: ~r~-$".. amount .." ~n~~s~Cash: ~g~$" .. user.money)
-				TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donné: ~g~$".. amount .." ~n~~s~Cash: ~g~$" .. recipient.money)
-				TriggerEvent("es:getPlayerFromId", toPlayer, function(toUser)
-					-- TriggerEvent("log:addLogServer", "Banking" , "INFO", recipient.identifier .. " recieve " .. tostring(amount) .. " to player : " .. toPlayer.identifier )
-				end)
-			end)
-		else
-			if (tonumber(user.money) < tonumber(amount)) then
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+    if (tonumber(user.money) >= tonumber(amount) and tonumber(amount) >= 0) then
+      local player = user.identifier
+      user:removeMoney(amount)
+      TriggerEvent('es:getPlayerFromId', toPlayer, function(recipient)
+        recipient:addMoney(amount)
+        TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donné: ~r~-$".. amount .." ~n~~s~Cash: ~g~$" .. user.money)
+        TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "KoprovBank", false, "Argent donné: ~g~$".. amount .." ~n~~s~Cash: ~g~$" .. recipient.money)
+        TriggerEvent("es:getPlayerFromId", toPlayer, function(toUser)
+          -- TriggerEvent("log:addLogServer", "Banking" , "INFO", recipient.identifier .. " recieve " .. tostring(amount) .. " to player : " .. toPlayer.identifier )
+        end)
+      end)
+    else
+      if (tonumber(user.money) < tonumber(amount)) then
         TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Pas assez d'argent'^0")
         CancelEvent()
-			end
-		end
-	end)
+      end
+    end
+  end)
 end)
 
 RegisterServerEvent('bank:givedirtycash')
