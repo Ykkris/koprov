@@ -119,7 +119,7 @@ local vehshop = {
 				{name = "Schafter V12", costs = 154000, description = {}, model = "schafter3"},
 				{name = "Seven 70", costs = 2000000, description = {}, model = "seven70"},
 				{name = "Specter", costs = 2500000, description = {}, model = "specter"},
-				{name = "Sultan", costs = 30000, description = {}, model = "sultan"},
+				{name = "Sultan", costs = 50000, description = {}, model = "sultan"},
 				{name = "Surano", costs = 250000, description = {}, model = "surano"},
 				{name = "Tropos", costs = 400000, description = {}, model = "tropos"},
 				{name = "Verlierer", costs = 100000, description = {}, model = "verlierer2"},
