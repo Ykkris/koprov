@@ -14,7 +14,7 @@
 require "resources/essentialmode/lib/MySQL"
 local Job = {}
 local Coffre = {}
-local addjobautomatic = true
+local addjobautomatic = false
 
 function getPlayerID(source)
 		local identifiers = GetPlayerIdentifiers(source)
@@ -39,7 +39,7 @@ AddEventHandler("onResourceStart", function(resource)
 					{id = 2, fieldType = "entrepôt", name = "Bureau",blipID = 357,BlipCOLOR = 60,radius = 2.0, x = -68.67, y = 6254.87, z = 31.09, inventory = {}, maxQuantity = 25000},
 					{name = "Véhicule de Fermier", fieldType = "spawn", blipID = 85,BlipCOLOR = 25,radius = 3.0, x = -119.38, y = 6215.65, z = 31.19, choix1 = { {model = "Rumpo", name = "VanA"}, {model = "Burrito3", name = "AnaV"} } , choix2 = { {r = "160", g = "24", b = "124", name = "IziColor"},  {r = "99", g = "19", b = "142", name = "SheepyColor"},  {r = "80", g = "81", b = "72", name = "BaseColor"}}}
 				},
-				employe = { {pl = "steam:110000102946cda", rank = "Fermier"}, {pl = "steam:110000104bd6595", rank = "Fermier"},  {pl = "steam:1100001038318d9", rank = "Gérant"}, {pl = "steam:11000010c3bb676", rank = "Gérant"}, {pl = "steam:1100001047a0f88", rank = "Fermier"}, {pl = "steam:1100001030897d8", rank = "Fermier"}, {pl = "steam:11000010882162b", rank = "Fermier"}}
+				employe = { {pl = "steam:110000102946cda", rank = "Fermier"}, {pl = "steam:110000104bd6595", rank = "Fermier"},  {pl = "steam:1100001038318d9", rank = "Gérant"}, {pl = "steam:11000010c3bb676", rank = "Gérant"}, {pl = "steam:1100001047a0f88", rank = "Fermier"}, {pl = "steam:1100001030897d8", rank = "Fermier"}, {pl = "steam:11000010882162b", rank = "Fermier"}, {pl = "steam:110000101f91cd2", rank = "Gérant"}}
 			} -- coffre
 			local encodedPositions = json.encode(tableTest.positions)
 			local id = tostring(tableTest.id)
@@ -198,7 +198,7 @@ function SendAllPositions(jobId)
 end
 
 function PayMyBoss()
-	SetTimeout(90000, function()
+	SetTimeout(900000, function()
 		TriggerEvent("es:getPlayers", function(Users)
 			for i = 1, #Users do
 				for j = 1, #Job[1].employe do

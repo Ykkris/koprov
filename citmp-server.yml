@@ -65,6 +65,7 @@ AutoStartResources:
     - sirencontrols
     # - vdk_truck
     - deleteveh
+    - fermier
 
 # do change
 RconPassword: koprobestv
