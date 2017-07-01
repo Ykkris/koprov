@@ -99,6 +99,10 @@ function use(item)
         elseif ITEMS[item].type == 1 then
             TriggerEvent("food:drink", ITEMS[item])
         else
+            Toxicated()
+            Citizen.Wait(7000)
+            ClearPedTasks(GetPlayerPed(-1))
+            Reality()
         end
     end
 end
@@ -261,4 +265,28 @@ function getPlayers()
         end
     end
     return playerList
+end
+
+function Toxicated()
+    Citizen.Wait(5000)
+    DoScreenFadeOut(1000)
+    Citizen.Wait(1000)
+    ClearPedTasksImmediately(GetPlayerPed(-1))
+    SetTimecycleModifier("spectator5")
+    SetPedMotionBlur(GetPlayerPed(-1), true)
+    SetPedMovementClipset(GetPlayerPed(-1), "move_m@drunk@moderatedrunk", true)
+    SetPedIsDrunk(GetPlayerPed(-1), true)
+    DoScreenFadeIn(1000)
+end
+
+function Reality()
+  Citizen.Wait(120000)
+  DoScreenFadeOut(1000)
+  Citizen.Wait(1000)
+  DoScreenFadeIn(1000)
+  ClearTimecycleModifier()
+  ResetScenarioTypesEnabled()
+  ResetPedMovementClipset(GetPlayerPed(-1), 0)
+  SetPedIsDrunk(GetPlayerPed(-1), false)
+  SetPedMotionBlur(GetPlayerPed(-1), false)
 end

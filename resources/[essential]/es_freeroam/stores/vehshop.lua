@@ -130,6 +130,7 @@ local vehshop = {
 			title = "sports classics",
 			name = "sportsclassics",
 			buttons = {
+				{name = "Ardent", costs = 250000, description = {}, model = "ardent"},
 				{name = "Casco", costs = 850000, description = {}, model = "casco"},
 				{name = "Coquette Classic", costs = 160000, description = {}, model = "coquette2"},
 				{name = "Infernus", costs = 250000, description = {}, model = "infernus2"},
