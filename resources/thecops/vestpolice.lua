@@ -456,7 +456,7 @@ local backlock = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if GetDistanceBetweenCoords(457.956, -992.723, 30.689,GetEntityCoords(GetPlayerPed(-1))) > 2 then
+		if GetDistanceBetweenCoords(457.956, -992.723, 30.689,GetEntityCoords(GetPlayerPed(-1))) > 2 and GetDistanceBetweenCoords(-446.217, 6009.002, 31.716,GetEntityCoords(GetPlayerPed(-1))) > 2 then
 			if vestpolice.opened then
 				CloseMenuVest()
 			end

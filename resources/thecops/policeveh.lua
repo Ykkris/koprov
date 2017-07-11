@@ -348,7 +348,7 @@ if(config.useNativePoliceGarage == true) then
 	Citizen.CreateThread(function()
 		while true do
 			Citizen.Wait(0)
-			if GetDistanceBetweenCoords(452.115, -1018.106, 28.478,GetEntityCoords(GetPlayerPed(-1))) > 5 then
+			if GetDistanceBetweenCoords(452.115, -1018.106, 28.478,GetEntityCoords(GetPlayerPed(-1))) > 5 and GetDistanceBetweenCoords(462.805, 6019.412, 31.350,GetEntityCoords(GetPlayerPed(-1))) > 5 then
 				if policeveh.opened then
 					CloseVeh()
 				end
